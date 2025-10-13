@@ -12,7 +12,7 @@
 
 import { initializePageFunctions } from "./core/initialize.js";
 import { loadSidebarAndSetActiveLink, handleSidebarState } from "./core/sidebar.js";
-import { closeAllModalsAndPopovers } from "./modals/modals.js"
+import { closeAllModalsAndPopovers } from "../assets/js/modals/modals.js"
 
 // Biến toàn cục để theo dõi ID của task đang được chọn trên trang "My Tasks"
 let currentSelectedTaskId = null;
