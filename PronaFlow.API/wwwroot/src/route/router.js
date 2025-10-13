@@ -101,15 +101,3 @@ window.addEventListener('load', router);
 
 // Export để main.js có thể gọi
 export { router };
-
-    app.innerHTML = await route.component.render();
-    if (route.component.after_render) {
-        await route.component.after_render();
-    }
-};
-
-window.addEventListener('hashchange', router);
-window.addEventListener('load', router);
-
-// Export để main.js có thể gọi
-export { router };
