@@ -1,42 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+// src/pages/KanbanPage.js
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KanBan Board - PronaFlow</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap"
-        rel="stylesheet">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+import { isAuthenticated } from '../auth/authService.js';
+import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
+import { autoResizeTextarea } from '../utils/utils.js'; // Giả sử bạn có hàm này
 
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+const KanbanPage = {
+    /**
+     * Render a view of the page.
+     */
+    render: async () => {
+        if (!isAuthenticated()) {
+            window.location.hash = '#/login';
+            return '';
+        }
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
-    <!-- style: .css -->
-    <link rel="stylesheet" href="../assets/css/reset.min.css">
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-
-    <!-- icon -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-
-    </style>
-
-</head>
-
-<body>
-    <div id="sidebar-container"></div>
-
-
+        // HTML content from kanban-board.html
+        return `<div id="sidebar-container"></div>
+    
     <main id="main" class="main kanban-board">
         <div class="kanban-board__header">
             <div class="workspace__title">
@@ -801,10 +781,113 @@
     <button id="sidebar-toggle-button" class="sidebar-toggle" type="button">
         <i class="icon-open" data-lucide="chevrons-left"></i>
         <i class="icon-closed" data-lucide="chevrons-right"></i>
-    </button>
+    </button>`;
+    },
 
-    <script type="module" src="../assets/js/main.js"></script>
+    /**
+     * Execute script after rendering
+     */
+    after_render: async () => {
+        if (!isAuthenticated()) return;
 
-</body>
+        await loadSidebarAndSetActiveLink();
 
-</html>
+        // All logic from workspace.js is moved here
+        initializeKanbanPageFunctions();
+        
+        // Initialize drag and drop for Kanban cards
+        initKanbanDragDrop();
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    }
+};
+
+/**
+ * Initializes all necessary functions for the Kanban page.
+ * This function replaces the old 'refreshKanbanFunctions'.
+ */
+function initializeKanbanPageFunctions() {
+    initWorkspaceToggle('.toggle-workspace-list-btn');
+    autoResizeTextarea('textarea.auto-resize'); // Assuming you have this utility function
+    // Any other initializations for the Kanban page can go here
+}
+
+/**
+ * Toggles the visibility of workspace project lists.
+ * @param {string} selector - The CSS selector for the toggle buttons.
+ */
+function initWorkspaceToggle(selector) {
+    document.querySelectorAll(selector).forEach(btn => {
+        btn.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target');
+            const content = document.getElementById(targetId);
+            if (!content) return;
+
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            
+            content.hidden = isExpanded;
+            this.setAttribute('aria-expanded', String(!isExpanded));
+            
+            const icon = this.querySelector('.icon-toggle');
+            if (icon) {
+                icon.classList.toggle('rotated-icon', !isExpanded);
+            }
+        });
+    });
+}
+
+/**
+ * Initializes drag and drop functionality for the Kanban board.
+ */
+function initKanbanDragDrop() {
+    const draggables = document.querySelectorAll('.project-card');
+    const columns = document.querySelectorAll('.kanban__col .list-card');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('dragging');
+        });
+
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('dragging');
+        });
+    });
+
+    columns.forEach(column => {
+        column.addEventListener('dragover', e => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(column, e.clientY);
+            const dragging = document.querySelector('.dragging');
+            if (afterElement == null) {
+                column.appendChild(dragging);
+            } else {
+                column.insertBefore(dragging, afterElement);
+            }
+        });
+    });
+}
+
+/**
+ * Helper function to determine where to place the dragged element within a column.
+ * @param {HTMLElement} column - The column being dragged over.
+ * @param {number} y - The clientY position of the mouse.
+ * @returns {HTMLElement|null} - The element to insert before, or null to append at the end.
+ */
+function getDragAfterElement(column, y) {
+    const draggableElements = [...column.querySelectorAll('.project-card:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+
+export default KanbanPage;

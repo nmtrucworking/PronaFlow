@@ -6,6 +6,7 @@ import { pageTransition } from '../utils/animations.js';
 import HomePage from '../pages/HomePage.js';
 import AuthPage from '../pages/AuthPage.js';
 import DashboardPage from '../pages/DashboardPage.js';
+import KanbanPage from '../pages/KanbanPage';
 import MyTasksPage from '../pages/MyTaskPage.js';
 import MyCalendarPage from '../pages/MyCalendarPage.js';
 import NotificationPage from '../pages/NotificationPage.js';
@@ -18,6 +19,7 @@ const routes = {
     '/': { component: HomePage, requiresAuth: false},
     '/login': { component: AuthPage, requiresAuth: false},
     '/dashboard': { component: DashboardPage, requiresAuth: true}, 
+    '/kanban-board': { component: KanbanPage, requiresAuth: true}, 
     '/my-tasks': { component: MyTasksPage, requiresAuth: true},
     '/my-calendar': { component: MyCalendarPage, requiresAuth: true},
     '/notification': { component: NotificationPage, requiresAuth: true},
