@@ -1,0 +1,34 @@
+[
+    {
+        "id": "p001", "workspaceId": "ws001", "type": "group", "title": "Website Redesign 2025", 
+        "description": "Nâng cấp toàn diện giao diện và trải nghiệm người dùng.", "status": "inprogress", 
+        "members": ["u001", "u002"], "tags": ["tag001"], "startDate": "2025-07-20", "endDate": "2025-09-01",
+        "isArchived": false, "isDeleted": false, "lastModified": "2025-07-22T10:00:00Z"
+    },
+    {
+        "id": "p002", "workspaceId": "ws001", "type": "group", "title": "API Payment Gateway", 
+        "description": "Tích hợp cổng thanh toán Stripe và Momo.", "status": "inreview", 
+        "members": ["u001", "u003"], "tags": ["tag002", "tag003"], "startDate": "2025-07-15", "endDate": "2025-08-10",
+        "isArchived": false, "isDeleted": false, "lastModified": "2025-07-21T15:10:00Z"
+    },
+    {
+        "id": "p003", "workspaceId": "ws002", "type": "personal", "title": "Học React Native", 
+        "description": "Tự học và xây dựng một ứng dụng di động đơn giản.", "status": "notstarted", 
+        "members": ["u001"], "tags": ["tag005"], "startDate": "2025-08-01", "endDate": null,
+        "isArchived": false, "isDeleted": false, "lastModified": "2025-07-20T11:00:00Z"
+    },
+    {
+        "id": "p005", "workspaceId": "ws002", "type": "personal", 
+        "title": "Dự án Freelance cho 'The Coffee House'", 
+        "description": "Dự án đã hoàn thành và được lưu trữ. Toàn bộ nội dung (tasks, files) được đóng gói và bảo quản tại đây.", 
+        "status": "done", "members": ["u001"], "tags": ["tag006"], "startDate": "2025-05-01", "endDate": "2025-06-30",
+        "isArchived": true, "isDeleted": false, "lastModified": "2025-07-01T14:00:00Z"
+    },
+    {
+        "id": "p006", "workspaceId": "ws001", "type": "group", 
+        "title": "Chiến dịch quảng cáo hè 2024 (Đã hủy)", 
+        "description": "Dự án này đã bị xóa. Khi khôi phục, tất cả các công việc bên trong cũng sẽ được khôi phục.", 
+        "status": "done", "members": ["u001", "u003"], "tags": [], "startDate": "2024-06-01", "endDate": "2024-07-01",
+        "isArchived": false, "isDeleted": true, "lastModified": "2025-07-15T18:00:00Z"
+    }
+]

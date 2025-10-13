@@ -1,0 +1,29 @@
+# Compiled files and user-specific settings
+*.user
+*.suo
+*.dbmdl
+*.jfm
+*.pdb
+
+# Visual Studio cache/options
+.vs/
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Rider temporary files
+.idea/
+
+# Secrets and environment-specific settings
+appsettings.Development.json
+secrets.json
+
+# Mac files
+.DS_Store
+
+# Node.js dependencies (in case you add a build step later)
+node_modules/
+
+# Log files
+*.log

@@ -1,0 +1,52 @@
+[
+    {
+        "id": "noti001",
+        "userId": "u001",
+        "type": "mention",
+        "actorId": "u002",
+        "content": "đã nhắc đến bạn trong một bình luận: \"@minhtruc xem giúp mình mockup này nhé!\"",
+        "context": { "type": "task", "id": "t001" },
+        "isRead": false,
+        "timestamp": "2025-07-22T09:00:00Z"
+    },
+    {
+        "id": "noti002",
+        "userId": "u001",
+        "type": "assignment",
+        "actorId": "u003",
+        "content": "đã giao cho bạn công việc mới: \"Sửa lỗi hiển thị trên Safari\"",
+        "context": { "type": "task", "id": "t005" },
+        "isRead": false,
+        "timestamp": "2025-07-22T08:30:00Z"
+    },
+    {
+        "id": "noti003",
+        "userId": "u001",
+        "type": "status_change",
+        "actorId": "u003",
+        "content": "đã chuyển công việc \"Kiểm thử API thanh toán với Stripe\" sang trạng thái In Review.",
+        "context": { "type": "task", "id": "t003" },
+        "isRead": true,
+        "timestamp": "2025-07-21T15:10:00Z"
+    },
+    {
+        "id": "noti004",
+        "userId": "u002",
+        "type": "project_invite",
+        "actorId": "u001",
+        "content": "đã mời bạn tham gia vào dự án \"Website Redesign 2025\"",
+        "context": { "type": "project", "id": "p001" },
+        "isRead": true,
+        "timestamp": "2025-07-20T10:00:00Z"
+    },
+    {
+        "id": "noti005",
+        "userId": "u001",
+        "type": "deadline",
+        "actorId": "system",
+        "content": "Công việc \"Sửa lỗi hiển thị trên Safari\" đã quá hạn.",
+        "context": { "type": "task", "id": "t005" },
+        "isRead": false,
+        "timestamp": "2025-07-21T00:00:00Z"
+    }
+]

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - PronaFlow</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/reset.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Lucide Icons Script -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <!-- Sidebar được tải động hoặc là một component riêng -->
+    <div id="sidebar-container"></div>
+
+    <!-- Vùng nội dung chính -->
+    <main id="main" class="main">
+        <!-- Header cố định với Tiêu đề, Tìm kiếm và các Hành động -->
+        <header class="page-header--sticky">
+            <div class="page-header__left">
+                <h3 class="page__title">
+                    <i data-lucide="bell"></i>
+                    <span>Notifications</span>
+                </h3>
+            </div>
+            <div class="page-header__right">
+                <div class="search-bar">
+                    <i data-lucide="search" class="search-bar__icon"></i>
+                    <input type="text" placeholder="Search notifications..." class="search-bar__input">
+                </div>
+                <!-- Nút Filter với anchor -->
+                <button id="filter-btn" class="btn btn--tertiary" popovertarget="filter-popover" popovertargetaction="toggle">
+                    <i data-lucide="filter"></i>
+                    <span>Filter</span>
+                </button>
+                <button class="mark-all-read btn btn-hover" id="mark-all-read-btn">
+                    <i data-lucide="check-check"></i>
+                    <span>Mark All as Read</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Nội dung chính của trang thông báo -->
+        <div class="page__content page__content--notifications">            
+            <!-- Nhóm theo dòng thời gian: Hôm nay -->
+            <section class="notification-timeline-group">
+                <div class="timeline-group__header">
+                    <h4 class="timeline-group__title">Today</h4>
+                </div>
+                <div class="list-col notification-group">
+                    <!-- Case 1: Thông báo CHƯA ĐỌC & ĐANG ĐƯỢC CHỌN -->
+                    <div class="notification-card unread selected" data-id="noti001">
+                        <label class="custom-checkbox notification-card__checkbox">
+                            <input type="checkbox" checked>
+                            <span class="custom-checkbox__checkmark"></span>
+                        </label>
+                        <div class="notification-card__main">
+                            <i data-lucide="at-sign" class="notification-card__icon"></i>
+                            <div class="notification-card__content">
+                                <p><strong>@u002</strong> mentioned you in a comment: "<em>@minhtruc please check this mockup!</em>"</p>
+                                <span class="notification-meta">Task • 09:00 AM</span>
+                            </div>
+                        </div>
+                        <div class="notification-card__actions">
+                            <button class="btn btn-small btn--secondary" title="View Details">View</button>
+                            <button id="actions-btn-noti001" class="btn btn-small btn--tertiary notification-actions-btn" popovertarget="actions-popover-noti001" title="More actions">
+                                <i data-lucide="more-horizontal"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Case 2: Thông báo CHƯA ĐỌC & QUÁ HẠN -->
+                    <div class="notification-card unread" data-id="noti005">
+                        <label class="custom-checkbox notification-card__checkbox">
+                            <input type="checkbox">
+                            <span class="custom-checkbox__checkmark"></span>
+                        </label>
+                         <div class="notification-card__main">
+                            <i data-lucide="alarm-clock" class="notification-card__icon icon-danger"></i>
+                            <div class="notification-card__content">
+                                <p><strong>System</strong>: The task "<em>Fix display issue on Safari</em>" is overdue.</p>
+                                <span class="notification-meta">Task • 12:00 AM</span>
+                            </div>
+                        </div>
+                        <div class="notification-card__actions">
+                             <button class="btn btn-small btn--secondary" title="View Details">View</button>
+                            <button id="actions-btn-noti005" class="btn btn-small btn--tertiary notification-actions-btn" popovertarget="actions-popover-noti005" title="More actions">
+                                <i data-lucide="more-horizontal"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Case 3: Thông báo ĐÃ ĐỌC -->
+                     <div class="notification-card" data-id="noti006">
+                        <label class="custom-checkbox notification-card__checkbox">
+                            <input type="checkbox">
+                            <span class="custom-checkbox__checkmark"></span>
+                        </label>
+                         <div class="notification-card__main">
+                            <i data-lucide="user-plus" class="notification-card__icon"></i>
+                            <div class="notification-card__content">
+                                <p><strong>@u004</strong> assigned you to the project "<em>Mobile App Launch</em>".</p>
+                                <span class="notification-meta">Project • 11:30 AM</span>
+                            </div>
+                        </div>
+                        <div class="notification-card__actions">
+                             <button class="btn btn-small btn--secondary" title="View Details">View</button>
+                            <button id="actions-btn-noti006" class="btn btn-small btn--tertiary notification-actions-btn" popovertarget="actions-popover-noti006" title="More actions">
+                                <i data-lucide="more-horizontal"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Nhóm theo dòng thời gian: Hôm qua -->
+            <section class="notification-timeline-group">
+                <div class="timeline-group__header">
+                    <h4 class="timeline-group__title">Yesterday</h4>
+                </div>
+                <div class="list-col notification-group">
+                    <!-- Case 4: Thông báo đã đọc về việc thay đổi trạng thái -->
+                    <div class="notification-card" data-id="noti003">
+                        <label class="custom-checkbox notification-card__checkbox"><input type="checkbox"><span class="custom-checkbox__checkmark"></span></label>
+                        <div class="notification-card__main">
+                            <i data-lucide="shuffle" class="notification-card__icon"></i>
+                            <div class="notification-card__content">
+                                <p><strong>@u003</strong> moved the task "<em>Test payment API with Stripe</em>" to In Review.</p>
+                                <span class="notification-meta">Task • 3:10 PM</span>
+                            </div>
+                        </div>
+                         <div class="notification-card__actions">
+                             <button class="btn btn-small btn--secondary" title="View Details">View</button>
+                            <button id="actions-btn-noti003" class="btn btn-small btn--tertiary notification-actions-btn" popovertarget="actions-popover-noti003" title="More actions">
+                                <i data-lucide="more-horizontal"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nhóm theo dòng thời gian: Cũ hơn -->
+            <section class="notification-timeline-group">
+                <div class="timeline-group__header">
+                    <h4 class="timeline-group__title">Older</h4>
+                </div>
+                <div class="list-col notification-group">
+                    <!-- Case 5: Thông báo đã đọc từ lâu -->
+                    <div class="notification-card" data-id="noti004">
+                        <label class="custom-checkbox notification-card__checkbox"><input type="checkbox"><span class="custom-checkbox__checkmark"></span></label>
+                        <div class="notification-card__main">
+                            <i data-lucide="users" class="notification-card__icon"></i>
+                            <div class="notification-card__content">
+                                <p><strong>@u001</strong> invited you to join the project "<em>Website Redesign 2025</em>".</p>
+                                <span class="notification-meta">Project • 20/07/2025</span>
+                            </div>
+                        </div>
+                         <div class="notification-card__actions">
+                             <button class="btn btn-small btn--secondary" title="View Details">View</button>
+                            <button id="actions-btn-noti004" class="btn btn-small btn--tertiary notification-actions-btn" popovertarget="actions-popover-noti004" title="More actions">
+                                <i data-lucide="more-horizontal"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Case 6: Trạng thái trống (Không có thông báo nào) -->
+            <!-- JavaScript sẽ ẩn các section ở trên và hiển thị section này khi cần -->
+            <section class="empty-state-container" id="no-notifications-message" style="display: none;"> <!-- -->
+                <div class="empty-state">
+                    <i data-lucide="bell-off" class="empty-state__icon"></i>
+                    <h4 class="empty-state__text">All caught up!</h4>
+                    <p class="empty-state__subtext">You have no new notifications.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- THANH HÀNH ĐỘNG NGỮ CẢNH (CHO VIỆC CHỌN HÀNG LOẠT) -->
+    <!-- Class "is-visible" được thêm vào để trình diễn, JS sẽ quản lý việc này -->
+    <div class="contextual-action-bar is-visible">
+        <div class="action-bar__left">
+            <span class="action-bar__selection-count">1 item selected</span>
+        </div>
+        <div class="action-bar__right">
+            <button class="btn btn--tertiary"><i data-lucide="check-check"></i> Mark as read</button>
+            <button class="btn btn--tertiary"><i data-lucide="archive"></i> Archive</button>
+            <div class="action-bar__divider"></div>
+            <button class="btn btn--tertiary btn--danger"><i data-lucide="trash-2"></i> Delete</button>
+        </div>
+    </div>
+
+    <!-- CÁC POPOVER & MODAL -->
+    <!-- Các element này nên được đặt ngay trước thẻ đóng </body> -->
+
+    <!-- Popover cho Bộ lọc -->
+    <div id="filter-popover" class="popover filter-popover" popover>
+        <div class="popover__header"><h5 class="popover__title">Filter Notifications</h5></div>
+        <div class="popover__body">
+            <div class="filter-group">
+                <h6 class="filter-group__title">Status</h6>
+                <ul class="filter-group__list">
+                    <li><label class="custom-checkbox"><input type="checkbox" checked><span class="custom-checkbox__checkmark"></span> Unread</label></li>
+                    <li><label class="custom-checkbox"><input type="checkbox"><span class="custom-checkbox__checkmark"></span> Mentions</label></li>
+                    <li><label class="custom-checkbox"><input type="checkbox"><span class="custom-checkbox__checkmark"></span> System</label></li>
+                </ul>
+            </div>
+            <div class="filter-group">
+                 <h6 class="filter-group__title">Project</h6>
+                 <select class="form-input">
+                     <option>All Projects</option>
+                     <option>Website Redesign 2025</option>
+                     <option>Mobile App Launch</option>
+                 </select>
+            </div>
+        </div>
+        <div class="popover__footer">
+            <button class="btn btn-small btn--tertiary">Clear</button>
+            <button class="btn btn-small btn--primary">Apply</button>
+        </div>
+    </div>
+
+    <!-- Các Popover cho Hành động của từng thông báo -->
+    <div id="actions-popover-noti001" class="popover actions-popover" popover>
+        <ul class="popover-action-list">
+            <li><button><i data-lucide="archive"></i> Archive</button>
+            </li><li><button><i data-lucide="check"></i> Mark as unread</button>
+        </li></ul>
+    </div>
+    <div id="actions-popover-noti005" class="popover actions-popover" popover><ul class="popover-action-list"><li><button><i data-lucide="archive"></i> Archive</button></li><li><button><i data-lucide="check"></i> Mark as unread</button></li></ul></div>
+    <div id="actions-popover-noti006" class="popover actions-popover" popover><ul class="popover-action-list"><li><button><i data-lucide="archive"></i> Archive</button></li><li><button><i data-lucide="check"></i> Mark as unread</button></li></ul></div>
+    <div id="actions-popover-noti003" class="popover actions-popover" popover><ul class="popover-action-list"><li><button><i data-lucide="archive"></i> Archive</button></li><li><button><i data-lucide="check"></i> Mark as unread</button></li></ul></div>
+    <div id="actions-popover-noti004" class="popover actions-popover" popover><ul class="popover-action-list"><li><button><i data-lucide="archive"></i> Archive</button></li><li><button><i data-lucide="check"></i> Mark as unread</button></li></ul></div>
+
+    <!-- Modal Xác nhận -->
+    <!-- Class "is-visible" được thêm vào để trình diễn -->
+    <div class="shared-backdrop"></div>
+    <div class="simple-modal" id="confirmation-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">Mark all as read?</h5>
+            <button class="btn-exit" title="Close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to mark all notifications on this page as read? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn--tertiary">Cancel</button>
+            <button class="btn btn--primary">Confirm</button>
+        </div>
+    </div>
+
+    <!-- Nút bật/tắt Sidebar -->
+    <button id="sidebar-toggle-button" class="sidebar-toggle">
+        <i class="icon-open" data-lucide="chevrons-left"></i>
+        <i class="icon-closed" data-lucide="chevrons-right"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons(); // Khởi tạo icon
+    </script>
+    <script src="../assets/js/main.js"></script>
+
+</body>
+</html>

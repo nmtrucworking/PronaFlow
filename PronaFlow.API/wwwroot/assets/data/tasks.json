@@ -1,0 +1,30 @@
+[
+    {
+        "id": "t001", "taskListId": "tl001", "name": "Tạo Dashboard Mockup trên Figma", "deadline": "2025-07-30",
+        "priority": "Cao", "status": "In Progress", "assignees": ["u002"], "isDeleted": false
+    },
+    {
+        "id": "t002", "taskListId": "tl002", "name": "Lập trình Sidebar Component", "deadline": "2025-08-15",
+        "priority": "Cao", "status": "Not Started", "assignees": ["u001"], "isDeleted": false
+    },
+    {
+        "id": "t003", "taskListId": "tl003", "name": "Kiểm thử API thanh toán với Stripe", "deadline": "2025-08-01",
+        "priority": "Trung bình", "status": "In Review", "assignees": ["u001", "u003"], "isDeleted": false
+    },
+    {
+        "id": "t007", "taskListId": "tl001", "name": "Chuẩn bị slide thuyết trình (đã xóa)",
+        "description": "Task này bị xóa riêng lẻ và sẽ xuất hiện trong danh sách 'Công việc đã xóa' ở trang Thùng rác.",
+        "deadline": "2025-07-28", "priority": "Thấp", "status": "Not Started", "assignees": ["u002"],
+        "isDeleted": true, "lastModified": "2025-07-19T11:30:00Z"
+    },
+    {
+        "id": "t009", "projectId": "p006", "taskListId": null, "name": "Lên kịch bản video quảng cáo",
+        "description": "Task này thuộc dự án p006 đã bị xóa.", "deadline": null,
+        "priority": "Thấp", "status": "Done", "assignees": ["u001"], "isDeleted": false
+    },
+    {
+        "id": "t010", "projectId": "p006", "taskListId": null, "name": "Booking KOLs",
+        "description": "Task này cũng thuộc dự án p006 đã bị xóa.", "deadline": null,
+        "priority": "Cao", "status": "In Progress", "assignees": ["u003"], "isDeleted": false
+    }
+]

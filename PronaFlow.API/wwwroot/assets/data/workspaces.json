@@ -1,0 +1,12 @@
+[
+    {
+        "id": "ws001",
+        "name": "PronaFlow Team",
+        "ownerId": "u001"
+    },
+    {
+        "id": "ws002",
+        "name": "Dự án Cá nhân",
+        "ownerId": "u001"
+    }
+]

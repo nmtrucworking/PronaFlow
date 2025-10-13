@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" />
+    <!-- style: .css -->
+    <link rel="stylesheet" href="../assets/css/reset.min.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <!-- icon -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <style>
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #27ae60;
+            /* Màu xanh lá thành công */
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 9999;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        .form__error {
+            display: none;
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .form__input-group.error .form__input {
+            border-color: #e74c3c;
+        }
+
+        .form__input-group.error .form__error {
+            display: block;
+        }
+
+        .form__input-group.success .form__input {
+            border-color: #27ae60;
+        }
+
+        /* Toast types */
+        .toast.error {
+            background-color: #e74c3c;
+        }
+
+        .toast.success {
+            background-color: #27ae60;
+        }
+
+        .toast.warning {
+            background-color: #f1c40f;
+        }
+
+        /* Loading state */
+        .form__submit-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .form__submit-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 4px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s linear infinite;
+        }
+
+        
+    </style>
+    <div class="login-page">
+        <header class="header" id="login-page-header">
+            <div class="header__container">
+                <a href="../pages/home.html" class="web-name">PronaFlow</a>
+            </div>
+        </header>
+        <!-- HEADER END -->
+
+        <div class="login-card">
+            <!-- LOGIN FORM -->
+            <div class="login-card__form-wrapper login-card__form-wrapper--login" id="login_form">
+                <form action="" class="form" id="loginForm" name="loginForm" novalidate>
+                    <h1 class="form__title">Login</h1>
+                    <div class="form__input-groups">
+                        <div class="form__input-group">
+                            <input id="loginEmail" 
+                                    name="loginEmail" 
+                                    type="email" 
+                                    class="form__input"
+                                    title="Please enter your email" 
+                                    required 
+                                    placeholder="Email" 
+                                    autocomplete="email" />
+                            <i data-lucide="mail" class="form__icon"></i>
+                            <span class="form__error" id="loginEmailError"></span>
+                        </div>
+                        <div class="form__input-group">
+                            <input id="loginPassword" 
+                                    name="loginPassword" 
+                                    type="password" 
+                                    class="form__input"
+                                    title="Please enter your password" 
+                                    placeholder="Password"
+                                    required 
+                                    autocomplete="current-password" />
+                            <i data-lucide="lock" class="form__icon"></i>
+                            <span class="form__error" id="loginPasswordError"></span>
+                        </div>
+                    </div>
+
+                    <a href="#" class="form__link">Forgot Password?</a>
+
+                    <button type="submit" class="form__submit-btn">Login</button>
+                </form>
+                <p class="form__text">or login with social platforms</p>
+                <div class="form_socials">
+                    <a href="#" class="form__social-link"><i class="bx bxl-google"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-github"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-linkedin"></i></a>
+                </div>
+            </div>
+
+            <!-- REGISTER FORM -->
+            <div class="login-card__form-wrapper login-card__form-wrapper--register" id="register-form">
+                <form action="#" class="form" id="registerForm" name="registerForm" novalidate>
+                    <h1 class="form__title">Registration</h1>
+                    <div class="form__input-groups">
+                        <div class="form__input-group">
+                            <input id="registerUsername" 
+                                name="registerUsername" 
+                                type="text" 
+                                class="form__input"
+                                title="Username must be 4-20 characters" 
+                                required placeholder="Username"
+                                autocomplete="username" 
+                                minlength="4" 
+                                maxlength="20" />
+                            <i data-lucide="user" class="form__icon"></i>
+                            <span class="form__error" id="registerUsernameError"></span>
+                        </div>
+                        <div class="form__input-group">
+                            <input id="registerEmail" 
+                                name="registerEmail" 
+                                type="email" 
+                                class="form__input"
+                                title="Please enter a valid email" 
+                                required placeholder="Email" 
+                                autocomplete="email" />
+                            <i data-lucide="mail" class="form__icon"></i>
+                            <span class="form__error" id="registerEmailError"></span>
+                        </div>
+                        <div class="form__input-group">
+                            <input id="registerPassword" name="registerPassword" type="password" class="form__input"
+                                title="Password must be at least 8 characters" required placeholder="Password"
+                                autocomplete="new-password" minlength="8" />
+                            <i data-lucide="lock" class="form__icon"></i>
+                            <span class="form__error" id="registerPasswordError"></span>
+                        </div>
+                        <div class="form__input-group">
+                            <input id="registerConfirmPassword" name="registerConfirmPassword" type="password"
+                                class="form__input" title="Please confirm your password" required
+                                placeholder="Confirm Password" autocomplete="new-password" />
+                            <i data-lucide="lock" class="form__icon"></i>
+                            <span class="form__error" id="registerConfirmPasswordError"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="form__submit-btn">Register</button>
+                </form>
+                <p class="form__text">or register with social platforms</p>
+                <div class="form_socials">
+                    <a href="#" class="form__social-link"><i class="bx bxl-google"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-github"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="toggle-box">
+                <div class="toggle-panel toggle-left">
+                    <h1 class="toggle-panel__title">Hello, Welcome!</h1>
+                    <p class="toggle-panel__text">Don't have an account?</p>
+                    <button class="form__submit-btn register-btn">Register</button>
+                </div>
+            </div>
+
+            <div class="toggle-box">
+                <div class="toggle-panel toggle-right">
+                    <h1 class="toggle-panel__title">Welcome Back!</h1>
+                    <p class="toggle-panel__text">Already have an account?</p>
+                    <button class="form__submit-btn login-btn">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p class="footer__text">
+                © 2025 PronaFlow. All Rights Reserved. Built for better work
+                management.
+            </p>
+        </footer>
+    </div>
+
+    <div id="toast-notification" class="toast">
+        <i data-lucide="check-circle" class="toast-icon"></i>
+        <span id="toast-message" class="toast-message"></span>
+    </div>
+
+    <script type="module">
+        import { initializeAuth } from "../assets/js/pages/auth/auth.js";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initializeAuth();
+        });
+    </script>
+</body>
+
+</html>

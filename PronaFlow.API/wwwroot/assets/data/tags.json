@@ -1,0 +1,8 @@
+[
+    { "id": "tag001", "workspaceId": "ws001", "name": "Frontend", "color": "#2980b9" },
+    { "id": "tag002", "workspaceId": "ws001", "name": "Backend", "color": "#27ae60" },
+    { "id": "tag003", "workspaceId": "ws001", "name": "Bug Critical", "color": "#c0392b" },
+    { "id": "tag004", "workspaceId": "ws001", "name": "Marketing", "color": "#8e44ad" },
+    { "id": "tag005", "workspaceId": "ws002", "name": "Học Tập", "color": "#16a085" },
+    { "id": "tag006", "workspaceId": "ws002", "name": "Freelance", "color": "#f39c12" }
+]

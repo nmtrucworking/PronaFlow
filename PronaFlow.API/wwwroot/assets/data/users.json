@@ -1,0 +1,23 @@
+[
+    {
+        "id": "u001",
+        "username": "minhtruc",
+        "fullName": "Nguyễn Minh Trúc",
+        "email": "truc.nguyen@prona.flow",
+        "avatar": "../assets/images/avt-notion_1.png"
+    },
+    {
+        "id": "u002",
+        "username": "alice_design",
+        "fullName": "Alice Williams",
+        "email": "alice.w@example.com",
+        "avatar": "../assets/images/avt-notion_2.png"
+    },
+    {
+        "id": "u003",
+        "username": "bob_marketing",
+        "fullName": "Bob Johnson",
+        "email": "bob.j@example.com",
+        "avatar": "../assets/images/avt-notion_3.png"
+    }
+]
