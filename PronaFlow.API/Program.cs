@@ -106,7 +106,9 @@ app.MapControllers();
 app.MapGet("/index", async context =>
 {
     context.Response.ContentType = "text/html";
-    await context.Response.SendFileAsync("wwwroot/pages/index.html");
+    await context.Response.SendFileAsync("wwwroot/index.html");
 });
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
