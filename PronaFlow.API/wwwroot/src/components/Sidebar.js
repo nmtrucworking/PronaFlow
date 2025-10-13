@@ -87,7 +87,7 @@ const Sidebar = {
 
                 <ul class="sidebar__workspace-tools">
                     <li>
-                        <a class="sidebar__nav-item" href="#/kanban-board">
+                        <a class="sidebar__nav-item" href="#/kanban-board" data-nav-link="/kanban-board/${p.id}">
                             <i class="nav-icon icon-lg" data-lucide="square-kanban"></i>
                             <span class="item-hide-collapsed">Kanban Board</span>
                         </a>

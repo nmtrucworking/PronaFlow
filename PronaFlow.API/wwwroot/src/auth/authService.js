@@ -22,17 +22,17 @@ export function initializeAuth() {
  */
 export async function checkAuthStatus() {
     const token = localStorage.getItem('authToken');
-    
+
     if (token) {
         try {
             // Lấy thông tin người dùng hiện tại
             const user = await apiService.auth.getCurrentUser();
-            
+
             // Nếu đang ở trang đăng nhập, chuyển hướng đến dashboard
             if (window.location.hash === '#/login') {
                 window.location.hash = '#/dashboard';
             }
-            
+
             return true;
         } catch (error) {
             console.error('Failed to verify authentication:', error);
@@ -42,7 +42,7 @@ export async function checkAuthStatus() {
             return false;
         }
     }
-    
+
     return false;
 }
 
@@ -55,10 +55,10 @@ export async function checkAuthStatus() {
 export async function login(email, password) {
     try {
         const response = await apiService.auth.login({ email, password });
-        
+
         // Chuyển hướng đến dashboard
         window.location.hash = '#/dashboard';
-        
+
         return response;
     } catch (error) {
         console.error('Login failed:', error);
@@ -86,8 +86,9 @@ export async function register(userData) {
  */
 export function logout() {
     // Clear user session/token
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    showToast('You have been logged out.', 'success');
 }
 
 /**
@@ -100,13 +101,13 @@ export function checkAccess(route) {
     if (!route.requiresAuth) {
         return true;
     }
-    
+
     // Kiểm tra token
     const token = localStorage.getItem('authToken');
     if (!token) {
         return false;
     }
-    
+
     // Kiểm tra vai trò nếu cần
     if (route.roles) {
         const user = store.getState().user;
@@ -114,7 +115,7 @@ export function checkAccess(route) {
             return false;
         }
     }
-    
+
     return true;
 }
 
@@ -138,7 +139,7 @@ async function handleRegisterSubmit(event, container) {
     const form = event.target;
     const submitBtn = form.querySelector('.form__submit-btn');
     const originalButtonText = submitBtn.textContent;
-    
+
     // Lưu ý: Giao diện của bạn có input 'Username' nhưng API register chỉ cần 'FullName'.
     // Chúng ta sẽ dùng Username làm FullName.
     const fullName = form.elements.registerUsername.value;
@@ -173,13 +174,4 @@ async function handleRegisterSubmit(event, container) {
  */
 export function isAuthenticated() {
     return !!localStorage.getItem('authToken');
-}
-
-/**
- * Xử lý đăng xuất.
- */
-export function logout() {
-    localStorage.removeItem('authToken');
-    window.location.hash = '#/login';
-    showToast('You have been logged out.', 'success');
 }
