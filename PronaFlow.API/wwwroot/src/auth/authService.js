@@ -1,6 +1,7 @@
 // Import các hàm gọi API và các hàm tiện ích giao diện
-import { api } from '../api/apiService.js';
-import { showToast, setLoadingState, toggleForms } from '../utils/ui.js';
+import apiService from '../api/apiService.js';
+import store from '../store/store.js';
+import { showToast, setLoadingState } from '../utils/ui.js';
 
 /**
  * Hàm chính để khởi tạo các sự kiện và logic trên trang xác thực.
@@ -12,37 +13,118 @@ export function initializeAuth() {
         lucide.createIcons();
     }
 
-    // Lấy các element cần thiết từ DOM
-    const container = document.querySelector('.login-card');
-    const registerBtn = document.querySelector('.register-btn');
-    const loginBtn = document.querySelector('.login-btn');
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-
-    // Gán sự kiện cho các nút chuyển đổi form
-    registerBtn?.addEventListener('click', () => toggleForms(container, 'register'));
-    loginBtn?.addEventListener('click', () => toggleForms(container, 'login'));
-
-    // Gán sự kiện submit cho từng form
-    loginForm?.addEventListener('submit', handleLoginSubmit);
-    registerForm?.addEventListener('submit', (e) => handleRegisterSubmit(e, container));
+    // Kiểm tra nếu người dùng đã đăng nhập
+    checkAuthStatus();
 }
 
 /**
- * Xử lý logic khi người dùng submit form đăng nhập.
- * @param {Event} event - Sự kiện submit.
+ * Kiểm tra trạng thái xác thực của người dùng
  */
-async function handleLoginSubmit(event) {
-    event.preventDefault();
+export async function checkAuthStatus() {
+    const token = localStorage.getItem('authToken');
+    
+    if (token) {
+        try {
+            // Lấy thông tin người dùng hiện tại
+            const user = await apiService.auth.getCurrentUser();
+            
+            // Nếu đang ở trang đăng nhập, chuyển hướng đến dashboard
+            if (window.location.hash === '#/login') {
+                window.location.hash = '#/dashboard';
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('Failed to verify authentication:', error);
+            // Token không hợp lệ, xóa khỏi localStorage
+            localStorage.removeItem('authToken');
+            store.logout();
+            return false;
+        }
+    }
+    
+    return false;
+}
 
-    const form = event.target;
-    const submitBtn = form.querySelector('.form__submit-btn');
-    const originalButtonText = submitBtn.textContent;
+/**
+ * Đăng nhập người dùng
+ * @param {string} email - Email người dùng
+ * @param {string} password - Mật khẩu người dùng
+ * @returns {Promise<object>} - Thông tin người dùng
+ */
+export async function login(email, password) {
+    try {
+        const response = await apiService.auth.login({ email, password });
+        
+        // Chuyển hướng đến dashboard
+        window.location.hash = '#/dashboard';
+        
+        return response;
+    } catch (error) {
+        console.error('Login failed:', error);
+        throw error;
+    }
+}
 
-    const email = form.elements.loginEmail.value;
-    const password = form.elements.loginPassword.value;
+/**
+ * Đăng ký người dùng mới
+ * @param {object} userData - Thông tin người dùng
+ * @returns {Promise<object>} - Thông tin người dùng đã đăng ký
+ */
+export async function register(userData) {
+    try {
+        const response = await apiService.auth.register(userData);
+        return response;
+    } catch (error) {
+        console.error('Registration failed:', error);
+        throw error;
+    }
+}
 
-    setLoadingState(submitBtn, true, 'Logging in...');
+/**
+ * Đăng xuất người dùng
+ */
+export function logout() {
+    apiService.auth.logout();
+    window.location.hash = '#/';
+}
+
+/**
+ * Kiểm tra quyền truy cập vào một trang
+ * @param {object} route - Thông tin route
+ * @returns {boolean} - Có quyền truy cập hay không
+ */
+export function checkAccess(route) {
+    // Nếu route không yêu cầu xác thực, cho phép truy cập
+    if (!route.requiresAuth) {
+        return true;
+    }
+    
+    // Kiểm tra token
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        return false;
+    }
+    
+    // Kiểm tra vai trò nếu cần
+    if (route.roles) {
+        const user = store.getState().user;
+        if (!user || !route.roles.includes(user.role)) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+export default {
+    initializeAuth,
+    checkAuthStatus,
+    login,
+    register,
+    logout,
+    checkAccess
+};
 
     try {
         const data = await api.post('/auth/login', { email, password });

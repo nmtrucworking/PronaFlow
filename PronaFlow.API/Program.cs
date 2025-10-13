@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens; // using SymmetricSecurityKey, TokenValida
 using PronaFlow.Core.Interfaces;
 using PronaFlow.Services; // using UserService
 using PronaFlow.Core.Data;
-using PronaFLow.Services; // using PronaFlowDbContext
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,7 +52,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITaskListService, TaskListService>();
-builder.Services.AddScoped<ITaskListService, TaskListService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ISubtaskService, SubtaskService>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<ITagService, TagService>();

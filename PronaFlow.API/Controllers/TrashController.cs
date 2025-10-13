@@ -19,7 +19,12 @@ public class TrashController : ControllerBase
 
     private long GetCurrentUserId()
     {
-        // ... copy phương thức này từ controller khác ...
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null || !long.TryParse(userIdClaim.Value, out var userId))
+        {
+            throw new InvalidOperationException("User ID not found in token.");
+        }
+        return userId;
     }
 
     [HttpGet]

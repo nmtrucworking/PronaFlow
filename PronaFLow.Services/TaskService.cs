@@ -10,9 +10,9 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PronaFLow.Services;
+namespace PronaFlow.Services;
 
-public class TaskService
+public class TaskService : ITaskService
 {
     private readonly PronaFlowDbContext _context;
     private readonly IActivityService _activityService;

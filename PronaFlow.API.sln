@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PronaFlow.Core", "PronaFlow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PronaFlow.API", "PronaFlow.API\PronaFlow.API.csproj", "{824F4EDB-4FDE-A2A0-3B3C-D23C8FEF3599}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PronaFLow.Services", "PronaFLow.Services\PronaFLow.Services.csproj", "{5FAFD719-4392-A106-3921-9BBB3AE394E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PronaFlow.Services", "PronaFlow.Services\PronaFlow.Services.csproj", "{5FAFD719-4392-A106-3921-9BBB3AE394E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

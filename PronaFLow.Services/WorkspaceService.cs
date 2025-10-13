@@ -6,9 +6,6 @@ using PronaFlow.Core.DTOs.Workspace;
 using PronaFlow.Core.Interfaces;
 using PronaFlow.Core.Models;
 using PronaFLow.Core.DTOs.Workspace;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PronaFlow.Services;
 
@@ -48,18 +45,35 @@ public class WorkspaceService : IWorkspaceService
 
         if (workspace == null)
         {
-            return (false, "Workspace not found or access denied.");
+            return (false, "Workspace not found or you don't have permission to delete it.");
+        }
+
+        var hasProjects = await _context.Projects.AnyAsync(p => p.WorkspaceId == workspaceId);
+        if (hasProjects)
+        {
+            return (false, "Workspace is not empty. Please move or delete all projects before deleting the workspace.");
         }
 
         _context.Workspaces.Remove(workspace);
         await _context.SaveChangesAsync();
-
         return (true, null);
     }
 
-    public Task<WorkspaceDto?> GetWorkspaceByIdAsync(long workspaceId, long userId)
+    public async Task<WorkspaceDto?> GetWorkspaceByIdAsync(long workspaceId, long userId)
     {
-        throw new NotImplementedException();
+        var workspace = await _context.Workspaces
+            .AsNoTracking()
+            .Where(w => w.Id == workspaceId && w.OwnerId == userId)
+            .Select(w => new WorkspaceDto
+            {
+                Id = w.Id,
+                Name = w.Name,
+                Description = w.Description,
+                OwnerId = w.OwnerId
+            })
+            .FirstOrDefaultAsync();
+
+        return workspace;
     }
 
     public async Task<IEnumerable<WorkspaceDto>> GetWorkspacesForUserAsync(long userId)

@@ -22,11 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PronaFLow.Services\PronaFLow.Services.csproj" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <ProjectReference Include="..\PronaFlow.Services\PronaFlow.Services.csproj" />
   </ItemGroup>
 
 </Project>

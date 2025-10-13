@@ -1,14 +1,16 @@
-import AuthPage from './AuthPage.js'; // include extension if needed
 import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
-import { isAuthenticated } from '../auth/authService.js';
+import { store } from '../store/store.js';
+import { apiService } from '../api/apiService.js';
+import { throttle, renderLongList } from '../utils/performance.js';
 
 const MyTasksPage = {
     render: async () => {
-        // Check Authorizator
-        if (!isAuthenticated()) {
-        window.location.hash = '#/login'; 
-        return ''; 
-    }
+        // Kiểm tra xác thực từ store
+        const state = store.getState();
+        if (!state.auth.isAuthenticated) {
+            window.location.hash = '#/login';
+            return '';
+        }
 
         return `<div id="sidebar-container"></div>
 

@@ -1,7 +1,8 @@
 // File: wwwroot/src/components/Sidebar.js
 
 import { isAuthenticated, logout } from '../auth/authService.js';
-import { decodeToken } from '../utils/index.js'; // Chúng ta sẽ cần tạo hàm này
+import { decodeToken } from '../utils/index.js';
+import store from '../store/store.js';
 
 const Sidebar = {
 
@@ -187,6 +188,7 @@ const Sidebar = {
     if (signOutBtn) {
       signOutBtn.addEventListener('click', () => {
         logout();
+        window.location.hash = '#/login';
       });
     }
     
@@ -199,6 +201,12 @@ const Sidebar = {
     // Khởi tạo lại các icon
     if (window.lucide) {
       lucide.createIcons();
+    }
+    
+    // Cập nhật trạng thái sidebar từ store
+    const sidebarState = store.getState().ui.sidebarCollapsed;
+    if (sidebarState !== undefined) {
+      sidebar.classList.toggle('collapsed', sidebarState);
     }
   }
 };
