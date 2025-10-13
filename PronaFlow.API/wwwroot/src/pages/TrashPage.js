@@ -1,208 +1,108 @@
-import AuthPage from './AuthPage.js'; // include extension if needed
-import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
 import { isAuthenticated } from '../auth/authService.js';
+import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
+// Hàm updateBackdropVisibility rất quan trọng để quản lý lớp phủ nền
+import { updateBackdropVisibility } from '../components/modals.js'; 
 
 const TrashPage = {
+    /**
+     * Render a view of the page.
+     */
     render: async () => {
-        // Check Authorizator
         if (!isAuthenticated()) {
-        window.location.hash = '#/login'; 
-        return ''; 
-    }
+            window.location.hash = '#/trash';
+            return '';
+        }
 
-        return `<div id="sidebar-container"></div>
+        // HTML content from trash.html
+        return `
+            <div id="sidebar-container"></div>
 
-    <main id="main" class="main dashboard no-scrollbar">
-        <!-- top-main -->
-        <div id="greeting-widget-frame" class="greeting-widget">
-            <img src="../assets/images/hello.gif" alt="">
-            <span id="greeting-widget">
-                <!-- Js fill: renderGreetingWidget() -->
-            </span>
-        </div>
+            <main id="main" class="main">
+                <header>
+                    <h3 class="page__title">
+                        <i data-lucide="trash-2"></i>
+                        <span>Trash</span>
+                    </h3>
+                    <div class="description--second description--trash" role="alert">
+                        Items in the trash will be <strong>permanently deleted</strong> after 30 days.
+                    </div>
+                </header>
+                <div class="page__content">
+                    <section class="section-container">
+                        <div class="section-title">Deleted Projects</div>
+                        <div class="section__inner-content">
+                            <div class="list-row group-folder" id="deleted-projects-container">
+                                <div class="folder-item" data-id="p006" data-name="Chiến dịch quảng cáo hè 2024 (Cancelled)">
+                                    <div class="folder folder__icon--closed"></div>
+                                    <span class="folder__pjt-title">Chiến dịch quảng cáo hè 2024 (Cancelled)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="section-container">
+                        <div class="section-title">Deleted Tasks</div>
+                        <div class="section__inner-content">
+                            <div class="list-col" id="deleted-tasks-container">
+                                <div class="task-card">
+                                    <div class="task__name" style="text-decoration: line-through;">Chuẩn bị slide thuyết trình</div>
+                                    <div class="task-actions">
+                                        <button class="btn-hover" title="Restore"><i data-lucide="rotate-ccw"></i></button>
+                                        <button class="btn-hover btn-danger" title="Delete Permanently"><i data-lucide="trash-2"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
 
-        <div class="divider"></div>
-
-        <div class="widget-group">
-            <div class="widget">
-                <h3 class="widget__title">Overview</h3>
-                <div class="widget__content widget__content--overview">
-                    <div class="inner-widget-content">
-                        You're managing <span id="total-projects">#</span> projects in total
+            <div class="simple-modal" id="trash-item-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Deleted Project</h4>
+                    <button class="btn-exit"><i data-lucide="x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-project-name" id="modal-project-name"></p>
+                    <p class="modal-description">This project and all its contents will be permanently deleted after 30 days. Do you want to restore it?</p>
+                    <div class="modal-item-list" id="modal-task-list-container" style="display: none;">
+                        <strong>Tasks inside:</strong>
+                        <ul id="modal-task-list"></ul>
                     </div>
                 </div>
-            </div>
-            <div class="widget">
-                <h3 class="widget__title">Task in progress</h3>
-                <div class="widget__content widget__content--inprogress">
-                    <div class="inner-widget-content">
-                        You're working on <span id="total-tasks-inprogress">#</span> tasks right now
-                    </div>
+                <div class="modal-footer">
+                    <button class="btn btn-delete">
+                        <i data-lucide="trash-2" class="icon-sm"></i>
+                        <span>Permanently Delete</span>
+                    </button>
+                    <button class="btn btn--primary">
+                        <i data-lucide="undo-2" class="icon-sm"></i>
+                        <span>Restore</span>
+                    </button>
                 </div>
             </div>
-            <div class="widget">
-                <h3 class="widget__title">Task Overdue</h3>
-                <div class="widget__content widget__content--overdue">
-                    <div class="inner-widget-content">
-                        You have <span id="total-tasks-overdue">#</span> overdue tasks to catch up on
-                    </div>
-                </div>
-            </div>
-        </div>
+            
+            <div id="sharedBackdrop" class="shared-backdrop"></div>
 
-        <div class="divider"></div>
-
-        <!-- Some Task -->
-        <div class="frames">
-            <div class="frame frame--dashboard">
-                <h3 class="frame__title frame__title--dashboard">Upcoming task</h3>
-                <div class="frame__content hide-scrollbar">
-                    <div class="task-list">
-                        <!-- sample task-card -->
-                        <div class="task-card" data-task-id="t001"
-                            style="background: var(--color-background-inprogress);">
-                            <!-- checkbox: to done status -->
-                            <label class="custom-checkbox">
-                                <input type="checkbox" name="" id="task-status">
-                                <span class="custom-checkbox__checkmark"></span>
-                            </label>
-
-                            <!-- inner task-card -->
-                            <div class="task-card__content">
-                                <span class="task__name" id="task__name">Tạo Dashboard Mockup trên Figma</span>
-                                <div class="task-card__detail">
-                                    <div class="task__address">
-                                        <span id="taskAddress__prjId">Project</span>
-                                        <span> / </span>
-                                        <span id="taskAddress__tasklistId">tl001</span>
-                                    </div>
-                                    <div class="task__deadline" id="task__deadline">
-                                        <i data-lucide="calendar-fold" class="icon--minium"></i>
-                                        <span>Wednesday, 30 July 2025</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- priority -->
-                            <button class="btn priority-high">
-                                <i data-lucide="star"></i>
-                            </button>
-                        </div>
-
-                        <div class="task-card" data-task-id="t002"
-                            style="background: var(--color-background-notstarted);">
-                            <label class="custom-checkbox">
-                                <input type="checkbox" name="" id="task-status">
-                                <span class="custom-checkbox__checkmark"></span>
-                            </label>
-                            <div class="task-card__content">
-                                <div class="task__name">Lập trình Sidebar Component</div>
-                                <div class="task-card__detail">
-                                    <div class="task__address">
-                                        <span id="taskAddress__prjId">Project</span>
-                                        <span> / </span>
-                                        <span id="taskAddress__tasklistId">tl002</span>
-                                    </div>
-                                    <div class="task__deadline">
-                                        <i data-lucide="calendar-fold" class="icon--minium"></i>
-                                        <span>Friday, 15 August 2025</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn priority-high">
-                                <i data-lucide="star"></i>
-                            </button>
-                        </div>
-
-                        <div class="task-card" data-task-id="t003"
-                            style="background: var(--color-background-inreview);">
-                            <label class="custom-checkbox">
-                                <input type="checkbox" name="" id="task-status">
-                                <span class="custom-checkbox__checkmark"></span>
-                            </label>
-                            <div class="task-card__content">
-                                <div class="task__name">Kiểm thử API thanh toán với Stripe</div>
-                                <div class="task-card__detail">
-                                    <div class="task__address">
-                                        <span id="taskAddress__prjId">Project</span>
-                                        <span> / </span>
-                                        <span id="taskAddress__tasklistId">tl003</span>
-                                    </div>
-                                    <div class="task__deadline">
-                                        <i data-lucide="calendar-fold" class="icon--minium"></i>
-                                        <span>Thursday, 01 August 2025</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn priority-medium">
-                                <i data-lucide="star"></i>
-                            </button>
-                        </div>
-
-                        <div class="task-card" data-task-id="t009" style="background: var(--color-background-done);">
-                            <label class="custom-checkbox">
-                                <input type="checkbox" name="" id="task-status">
-                                <span class="custom-checkbox__checkmark"></span>
-                            </label>
-                            <div class="task-card__content">
-                                <div class="task__name">Lên kịch bản video quảng cáo</div>
-                                <div class="task-card__detail">
-                                    <div class="task__address">
-                                        <span id="taskAddress__prjId">p006</span>
-                                        <span> / </span>
-                                        <span id="taskAddress__tasklistId">-</span>
-                                    </div>
-                                    <div class="task__deadline">
-                                        <i data-lucide="calendar-fold" class="icon--minium"></i>
-                                        <span>Not set</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn priority-low">
-                                <i data-lucide="star"></i>
-                            </button>
-                        </div>
-
-                        <div class="task-card" data-task-id="t010"
-                            style="background: var(--color-background-inprogress);">
-                            <label class="custom-checkbox">
-                                <input type="checkbox" name="" id="task-status">
-                                <span class="custom-checkbox__checkmark"></span>
-                            </label>
-                            <div class="task-card__content">
-                                <div class="task__name">Booking KOLs</div>
-                                <div class="task-card__detail">
-                                    <div class="task__address">
-                                        <span id="taskAddress__prjId">p006</span>
-                                        <span> / </span>
-                                        <span id="taskAddress__tasklistId">-</span>
-                                    </div>
-                                    <div class="task__deadline">
-                                        <i data-lucide="calendar-fold" class="icon--minium"></i>
-                                        <span>Not set</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn priority-high">
-                                <i data-lucide="star"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <button id="sidebar-toggle-button" class="sidebar-toggle">
-        <i class="icon-open" data-lucide="chevrons-left"></i>
-        <i class="icon-closed" data-lucide="chevrons-right"></i>
-    </button>`;
+            <button id="sidebar-toggle-button" class="sidebar-toggle">
+                <i class="icon-open" data-lucide="chevrons-left"></i>
+                <i class="icon-closed" data-lucide="chevrons-right"></i>
+            </button>
+        `;
     },
-    
+
+    /**
+     * Execute script after rendering.
+     */
     after_render: async () => {
         if (!isAuthenticated()) return;
 
         await loadSidebarAndSetActiveLink();
+        if (window.lucide) {
+            lucide.createIcons();
+        }
 
+        // In a real app, you would fetch and render trashed items here
+        // loadTrashedItems();
     }
 };
 
