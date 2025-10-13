@@ -6,18 +6,20 @@ import store from '../store/store.js';
 
 const Sidebar = {
 
-  render: async () => {
-    // KIỂM TRA: Chỉ render sidebar nếu người dùng đã đăng nhập
-    if (!isAuthenticated()) {
-      return ''; // return empty if unauthenticated
-    }
+    /**
+     * Render the HTML structure of the Sidebar.
+     */
+    render: async () => {
+        if (!isAuthenticated()) {
+            return '';
+        }
 
-    // Get user informations from token displayed
-    const token = localStorage.getItem('authToken');
-    const userData = decodeToken(token); // HELPER: decode token
+        const user = store.getState().user;
+        const userName = user?.fullName || 'Guest';
+        const userEmail = user?.email || '';
 
-    // tag <a> using hash-based routing (href="#/...")
-    return `
+        // tag <a> using hash-based routing (href="#/...")
+        return `
       <nav id="sidebar" class="sidebar">
         <div class="sidebar__nav-top">
             <a href="#/home" class="sidebar__web-info">
@@ -30,7 +32,7 @@ const Sidebar = {
                 <div id="userAvt">
                     <img class="user__avt" src=".#/assets/images/avt-notion_1.png" alt="User Avatar">
                 </div>
-                <span class="user__name item-hide-collapsed" id="user-name">${userData?.name}</span>
+                <span class="user__name item-hide-collapsed" id="user-name">${userName}</span>
             </button>
 
             <!-- Popover for user profile -->
@@ -43,8 +45,8 @@ const Sidebar = {
                 </div>
                 <div class="popover__body">
                     <div class="user-info popover-item">
-                        <span id="user-name">${userData?.name || 'Guest'}</span>
-                        <span id="user-email">${userData?.email || ''}</span>
+                        <span id="user-name">${userName}</span>
+                        <span id="user-email">${useruserEmail}</span>
                     </div>
                     <div class="divider"></div>
                     <ul class="popover-action-list">
@@ -174,41 +176,44 @@ const Sidebar = {
         </div>
     </nav>
     `;
-  },
-  
-  
-  after_render: async () => {
-    if (!isAuthenticated()) return;
+    },
 
-    const sidebar = document.getElementById('sidebar');
-    if (!sidebar) return;
+    /**
+     * Handles logic after the sidebar is rendered, such as event listeners and fetching dynamic data.
+     */
+    after_render: async () => {
+        if (!isAuthenticated()) return;
 
-    // Gán sự kiện cho nút đăng xuất
-    const signOutBtn = document.getElementById('sign-out-btn');
-    if (signOutBtn) {
-      signOutBtn.addEventListener('click', () => {
-        logout();
-        window.location.hash = '#/login';
-      });
-    }
-    
-    // Đánh dấu link active
-    setActiveSidebarLink();
-    
-    // Khởi tạo các chức năng đóng/mở, responsive
-    initializeSidebarEventListeners();
+        const sidebar = document.getElementById('sidebar');
+        if (!sidebar) return;
 
-    // Khởi tạo lại các icon
-    if (window.lucide) {
-      lucide.createIcons();
+        // Add event listener for the logout button
+        // Gán sự kiện cho nút đăng xuất
+        const signOutBtn = document.getElementById('sign-out-btn');
+        if (signOutBtn) {
+            signOutBtn.addEventListener('click', () => {
+                logout();
+                window.location.hash = '#/login';
+            });
+        }
+
+        // Đánh dấu link active
+        setActiveSidebarLink();
+
+        // Khởi tạo các chức năng đóng/mở, responsive
+        initializeSidebarEventListeners();
+
+        // Khởi tạo lại các icon
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Cập nhật trạng thái sidebar từ store
+        const sidebarState = store.getState().ui.sidebarCollapsed;
+        if (sidebarState !== undefined) {
+            sidebar.classList.toggle('collapsed', sidebarState);
+        }
     }
-    
-    // Cập nhật trạng thái sidebar từ store
-    const sidebarState = store.getState().ui.sidebarCollapsed;
-    if (sidebarState !== undefined) {
-      sidebar.classList.toggle('collapsed', sidebarState);
-    }
-  }
 };
 
 export default Sidebar;
@@ -224,7 +229,7 @@ function setActiveSidebarLink() {
     const currentHash = window.location.hash || '#/dashboard';
     document.querySelectorAll('#sidebar .sidebar__nav-item').forEach(link => {
         const linkHash = link.getAttribute('href');
-        
+
         // So sánh hash thay vì pathname
         if (linkHash === currentHash) {
             link.classList.add('active');
@@ -238,14 +243,14 @@ function initializeSidebarEventListeners() {
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('sidebar-toggle-button');
     if (!sidebar || !toggleBtn) return;
-    
+
     // Logic đóng/mở khi click nút toggle
     toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         sidebar.classList.toggle('collapsed');
         localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     });
-    
+
     // Logic responsive khi thay đổi kích thước cửa sổ
     window.addEventListener('resize', handleSidebarState);
 
@@ -259,7 +264,7 @@ function handleSidebarState() {
 
     const isDesktop = window.innerWidth >= 1024;
     const savedState = localStorage.getItem('sidebarCollapsed');
-    
+
     // Trên desktop, ưu tiên lựa chọn đã lưu. Nếu không có, mặc định là mở.
     // Trên mobile/tablet, sidebar luôn ở trạng thái "collapsed" (chỉ hiện icon).
     const shouldBeCollapsed = isDesktop ? (savedState === 'true') : true;

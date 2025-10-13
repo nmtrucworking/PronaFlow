@@ -85,8 +85,9 @@ export async function register(userData) {
  * Đăng xuất người dùng
  */
 export function logout() {
-    apiService.auth.logout();
-    window.location.hash = '#/';
+    // Clear user session/token
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
 }
 
 /**
@@ -125,29 +126,6 @@ export default {
     logout,
     checkAccess
 };
-
-    try {
-        const data = await api.post('/auth/login', { email, password });
-
-        if (data && data.token) {
-            // Đăng nhập thành công
-            localStorage.setItem('authToken', data.token); // Lưu token vào localStorage
-            showToast('Login successful!', 'success');
-            
-            // Chuyển hướng đến trang dashboard sau một khoảng trễ ngắn
-            setTimeout(() => {
-                window.location.hash = '#/dashboard';
-            }, 500);
-        } else {
-            throw new Error('Invalid response from server.');
-        }
-
-    } catch (error) {
-        // Xử lý lỗi
-        showToast(error.message || 'Login failed. Please check your credentials.', 'error');
-        setLoadingState(submitBtn, false, originalButtonText);
-    }
-}
 
 /**
  * Xử lý logic khi người dùng submit form đăng ký.
