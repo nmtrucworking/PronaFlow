@@ -1,81 +1,87 @@
-import AuthPage from './AuthPage.js'; // include extension if needed
+import { isAuthenticated } from '../auth/authService.js';
 import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
 import store from '../store/store.js';
 import apiService from '../api/apiService.js';
-import { isAuthenticated } from '../auth/authService.js';
 
 const DashboardPage = {
+    /**
+     * Render a view of the page.
+     */
     render: async () => {
         // Check Authorizator
         if (!isAuthenticated()) {
-        window.location.hash = '#/login'; 
-        return ''; 
-    }
+            window.location.hash = '#/login'; 
+            return ''; 
+        }
 
-        return `<div id="sidebar-container"></div>
+        // HTML content from dashboard.html
+        return `
+            <div id="sidebar-container"></div>
 
-    <main id="main" class="main dashboard no-scrollbar">
-        <!-- top-main -->
-        <div id="greeting-widget-frame" class="greeting-widget">
-            <img src="../assets/images/hello.gif" alt="">
-            <span id="greeting-widget">
-                <!-- Js fill: renderGreetingWidget() -->
-            </span>
-        </div>
+            <main id="main" class="main dashboard no-scrollbar">
+                <div id="greeting-widget-frame" class="greeting-widget">
+                    <img src="./assets/images/hello.gif" alt="Hello Icon">
+                    <span id="greeting-widget">
+                        </span>
+                </div>
 
-        <div class="divider"></div>
+                <div class="divider"></div>
 
-        <div class="widget-group">
-            <div class="widget">
-                <h3 class="widget__title">Overview</h3>
-                <div class="widget__content widget__content--overview">
-                    <div class="inner-widget-content">
-                        You're managing <span id="total-projects">#</span> projects in total
+                <div class="widget-group">
+                    <div class="widget">
+                        <h3 class="widget__title">Overview</h3>
+                        <div class="widget__content widget__content--overview">
+                            <div class="inner-widget-content">
+                                You're managing <span id="total-projects">#</span> projects in total
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <h3 class="widget__title">Task in progress</h3>
+                        <div class="widget__content widget__content--inprogress">
+                            <div class="inner-widget-content">
+                                You're working on <span id="total-tasks-inprogress">#</span> tasks right now
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <h3 class="widget__title">Task Overdue</h3>
+                        <div class="widget__content widget__content--overdue">
+                            <div class="inner-widget-content">
+                                You have <span id="total-tasks-overdue">#</span> overdue tasks to catch up on
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="widget">
-                <h3 class="widget__title">Task in progress</h3>
-                <div class="widget__content widget__content--inprogress">
-                    <div class="inner-widget-content">
-                        You're working on <span id="total-tasks-inprogress">#</span> tasks right now
+
+                <div class="divider"></div>
+
+                <div class="frames">
+                    <div class="frame frame--dashboard">
+                        <h3 class="frame__title frame__title--dashboard">Upcoming task</h3>
+                        <div class="frame__content hide-scrollbar">
+                            <div class="task-list" id="upcoming-tasks">
+                                </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="widget">
-                <h3 class="widget__title">Task Overdue</h3>
-                <div class="widget__content widget__content--overdue">
-                    <div class="inner-widget-content">
-                        You have <span id="total-tasks-overdue">#</span> overdue tasks to catch up on
-                    </div>
-                </div>
-            </div>
-        </div>
+            </main>
 
-        <div class="divider"></div>
-
-        <!-- Some Task -->
-        <div class="frames">
-            <div class="frame frame--dashboard">
-                <h3 class="frame__title frame__title--dashboard">Upcoming task</h3>
-                <div class="frame__content hide-scrollbar">
-                    <div class="task-list" id="upcoming-tasks">
-                        <!-- Tasks will be loaded dynamically -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <button id="sidebar-toggle-button" class="sidebar-toggle">
-        <i class="icon-open" data-lucide="chevrons-left"></i>
-        <i class="icon-closed" data-lucide="chevrons-right"></i>
-    </button>`;
+            <button id="sidebar-toggle-button" class="sidebar-toggle">
+                <i class="icon-open" data-lucide="chevrons-left"></i>
+                <i class="icon-closed" data-lucide="chevrons-right"></i>
+            </button>
+        `;
     },
     
+    /**
+     * Execute script after rendering
+     */
     after_render: async () => {
+        if (!isAuthenticated()) return;
+
         // Load sidebar and set active link
-        await loadSidebarAndSetActiveLink('dashboard');
+        await loadSidebarAndSetActiveLink();
         
         // Initialize Lucide icons
         if (window.lucide) {
@@ -85,21 +91,22 @@ const DashboardPage = {
         // Render greeting widget
         renderGreetingWidget();
         
-        // Load dashboard data
-        await loadDashboardData();
+        // Load dashboard data (You would call your API here)
+        // For demonstration, we'll use static data.
+        loadDashboardData();
     }
 };
 
 /**
- * Renders the greeting widget based on time of day
+ * Renders the greeting widget based on the time of day and user's name.
  */
 function renderGreetingWidget() {
     const greetingWidget = document.getElementById('greeting-widget');
     if (!greetingWidget) return;
     
     const hour = new Date().getHours();
-    const user = store.getState().user;
-    const userName = user?.name || 'there';
+    const user = store.getState().user; // Assuming user info is in the store
+    const userName = user?.fullName || 'Guest'; // Use fullName from your User model
     
     let greeting = '';
     if (hour < 12) {
@@ -114,117 +121,105 @@ function renderGreetingWidget() {
 }
 
 /**
- * Loads dashboard data from API
+ * Loads and displays dashboard statistics and upcoming tasks.
+ * NOTE: This is a placeholder. You should replace this with actual API calls.
  */
 async function loadDashboardData() {
     try {
-        // Get statistics from API
-        const stats = await apiService.dashboard.getStatistics();
+        // --- In a real application, you would make API calls here ---
+        // const stats = await apiService.dashboard.getStatistics();
+        // const tasks = await apiService.tasks.getUpcoming();
+
+        // For now, we use placeholder data
+        const stats = { totalProjects: 5, tasksInProgress: 3, tasksOverdue: 1 };
+        const tasks = [
+            { id: 't001', name: 'Tạo Dashboard Mockup trên Figma', projectName: 'Project', taskListName: 'tl001', deadline: '2025-07-30', priority: 'high', status: 'in-progress' },
+            { id: 't002', name: 'Lập trình Sidebar Component', projectName: 'Project', taskListName: 'tl002', deadline: '2025-08-15', priority: 'high', status: 'not-started' }
+        ];
         
         // Update UI with statistics
-        document.getElementById('total-projects').textContent = stats.totalProjects || 0;
-        document.getElementById('total-tasks-inprogress').textContent = stats.tasksInProgress || 0;
-        document.getElementById('total-tasks-overdue').textContent = stats.tasksOverdue || 0;
+        document.getElementById('total-projects').textContent = stats.totalProjects;
+        document.getElementById('total-tasks-inprogress').textContent = stats.tasksInProgress;
+        document.getElementById('total-tasks-overdue').textContent = stats.tasksOverdue;
         
-        // Load upcoming tasks
-        await loadUpcomingTasks();
+        // Render upcoming tasks
+        renderUpcomingTasks(tasks);
+
     } catch (error) {
         console.error('Error loading dashboard data:', error);
+        // Optionally display an error message to the user
     }
 }
 
 /**
- * Loads upcoming tasks for the dashboard
+ * Renders the list of upcoming tasks into the DOM.
+ * @param {Array} tasks - An array of task objects.
  */
-async function loadUpcomingTasks() {
+function renderUpcomingTasks(tasks) {
     const tasksContainer = document.getElementById('upcoming-tasks');
     if (!tasksContainer) return;
     
-    try {
-        // Get upcoming tasks from API
-        const tasks = await apiService.tasks.getUpcoming();
-        
-        // Clear container
-        tasksContainer.innerHTML = '';
-        
-        if (tasks.length === 0) {
-            tasksContainer.innerHTML = '<div class="empty-state">No upcoming tasks</div>';
-            return;
-        }
-        
-        // Render tasks
-        tasks.forEach(task => {
-            const taskCard = createTaskCard(task);
-            tasksContainer.appendChild(taskCard);
-        });
-        
-        // Initialize Lucide icons in the new content
-        if (window.lucide) {
-            lucide.createIcons();
-        }
-    } catch (error) {
-        console.error('Error loading upcoming tasks:', error);
-        tasksContainer.innerHTML = '<div class="error-state">Failed to load tasks</div>';
+    tasksContainer.innerHTML = ''; // Clear existing content
+    
+    if (tasks.length === 0) {
+        tasksContainer.innerHTML = '<div class="empty-state">No upcoming tasks. Great job!</div>';
+        return;
+    }
+    
+    tasks.forEach(task => {
+        const taskCard = createTaskCardElement(task);
+        tasksContainer.appendChild(taskCard);
+    });
+
+    // Re-initialize icons for the newly added elements
+    if (window.lucide) {
+        lucide.createIcons();
     }
 }
 
 /**
- * Creates a task card element
+ * Creates a single task card HTML element from a task object.
+ * @param {object} task - The task data object.
+ * @returns {HTMLElement} - The created div element for the task card.
  */
-function createTaskCard(task) {
+function createTaskCardElement(task) {
     const taskCard = document.createElement('div');
     taskCard.className = 'task-card';
     taskCard.dataset.taskId = task.id;
     
-    // Set background color based on status
-    let bgColor = 'var(--color-background-notstarted)';
-    if (task.status === 'in_progress') {
-        bgColor = 'var(--color-background-inprogress)';
-    } else if (task.status === 'completed') {
-        bgColor = 'var(--color-background-completed)';
-    }
-    taskCard.style.background = bgColor;
+    const statusBgMap = {
+        'not-started': 'var(--color-background-notstarted)',
+        'in-progress': 'var(--color-background-inprogress)',
+        'in-review': 'var(--color-background-inreview)',
+        'done': 'var(--color-background-done)'
+    };
+    taskCard.style.background = statusBgMap[task.status] || 'var(--color-background-notstarted)';
     
     taskCard.innerHTML = `
         <label class="custom-checkbox">
-            <input type="checkbox" name="" id="task-status" ${task.status === 'completed' ? 'checked' : ''}>
+            <input type="checkbox" ${task.status === 'done' ? 'checked' : ''}>
             <span class="custom-checkbox__checkmark"></span>
         </label>
         <div class="task-card__content">
             <span class="task__name">${task.name}</span>
             <div class="task-card__detail">
                 <div class="task__address">
-                    <span>${task.projectName || 'Project'}</span>
+                    <span id="taskAddress__prjId">${task.projectName}</span>
                     <span> / </span>
-                    <span>${task.taskListName || ''}</span>
+                    <span id="taskAddress__tasklistId">${task.taskListName}</span>
                 </div>
                 <div class="task__deadline">
                     <i data-lucide="calendar-fold" class="icon--minium"></i>
-                    <span>${formatDate(task.deadline)}</span>
+                    <span>${task.deadline ? new Date(task.deadline).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not set'}</span>
                 </div>
             </div>
         </div>
-        <button class="btn priority-${task.priority || 'medium'}">
+        <button class="btn priority-${task.priority.toLowerCase()}">
             <i data-lucide="star"></i>
         </button>
     `;
     
     return taskCard;
-}
-
-/**
- * Format date for display
- */
-function formatDate(dateString) {
-    if (!dateString) return 'No deadline';
-    
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-    });
 }
 
 export default DashboardPage;
