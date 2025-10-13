@@ -5,7 +5,6 @@
 
 using PronaFlow.Core.DTOs.Workspace;
 using PronaFlow.Core.Models;
-using PronaFLow.Core.DTOs.Workspace;
 
 namespace PronaFlow.Core.Interfaces;
 

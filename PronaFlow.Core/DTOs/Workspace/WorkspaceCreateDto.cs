@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PronaFLow.Core.DTOs.Workspace;
+namespace PronaFlow.Core.DTOs.Workspace;
 
 /*
  * Workspace Creation Data Transfer Object (DTO)

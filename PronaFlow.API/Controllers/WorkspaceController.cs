@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PronaFlow.Core.DTOs.Workspace;
 using PronaFlow.Core.Interfaces;
-using PronaFLow.Core.DTOs.Workspace;
 using System.Security.Claims;
 
 namespace PronaFlow.API.Controllers;

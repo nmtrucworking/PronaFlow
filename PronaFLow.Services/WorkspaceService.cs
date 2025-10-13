@@ -5,8 +5,6 @@ using PronaFlow.Core.Data;
 using PronaFlow.Core.DTOs.Workspace;
 using PronaFlow.Core.Interfaces;
 using PronaFlow.Core.Models;
-using PronaFLow.Core.DTOs.Workspace;
-
 namespace PronaFlow.Services;
 
 public class WorkspaceService : IWorkspaceService
