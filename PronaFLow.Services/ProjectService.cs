@@ -213,7 +213,6 @@ public class ProjectService : IProjectService
 
         await _activityService.LogActivityAsync(currentUserId, "project_add_member", projectId, "project", $"{{ \"memberId\": {userToAdd.Id} }}");
 
-        // **FIX:** Return the details of the newly added member.
         return new MemberDto
         {
             UserId = userToAdd.Id,
