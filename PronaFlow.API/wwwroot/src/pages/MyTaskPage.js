@@ -2,7 +2,7 @@ import { store } from '../store/store.js';
 import apiService from '../api/apiService.js';
 import performanceUtils from '../utils/performance.js';
 import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
-import { showToast } from '../utils/toast.js';
+import { showToast } from '../utils/ui.js';
 
 const { throttle, renderLongList } = performanceUtils;
 
