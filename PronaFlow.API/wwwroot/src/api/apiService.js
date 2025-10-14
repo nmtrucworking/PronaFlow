@@ -179,6 +179,47 @@ const apiService = {
         deletePermanently: (itemType, itemId) => request(`/trash/permanent/${itemType}/${itemId}`, 'DELETE'),
     },
 
+    // User API
+    users: {
+        /**
+         * Cập nhật thông tin người dùng hiện tại.
+         * @param {object} userData - Dữ liệu cần cập nhật (ví dụ: { fullName, bio }).
+         * @returns {Promise<any>}
+         */
+        updateCurrentUser: (userData) => request('/users/me', 'PUT', userData),
+
+        /**
+         * Xóa tài khoản người dùng hiện tại.
+         * @returns {Promise<any>}
+         */
+        deleteCurrentUser: () => request('/users/me', 'DELETE')
+    },
+    
+    // Tags API
+    tags: {
+        /**
+         * Lấy tất cả tags cho một workspace.
+         * @param {number} workspaceId - ID của workspace.
+         * @returns {Promise<Array>}
+         */
+        getForWorkspace: (workspaceId) => request(`/workspaces/${workspaceId}/tags`, 'GET'),
+
+        /**
+         * Tạo một tag mới trong workspace.
+         * @param {number} workspaceId - ID của workspace.
+         * @param {object} tagData - Dữ liệu của tag mới (ví dụ: { name, colorHex }).
+         * @returns {Promise<any>}
+         */
+        create: (workspaceId, tagData) => request(`/workspaces/${workspaceId}/tags`, 'POST', tagData),
+
+        /**
+         * Xóa một tag.
+         * @param {number} tagId - ID của tag cần xóa.
+         * @returns {Promise<any>}
+         */
+        delete: (tagId) => request(`/tags/${tagId}`, 'DELETE')
+    },
+
 
     // Utility methods
     utils: {
