@@ -17,7 +17,6 @@ public class TrashService : ITrashService
 
     public async Task<IEnumerable<TrashItemDto>> GetTrashedItemsAsync(long userId)
     {
-        // Lấy các project đã bị xóa mà người dùng là thành viên
         var trashedProjects = await _context.Projects
             .Where(p => p.IsDeleted == true && p.ProjectMembers.Any(pm => pm.UserId == userId))
             .Select(p => new TrashItemDto
@@ -29,7 +28,6 @@ public class TrashService : ITrashService
             })
             .ToListAsync();
 
-        // Lấy các task đã bị xóa thuộc các project mà người dùng là thành viên
         var trashedTasks = await _context.Tasks
             .Where(t => t.IsDeleted == true && t.Project.ProjectMembers.Any(pm => pm.UserId == userId))
             .Select(t => new TrashItemDto
@@ -41,7 +39,6 @@ public class TrashService : ITrashService
             })
             .ToListAsync();
 
-        // Gộp và sắp xếp theo ngày xóa gần nhất
         return trashedProjects.Concat(trashedTasks).OrderByDescending(item => item.DeletedAt);
     }
 
@@ -82,14 +79,28 @@ public class TrashService : ITrashService
                 .FirstOrDefaultAsync(p => p.Id == itemId);
             if (project == null) return false;
 
-            // Chỉ admin của dự án mới có quyền xóa vĩnh viễn
             if (!project.ProjectMembers.Any(pm => pm.UserId == userId && pm.Role == "admin"))
             {
                 throw new SecurityException("Permission denied to permanently delete this project.");
             }
-            _context.Projects.Remove(project); // Xóa cứng
+            _context.Projects.Remove(project);
         }
-        // Logic tương tự cho Task...
+        // **FIX:** Add logic to permanently delete a Task.
+        else if (itemType.Equals("Task", StringComparison.OrdinalIgnoreCase))
+        {
+            var task = await _context.Tasks
+                .Include(t => t.Project.ProjectMembers)
+                .FirstOrDefaultAsync(t => t.Id == itemId);
+
+            if (task == null) return false;
+
+            // Permission check: Only project admins can permanently delete tasks.
+            if (!task.Project.ProjectMembers.Any(pm => pm.UserId == userId && pm.Role == "admin"))
+            {
+                throw new SecurityException("Permission denied to permanently delete this task.");
+            }
+            _context.Tasks.Remove(task); // Hard delete the task.
+        }
         else
         {
             throw new ArgumentException("Invalid item type.");
