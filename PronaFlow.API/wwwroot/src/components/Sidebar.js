@@ -46,7 +46,7 @@ const Sidebar = {
                 <div class="popover__body">
                     <div class="user-info popover-item">
                         <span id="user-name">${userName}</span>
-                        <span id="user-email">${useruserEmail}</span>
+                        <span id="user-email">${userEmail}</span>
                     </div>
                     <div class="divider"></div>
                     <ul class="popover-action-list">

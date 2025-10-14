@@ -86,8 +86,7 @@ export async function register(userData) {
  */
 export function logout() {
     // Clear user session/token
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    apiService.auth.logout();
     showToast('You have been logged out.', 'success');
 }
 
@@ -119,14 +118,6 @@ export function checkAccess(route) {
     return true;
 }
 
-export default {
-    initializeAuth,
-    checkAuthStatus,
-    login,
-    register,
-    logout,
-    checkAccess
-};
 
 /**
  * Xử lý logic khi người dùng submit form đăng ký.
@@ -175,3 +166,13 @@ async function handleRegisterSubmit(event, container) {
 export function isAuthenticated() {
     return !!localStorage.getItem('authToken');
 }
+
+
+export default {
+    initializeAuth,
+    checkAuthStatus,
+    login,
+    register,
+    logout,
+    checkAccess
+};

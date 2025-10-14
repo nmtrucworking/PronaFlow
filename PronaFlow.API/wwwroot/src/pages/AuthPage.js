@@ -10,10 +10,7 @@ const AuthPage = {
                 <a href="#/" class="web-name">PronaFlow</a>
             </div>
         </header>
-        <!-- HEADER END -->
-
         <div class="login-card">
-            <!-- LOGIN FORM -->
             <div class="login-card__form-wrapper login-card__form-wrapper--login" id="login_form">
                 <form action="" class="form" id="loginForm" name="loginForm" novalidate>
                     <h1 class="form__title">Login</h1>
@@ -65,7 +62,6 @@ const AuthPage = {
                 </div>
             </div>
 
-            <!-- SIGNUP FORM -->
             <div class="login-card__form-wrapper login-card__form-wrapper--signup" id="signup_form">
                 <form action="" class="form" id="signupForm" name="signupForm" novalidate>
                     <h1 class="form__title">Create Account</h1>
@@ -127,7 +123,6 @@ const AuthPage = {
                 </div>
             </div>
 
-            <!-- OVERLAY -->
             <div class="login-card__overlay-container">
                 <div class="login-card__overlay">
                     <div class="login-card__overlay-panel login-card__overlay-panel--left">
@@ -146,13 +141,9 @@ const AuthPage = {
     </div>`;
   },
   after_render: async () => {
-    // Khởi tạo các icon Lucide
     lucide.createIcons();
-    
-    // Khởi tạo các sự kiện xác thực
     initializeAuth();
     
-    // Xử lý chuyển đổi giữa form đăng nhập và đăng ký
     const signUpBtn = document.getElementById('signUpBtn');
     const signInBtn = document.getElementById('signInBtn');
     const loginCard = document.querySelector('.login-card');
@@ -167,21 +158,17 @@ const AuthPage = {
       });
     }
     
-    // Xử lý form đăng nhập
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Lấy dữ liệu từ form
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
         
-        // Xóa thông báo lỗi cũ
         document.getElementById('loginEmailError').textContent = '';
         document.getElementById('loginPasswordError').textContent = '';
         
-        // Validate dữ liệu
         let isValid = true;
         
         if (!email) {
@@ -199,36 +186,28 @@ const AuthPage = {
         
         if (isValid) {
           try {
-            // Gọi API đăng nhập
             await apiService.auth.login({ email, password });
-            
-            // Chuyển hướng đến trang dashboard
             window.location.hash = '#/dashboard';
           } catch (error) {
-            // Hiển thị lỗi
             document.getElementById('loginEmailError').textContent = error.message || 'Login failed';
           }
         }
       });
     }
     
-    // Xử lý form đăng ký
     const signupForm = document.getElementById('signupForm');
     if (signupForm) {
       signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Lấy dữ liệu từ form
         const name = document.getElementById('signupName').value;
         const email = document.getElementById('signupEmail').value;
         const password = document.getElementById('signupPassword').value;
         
-        // Xóa thông báo lỗi cũ
         document.getElementById('signupNameError').textContent = '';
         document.getElementById('signupEmailError').textContent = '';
         document.getElementById('signupPasswordError').textContent = '';
         
-        // Validate dữ liệu
         let isValid = true;
         
         if (!name) {
@@ -254,16 +233,12 @@ const AuthPage = {
         
         if (isValid) {
           try {
-            // Gọi API đăng ký
-            await apiService.auth.register({ name, email, password });
+            // **FIX:** Thay đổi `name` thành `fullName` để khớp với DTO của backend
+            await apiService.auth.register({ fullName: name, email, password });
             
-            // Chuyển sang form đăng nhập
             loginCard.classList.remove('login-card--right-panel-active');
-            
-            // Hiển thị thông báo thành công
             alert('Registration successful! Please login.');
           } catch (error) {
-            // Hiển thị lỗi
             document.getElementById('signupEmailError').textContent = error.message || 'Registration failed';
           }
         }

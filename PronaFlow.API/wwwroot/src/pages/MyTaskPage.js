@@ -422,168 +422,6 @@ async function loadTasks() {
     }
 }
 
-/**
- * Main function to initialize all interactions on the My Tasks page.
- */
-function initializeMyTasksPage() {
-    const taskListContainer = document.getElementById('task-list-container');
-    const detailPanel = document.getElementById('task-detail-panel');
-    const detailContent = document.getElementById('task-detail-content');
-    const emptyStateMessage = document.getElementById('empty-state-message');
-    const closeTaskDetailBtn = document.getElementById('close-task-detail-btn');
-    const addTaskForm = document.getElementById('add-task-form');
-    const newTaskInput = document.getElementById('new-task-input');
-    const deleteTaskBtn = document.getElementById('delete-task-btn');
-
-    let currentSelectedTaskId = null;
-
-    const resetToEmptyState = () => {
-        detailContent.style.display = 'none';
-        emptyStateMessage.style.display = 'flex';
-        const activeCard = taskListContainer.querySelector('.active-task');
-        if (activeCard) activeCard.classList.remove('active-task');
-        currentSelectedTaskId = null;
-        detailPanel.querySelector('form').reset();
-    };
-
-    const displayTaskDetails = (taskCard) => {
-        // Here you would fetch full task details from an API
-        // For now, we'll use the data from the card
-        const taskId = taskCard.dataset.taskId;
-        const name = taskCard.querySelector('.task__name').textContent;
-        const project = taskCard.querySelector('#taskAddress__prjId')?.textContent || 'N/A';
-        const tasklist = taskCard.querySelector('#taskAddress__tasklistId')?.textContent || 'N/A';
-
-        currentSelectedTaskId = taskId;
-        document.getElementById('task-id-input').value = taskId;
-        document.getElementById('detail-taskName').value = name;
-        document.getElementById('detail-taskAddress__prjId').textContent = project;
-        document.getElementById('detail-taskAddress__tasklistId').textContent = tasklist;
-        
-        emptyStateMessage.style.display = 'none';
-        detailContent.style.display = 'block';
-    };
-
-    // Event Listeners
-    closeTaskDetailBtn.addEventListener('click', resetToEmptyState);
-
-    taskListContainer.addEventListener('click', (event) => {
-        const clickedCard = event.target.closest('.task-card');
-        if (clickedCard) {
-            taskListContainer.querySelectorAll('.task-card').forEach(card => card.classList.remove('active-task'));
-            clickedCard.classList.add('active-task');
-            displayTaskDetails(clickedCard);
-        }
-    });
-
-    addTaskForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const taskName = newTaskInput.value.trim();
-        if (taskName === '') return;
-        
-        // In a real app, you would call apiService.tasks.create(taskName)
-        // For now, we simulate adding it to the UI
-        const newTaskId = 't' + Date.now();
-        const newTaskCardHTML = `
-            <div class="task-card" data-task-id="${newTaskId}" style="background: var(--color-background-notstarted);">
-                <label class="custom-checkbox"><input type="checkbox"><span class="custom-checkbox__checkmark round"></span></label>
-                <div class="task-card__content">
-                    <span class="task__name">${taskName}</span>
-                    <div class="task-card__detail">
-                        <div class="task__address"><span id="taskAddress__prjId">Uncategorized</span><span> / </span><span id="taskAddress__tasklistId">-</span></div>
-                        <div class="task__deadline"><i data-lucide="calendar-fold" class="icon--minium"></i><span>Not set</span></div>
-                    </div>
-                </div>
-                <button class="btn priority-low"><i data-lucide="star"></i></button>
-            </div>`;
-        taskListContainer.insertAdjacentHTML('beforeend', newTaskCardHTML);
-        lucide.createIcons();
-        newTaskInput.value = '';
-        document.getElementById('empty-state-tasks').style.display = 'none';
-    });
-
-    deleteTaskBtn.addEventListener('click', () => {
-        if (!currentSelectedTaskId || !confirm("Are you sure you want to delete this task?")) return;
-        
-        // Real app: await apiService.tasks.delete(currentSelectedTaskId);
-        const taskCardToDelete = taskListContainer.querySelector(`[data-task-id="${currentSelectedTaskId}"]`);
-        if (taskCardToDelete) taskCardToDelete.remove();
-        
-        resetToEmptyState();
-        if (taskListContainer.children.length <= 1) { // Check if only empty state is left
-            document.getElementById('empty-state-tasks').style.display = 'flex';
-        }
-    });
-
-    // Initial state setup
-    resetToEmptyState();
-    if (taskListContainer.children.length <= 1) {
-        document.getElementById('empty-state-tasks').style.display = 'flex';
-    }
-
-    // Add throttled search handler
-    const handleSearch = throttle(async (searchTerm) => {
-        try {
-            const tasks = await apiService.tasks.getAll({ search: searchTerm });
-            renderLongList(taskListContainer, tasks, renderTaskCard);
-        } catch (error) {
-            showToast('Failed to search tasks', 'error');
-            console.error('Search error:', error);
-        }
-    }, 300);
-
-    // Add search input listener
-    document.querySelector('.search-bar__input').addEventListener('input', (e) => {
-        handleSearch(e.target.value.trim());
-    });
-
-    // Update form submission
-    addTaskForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const taskName = newTaskInput.value.trim();
-        if (taskName === '') return;
-
-        try {
-            await taskOperations.createTask({ name: taskName });
-            newTaskInput.value = '';
-        } catch (error) {
-            // Error is already handled in taskOperations
-            return;
-        }
-    });
-
-    // Update delete handler
-    deleteTaskBtn.addEventListener('click', async () => {
-        if (!currentSelectedTaskId || !confirm("Are you sure you want to delete this task?")) return;
-        
-        try {
-            await taskOperations.deleteTask(currentSelectedTaskId);
-            resetToEmptyState();
-        } catch (error) {
-            // Error is already handled in taskOperations
-            return;
-        }
-    });
-
-    // Add task status change handler
-    taskListContainer.addEventListener('change', async (event) => {
-        const checkbox = event.target;
-        if (checkbox.type === 'checkbox') {
-            const taskCard = checkbox.closest('.task-card');
-            if (taskCard) {
-                const taskId = taskCard.dataset.taskId;
-                try {
-                    await taskOperations.updateTask(taskId, {
-                        status: checkbox.checked ? 'done' : 'not-started'
-                    });
-                } catch (error) {
-                    // Revert checkbox state on error
-                    checkbox.checked = !checkbox.checked;
-                }
-            }
-        }
-    });
-}
 
 function renderTaskCard(task) {
     return `
@@ -610,19 +448,245 @@ function renderTaskCard(task) {
         </div>`;
 }
 
-// Add these functions before MyTaskPage definition
+/**
+ * @file This file contains the core logic for the "My Tasks" page.
+ * @summary It handles state management, event listeners, API interactions, and UI updates for tasks.
+ */
+
+/**
+ * Main function to initialize all interactions and logic on the My Tasks page.
+ * This acts as the entry point for the page's client-side functionality.
+ */
+function initializeMyTasksPage() {
+
+    // --- 1. DOM ELEMENT SELECTION ---
+    // Select all necessary elements from the DOM to avoid repeated queries.
+    const taskListContainer = document.getElementById('task-list-container');
+    const detailPanel = document.getElementById('task-detail-panel');
+    const detailContent = document.getElementById('task-detail-content');
+    const emptyStateMessage = document.getElementById('empty-state-message');
+    const closeTaskDetailBtn = document.getElementById('close-task-detail-btn');
+    const addTaskForm = document.getElementById('add-task-form');
+    const newTaskInput = document.getElementById('new-task-input');
+    const deleteTaskBtn = document.getElementById('delete-task-btn');
+
+    // --- 2. STATE MANAGEMENT ---
+    // These variables hold the client-side state of the page.
+
+    // Holds the ID of the currently selected task for viewing/editing in the detail panel.
+    let currentSelectedTaskId = null;
+
+    // A temporary object to hold attributes for a new task before it's created.
+    // This object is populated by interactions with various popovers.
+    let newTaskData = {
+        name: '',
+        description: null,
+        priority: 'normal', // Default priority
+        assigneeIds: [],
+        startDate: null,
+        endDate: null,
+        taskListId: null // **CRITICAL:** This must be set before creation.
+    };
+    
+    // Holds the current filter and sort parameters for fetching tasks.
+    let queryParams = {
+        search: '',
+        status: null,
+        assigneeId: null,
+        sortBy: 'creation-date',
+        sortDir: 'desc'
+    };
+
+
+    // --- 3. CORE FUNCTIONS ---
+
+    /**
+     * Resets the detail panel to its initial empty state.
+     * It hides the task details, shows the placeholder message, and deselects any active task.
+     */
+    const resetToEmptyState = () => {
+        detailContent.style.display = 'none';
+        emptyStateMessage.style.display = 'flex';
+        
+        const activeCard = taskListContainer.querySelector('.active-task');
+        if (activeCard) {
+            activeCard.classList.remove('active-task');
+        }
+        
+        currentSelectedTaskId = null;
+        // Reset the form in the detail panel to clear old data.
+        detailPanel.querySelector('form').reset();
+    };
+
+    /**
+     * Fetches detailed information for a specific task and populates the detail panel.
+     * @param {string} taskId - The ID of the task to display.
+     */
+    const displayTaskDetails = async (taskId) => {
+        try {
+            // Fetch full task details from the API to ensure data is up-to-date.
+            // Note: The backend endpoint for getting a single task needs to be implemented.
+            // Assuming `apiService.tasks.getById(taskId)` exists.
+            const task = await apiService.tasks.getById(taskId);
+
+            if (!task) {
+                showToast('Could not fetch task details.', 'error');
+                return;
+            }
+
+            currentSelectedTaskId = taskId;
+            
+            // Populate the detail panel form with the fetched data.
+            document.getElementById('task-id-input').value = task.id;
+            document.getElementById('detail-taskName').value = task.name;
+            document.getElementById('detail-task-description').value = task.description || '';
+            document.getElementById('detail-task-priority').value = task.priority || 'normal';
+            document.getElementById('detail-task-status').value = task.status || 'not-started';
+            
+            // Populate dates
+            document.getElementById('detail-task-start-date-display').textContent = task.startDate ? new Date(task.startDate).toLocaleDateString() : 'No start date';
+            document.getElementById('detail-task-end-date-display').textContent = task.endDate ? new Date(task.endDate).toLocaleDateString() : 'No end date';
+
+            // Populate project/tasklist info
+            // These would ideally come from the API response with more context
+            document.getElementById('detail-taskAddress__prjId').textContent = task.projectName || 'Project';
+            document.getElementById('detail-taskAddress__tasklistId').textContent = task.taskListName || 'Task-list';
+
+            // Show the content and hide the empty state message.
+            emptyStateMessage.style.display = 'none';
+            detailContent.style.display = 'block';
+
+        } catch (error) {
+            console.error("Error fetching task details:", error);
+            showToast('Failed to load task details.', 'error');
+        }
+    };
+
+    /**
+     * Handles debounced updates for text-based inputs in the detail panel.
+     * This prevents excessive API calls while the user is typing.
+     */
+    const handleDetailUpdate = performanceUtils.debounce(async (updateData) => {
+        if (!currentSelectedTaskId) return;
+        try {
+            await taskOperations.updateTask(currentSelectedTaskId, updateData);
+        } catch (error) {
+            // Error is handled within taskOperations
+        }
+    }, 500); // 500ms delay after user stops typing
+
+
+    // --- 4. EVENT LISTENER SETUP ---
+
+    // Close the detail panel when the 'X' button is clicked.
+    closeTaskDetailBtn.addEventListener('click', resetToEmptyState);
+
+    // Handle clicks within the main task list container (Event Delegation).
+    taskListContainer.addEventListener('click', (event) => {
+        const clickedCard = event.target.closest('.task-card');
+        if (clickedCard && !event.target.closest('.custom-checkbox')) {
+            // Deselect previous card and select the new one.
+            const currentlyActive = taskListContainer.querySelector('.active-task');
+            if (currentlyActive) currentlyActive.classList.remove('active-task');
+            
+            clickedCard.classList.add('active-task');
+            displayTaskDetails(clickedCard.dataset.taskId);
+        }
+    });
+
+    // Handle the creation of a new task.
+    addTaskForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const taskName = newTaskInput.value.trim();
+        
+        // Basic validation
+        if (taskName === '') {
+            showToast('Task name cannot be empty.', 'error');
+            return;
+        }
+        // **CRITICAL BUSINESS LOGIC:** A task must belong to a TaskList.
+        // We require the user to have selected a project/tasklist via the popovers.
+        if (!newTaskData.taskListId) {
+            showToast('Please select a project for the new task.', 'error');
+            return;
+        }
+
+        newTaskData.name = taskName;
+
+        try {
+            await taskOperations.createTask(newTaskData.taskListId, newTaskData);
+            
+            // Reset form and temporary state object for the next task.
+            newTaskInput.value = '';
+            newTaskData = {
+                name: '', description: null, priority: 'normal', assigneeIds: [],
+                startDate: null, endDate: null, taskListId: null
+            };
+            // You might want to visually reset the popover-related buttons here as well.
+
+        } catch (error) {
+            // Error is already handled inside taskOperations.
+            return;
+        }
+    });
+
+    // Handle the deletion of the currently selected task.
+    deleteTaskBtn.addEventListener('click', async () => {
+        if (!currentSelectedTaskId || !confirm("Are you sure you want to permanently delete this task?")) return;
+        
+        try {
+            await taskOperations.deleteTask(currentSelectedTaskId);
+            resetToEmptyState(); // Reset the UI after successful deletion.
+        } catch (error) {
+            // Error is handled inside taskOperations.
+            return;
+        }
+    });
+    
+    // --- Event Listeners for Live Updates from Detail Panel ---
+
+    // Listen for immediate changes on select dropdowns (Priority, Status).
+    detailPanel.addEventListener('change', (event) => {
+        const target = event.target;
+        if (target.matches('#detail-task-priority') || target.matches('#detail-task-status')) {
+            const updateData = { [target.id.replace('detail-task-', '')]: target.value };
+            handleDetailUpdate(updateData);
+        }
+    });
+
+    // Listen for text input changes (Name, Description) using the debounced handler.
+    detailPanel.addEventListener('input', (event) => {
+        const target = event.target;
+        if (target.matches('#detail-taskName') || target.matches('#detail-task-description')) {
+            const key = target.id === 'detail-taskName' ? 'name' : 'description';
+            handleDetailUpdate({ [key]: target.value });
+        }
+    });
+
+
+    // --- Initial Page Setup ---
+    resetToEmptyState(); // Start with a clean detail panel.
+    
+    // Check if the initial task list is empty and show the empty state if needed.
+    if (taskListContainer.children.length <= 1) { // 1 because the empty state div is a child
+        document.getElementById('empty-state-tasks').style.display = 'flex';
+    }
+}
+
+
 /**
  * Handles task operations with API calls and UI updates
  */
 const taskOperations = {
-    async createTask(taskData) {
+    async createTask(taskListId, taskData) {
         try {
-            const newTask = await apiService.tasks.create(taskData);
-            await loadTasks(); // Reload task list
+            // Gọi đến apiService đã được sửa lỗi ở bước trước
+            const newTask = await apiService.tasks.create(taskListId, taskData);
+            await loadTasks(); // Tải lại danh sách công việc
             showToast('Task created successfully', 'success');
             return newTask;
         } catch (error) {
-            showToast('Failed to create task', 'error');
+            showToast(error.message || 'Failed to create task', 'error');
             console.error('Error creating task:', error);
             throw error;
         }
