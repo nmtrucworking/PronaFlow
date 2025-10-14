@@ -8,7 +8,7 @@ const HomePage = {
             <div class="header__container">
                 <div title="PronaFlow">
                     <img src="../assets/images/logo-light.svg" alt="PronaFlow's logo'" class="logo">
-                    <a class="web-name" href="./home.html" >PronaFlow</a>
+                    <a class="web-name" href="#/" >PronaFlow</a>
                 </div>
                 <nav class="main-nav" id="main-nav">
                     <ul>
@@ -305,10 +305,7 @@ const HomePage = {
         <footer class="footer">
             <p class="footer__text">© 2025 PronaFlow. All Rights Reserved. Built for better work management.</p>
         </footer>
-
-
-    </div>
-`;
+    </div>`;
   },
   after_render: async () => {
     // Khởi tạo các hiệu ứng, sự kiện cho trang home

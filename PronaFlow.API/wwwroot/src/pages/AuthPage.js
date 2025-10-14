@@ -90,14 +90,14 @@ const AuthPage = {
     <div class="login-page">
         <header class="header" id="login-page-header">
             <div class="header__container">
-                <a href="../pages/home.html" class="web-name">PronaFlow</a>
+                <a href="#/" class="web-name">PronaFlow</a>
             </div>
         </header>
         <!-- HEADER END -->
 
         <div class="login-card">
             <!-- LOGIN FORM -->
-            <div class="login-card__form-wrapper login-card__form-wrapper--login" id="login_form">
+            <div class="login-card__form-wrapper login-card__form-wrapper--login" id="loginForm">
                 <form action="" class="form" id="loginForm" name="loginForm" novalidate>
                     <h1 class="form__title">Login</h1>
                     <div class="form__input-groups">
@@ -129,7 +129,7 @@ const AuthPage = {
 
                     <a href="#" class="form__link">Forgot Password?</a>
 
-                    <button type="submit" class="form__submit-btn">Login</button>
+                    <button id="sigInBtn" type="submit" class="form__submit-btn">Login</button>
                 </form>
                 <p class="form__text">or login with social platforms</p>
                 <div class="form_socials">
@@ -141,13 +141,13 @@ const AuthPage = {
             </div>
 
             <!-- REGISTER FORM -->
-            <div class="login-card__form-wrapper login-card__form-wrapper--register" id="register-form">
+            <div class="login-card__form-wrapper login-card__form-wrapper--register" id="signupForm">
                 <form action="#" class="form" id="registerForm" name="registerForm" novalidate>
                     <h1 class="form__title">Registration</h1>
                     <div class="form__input-groups">
                         <div class="form__input-group">
-                            <input id="registerUsername" 
-                                name="registerUsername" 
+                            <input id="signupName"
+                                name="signupName"
                                 type="text" 
                                 class="form__input"
                                 title="Username must be 4-20 characters" 
@@ -159,8 +159,8 @@ const AuthPage = {
                             <span class="form__error" id="registerUsernameError"></span>
                         </div>
                         <div class="form__input-group">
-                            <input id="registerEmail" 
-                                name="registerEmail" 
+                            <input id="signupEmail"
+                                name="signupEmail"
                                 type="email" 
                                 class="form__input"
                                 title="Please enter a valid email" 
@@ -170,7 +170,7 @@ const AuthPage = {
                             <span class="form__error" id="registerEmailError"></span>
                         </div>
                         <div class="form__input-group">
-                            <input id="registerPassword" name="registerPassword" type="password" class="form__input"
+                            <input id="signupPassword" name="signupPassword" type="password" class="form__input"
                                 title="Password must be at least 8 characters" required placeholder="Password"
                                 autocomplete="new-password" minlength="8" />
                             <i data-lucide="lock" class="form__icon"></i>
@@ -185,7 +185,7 @@ const AuthPage = {
                         </div>
                     </div>
 
-                    <button type="submit" class="form__submit-btn">Register</button>
+                    <button id="signUpBtn" type="submit" class="form__submit-btn">Register</button>
                 </form>
                 <p class="form__text">or register with social platforms</p>
                 <div class="form_socials">

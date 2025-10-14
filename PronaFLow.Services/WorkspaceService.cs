@@ -37,26 +37,6 @@ public class WorkspaceService : IWorkspaceService
         };
     }
 
-    public async Task<(bool Success, string? Error)> DeleteWorkspaceAsync(long workspaceId, long userId)
-    {
-        var workspace = await _context.Workspaces.FirstOrDefaultAsync(w => w.Id == workspaceId && w.OwnerId == userId);
-
-        if (workspace == null)
-        {
-            return (false, "Workspace not found or you don't have permission to delete it.");
-        }
-
-        var hasProjects = await _context.Projects.AnyAsync(p => p.WorkspaceId == workspaceId);
-        if (hasProjects)
-        {
-            return (false, "Workspace is not empty. Please move or delete all projects before deleting the workspace.");
-        }
-
-        _context.Workspaces.Remove(workspace);
-        await _context.SaveChangesAsync();
-        return (true, null);
-    }
-
     public async Task<WorkspaceDto?> GetWorkspaceByIdAsync(long workspaceId, long userId)
     {
         var workspace = await _context.Workspaces
@@ -96,7 +76,7 @@ public class WorkspaceService : IWorkspaceService
 
         if (workspace == null)
         {
-            return false; // Không tìm thấy hoặc không có quyền
+            return false; 
         }
 
         workspace.Name = workspaceDto.Name;
@@ -106,8 +86,30 @@ public class WorkspaceService : IWorkspaceService
         return true;
     }
 
-    Task<(bool Success, string? Error)> IWorkspaceService.DeleteWorkspaceAsync(long workspaceId, long userId)
+    /* <summary>
+     * Deletes a workspace after performing necessary validation checks.
+     * </summary>
+     * <param name="workspaceId">The ID of the workspace to delete.</param>
+     * <param name="userId">The ID of the user attempting the deletion.</param>
+     * <returns>A tuple indicating success and an optional error message.</returns>
+     */
+    public async Task<(bool Success, string? Error)> DeleteWorkspaceAsync(long workspaceId, long userId)
     {
-        throw new NotImplementedException();
+        var workspace = await _context.Workspaces.FirstOrDefaultAsync(w => w.Id == workspaceId && w.OwnerId == userId);
+
+        if (workspace == null)
+        {
+            return (false, "Workspace not found or you don't have permission to delete it.");
+        }
+
+        var hasProjects = await _context.Projects.AnyAsync(p => p.WorkspaceId == workspaceId);
+        if (hasProjects)
+        {
+            return (false, "Workspace is not empty. Please move or delete all projects before deleting the workspace.");
+        }
+
+        _context.Workspaces.Remove(workspace);
+        await _context.SaveChangesAsync();
+        return (true, null);
     }
 }
