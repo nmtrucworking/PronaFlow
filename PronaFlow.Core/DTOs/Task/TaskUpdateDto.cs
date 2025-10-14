@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PronaFlow.Core.DTOs.Task;
 
-public class  TaskupdateDto
+public class  TaskUpdateDto
 {
     [Required]
     [MaxLength(255)]
