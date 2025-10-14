@@ -97,6 +97,16 @@ public class UserService : IUserService
         return token;
     }
 
+    public async Task<User?> GetUserByIdAsync(long userId)
+    {
+        // Tìm ng??i dùng d?a trên ID, không theo dõi thay ??i ?? t?i ?u hi?u su?t ??c
+        var user = await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == userId);
+
+        return user;
+    }
+
     // Helper method: Generate JWT token for authenticated user
     private string CreateToken(User user)
     {

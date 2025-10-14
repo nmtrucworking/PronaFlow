@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PronaFlow.Core.DTOs.User;
 using PronaFlow.Core.Interfaces;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 
@@ -47,6 +49,37 @@ namespace PronaFlow.API.Controllers
             }
 
             return Ok(new { token });
+        }
+
+        [Authorize] // Đảm bảo chỉ người dùng đã đăng nhập mới có thể gọi
+        [HttpGet("me")] // GET: api/auth/me
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !long.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            // Lấy thông tin chi tiết của người dùng từ service
+            // (Bạn sẽ cần tạo phương thức GetUserByIdAsync trong IUserService và UserService)
+            var user = await _userService.GetUserByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Trả về một DTO an toàn, không chứa mật khẩu
+            var userToReturn = new UserForDetailDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FullName = user.FullName
+                // Thêm các trường khác nếu cần
+            };
+
+            return Ok(userToReturn);
         }
     }
 }

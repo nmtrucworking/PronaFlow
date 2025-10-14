@@ -102,13 +102,6 @@ app.UseAuthorization();
 // Map controllers
 app.MapControllers();
 
-// Fallback route for SPA
-app.MapGet("/index", async context =>
-{
-    context.Response.ContentType = "text/html";
-    await context.Response.SendFileAsync("wwwroot/index.html");
-});
-
 
 app.MapFallbackToFile("index.html");
 

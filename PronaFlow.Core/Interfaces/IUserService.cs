@@ -8,4 +8,5 @@ public interface IUserService
 {
     Task<User> Register(UserForRegisterDto userForRegisterDto);
     Task<String?> Login(UserForLoginDto useForLoginDto);
+    Task<User?> GetUserByIdAsync(long userId);
 }
