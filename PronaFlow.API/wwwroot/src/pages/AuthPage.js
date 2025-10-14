@@ -4,13 +4,99 @@ import store from '../store/store.js';
 
 const AuthPage = {
   render: async () => {
-    return `<div class="login-page">
+    return `<style>
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #27ae60;
+            /* Màu xanh lá thành công */
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 9999;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        .form__error {
+            display: none;
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .form__input-group.error .form__input {
+            border-color: #e74c3c;
+        }
+
+        .form__input-group.error .form__error {
+            display: block;
+        }
+
+        .form__input-group.success .form__input {
+            border-color: #27ae60;
+        }
+
+        /* Toast types */
+        .toast.error {
+            background-color: #e74c3c;
+        }
+
+        .toast.success {
+            background-color: #27ae60;
+        }
+
+        .toast.warning {
+            background-color: #f1c40f;
+        }
+
+        /* Loading state */
+        .form__submit-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .form__submit-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 4px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s linear infinite;
+        }
+
+        
+    </style>
+    <div class="login-page">
         <header class="header" id="login-page-header">
             <div class="header__container">
-                <a href="#/" class="web-name">PronaFlow</a>
+                <a href="../pages/home.html" class="web-name">PronaFlow</a>
             </div>
         </header>
+        <!-- HEADER END -->
+
         <div class="login-card">
+            <!-- LOGIN FORM -->
             <div class="login-card__form-wrapper login-card__form-wrapper--login" id="login_form">
                 <form action="" class="form" id="loginForm" name="loginForm" novalidate>
                     <h1 class="form__title">Login</h1>
@@ -47,98 +133,95 @@ const AuthPage = {
                 </form>
                 <p class="form__text">or login with social platforms</p>
                 <div class="form_socials">
-                    <button class="form__social-btn">
-                        <img src="../assets/images/facebook.svg" alt="Facebook">
-                    </button>
-                    <button class="form__social-btn">
-                        <img src="../assets/images/google.svg" alt="Google">
-                    </button>
-                    <button class="form__social-btn">
-                        <img src="../assets/images/twitter.svg" alt="Twitter">
-                    </button>
-                    <button class="form__social-btn">
-                        <img src="../assets/images/linkedin.svg" alt="LinkedIn">
-                    </button>
+                    <a href="#" class="form__social-link"><i class="bx bxl-google"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-github"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-linkedin"></i></a>
                 </div>
             </div>
 
-            <div class="login-card__form-wrapper login-card__form-wrapper--signup" id="signup_form">
-                <form action="" class="form" id="signupForm" name="signupForm" novalidate>
-                    <h1 class="form__title">Create Account</h1>
+            <!-- REGISTER FORM -->
+            <div class="login-card__form-wrapper login-card__form-wrapper--register" id="register-form">
+                <form action="#" class="form" id="registerForm" name="registerForm" novalidate>
+                    <h1 class="form__title">Registration</h1>
                     <div class="form__input-groups">
                         <div class="form__input-group">
-                            <input id="signupName" 
-                                    name="signupName" 
-                                    type="text" 
-                                    class="form__input"
-                                    title="Please enter your name" 
-                                    required 
-                                    placeholder="Name" 
-                                    autocomplete="name" />
+                            <input id="registerUsername" 
+                                name="registerUsername" 
+                                type="text" 
+                                class="form__input"
+                                title="Username must be 4-20 characters" 
+                                required placeholder="Username"
+                                autocomplete="username" 
+                                minlength="4" 
+                                maxlength="20" />
                             <i data-lucide="user" class="form__icon"></i>
-                            <span class="form__error" id="signupNameError"></span>
+                            <span class="form__error" id="registerUsernameError"></span>
                         </div>
                         <div class="form__input-group">
-                            <input id="signupEmail" 
-                                    name="signupEmail" 
-                                    type="email" 
-                                    class="form__input"
-                                    title="Please enter your email" 
-                                    required 
-                                    placeholder="Email" 
-                                    autocomplete="email" />
+                            <input id="registerEmail" 
+                                name="registerEmail" 
+                                type="email" 
+                                class="form__input"
+                                title="Please enter a valid email" 
+                                required placeholder="Email" 
+                                autocomplete="email" />
                             <i data-lucide="mail" class="form__icon"></i>
-                            <span class="form__error" id="signupEmailError"></span>
+                            <span class="form__error" id="registerEmailError"></span>
                         </div>
                         <div class="form__input-group">
-                            <input id="signupPassword" 
-                                    name="signupPassword" 
-                                    type="password" 
-                                    class="form__input"
-                                    title="Please enter your password" 
-                                    placeholder="Password"
-                                    required 
-                                    autocomplete="new-password" />
+                            <input id="registerPassword" name="registerPassword" type="password" class="form__input"
+                                title="Password must be at least 8 characters" required placeholder="Password"
+                                autocomplete="new-password" minlength="8" />
                             <i data-lucide="lock" class="form__icon"></i>
-                            <span class="form__error" id="signupPasswordError"></span>
+                            <span class="form__error" id="registerPasswordError"></span>
+                        </div>
+                        <div class="form__input-group">
+                            <input id="registerConfirmPassword" name="registerConfirmPassword" type="password"
+                                class="form__input" title="Please confirm your password" required
+                                placeholder="Confirm Password" autocomplete="new-password" />
+                            <i data-lucide="lock" class="form__icon"></i>
+                            <span class="form__error" id="registerConfirmPasswordError"></span>
                         </div>
                     </div>
 
-                    <button type="submit" class="form__submit-btn">Sign Up</button>
+                    <button type="submit" class="form__submit-btn">Register</button>
                 </form>
-                <p class="form__text">or sign up with social platforms</p>
+                <p class="form__text">or register with social platforms</p>
                 <div class="form_socials">
-                    <button class="form__social-btn">
-                        <img src="../assets/images/facebook.svg" alt="Facebook">
-                    </button>
-                    <button class="form__social-btn">
-                        <img src="../assets/images/google.svg" alt="Google">
-                    </button>
-                    <button class="form__social-btn">
-                        <img src="../assets/images/twitter.svg" alt="Twitter">
-                    </button>
-                    <button class="form__social-btn">
-                        <img src="../assets/images/linkedin.svg" alt="LinkedIn">
-                    </button>
+                    <a href="#" class="form__social-link"><i class="bx bxl-google"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-github"></i></a>
+                    <a href="#" class="form__social-link"><i class="bx bxl-linkedin"></i></a>
                 </div>
             </div>
 
-            <div class="login-card__overlay-container">
-                <div class="login-card__overlay">
-                    <div class="login-card__overlay-panel login-card__overlay-panel--left">
-                        <h1 class="login-card__title">Welcome Back!</h1>
-                        <p class="login-card__text">To keep connected with us please login with your personal info</p>
-                        <button class="login-card__btn" id="signInBtn">Sign In</button>
-                    </div>
-                    <div class="login-card__overlay-panel login-card__overlay-panel--right">
-                        <h1 class="login-card__title">Hello, Friend!</h1>
-                        <p class="login-card__text">Enter your personal details and start journey with us</p>
-                        <button class="login-card__btn" id="signUpBtn">Sign Up</button>
-                    </div>
+            <div class="toggle-box">
+                <div class="toggle-panel toggle-left">
+                    <h1 class="toggle-panel__title">Hello, Welcome!</h1>
+                    <p class="toggle-panel__text">Don't have an account?</p>
+                    <button class="form__submit-btn register-btn">Register</button>
+                </div>
+            </div>
+
+            <div class="toggle-box">
+                <div class="toggle-panel toggle-right">
+                    <h1 class="toggle-panel__title">Welcome Back!</h1>
+                    <p class="toggle-panel__text">Already have an account?</p>
+                    <button class="form__submit-btn login-btn">Login</button>
                 </div>
             </div>
         </div>
-    </div>`;
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p class="footer__text">
+                © 2025 PronaFlow. All Rights Reserved. Built for better work
+                management.
+            </p>
+        </footer>
+    </div>
+`;
   },
   after_render: async () => {
     lucide.createIcons();
@@ -233,7 +316,6 @@ const AuthPage = {
         
         if (isValid) {
           try {
-            // **FIX:** Thay đổi `name` thành `fullName` để khớp với DTO của backend
             await apiService.auth.register({ fullName: name, email, password });
             
             loginCard.classList.remove('login-card--right-panel-active');

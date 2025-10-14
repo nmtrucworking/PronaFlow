@@ -88,7 +88,7 @@ const router = async () => {
 
         currentRoute = request;
 
-        store.dispatch({
+        store.setState({
             type: 'SET_CURRENT_ROUTE',
             payload: {
                 path: request,

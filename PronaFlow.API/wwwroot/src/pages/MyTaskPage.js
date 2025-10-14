@@ -1,4 +1,4 @@
-import { store } from '../store/store.js';
+import  store  from '../store/store.js';
 import apiService from '../api/apiService.js';
 import performanceUtils from '../utils/performance.js';
 import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
@@ -14,7 +14,7 @@ const MyTaskPage = {
      */
     render: async () => {
         const state = store.getState();
-        if (!state.auth.isAuthenticated) {
+        if (!state.user) {
             window.location.hash = '#/login';
             return '';
         }
