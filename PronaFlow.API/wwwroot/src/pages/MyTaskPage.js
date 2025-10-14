@@ -3,6 +3,7 @@ import apiService from '../api/apiService.js';
 import performanceUtils from '../utils/performance.js';
 import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
 import { showToast } from '../utils/ui.js';
+import { isAuthenticated } from '../auth/authService.js';
 
 const { throttle, renderLongList } = performanceUtils;
 
@@ -13,8 +14,7 @@ const MyTaskPage = {
      * HTML is merged from my-task.html.
      */
     render: async () => {
-        const state = store.getState();
-        if (!state.user) {
+        if (!isAuthenticated()) {
             window.location.hash = '#/login';
             return '';
         }

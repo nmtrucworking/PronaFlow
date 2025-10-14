@@ -87,7 +87,7 @@ const Sidebar = {
 
                 <ul class="sidebar__workspace-tools">
                     <li>
-                        <a class="sidebar__nav-item" href="#/kanban-board" data-nav-link="/kanban-board/${p.id}">
+                        <a class="sidebar__nav-item" href="#/kanban-board"">
                             <i class="nav-icon icon-lg" data-lucide="square-kanban"></i>
                             <span class="item-hide-collapsed">Kanban Board</span>
                         </a>
@@ -166,10 +166,10 @@ const Sidebar = {
             <div class="divider"></div>
             <!-- inner content -->
             <div class="nav-bot__inner">
-                <a href="#/settings" title="Settings" class="sidebar-bot-btn icon-lg">
+                <a href="#/setting" title="Settings" class="sidebar-bot-btn icon-lg">
                     <i data-lucide="settings"></i>
                 </a>
-                <a href="#/notifications" title="Notifications" class="sidebar-bot-btn icon-lg">
+                <a href="#/notification" title="Notifications" class="sidebar-bot-btn icon-lg">
                     <i data-lucide="bell"></i>
                 </a>
             </div>
@@ -209,10 +209,10 @@ const Sidebar = {
         }
 
         // Cập nhật trạng thái sidebar từ store
-        const sidebarState = store.getState().ui.sidebarCollapsed;
-        if (sidebarState !== undefined) {
-            sidebar.classList.toggle('collapsed', sidebarState);
-        }
+        //const sidebarState = store.getState().ui.sidebarCollapsed;
+        //if (sidebarState !== undefined) {
+        //    sidebar.classList.toggle('collapsed', sidebarState);
+        //}
     }
 };
 
