@@ -145,8 +145,19 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> RemoveMember(long projectId, long memberId)
     {
         var userId = GetCurrentUserId();
-        var success = await _projectService.RemoveMemberFromProjectAsync(projectId, memberId, userId);
-        if (!success) return NotFound();
-        return NoContent();
+        try 
+        {
+            var success = await _projectService.RemoveMemberFromProjectAsync(projectId, memberId, userId);
+            if (!success) return NotFound();
+            return NoContent();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (SecurityException ex)
+        {
+            return Forbid(ex.Message);
+        }
     }
 }
