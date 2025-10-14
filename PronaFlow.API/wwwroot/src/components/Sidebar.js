@@ -3,6 +3,7 @@
 import { isAuthenticated, logout } from '../auth/authService.js';
 import { decodeToken } from '../utils/index.js';
 import store from '../store/store.js';
+import apiService  from '../api/apiService';
 
 const Sidebar = {
 
@@ -52,7 +53,7 @@ const Sidebar = {
                     <ul class="popover-action-list">
                         <li>
                             <button type="button" class="popover-item">
-                                <a href="#/settings" class="popover-item">
+                                <a href="#/setting" class="popover-item">
                                     <i data-lucide="settings-2" class="icon-md"></i>
                                     <span>Manage Account</span>
                                 </a>
@@ -81,8 +82,7 @@ const Sidebar = {
             <div class="nav-group group-1">
                 <select name="" id="workspace-selector" class="sidebar__workspace-selector">
                     <option value="" disabled selected hidden>Choose Workspace</option>
-                    <option value="ws001">PronaFlow Team</option>
-                    <option value="ws002">Dự án Cá nhân</option>
+                    <!--JS render data-->
                 </select>
 
                 <ul class="sidebar__workspace-tools">
@@ -197,12 +197,14 @@ const Sidebar = {
             });
         }
 
-        // Đánh dấu link active
-        setActiveSidebarLink();
+        // Initialize dynamic data loading for workspaces
+        
 
-        // Khởi tạo các chức năng đóng/mở, responsive
+        setActiveSidebarLink();
         initializeSidebarEventListeners();
 
+        await loadWorkspaces();
+        
         // Khởi tạo lại các icon
         if (window.lucide) {
             lucide.createIcons();
@@ -218,19 +220,11 @@ const Sidebar = {
 
 export default Sidebar;
 
-
-// =====================================================================================
-// CÁC HÀM HELPER (PRIVATE) CHO SIDEBAR
-// Toàn bộ logic từ file sidebar.js cũ được chuyển vào đây và không cần export.
-// =====================================================================================
-
 function setActiveSidebarLink() {
     // Sửa lại để hoạt động với hash
     const currentHash = window.location.hash || '#/dashboard';
     document.querySelectorAll('#sidebar .sidebar__nav-item').forEach(link => {
         const linkHash = link.getAttribute('href');
-
-        // So sánh hash thay vì pathname
         if (linkHash === currentHash) {
             link.classList.add('active');
         } else {
@@ -243,18 +237,13 @@ function initializeSidebarEventListeners() {
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('sidebar-toggle-button');
     if (!sidebar || !toggleBtn) return;
-
-    // Logic đóng/mở khi click nút toggle
     toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         sidebar.classList.toggle('collapsed');
         localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     });
 
-    // Logic responsive khi thay đổi kích thước cửa sổ
     window.addEventListener('resize', handleSidebarState);
-
-    // Áp dụng trạng thái ban đầu khi tải
     handleSidebarState();
 }
 
@@ -265,24 +254,53 @@ function handleSidebarState() {
     const isDesktop = window.innerWidth >= 1024;
     const savedState = localStorage.getItem('sidebarCollapsed');
 
-    // Trên desktop, ưu tiên lựa chọn đã lưu. Nếu không có, mặc định là mở.
-    // Trên mobile/tablet, sidebar luôn ở trạng thái "collapsed" (chỉ hiện icon).
     const shouldBeCollapsed = isDesktop ? (savedState === 'true') : true;
 
     sidebar.classList.toggle('collapsed', shouldBeCollapsed);
 }
 
 export async function loadSidebarAndSetActiveLink() {
-    // Render sidebar
     const sidebarContainer = document.getElementById('sidebar-container');
     if (sidebarContainer) {
         sidebarContainer.innerHTML = await Sidebar.render();
         await Sidebar.after_render();
     }
-    
-    // Set active link
-    setActiveSidebarLink();
-    
-    // Initialize sidebar events
-    initializeSidebarEventListeners();
 }
+
+/**
+ * Fetches workspaces to populate the sidebar selector.
+ */
+async function loadWorkspaces() {
+    const workspaceSelector = document.getElementById('workspace-selector');
+    if (!workspaceSelector) return;
+
+    try {
+        // 1. Fetch workspaces
+        const workspaces = await apiService.workspaces.getAll();
+
+        // 2. Populate workspace selector
+        workspaceSelector.innerHTML = '<option value="" disabled>Choose Workspace</option>';
+        if (workspaces && workspaces.length > 0) {
+            workspaces.forEach(ws => {
+                workspaceSelector.innerHTML += `<option value="${ws.id}">${ws.name}</option>`;
+            });
+
+            // 3. Add event listener for changes to update application state
+            workspaceSelector.addEventListener('change', () => {
+                const selectedWorkspaceId = workspaceSelector.value;
+                console.log(`Workspace changed to: ${selectedWorkspaceId}`);
+            });
+
+            // 4. Select the first workspace by default
+            workspaceSelector.selectedIndex = 1;
+            workspaceSelector.dispatchEvent(new Event('change'));
+
+        } else {
+             workspaceSelector.innerHTML = '<option value="" disabled selected>No workspaces found</option>';
+        }
+    } catch (error) {
+        console.error('Failed to load workspaces:', error);
+        workspaceSelector.innerHTML = '<option>Error loading</option>';
+    }
+}
+
