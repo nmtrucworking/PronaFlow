@@ -1,9 +1,13 @@
-import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
 import { store } from '../store/store.js';
-import { apiService } from '../api/apiService.js';
-import { throttle, renderLongList } from '../utils/performance.js';
+import apiService from '../api/apiService.js';
+import performanceUtils from '../utils/performance.js';
+import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
+import { showToast } from '../utils/toast.js';
 
-const MyTasksPage = {
+const { throttle, renderLongList } = performanceUtils;
+
+
+const MyTaskPage = {
     /**
      * Render a view of the page.
      * HTML is merged from my-task.html.
@@ -362,17 +366,61 @@ const MyTasksPage = {
      * All logic from my-task.js is moved and adapted here.
      */
     after_render: async () => {
-        if (!isAuthenticated()) return;
+        const state = store.getState();
+        if (!state.auth.isAuthenticated) return;
 
-        await loadSidebarAndSetActiveLink();
+        try {
+            await loadSidebarAndSetActiveLink();
+            
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+            
+            // Initialize page with error handling
+            await initializeMyTasksPage();
+            
+            // Load initial tasks
+            await loadTasks();
+            
+        } catch (error) {
+            console.error('Error in after_render:', error);
+        }
+    }
+};
+
+async function loadTasks() {
+    const taskListContainer = document.getElementById('task-list-container');
+    const emptyState = document.getElementById('empty-state-tasks');
+    
+    try {
+        taskListContainer.innerHTML = '<div class="loading-spinner"></div>';
+        
+        const tasks = await apiService.tasks.getAll();
+        
+        if (!tasks || tasks.length === 0) {
+            emptyState.style.display = 'flex';
+            taskListContainer.innerHTML = '';
+            return;
+        }
+
+        emptyState.style.display = 'none';
+        renderLongList(taskListContainer, tasks, renderTaskCard);
+        
+        // Initialize Lucide icons for new content
         if (window.lucide) {
             lucide.createIcons();
         }
-        
-        // Initialize all event listeners and logic for the page
-        initializeMyTasksPage();
+    } catch (error) {
+        showToast('Failed to load tasks', 'error');
+        console.error('Error loading tasks:', error);
+        taskListContainer.innerHTML = `
+            <div class="error-state">
+                <p>Failed to load tasks. Please try again.</p>
+                <button onclick="loadTasks()" class="btn btn--primary btn--sm">Retry</button>
+            </div>
+        `;
     }
-};
+}
 
 /**
  * Main function to initialize all interactions on the My Tasks page.
@@ -472,6 +520,137 @@ function initializeMyTasksPage() {
     if (taskListContainer.children.length <= 1) {
         document.getElementById('empty-state-tasks').style.display = 'flex';
     }
+
+    // Add throttled search handler
+    const handleSearch = throttle(async (searchTerm) => {
+        try {
+            const tasks = await apiService.tasks.getAll({ search: searchTerm });
+            renderLongList(taskListContainer, tasks, renderTaskCard);
+        } catch (error) {
+            showToast('Failed to search tasks', 'error');
+            console.error('Search error:', error);
+        }
+    }, 300);
+
+    // Add search input listener
+    document.querySelector('.search-bar__input').addEventListener('input', (e) => {
+        handleSearch(e.target.value.trim());
+    });
+
+    // Update form submission
+    addTaskForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const taskName = newTaskInput.value.trim();
+        if (taskName === '') return;
+
+        try {
+            await taskOperations.createTask({ name: taskName });
+            newTaskInput.value = '';
+        } catch (error) {
+            // Error is already handled in taskOperations
+            return;
+        }
+    });
+
+    // Update delete handler
+    deleteTaskBtn.addEventListener('click', async () => {
+        if (!currentSelectedTaskId || !confirm("Are you sure you want to delete this task?")) return;
+        
+        try {
+            await taskOperations.deleteTask(currentSelectedTaskId);
+            resetToEmptyState();
+        } catch (error) {
+            // Error is already handled in taskOperations
+            return;
+        }
+    });
+
+    // Add task status change handler
+    taskListContainer.addEventListener('change', async (event) => {
+        const checkbox = event.target;
+        if (checkbox.type === 'checkbox') {
+            const taskCard = checkbox.closest('.task-card');
+            if (taskCard) {
+                const taskId = taskCard.dataset.taskId;
+                try {
+                    await taskOperations.updateTask(taskId, {
+                        status: checkbox.checked ? 'done' : 'not-started'
+                    });
+                } catch (error) {
+                    // Revert checkbox state on error
+                    checkbox.checked = !checkbox.checked;
+                }
+            }
+        }
+    });
 }
+
+function renderTaskCard(task) {
+    return `
+        <div class="task-card" data-task-id="${task.id}" style="background: var(--color-background-${task.status});">
+            <label class="custom-checkbox">
+                <input type="checkbox" ${task.status === 'done' ? 'checked' : ''}>
+                <span class="custom-checkbox__checkmark round"></span>
+            </label>
+            <div class="task-card__content">
+                <span class="task__name">${task.name}</span>
+                <div class="task-card__detail">
+                    <div class="task__address">
+                        <span id="taskAddress__prjId">${task.projectName || 'Uncategorized'}</span>
+                        <span> / </span>
+                        <span id="taskAddress__tasklistId">${task.taskListName || '-'}</span>
+                    </div>
+                    <div class="task__deadline">
+                        <i data-lucide="calendar-fold" class="icon--minium"></i>
+                        <span>${task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Not set'}</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn priority-${task.priority}"><i data-lucide="star"></i></button>
+        </div>`;
+}
+
+// Add these functions before MyTaskPage definition
+/**
+ * Handles task operations with API calls and UI updates
+ */
+const taskOperations = {
+    async createTask(taskData) {
+        try {
+            const newTask = await apiService.tasks.create(taskData);
+            await loadTasks(); // Reload task list
+            showToast('Task created successfully', 'success');
+            return newTask;
+        } catch (error) {
+            showToast('Failed to create task', 'error');
+            console.error('Error creating task:', error);
+            throw error;
+        }
+    },
+
+    async updateTask(taskId, updateData) {
+        try {
+            await apiService.tasks.update(taskId, updateData);
+            await loadTasks(); // Reload to show changes
+            showToast('Task updated successfully', 'success');
+        } catch (error) {
+            showToast('Failed to update task', 'error');
+            console.error('Error updating task:', error);
+            throw error;
+        }
+    },
+
+    async deleteTask(taskId) {
+        try {
+            await apiService.tasks.delete(taskId);
+            await loadTasks();
+            showToast('Task deleted successfully', 'success');
+        } catch (error) {
+            showToast('Failed to delete task', 'error');
+            console.error('Error deleting task:', error);
+            throw error;
+        }
+    }
+};
 
 export default MyTaskPage;

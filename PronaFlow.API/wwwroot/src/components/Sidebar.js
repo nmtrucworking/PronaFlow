@@ -23,14 +23,14 @@ const Sidebar = {
       <nav id="sidebar" class="sidebar">
         <div class="sidebar__nav-top">
             <a href="#/home" class="sidebar__web-info">
-                <img src=".#/assets/images/logo-dark.svg" alt="PronaFlow" class="logo">
+                <img src="./assets/images/logo-dark.svg" alt="PronaFlow" class="logo">
                 <span class="web-name item-hide-collapsed">PronaFlow</span>
             </a>
 
             <button class="sidebar__user-profile" popovertarget="profile-menu" popovertargetaction="toggle"
                 type="button">
                 <div id="userAvt">
-                    <img class="user__avt" src=".#/assets/images/avt-notion_1.png" alt="User Avatar">
+                    <img class="user__avt" src="./assets/images/avt-notion_1.png" alt="User Avatar">
                 </div>
                 <span class="user__name item-hide-collapsed" id="user-name">${userName}</span>
             </button>
@@ -270,4 +270,19 @@ function handleSidebarState() {
     const shouldBeCollapsed = isDesktop ? (savedState === 'true') : true;
 
     sidebar.classList.toggle('collapsed', shouldBeCollapsed);
+}
+
+export async function loadSidebarAndSetActiveLink() {
+    // Render sidebar
+    const sidebarContainer = document.getElementById('sidebar-container');
+    if (sidebarContainer) {
+        sidebarContainer.innerHTML = await Sidebar.render();
+        await Sidebar.after_render();
+    }
+    
+    // Set active link
+    setActiveSidebarLink();
+    
+    // Initialize sidebar events
+    initializeSidebarEventListeners();
 }
