@@ -4,6 +4,9 @@ namespace PronaFlow.Core.DTOs.Task;
 
 public class TaskQueryParameters
 {
+    [FromQuery(Name = "taskListId")]
+    public long? TaskListId { get; set; }
+
     [FromQuery(Name = "search")]
     public string? Search { get; set; }
 

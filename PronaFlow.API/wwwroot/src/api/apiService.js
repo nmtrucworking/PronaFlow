@@ -107,7 +107,6 @@ const apiService = {
 
     // Project API
     projects: {
-        // **FIX:** Thêm workspaceId để khớp với backend
         getAll: (workspaceId) => request(`/workspaces/${workspaceId}/projects`, 'GET'),
         getById: (workspaceId, projectId) => request(`/workspaces/${workspaceId}/projects/${projectId}`, 'GET'),
         create: (workspaceId, project) => request(`/workspaces/${workspaceId}/projects`, 'POST', project),

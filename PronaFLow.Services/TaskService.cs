@@ -109,9 +109,13 @@ public class TaskService : ITaskService
     {
         await CheckProjectMembershipAsync(projectId, userId);
 
-        // Bắt đầu xây dựng câu truy vấn, chưa thực thi
         var query = _context.Tasks
             .Where(t => t.ProjectId == projectId && t.IsDeleted == false);
+
+        if (queryParams.TaskListId.HasValue)
+        {
+            query = query.Where(t => t.TaskListId == queryParams.TaskListId.Value);
+        }
 
         // 1. Áp dụng logic Tìm kiếm (Search)
         if (!string.IsNullOrEmpty(queryParams.Search))

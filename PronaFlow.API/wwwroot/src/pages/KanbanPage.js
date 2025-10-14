@@ -1,8 +1,8 @@
-// src/pages/KanbanPage.js
-
 import { isAuthenticated } from '../auth/authService.js';
 import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
-import { autoResizeTextarea } from '../utils/utils.js'; // Giả sử bạn có hàm này
+import { initializeProjectDetailModal, showProjectDetailModal, populateModalWithData } from '../components/project-modal.js';
+import { autoResizeTextarea } from '../utils/utils.js';
+import store from '../store/store.js';
 
 const KanbanPage = {
     /**
@@ -20,15 +20,15 @@ const KanbanPage = {
     <main id="main" class="main kanban-board">
         <div class="kanban-board__header">
             <div class="workspace__title">
-                <span id="workspaceName">Study English</span>
+                <span id="workspaceName">Loading...</span>
             </div>
-            <span class="workspace__description">The description for workspace</span>
+            <span class="workspace__description"></span>
         </div>
 
         <div class="divider"></div>
 
         <div class="frames frames--grid-2col">
-            <!-- ==================== CALENDAR FRAME (PRONAFLOW AGENDA) - START ==================== -->
+            <!--  CALENDAR FRAME (PRONAFLOW AGENDA) - START  -->
             <div class="frame frame--kanban">
                 <h3 class="frame__title">My Agenda</h3>
                 <div class="frame__content hide-scrollbar">
@@ -331,134 +331,7 @@ const KanbanPage = {
                 <div class="divider"></div>
                 <div class="list-card hide-scrollbar">
                     <!-- project-card -->
-                    <div class="project-card" draggable="true" data-project-id="proj_react_native">
-                        <div class="prj-card-attributes">
-                            <div class="prj-card-tags-group">
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-default);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-blue);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-green);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-red);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-brown);"></div>
-                            </div>
-                            <div class="prj-card-project-name prj-attribute">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" name="" id="project-status">
-                                    <span class="custom-checkbox__checkmark round"></span>
-                                </label>
-                                <span>project-name</span>
-                            </div>
-                            <div class="prj-card-deadline prj-attribute">
-                                <i data-lucide="clock" class="prj-card-icon"></i>
-                                <span>Jun 23, 2025</span>
-                                <span>-</span>
-                                <span>July 30, 2025</span>
-                            </div>
-                            <div class="prj-card-desct prj-attribute">
-                                <i data-lucide="text" class="prj-card-icon"></i>
-                            </div>
-                            <div class="prj-card-total-task prj-attribute">
-                                <i data-lucide="circle-check-big" class="prj-card-icon"></i>
-                                <span>5</span>
-                                <span>/</span>
-                                <span>10</span>
-                            </div>
-                            <div class="prj-card-coutdown prj-attribute">
-                                <i data-lucide="hourglass" class="prj-card-icon"></i>
-                                <span>2d</span>
-                            </div>
-                        </div>
-                        <div class="prj-card-members">
-                            <img src="../assets/images/avt-notion_1.png" alt="" class="prj-member">
-                            <img src="../assets/images/avt-notion_2.png" alt="" class="prj-member">
-                            <img src="../assets/images/avt-notion_3.png" alt="" class="prj-member">
-                        </div>
-                    </div>
-
-                    <div class="project-card" draggable="true" data-project-id="proj_react_native">
-                        <div class="prj-card-attributes">
-                            <div class="prj-card-tags-group">
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-default);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-blue);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-green);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-red);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-brown);"></div>
-                            </div>
-                            <div class="prj-card-project-name prj-attribute">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" name="" id="project-status">
-                                    <span class="custom-checkbox__checkmark round"></span>
-                                </label>
-                                <span>project-name</span>
-                            </div>
-                            <div class="prj-card-deadline prj-attribute">
-                                <i data-lucide="clock" class="prj-card-icon"></i>
-                                <span>Jun 23, 2025</span>
-                                <span>-</span>
-                                <span>July 30, 2025</span>
-                            </div>
-                            <div class="prj-card-desct prj-attribute">
-                                <i data-lucide="text" class="prj-card-icon"></i>
-                            </div>
-                            <div class="prj-card-total-task prj-attribute">
-                                <i data-lucide="circle-check-big" class="prj-card-icon"></i>
-                                <span>5</span>
-                                <span>/</span>
-                                <span>10</span>
-                            </div>
-                            <div class="prj-card-coutdown prj-attribute">
-                                <i data-lucide="hourglass" class="prj-card-icon"></i>
-                                <span>2d</span>
-                            </div>
-                        </div>
-                        <div class="prj-card-members">
-                            <img src="../assets/images/avt-notion_1.png" alt="" class="prj-member">
-                            <img src="../assets/images/avt-notion_2.png" alt="" class="prj-member">
-                            <img src="../assets/images/avt-notion_3.png" alt="" class="prj-member">
-                        </div>
-                    </div>
-
-                    <div class="project-card" draggable="true" data-project-id="proj_react_native">
-                        <div class="prj-card-attributes">
-                            <div class="prj-card-tags-group">
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-default);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-blue);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-green);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-red);"></div>
-                                <div class="prj-card-tag" style="background-color: var(--cl-tag-brown);"></div>
-                            </div>
-                            <div class="prj-card-project-name prj-attribute">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" name="" id="project-status">
-                                    <span class="custom-checkbox__checkmark round"></span>
-                                </label>
-                                <span>project-name</span>
-                            </div>
-                            <div class="prj-card-deadline prj-attribute">
-                                <i data-lucide="clock" class="prj-card-icon"></i>
-                                <span>Jun 23, 2025</span>
-                                <span>-</span>
-                                <span>July 30, 2025</span>
-                            </div>
-                            <div class="prj-card-desct prj-attribute">
-                                <i data-lucide="text" class="prj-card-icon"></i>
-                            </div>
-                            <div class="prj-card-total-task prj-attribute">
-                                <i data-lucide="circle-check-big" class="prj-card-icon"></i>
-                                <span>5</span>
-                                <span>/</span>
-                                <span>10</span>
-                            </div>
-                            <div class="prj-card-coutdown prj-attribute">
-                                <i data-lucide="hourglass" class="prj-card-icon"></i>
-                                <span>2d</span>
-                            </div>
-                        </div>
-                        <div class="prj-card-members">
-                            <img src="../assets/images/avt-notion_1.png" alt="" class="prj-member">
-                            <img src="../assets/images/avt-notion_2.png" alt="" class="prj-member">
-                            <img src="../assets/images/avt-notion_3.png" alt="" class="prj-member">
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <!-- Popover for Kanban Column Options -->
@@ -488,7 +361,7 @@ const KanbanPage = {
                     </div>
                 </div>
             </div>
-            <!--------------------------------------- Col: Not Started --------------------------------------->
+            <!----- Col: Not Started ------->
             <div class="kanban__col">
                 <div class="kanban-column__header">
                     <button class="btn icon-btn">
@@ -502,43 +375,7 @@ const KanbanPage = {
                 </div>
                 <div class="divider"></div>
                 <div class="list-card hide-scrollbar">
-                    <div class="project-card" draggable="true" data-project-id="proj_react_native">
-                        <div class="prj-card-attributes">
-                            <div class="prj-card-tags-group">
-                                <div class="prj-card-tag" style="background-color: #16a085;"></div>
-                            </div>
-                            <div class="prj-card-project-name prj-attribute">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" id="project-status">
-                                    <span class="custom-checkbox__checkmark round"></span>
-                                </label>
-                                <span>Học React Native</span>
-                            </div>
-                            <div class="prj-card-deadline prj-attribute">
-                                <i data-lucide="clock" class="prj-card-icon"></i>
-                                <span>Aug 1, 2025</span>
-                                <span>-</span>
-                                <span>—</span>
-                            </div>
-                            <div class="prj-card-desct prj-attribute">
-                                <i data-lucide="text" class="prj-card-icon"></i>
-                            </div>
-                            <div class="prj-card-total-task prj-attribute">
-                                <i data-lucide="circle-check-big" class="prj-card-icon"></i>
-                                <span>3</span>
-                                <span>/</span>
-                                <span>10</span>
-                            </div>
-                            <div class="prj-card-coutdown prj-attribute">
-                                <i data-lucide="hourglass" class="prj-card-icon"></i>
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="prj-card-members">
-                            <img src="../assets/images/avt-notion_1.png" alt="" class="prj-member">
-                        </div>
-                    </div>
-
+                    <!--Project card-->
                 </div>
 
                 <!-- Popover for Kanban Column Options -->
@@ -568,7 +405,7 @@ const KanbanPage = {
                     </div>
                 </div>
             </div>
-            <!--------------------------------------- Col: In Progress --------------------------------------->
+            <!------- Col: In Progress --------->
             <div class="kanban__col hide-scrollbar">
                 <div class="kanban-column__header">
                     <button class="btn icon-btn">
@@ -626,45 +463,7 @@ const KanbanPage = {
                 </div>
                 <div class="divider"></div>
                 <div class="list-card hide-scrollbar">
-                    <div class="project-card" draggable="true">
-                        <div class="prj-card-attributes">
-                            <div class="prj-card-tags-group">
-                                <div class="prj-card-tag" style="background-color: #27ae60;"></div>
-                                <div class="prj-card-tag" style="background-color: #c0392b;"></div>
-                            </div>
-                            <div class="prj-card-project-name prj-attribute">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" id="project-status">
-                                    <span class="custom-checkbox__checkmark round"></span>
-                                </label>
-                                <span>API Payment Gateway</span>
-                            </div>
-                            <div class="prj-card-deadline prj-attribute">
-                                <i data-lucide="clock" class="prj-card-icon"></i>
-                                <span>Jul 15, 2025</span>
-                                <span>-</span>
-                                <span>Aug 10, 2025</span>
-                            </div>
-                            <div class="prj-card-desct prj-attribute">
-                                <i data-lucide="text" class="prj-card-icon"></i>
-                            </div>
-                            <div class="prj-card-total-task prj-attribute">
-                                <i data-lucide="circle-check-big" class="prj-card-icon"></i>
-                                <span>6</span>
-                                <span>/</span>
-                                <span>10</span>
-                            </div>
-                            <div class="prj-card-coutdown prj-attribute">
-                                <i data-lucide="hourglass" class="prj-card-icon"></i>
-                                <span>7d</span>
-                            </div>
-                        </div>
-                        <div class="prj-card-members">
-                            <img src="../assets/images/avt-notion_1.png" alt="" class="prj-member">
-                            <img src="../assets/images/avt-notion_3.png" alt="" class="prj-member">
-                        </div>
-                    </div>
-
+                    <!-- Project card -->
                 </div>
 
                 <!-- Popover for Kanban Column Options -->
@@ -707,43 +506,7 @@ const KanbanPage = {
                 </div>
                 <div class="divider"></div>
                 <div class="list-card hide-scrollbar">
-                    <div class="project-card" draggable="true">
-                        <div class="prj-card-attributes">
-                            <div class="prj-card-tags-group">
-                                <div class="prj-card-tag" style="background-color: #f39c12;"></div>
-                            </div>
-                            <div class="prj-card-project-name prj-attribute">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" id="project-status">
-                                    <span class="custom-checkbox__checkmark round"></span>
-                                </label>
-                                <span>Dự án Freelance cho 'The Coffee House'</span>
-                            </div>
-                            <div class="prj-card-deadline prj-attribute">
-                                <i data-lucide="clock" class="prj-card-icon"></i>
-                                <span>May 1, 2025</span>
-                                <span>-</span>
-                                <span>Jun 30, 2025</span>
-                            </div>
-                            <div class="prj-card-desct prj-attribute">
-                                <i data-lucide="text" class="prj-card-icon"></i>
-                            </div>
-                            <div class="prj-card-total-task prj-attribute">
-                                <i data-lucide="circle-check-big" class="prj-card-icon"></i>
-                                <span>10</span>
-                                <span>/</span>
-                                <span>10</span>
-                            </div>
-                            <div class="prj-card-coutdown prj-attribute">
-                                <i data-lucide="hourglass" class="prj-card-icon"></i>
-                                <span>0d</span>
-                            </div>
-                        </div>
-                        <div class="prj-card-members">
-                            <img src="../assets/images/avt-notion_1.png" alt="" class="prj-member">
-                        </div>
-                    </div>
-
+                    <!-- Project card -->
                 </div>
 
                 <!-- Popover for Kanban Column Options -->
@@ -791,55 +554,171 @@ const KanbanPage = {
         if (!isAuthenticated()) return;
 
         await loadSidebarAndSetActiveLink();
-
-        // All logic from workspace.js is moved here
-        initializeKanbanPageFunctions();
-        
-        // Initialize drag and drop for Kanban cards
-        initKanbanDragDrop();
-
         if (window.lucide) {
             lucide.createIcons();
         }
+
+        initializeProjectDetailModal();
+
+        // Change workspace
+        const workspaceSelector = document.getElementById('workspace-selector');
+        if (workspaceSelector) {
+            workspaceSelector.addEventListener('change', () => {
+                loadKanbanData();
+            });
+        }
+
+
+        await loadKanbanData();
+        initializeAddProjectButtons();
+        initializeProjectCardClicks();
     }
 };
 
 /**
- * Initializes all necessary functions for the Kanban page.
- * This function replaces the old 'refreshKanbanFunctions'.
+ * Tải dữ liệu projects cho workspace hiện tại và render ra Kanban board.
  */
-function initializeKanbanPageFunctions() {
-    initWorkspaceToggle('.toggle-workspace-list-btn');
-    autoResizeTextarea('textarea.auto-resize'); // Assuming you have this utility function
-    // Any other initializations for the Kanban page can go here
+async function loadKanbanData() {
+    const workspaceSelector = document.getElementById('workspace-selector');
+    const workspaceNameEl = document.getElementById('workspaceName');
+    const kanbanView = document.getElementById('kanban-view');
+
+    if (!workspaceSelector) return;
+
+    const workspaceId = workspaceSelector.value;
+    if (!workspaceId) {
+        kanbanView.querySelectorAll('.list-card').forEach(col => col.innerHTML = ''); // Xóa board
+        workspaceNameEl.textContent = "Please select a workspace";
+        return;
+    }
+
+    // Cập nhật tên workspace
+    workspaceNameEl.textContent = workspaceSelector.options[workspaceSelector.selectedIndex].text;
+
+    try {
+        const projects = await apiService.projects.getAll(workspaceId);
+        renderProjects(projects);
+    } catch (error) {
+        console.error("Failed to load projects:", error);
+        // Có thể hiển thị thông báo lỗi cho người dùng ở đây
+    }
 }
 
 /**
- * Toggles the visibility of workspace project lists.
- * @param {string} selector - The CSS selector for the toggle buttons.
+ * Render danh sách các project vào các cột Kanban tương ứng.
+ * @param {Array} projects - Mảng các đối tượng project từ API.
  */
-function initWorkspaceToggle(selector) {
-    document.querySelectorAll(selector).forEach(btn => {
-        btn.addEventListener('click', function () {
-            const targetId = this.getAttribute('data-target');
-            const content = document.getElementById(targetId);
-            if (!content) return;
+function renderProjects(projects) {
+    const kanbanView = document.getElementById('kanban-view');
+    // Xóa tất cả các card cũ trước khi render
+    kanbanView.querySelectorAll('.list-card').forEach(column => {
+        column.innerHTML = '';
+    });
 
-            const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            
-            content.hidden = isExpanded;
-            this.setAttribute('aria-expanded', String(!isExpanded));
-            
-            const icon = this.querySelector('.icon-toggle');
-            if (icon) {
-                icon.classList.toggle('rotated-icon', !isExpanded);
+    if (!projects || projects.length === 0) {
+        // Có thể hiển thị thông báo "No projects found" ở đây
+        return;
+    }
+
+    projects.forEach(project => {
+        const projectCard = createProjectCard(project);
+        const column = kanbanView.querySelector(`.kanban__col[data-status="${project.status}"] .list-card`);
+        if (column) {
+            column.insertAdjacentHTML('beforeend', projectCard);
+        }
+    });
+
+    // Khởi tạo lại chức năng kéo thả sau khi đã render xong
+    initKanbanDragDrop();
+    lucide.createIcons();
+}
+
+/**
+ * Tạo chuỗi HTML cho một project card.
+ * @param {object} project - Đối tượng project.
+ * @returns {string} - Chuỗi HTML.
+ */
+function createProjectCard(project) {
+    // Logic tính toán countdown (ví dụ)
+    const endDate = project.endDate ? new Date(project.endDate) : null;
+    let countdownHtml = '';
+    if (endDate) {
+        const diffDays = Math.ceil((endDate - new Date()) / (1000 * 60 * 60 * 24));
+        if (diffDays >= 0) {
+            countdownHtml = `
+            <div class="prj-card-coutdown prj-attribute">
+                <i data-lucide="hourglass" class="prj-card-icon"></i>
+                <span>${diffDays}d</span>
+            </div>`;
+        }
+    }
+
+    return `
+    <div class="project-card" draggable="true" data-project-id="${project.id}">
+        <div class="prj-card-project-name prj-attribute">
+            <label class="custom-checkbox">
+                <input type="checkbox" name="project-status" ${project.status === 'done' ? 'checked' : ''}>
+                <span class="custom-checkbox__checkmark round"></span>
+            </label>
+            <span>${project.name}</span>
+        </div>
+        <div class="prj-card-deadline prj-attribute">
+             <i data-lucide="clock" class="prj-card-icon"></i>
+             <span>${project.startDate || '...'}</span>
+             <span>-</span>
+             <span>${project.endDate || '...'}</span>
+        </div>
+        ${countdownHtml}
+        </div>`;
+}
+
+/**
+ * Khởi tạo sự kiện cho các nút "Add Project".
+ */
+function initializeAddProjectButtons() {
+    document.querySelectorAll('.add-project-btn').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const column = e.target.closest('.kanban__col');
+            const status = column.dataset.status;
+
+            const projectName = prompt(`Enter new project name for "${status}" status:`);
+
+            if (projectName && projectName.trim() !== '') {
+                const workspaceId = document.getElementById('workspace-selector').value;
+                try {
+                    await apiService.projects.create(workspaceId, {
+                        name: projectName.trim(),
+                        status: status
+                    });
+                    // Tải lại toàn bộ board để cập nhật
+                    await loadKanbanData();
+                } catch (error) {
+                    console.error("Failed to create project:", error);
+                    alert("Error: Could not create the project.");
+                }
             }
         });
     });
 }
 
 /**
- * Initializes drag and drop functionality for the Kanban board.
+ * Gán sự kiện click cho các project card để mở modal.
+ * Sử dụng event delegation.
+ */
+function initializeProjectCardClicks() {
+    const kanbanView = document.getElementById('kanban-view');
+    kanbanView.addEventListener('click', (e) => {
+        const projectCard = e.target.closest('.project-card');
+        if (projectCard) {
+            const projectId = projectCard.dataset.projectId;
+            showProjectDetailModal();
+            populateModalWithData(projectId);
+        }
+    });
+}
+
+/**
+ * Khởi tạo chức năng kéo và thả cho các thẻ project.
  */
 function initKanbanDragDrop() {
     const draggables = document.querySelectorAll('.project-card');
@@ -850,8 +729,24 @@ function initKanbanDragDrop() {
             draggable.classList.add('dragging');
         });
 
-        draggable.addEventListener('dragend', () => {
+        draggable.addEventListener('dragend', async () => {
             draggable.classList.remove('dragging');
+
+            // Logic cập nhật trạng thái
+            const projectId = draggable.dataset.projectId;
+            const newColumn = draggable.closest('.kanban__col');
+            const newStatus = newColumn.dataset.status;
+            const workspaceId = document.getElementById('workspace-selector').value;
+
+            try {
+                // Gọi API để cập nhật trạng thái
+                await apiService.projects.update(workspaceId, projectId, { status: newStatus });
+                console.log(`Project ${projectId} moved to ${newStatus}`);
+            } catch (error) {
+                console.error('Failed to update project status:', error);
+                // Nếu lỗi, nên tải lại board để đảm bảo tính nhất quán
+                await loadKanbanData();
+            }
         });
     });
 
@@ -860,10 +755,12 @@ function initKanbanDragDrop() {
             e.preventDefault();
             const afterElement = getDragAfterElement(column, e.clientY);
             const dragging = document.querySelector('.dragging');
-            if (afterElement == null) {
-                column.appendChild(dragging);
-            } else {
-                column.insertBefore(dragging, afterElement);
+            if (dragging) { // Kiểm tra xem có phần tử đang kéo không
+                if (afterElement == null) {
+                    column.appendChild(dragging);
+                } else {
+                    column.insertBefore(dragging, afterElement);
+                }
             }
         });
     });
@@ -888,6 +785,5 @@ function getDragAfterElement(column, y) {
         }
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
-
 
 export default KanbanPage;
