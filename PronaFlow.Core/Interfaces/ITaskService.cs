@@ -1,4 +1,5 @@
-﻿using PronaFlow.Core.DTOs.Project;
+﻿using Microsoft.AspNetCore.Mvc;
+using PronaFlow.Core.DTOs.Project;
 using PronaFlow.Core.DTOs.Task;
 
 namespace PronaFlow.Core.Interfaces;
@@ -11,4 +12,6 @@ public interface ITaskService
 
     Task<bool> AssignUserToTaskAsync(long taskId, long assigneeId, long currentUserId);
     Task<bool> UnassignUserFromTaskAsync(long taskId, long assigneeId, long currentUserId);
+
+    Task<IEnumerable<TaskDto>> GetUpcomingTasksForUserAsync(long userId);
 }

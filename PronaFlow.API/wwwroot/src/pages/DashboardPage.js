@@ -125,17 +125,14 @@ function renderGreetingWidget() {
  * NOTE: This is a placeholder. You should replace this with actual API calls.
  */
 async function loadDashboardData() {
+    const upcomingTasksContainer = document.getElementById('upcoming-tasks');
+    // Hiển thị trạng thái chờ (loading spinner)
+    upcomingTasksContainer.innerHTML = '<div class="loading-spinner"></div>';
     try {
-        // --- In a real application, you would make API calls here ---
-        // const stats = await apiService.dashboard.getStatistics();
-        // const tasks = await apiService.tasks.getUpcoming();
-
-        // For now, we use placeholder data
-        const stats = { totalProjects: 5, tasksInProgress: 3, tasksOverdue: 1 };
-        const tasks = [
-            { id: 't001', name: 'Tạo Dashboard Mockup trên Figma', projectName: 'Project', taskListName: 'tl001', deadline: '2025-07-30', priority: 'high', status: 'in-progress' },
-            { id: 't002', name: 'Lập trình Sidebar Component', projectName: 'Project', taskListName: 'tl002', deadline: '2025-08-15', priority: 'high', status: 'not-started' }
-        ];
+        const [stats, tasks] = await Promise.all([
+            apiService.dashboard.getStatistics(),
+            apiService.tasks.getUpcoming()
+        ]);
         
         // Update UI with statistics
         document.getElementById('total-projects').textContent = stats.totalProjects;
@@ -147,7 +144,8 @@ async function loadDashboardData() {
 
     } catch (error) {
         console.error('Error loading dashboard data:', error);
-        // Optionally display an error message to the user
+        // Hiển thị thông báo lỗi thân thiện với người dùng
+        upcomingTasksContainer.innerHTML = `<div class="empty-state">Could not load dashboard data. Please try again later.</div>`;
     }
 }
 

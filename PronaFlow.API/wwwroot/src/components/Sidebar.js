@@ -3,7 +3,7 @@
 import { isAuthenticated, logout } from '../auth/authService.js';
 import { decodeToken } from '../utils/index.js';
 import store from '../store/store.js';
-import apiService  from '../api/apiService';
+import apiService  from '../api/apiService.js';
 
 const Sidebar = {
 

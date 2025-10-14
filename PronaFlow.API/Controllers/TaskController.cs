@@ -94,4 +94,20 @@ public class TasksController : ControllerBase
         if (!success) return NotFound();
         return NoContent();
     }
+
+    [HttpGet("/api/tasks/upcoming")] // Route ở cấp độ gốc
+    public async Task<IActionResult> GetUpcomingTasks()
+    {
+        try
+        {
+            var userId = GetCurrentUserId();
+            // Bạn sẽ cần thêm phương thức GetUpcomingTasksForUserAsync vào ITaskService và TaskService
+            var tasks = await _taskService.GetUpcomingTasksForUserAsync(userId);
+            return Ok(tasks);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

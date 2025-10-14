@@ -59,6 +59,9 @@ builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<IAttachmentService, AttachmentService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ITrashService, TrashService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
+
 
 // CORS Configuration: Allow any origin, header, and method (for development purposes)
 // In production, restrict this to specific origins

@@ -141,7 +141,8 @@ const apiService = {
         delete: async (id) => {
             await request(`/tasks/${id}`, 'DELETE');
             store.deleteTask(id);
-        }
+        },
+        getUpcoming: () => request('/tasks/upcoming', 'GET'),
     },
 
     // Notifications API
@@ -220,6 +221,10 @@ const apiService = {
         delete: (tagId) => request(`/tags/${tagId}`, 'DELETE')
     },
 
+    // Dashboard API
+    dashboard: {
+        getStatistics: () => request('/dashboard/statistics', 'GET'),
+    },
 
     // Utility methods
     utils: {

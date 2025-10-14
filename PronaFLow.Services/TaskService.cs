@@ -220,5 +220,38 @@ public class TaskService : ITaskService
         // ... Ghi log hoạt động bỏ gán
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<IEnumerable<TaskDto>> GetUpcomingTasksForUserAsync(long userId)
+    {
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var upcomingLimit = today.AddDays(7); // Lấy các công việc trong vòng 7 ngày tới
+
+        var upcomingTasks = await _context.Tasks
+            // Chỉ lấy các task được gán cho người dùng này
+            .Where(t => t.Users.Any(u => u.Id == userId))
+            // Loại bỏ các task đã xóa hoặc đã hoàn thành
+            .Where(t => !t.IsDeleted && t.Status != "done")
+            // Lọc các task có ngày hết hạn trong tương lai gần
+            .Where(t => t.EndDate != null && t.EndDate.Value.Date >= DateTime.UtcNow.Date && t.EndDate.Value.Date <= DateTime.UtcNow.Date.AddDays(7))
+            // Sắp xếp các task đến hạn sớm nhất lên đầu
+            .OrderBy(t => t.EndDate)
+            // Giới hạn số lượng kết quả để tránh quá tải
+            .Take(10)
+            .Select(t => new TaskDto
+            {
+                Id = t.Id,
+                Name = t.Name,
+                Status = t.Status,
+                Priority = t.Priority,
+                //EndDate = t.EndDate,
+                ProjectId = t.ProjectId,
+                // Bạn có thể join thêm để lấy ProjectName và TaskListName nếu cần
+                // ProjectName = t.Project.Name, 
+                // TaskListName = t.TaskList.Name 
+            })
+            .ToListAsync();
+
+        return upcomingTasks;
+    }
 }
 
