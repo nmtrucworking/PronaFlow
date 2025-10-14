@@ -4,7 +4,7 @@ Mô tả chi tiết nghiệp vụ đối với các bảng dữ liệu
 | ----------------------- | -------------------------- | --- |
 | users                   | [[UserFlow - Users]]       |     |
 | workspaces              | [[UserFlow - Workspaces]]  |     |
-| projects                | [[UserFlow - projects]]    |     |
+| projects                | [[UserFlow - Projects]]    |     |
 | task_lists              | [[UserFlow - task_lists]]  |     |
 | tasks                   | [[UserFlow - Task-list]]       |     |
 | subtasks                | [[UserFlow - Subtasks]]    |     |

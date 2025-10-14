@@ -14,7 +14,7 @@
         - `POST /api/change-password`, `POST /api/forgot-password`, `POST /api/reset-password`: Triển khai đầy đủ luồng quản lý mật khẩu, bao gồm việc sử dụng bảng `password_resets`.
             
     - **Authentication:** Áp dụng cơ chế xác thực bằng JWT (JSON Web Tokens) như đã đề cập trong `UserFlow - More.md`. Server sẽ cấp `access_token` (ngắn hạn) và `refresh_token` (dài hạn) để duy trì phiên đăng nhập an toàn.
-![[Cấu hình project.png]]
+![[Cấu hình cài đặt project (VS).png]]
 1. **Phát Triển API Quản Lý Không Gian Làm Việc (Workspaces):**
     
     - **Nghiệp vụ tự động:** Triển khai trigger hoặc logic ở tầng ứng dụng để tự động tạo một Workspace mặc định ngay sau khi một người dùng mới đăng ký thành công. Tên workspace có thể là `{user-name}'s Workspace`.
