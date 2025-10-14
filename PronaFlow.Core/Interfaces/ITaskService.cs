@@ -5,7 +5,8 @@ namespace PronaFlow.Core.Interfaces;
 
 public interface ITaskService
 {
-    Task<IEnumerable<TaskDto>> GetTasksForProjectAsync(long projectId, long userId, TaskQueryParameters queryParams); Task<TaskDto> CreateTaskAsync(long taskListId, TaskCreateDto dto, long creatorId);
+    Task<IEnumerable<TaskDto>> GetTasksForProjectAsync(long projectId, long userId, TaskQueryParameters queryParams);
+    Task<TaskDto> CreateTaskAsync(long taskListId, TaskCreateDto dto, long creatorId);
     Task<bool> SoftDeleteTaskAsync(long taskId, long userId);
 
     Task<bool> AssignUserToTaskAsync(long taskId, long assigneeId, long currentUserId);
