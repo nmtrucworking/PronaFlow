@@ -154,6 +154,32 @@ const apiService = {
         markAsRead: (id) => request(`/notifications/${id}/read`, 'PUT')
     },
 
+    // Trash API
+    trash: {
+        /**
+         * Lấy tất cả các mục (dự án, công việc) đã bị xóa.
+         * @returns {Promise<Array>} Danh sách các mục trong thùng rác.
+         */
+        getTrashedItems: () => request('/trash', 'GET'),
+
+        /**
+         * Khôi phục một mục đã xóa.
+         * @param {string} itemType - Loại mục ('Project' hoặc 'Task').
+         * @param {number} itemId - ID của mục cần khôi phục.
+         * @returns {Promise<any>}
+         */
+        restoreItem: (itemType, itemId) => request(`/trash/restore/${itemType}/${itemId}`, 'POST'),
+
+        /**
+         * Xóa vĩnh viễn một mục.
+         * @param {string} itemType - Loại mục ('Project' hoặc 'Task').
+         * @param {number} itemId - ID của mục cần xóa.
+         * @returns {Promise<any>}
+         */
+        deletePermanently: (itemType, itemId) => request(`/trash/permanent/${itemType}/${itemId}`, 'DELETE'),
+    },
+
+
     // Utility methods
     utils: {
         get: (endpoint) => request(endpoint, 'GET'),
