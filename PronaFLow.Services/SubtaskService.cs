@@ -49,7 +49,13 @@ public class SubtaskService : ISubtaskService
         await _context.Subtasks.AddAsync(subtask);
         await _context.SaveChangesAsync();
 
-        return new SubtaskDto { /* ... map properties ... */ };
+        return new SubtaskDto {
+            Id = subtask.Id,
+            TaskId = subtask.TaskId,
+            Name = subtask.Name,
+            IsCompleted = subtask.IsCompleted,
+            Position = subtask.Position
+        };
     }
 
     public async Task<bool> DeleteSubtaskAsync(long subtaskId, long userId)
