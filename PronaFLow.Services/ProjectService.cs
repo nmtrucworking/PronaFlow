@@ -2,6 +2,7 @@
 using PronaFlow.Core.Data;
 using PronaFlow.Core.DTOs.Member;
 using PronaFlow.Core.DTOs.Project;
+using PronaFlow.Core.DTOs.Tag;
 using PronaFlow.Core.Interfaces;
 using PronaFlow.Core.Models;
 using System.Security;
@@ -68,6 +69,10 @@ public class ProjectService : IProjectService
     {
         return await _context.Projects
             .Where(p => p.WorkspaceId == workspaceId && p.IsDeleted == false && p.ProjectMembers.Any(pm => pm.UserId == userId))
+            .Include(p => p.ProjectMembers) // Nạp thông tin thành viên
+            .ThenInclude(pm => pm.User)   // Nạp thông tin chi tiết của User
+            .Include(p => p.Tags)           // Nạp thông tin tags
+            .Include(p => p.Tasks)          // Nạp thông tin tasks để đếm
             .Select(p => new ProjectDto
             {
                 Id = p.Id,
@@ -78,7 +83,21 @@ public class ProjectService : IProjectService
                 Status = p.Status,
                 ProjectType = p.ProjectType,
                 StartDate = p.StartDate,
-                EndDate = p.EndDate
+                EndDate = p.EndDate,
+                Members = p.ProjectMembers.Select(pm => new MemberDto
+                {
+                    UserId = pm.UserId,
+                    FullName = pm.User.FullName,
+                    // AvatarUrl = pm.User.AvatarUrl // Cần thêm AvatarUrl vào MemberDto và User model
+                }).ToList(),
+                Tags = p.Tags.Select(t => new TagDto
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    ColorHex = t.ColorHex
+                }).ToList(),
+                TotalTasks = p.Tasks.Count(),
+                CompletedTasks = p.Tasks.Count(t => t.Status == "done")
             })
             .ToListAsync();
     }

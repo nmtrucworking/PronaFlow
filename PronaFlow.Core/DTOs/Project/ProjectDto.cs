@@ -1,4 +1,6 @@
 namespace PronaFlow.Core.DTOs.Project;
+using PronaFlow.Core.DTOs.Member;
+using PronaFlow.Core.DTOs.Tag;
 
 public class ProjectDto
 {
@@ -16,4 +18,9 @@ public class ProjectDto
     public bool IsArchived { get; set; } = false;
     public bool IsDeleted { get; set; } = false;
     public DateOnly? DeletedAt { get; set; }
+
+    public ICollection<MemberDto> Members { get; set; } = new List<MemberDto>();
+    public ICollection<TagDto> Tags { get; set; } = new List<TagDto>();
+    public int TotalTasks { get; set; }
+    public int CompletedTasks { get; set; }
 }

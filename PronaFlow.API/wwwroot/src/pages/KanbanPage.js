@@ -1,7 +1,6 @@
 import { isAuthenticated } from '../auth/authService.js';
 import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
 import { initializeProjectDetailModal, showProjectDetailModal, populateModalWithData } from '../components/project-modal.js';
-import { autoResizeTextarea } from '../utils/utils.js';
 import store from '../store/store.js';
 import apiService from '../api/apiService.js';
 
@@ -706,20 +705,24 @@ function createProjectCard(project) {
 function initializeAddProjectButtons() {
     document.querySelectorAll('.add-project-btn').forEach(button => {
         button.addEventListener('click', async (e) => {
-            const column = e.target.closest('.kanban__col');
-            const status = column.dataset.status;
-
-            const projectName = prompt(`Enter new project name for "${status}" status:`);
-
+            // ... logic lấy projectName ...
             if (projectName && projectName.trim() !== '') {
-                const workspaceId = document.getElementById('workspace-selector').value;
+                // ...
                 try {
-                    await apiService.projects.create(workspaceId, {
+                    // API giờ đã trả về đầy đủ thông tin
+                    const newProject = await apiService.projects.create(workspaceId, {
                         name: projectName.trim(),
                         status: status
                     });
-                    // Tải lại toàn bộ board để cập nhật
-                    await loadKanbanData();
+                    
+                    // Thay vì tải lại toàn bộ, chỉ cần thêm card mới
+                    const projectCardHtml = createProjectCard(newProject);
+                    const column = document.querySelector(`.kanban__col[data-status="${status}"] .list-card`);
+                    if (column) {
+                        column.insertAdjacentHTML('beforeend', projectCardHtml);
+                        lucide.createIcons(); // Cập nhật icon cho card mới
+                    }
+
                 } catch (error) {
                     console.error("Failed to create project:", error);
                     alert("Error: Could not create the project.");
