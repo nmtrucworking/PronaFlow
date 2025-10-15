@@ -317,9 +317,9 @@ const KanbanPage = {
 
         <div class="divider"></div>
 
-        <div class="kanban-view hide-scrollbar">
+        <div id="kanban-view" class="kanban-view hide-scrollbar">
             <!--------------------------------------- Col: Temp  --------------------------------------->
-            <div class="kanban__col">
+            <div class="kanban__col" data-status="temp">
                 <div class="kanban-column__header">
                     <button class="btn icon-btn">
                         <i data-lucide="plus" class="btn-icon"></i>
@@ -363,9 +363,9 @@ const KanbanPage = {
                 </div>
             </div>
             <!----- Col: Not Started ------->
-            <div class="kanban__col">
+            <div class="kanban__col" data-status="not-started">
                 <div class="kanban-column__header">
-                    <button class="btn icon-btn">
+                    <button class="btn icon-btn add-project-btn">
                         <i data-lucide="plus" class="btn-icon"></i>
                     </button>
                     <h3>Not Started</h3>
@@ -407,9 +407,9 @@ const KanbanPage = {
                 </div>
             </div>
             <!------- Col: In Progress --------->
-            <div class="kanban__col hide-scrollbar">
+            <div class="kanban__col hide-scrollbar" data-status="in-progress">
                 <div class="kanban-column__header">
-                    <button class="btn icon-btn">
+                    <button class="btn icon-btn add-project-btn">
                         <i data-lucide="plus" class="btn-icon"></i>
                     </button>
                     <h3>In Progress</h3>
@@ -451,9 +451,9 @@ const KanbanPage = {
                 </div>
             </div>
             <!--------------------------------------- Col: In Review --------------------------------------->
-            <div class="kanban__col hide-scrollbar">
+            <div class="kanban__col hide-scrollbar" data-status="in-review">
                 <div class="kanban-column__header">
-                    <button class="btn icon-btn">
+                    <button class="btn icon-btn add-project-btn">
                         <i data-lucide="plus" class="btn-icon"></i>
                     </button>
                     <h3>In Review</h3>
@@ -495,9 +495,9 @@ const KanbanPage = {
                 </div>
             </div>
             <!--------------------------------------- Col: Done --------------------------------------->
-            <div class="kanban__col hide-scrollbar">
+            <div class="kanban__col hide-scrollbar" data-status="done">
                 <div class="kanban-column__header">
-                    <button class="btn icon-btn">
+                    <button class="btn icon-btn add-project-btn">
                         <i data-lucide="plus" class="btn-icon"></i>
                     </button>
                     <h3>Done</h3>
@@ -568,8 +568,6 @@ const KanbanPage = {
                 loadKanbanData();
             });
         }
-
-
         await loadKanbanData();
         initializeAddProjectButtons();
         initializeProjectCardClicks();
@@ -639,6 +637,23 @@ function renderProjects(projects) {
  * @returns {string} - Chuỗi HTML.
  */
 function createProjectCard(project) {
+    // 1. Render Tags
+    const tagsHtml = project.tags && project.tags.length > 0
+        ? `<div class="prj-card-tags-group">
+               ${project.tags.map(tag => `<div class="prj-card-tag" style="background-color: ${tag.colorHex};"></div>`).join('')}
+           </div>`
+        : '';
+    
+    // 2. Render TaskStatics
+    const taskProgressHtml = (project.totalTasks > 0)
+        ? `<div class="prj-card-total-task prj-attribute">
+               <i data-lucide="circle-check-big" class="prj-card-icon"></i>
+               <span>${project.completedTasks || 0}</span>
+               <span>/</span>
+               <span>${project.totalTasks}</span>
+           </div>`
+        : '';
+    
     // Logic tính toán countdown (ví dụ)
     const endDate = project.endDate ? new Date(project.endDate) : null;
     let countdownHtml = '';
@@ -653,23 +668,36 @@ function createProjectCard(project) {
         }
     }
 
+    const membersHtml = project.members && project.members.length > 0
+        ? `<div class="prj-card-members">
+               ${project.members.map(member => `<img src="${member.avatarUrl || '../assets/images/avt-notion_1.png'}" alt="Member Avatar" class="prj-member">`).join('')}
+           </div>`
+        : '';
+
     return `
     <div class="project-card" draggable="true" data-project-id="${project.id}">
-        <div class="prj-card-project-name prj-attribute">
-            <label class="custom-checkbox">
-                <input type="checkbox" name="project-status" ${project.status === 'done' ? 'checked' : ''}>
-                <span class="custom-checkbox__checkmark round"></span>
-            </label>
-            <span>${project.name}</span>
+        <div class="prj-card-attributes">
+            <!-- tags -->
+            ${tagsHtml}
+            <!-- project name -->
+            <div class="prj-card-project-name prj-attribute">
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="project-status" ${project.status === 'done' ? 'checked' : ''}>
+                    <span class="custom-checkbox__checkmark round"></span>
+                </label>
+                <span>${project.name}</span>
+            </div>
+            <div class="prj-card-deadline prj-attribute">
+                 <i data-lucide="clock" class="prj-card-icon"></i>
+                 <span>${project.startDate || '...'}</span>
+                 <span>-</span>
+                 <span>${project.endDate || '...'}</span>
+            </div>
+            ${countdownHtml}
+            ${taskProgressHtml}    
         </div>
-        <div class="prj-card-deadline prj-attribute">
-             <i data-lucide="clock" class="prj-card-icon"></i>
-             <span>${project.startDate || '...'}</span>
-             <span>-</span>
-             <span>${project.endDate || '...'}</span>
-        </div>
-        ${countdownHtml}
-        </div>`;
+        ${membersHtml}
+    </div>`;
 }
 
 /**
