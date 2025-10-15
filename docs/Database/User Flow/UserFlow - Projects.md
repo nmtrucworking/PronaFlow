@@ -45,22 +45,24 @@ Hệ thống cung cấp 3 cách để cập nhật trạng thái của một d�
 # **3. Nghiệp vụ Cập nhật Chi tiết Dự án (Update Project Details)**
 Các hành động này chủ yếu diễn ra trong `projectDetailModal`.
 
-| Thành phần Giao diện                    | Nghiệp vụ Backend                                                                                                                                                                                                                                                                 | File nghiệp vụ liên quan    |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| **Project Title** (inline-editable)     | Cập nhật trường `projects.name`. Ghi `activity` với `action_type = 'project_update_details'`.                                                                                                                                                                                     | `Database - PronaFlow.md`   |
-| **Description** (textarea)              | Cập nhật trường `projects.description`. Ghi `activity` tương tự.                                                                                                                                                                                                                  | `Database - PronaFlow.md`   |
-| **Manage Members**                      | Thêm/Xóa bản ghi trong bảng `project_members`. Khi thêm thành viên đầu tiên, **tự động chuyển `projects.project_type` từ `'personal'` sang `'team'`**. Ghi `activity` với `action_type = 'project_add_member'` hoặc `project_remove_member` và gửi thông báo cho người liên quan. | `UserFlow - Projects.md`    |
-| **Manage Tags**                         | Thêm/Xóa bản ghi trong bảng nối `project_tags`. Cho phép tạo `tag` mới (thêm bản ghi vào bảng `tags` với `workspace_id` hiện tại).                                                                                                                                                | `Database - PronaFlow.md`   |
-| **Deadline** (`start_date`, `end_date`) | Cập nhật các trường `start_date` và `end_date` trong bảng `projects`.                                                                                                                                                                                                             | `Database - PronaFlow.md`   |
-| **Attachment** / **Cover Image**        | Tạo bản ghi mới trong bảng `attachments` với `attachable_id` là ID của dự án và `attachable_type` là `'project'`. Đối với ảnh bìa, cập nhật `projects.cover_image_url`.                                                                                                           | `UserFlow - Attachments.md` |
+| Thành phần Giao diện                    | Nghiệp vụ Backend                                                                                                                                                                                                                                                                 | File nghiệp vụ liên quan   |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| **Project Title** (inline-editable)     | Cập nhật trường `projects.name`. Ghi `activity` với `action_type = 'project_update_details'`.                                                                                                                                                                                     | [[Database - PronaFlow]]   |
+| **Description** (textarea)              | Cập nhật trường `projects.description`. Ghi `activity` tương tự.                                                                                                                                                                                                                  | [[Database - PronaFlow]]   |
+| **Manage Members**                      | Thêm/Xóa bản ghi trong bảng `project_members`. Khi thêm thành viên đầu tiên, **tự động chuyển `projects.project_type` từ `'personal'` sang `'team'`**. Ghi `activity` với `action_type = 'project_add_member'` hoặc `project_remove_member` và gửi thông báo cho người liên quan. | [[UserFlow - Projects]]    |
+| **Manage Tags**                         | Thêm/Xóa bản ghi trong bảng nối `project_tags`. Cho phép tạo `tag` mới (thêm bản ghi vào bảng `tags` với `workspace_id` hiện tại).                                                                                                                                                | [[Database - PronaFlow]]   |
+| **Deadline** (`start_date`, `end_date`) | Cập nhật các trường `start_date` và `end_date` trong bảng `projects`.                                                                                                                                                                                                             | [[Database - PronaFlow]]   |
+| **Attachment** / **Cover Image**        | Tạo bản ghi mới trong bảng `attachments` với `attachable_id` là ID của dự án và `attachable_type` là `'project'`. Đối với ảnh bìa, cập nhật `projects.cover_image_url`.                                                                                                           | [[UserFlow - Attachments]] |
+
 ## Logic của `project_type`
 1. value: `true` - `personal`: 
-	- Khi một dự án được tạo với type `personal`, nó chỉ thuộc về và hiển thị cho người dùng đã tạo ra nó (owner_id của workspace chứa nó).
-	- Mặc định khi người dùng tạo dự án mới, type sẽ là personal.
-	- Khi personal project được owner thêm thành viên (add member(s)) thì thuộc tính `project_type` sẽ được chuyển từ `personal` -> `team`.
-2. value: `false` - `team`:
-	- Khi một dự án được tạo với type `team`, người tạo có thể mời các `users` khác tham gia vào dự án đó (thêm bản ghi vào `project_members`).
-	- Dự án này sẽ hiển thị cho tất cả các thành viên trong danh sách dự án của họ.
+	- Khi một dự án được tạo với type `'personal'`, nó chỉ thuộc về và hiển thị cho người dùng đã tạo ra nó (owner_id của workspace chứa nó).
+	- Mặc định khi người dùng tạo dự án mới, type sẽ là `'personal'`.
+	- Khi personal-project được owner thêm thành viên (add member(s)) thì thuộc tính `project_type` sẽ được chuyển từ `'personal'` -> `'team'`.
+2. value: `false` - `'team'`:
+	- Khi một dự án được tạo với type `'team'`, người tạo có thể mời các `users` khác tham gia vào dự án đó (thêm bản ghi vào `project_members`).
+	- Dự án này sẽ hiển thị cho tất cả các thành
+	- viên trong danh sách dự án của họ.
 # 4. Nghiệp vụ Actions trong Project Detail Modal
 Phần này mô tả chi tiết các luồng xử lý cho các nút chức năng trong sidebar của modal chi tiết dự án.
 ### **a. Nghiệp vụ Lưu trữ Dự án (Archive Project)**
@@ -85,7 +87,7 @@ Cho phép người dùng ẩn một dự án khỏi giao diện làm việc chí
     - `target_type`: `'project'`.
 4. **Phản hồi (Response):**
     - Nếu thành công: Trả về #200-OK. Frontend sẽ đóng modal và ẩn dự án khỏi các giao diện chính (như Kanban board).
-    - Nếu thất bại: Trả về lỗi `4xx` (ví dụ: `403 Forbidden` nếu không có quyền).
+    - Nếu thất bại: Trả về lỗi #4xx (ví dụ: `403 Forbidden` nếu không có quyền).
 ### **b. Nghiệp vụ Di chuyển Dự án (Move Project)**
 Cho phép người dùng di chuyển một dự án từ workspace này sang một workspace khác mà họ sở hữu.
 #### **Frontend:**
@@ -106,8 +108,8 @@ Cho phép người dùng di chuyển một dự án từ workspace này sang m�
     - Tạo một bản ghi `activities` với `action_type = 'project_move_workspace'` (Cần thêm giá trị ENUM này).
     - `content` có thể lưu `{ "old_workspace_id": X, "new_workspace_id": Y }`.
 6. **Phản hồi (Response):**
-    - Nếu thành công: Trả về `200 OK`. Frontend sẽ làm mới lại danh sách dự án trong cả hai workspace.
-    - Nếu thất bại: Trả về lỗi `4xx`.
+    - Nếu thành công: Trả về #200-OK. Frontend sẽ làm mới lại danh sách dự án trong cả hai workspace.
+    - Nếu thất bại: Trả về lỗi #4xx.
 ### **c. Nghiệp vụ Nhân bản Dự án (Duplicate Project)**
 Cho phép người dùng tạo một bản sao của một dự án hiện có.
 #### **Frontend:**
@@ -127,5 +129,5 @@ Cho phép người dùng tạo một bản sao của một dự án hiện có.
     - Tạo một bản ghi `activities` với `action_type = 'project_duplicate'` (Cần thêm giá trị ENUM này).
     - `content` có thể lưu `{ "source_project_id": X, "new_project_id": Y }`.
 4. **Phản hồi (Response):**
-    - Nếu thành công: Trả về `201 Created` cùng với thông tin của dự án mới. Frontend sẽ hiển thị dự án mới này trong workspace.
-    - Nếu thất bại: Trả về lỗi `4xx` hoặc `500 Internal Server Error` nếu quá trình sao chép phức tạp gặp lỗi.
+    - Nếu thành công: Trả về #201-Created cùng với thông tin của dự án mới. Frontend sẽ hiển thị dự án mới này trong workspace.
+    - Nếu thất bại: Trả về lỗi #4xx hoặc `500 Internal Server Error` nếu quá trình sao chép phức tạp gặp lỗi.

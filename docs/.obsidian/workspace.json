@@ -4,67 +4,36 @@
     "type": "split",
     "children": [
       {
-        "id": "18761be9bea12404",
+        "id": "df8e745604888ffe",
         "type": "tabs",
         "children": [
           {
-            "id": "db427789c85f4c9f",
+            "id": "398fb8882975cc62",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Chi tiết Bước 6 - API Manager Workspace (CRUD).md",
+                "file": "Database/User Flow/UserFlow - Workspace.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chi tiết Bước 6 - API Manager Workspace (CRUD)"
-            },
-            "group": "8546a413d94aed0d"
-          }
-        ]
-      },
-      {
-        "id": "b581e91cc2c36210",
-        "type": "tabs",
-        "children": [
+              "title": "UserFlow - Workspace"
+            }
+          },
           {
-            "id": "12e53af11077e7fc",
+            "id": "94e74f315c2dfaf4",
             "type": "leaf",
             "state": {
-              "type": "localgraph",
+              "type": "markdown",
               "state": {
-                "file": "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Chi tiết Bước 6 - API Manager Workspace (CRUD).md",
-                "options": {
-                  "collapse-filter": true,
-                  "search": "",
-                  "localJumps": 1,
-                  "localBacklinks": true,
-                  "localForelinks": true,
-                  "localInterlinks": false,
-                  "showTags": false,
-                  "showAttachments": false,
-                  "hideUnresolved": false,
-                  "collapse-color-groups": true,
-                  "colorGroups": [],
-                  "collapse-display": true,
-                  "showArrow": false,
-                  "textFadeMultiplier": 0,
-                  "nodeSizeMultiplier": 1,
-                  "lineSizeMultiplier": 1,
-                  "collapse-forces": true,
-                  "centerStrength": 0.518713248970312,
-                  "repelStrength": 10,
-                  "linkStrength": 1,
-                  "linkDistance": 250,
-                  "scale": 1,
-                  "close": false
-                }
+                "file": "Database/Database - PronaFlow.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-git-fork",
-              "title": "Graph of Chi tiết Bước 6 - API Manager Workspace (CRUD)"
-            },
-            "group": "8546a413d94aed0d"
+              "icon": "lucide-file",
+              "title": "Database - PronaFlow"
+            }
           }
         ]
       }
@@ -123,7 +92,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 397.5
+    "width": 397.5,
+    "collapsed": true
   },
   "right": {
     "id": "7ed4e8f5e29b036a",
@@ -214,11 +184,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "b9ca96124e557d67",
+  "active": "398fb8882975cc62",
   "lastOpenFiles": [
+    "Database/User Flow/UserFlow - Projects.md",
+    "Database/Database - PronaFlow.md",
+    "Database/User Flow/UserFlow - Tags.md",
+    "Database/User Flow/UserFlow - Task.md",
+    "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Chi tiết Bước 6 - API Manager Workspace (CRUD).md",
     "Test API.md",
     "API - Application Programming Interface.md",
-    "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Chi tiết Bước 6 - API Manager Workspace (CRUD).md",
     "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Test CRUD API.md",
     "Code flow - Backend/Boilerplate.md",
     "Root Folder.md",
@@ -239,12 +213,8 @@
     "img",
     "img/Cấu hình cài đặt project (VS).png",
     "Resources/Standard HTML Form.md",
-    "Database/Database - PronaFlow.md",
     "PronaFlow by using C#-sharp/Step/BackEnd + FrontEnd.md",
     "PronaFlow by using C#-sharp/Step/Phrase2-Detail",
-    "PronaFlow by using C#-sharp/Step/Phrase2-Detail/Test Endpoint  - Project.md",
-    "PronaFlow by using C#-sharp/Step/Phrase1 - API.md",
-    "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Get Connect String - SQL Server.md",
     "PronaFlow by using C#-sharp/Step/Phrase1-Detail",
     "PronaFlow by using C#-sharp/Step",
     "PronaFlow by using C#-sharp",

@@ -71,7 +71,7 @@ const apiService = {
             const response = await request('/auth/login', 'POST', credentials);
             if (response && response.token) {
                 localStorage.setItem('authToken', response.token);
-                // **FIX:** Sau khi có token, gọi API để lấy thông tin người dùng
+                // Sau khi có token, gọi API để lấy thông tin người dùng
                 await apiService.auth.getCurrentUser();
             }
             return response;
@@ -116,13 +116,11 @@ const apiService = {
 
     // Task API
     tasks: {
-        // **FIX:** Thêm projectId và queryParams để khớp với backend
         getAll: (projectId, queryParams = {}) => {
             const queryString = new URLSearchParams(queryParams).toString();
             return request(`/projects/${projectId}/tasks?${queryString}`, 'GET');
         },
         getById: (id) => request(`/tasks/${id}`, 'GET'),
-        // **FIX:** Thêm taskListId để khớp với backend
         create: (taskListId, task) => {
             const newTask = request(`/tasklists/${taskListId}/tasks`, 'POST', task);
             if (newTask) {

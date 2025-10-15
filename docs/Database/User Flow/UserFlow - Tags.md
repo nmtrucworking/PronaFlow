@@ -17,12 +17,11 @@ Hệ thống cho phép tạo tag mới từ hai nơi: trang Cài đặt và moda
     - Đảm bảo người dùng đã đăng nhập và có quyền quản lý (`admin`/`owner`) trong `workspace` được chọn.  
 2. **Validation**:
     - `name` và `color_hex` không được để trống.
-    - `name` của tag phải là duy nhất trong cùng một `workspace_id` (không thể có hai tag tên "Bug" trong cùng một workspace).
 3. **Lưu vào Database (`tags`):**
     - Tạo một bản ghi mới trong bảng `tags` với `name`, `color_hex` và `workspace_id` đã cung cấp.
 4. **Phản hồi (Response):**
     - **Thành công**: Trả về `201 Created` cùng với thông tin tag mới. Giao diện sẽ hiển thị tag mới trong danh sách.
-    - **Thất bại**: Trả về `4xx` với thông báo lỗi (ví dụ: tên tag đã tồn tại).
+    - **Thất bại**: Trả về #4xx với thông báo lỗi (ví dụ: tên tag đã tồn tại).
 ## **b. Tạo Tag từ Modal Chi tiết Dự án (Shortcut)**
 Đây là luồng tạo nhanh khi đang làm việc.
 ### **Frontend:**
@@ -37,12 +36,12 @@ Hệ thống cho phép tạo tag mới từ hai nơi: trang Cài đặt và moda
 ## **Backend:**
 > **_API Endpoint_**: `PUT /api/tags/{tag_id}`
 1. **Xác thực & Ủy quyền**: Đảm bảo người dùng có quyền quản lý `workspace` chứa tag này.
-2. **Validation**: Tương tự như khi tạo mới, tên tag sau khi sửa không được trùng với các tag khác trong cùng workspace.
+2. **Validation**: Tương tự như khi tạo mới.
 3. **Cập nhật Database (`tags`):**
     - Cập nhật lại `name` và/hoặc `color_hex` cho bản ghi có `tag_id` tương ứng trong bảng `tags`.   
 4. **Phản hồi (Response):**
-    - **Thành công**: Trả về `200 OK`. Giao diện cập nhật lại thông tin tag.
-    - **Thất bại**: Trả về `4xx`.
+    - **Thành công**: Trả về #200-OK. Giao diện cập nhật lại thông tin tag.
+    - **Thất bại**: Trả về #4xx.
 # **3. Nghiệp vụ Xóa Tag (Delete Tag)**
 ## **Frontend:**
 1. **Giao diện**: Tại trang "Tags Management", bên cạnh mỗi tag sẽ có nút "Delete".
@@ -55,8 +54,8 @@ Hệ thống cho phép tạo tag mới từ hai nơi: trang Cài đặt và moda
 3. **Xóa Tag (`tags`):**
     - Sau khi đã xóa các liên kết, xóa bản ghi tag khỏi bảng `tags`. `DELETE FROM tags WHERE id = ?`
 4. **Phản hồi (Response):**
-    - **Thành công**: Trả về `200 OK`. Giao diện sẽ xóa tag khỏi danh sách.
-    - **Thất bại**: Trả về `4xx`.
+    - **Thành công**: Trả về #200-OK. Giao diện sẽ xóa tag khỏi danh sách.
+    - **Thất bại**: Trả về #4xx.
 # **4. Nghiệp vụ Gán và Gỡ Tag khỏi Dự án (Assign & Unassign)**
 ## **Frontend:**
 1. **Giao diện**: Trong modal chi tiết dự án, người dùng mở popover quản lý tags (`manageTagsPopover`).
@@ -66,9 +65,9 @@ Hệ thống cho phép tạo tag mới từ hai nơi: trang Cài đặt và moda
 1. **Xác thực & Ủy quyền**: Đảm bảo người dùng là thành viên (`member`/`admin`) của dự án.
 2. **Input**: Backend nhận một mảng chứa ID của tất cả các tag sẽ được áp dụng cho dự án (ví dụ: `[1, 5, 12]`).
 3. **Cập nhật Database (`project_tags`):**
-    - **Chiến lược "Thay thế toàn bộ" (проста і надзейна):**
+    - **Chiến lược "Thay thế toàn bộ":**
         1. Xóa tất cả các bản ghi hiện có của `project_id` trong bảng `project_tags`.
         2. Lặp qua mảng `tag_id` nhận được từ frontend, với mỗi `tag_id`, tạo một bản ghi mới trong `project_tags`.
 4. **Phản hồi (Response):**
-    - **Thành công**: Trả về `200 OK`. Giao diện cập nhật lại danh sách tag của dự án.
-    - **Thất bại**: Trả về `4xx`.
+    - **Thành công**: Trả về #200-OK. Giao diện cập nhật lại danh sách tag của dự án.
+    - **Thất bại**: Trả về #4xx.
