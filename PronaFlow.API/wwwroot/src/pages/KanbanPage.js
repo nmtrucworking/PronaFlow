@@ -3,6 +3,7 @@ import { loadSidebarAndSetActiveLink } from '../components/Sidebar.js';
 import { initializeProjectDetailModal, showProjectDetailModal, populateModalWithData } from '../components/project-modal.js';
 import { autoResizeTextarea } from '../utils/utils.js';
 import store from '../store/store.js';
+import apiService from '../api/apiService.js';
 
 const KanbanPage = {
     /**
@@ -587,7 +588,7 @@ async function loadKanbanData() {
 
     const workspaceId = workspaceSelector.value;
     if (!workspaceId) {
-        kanbanView.querySelectorAll('.list-card').forEach(col => col.innerHTML = ''); // Xóa board
+        kanbanView.querySelectorAll('.list-card').forEach(col => col.innerHTML = '');
         workspaceNameEl.textContent = "Please select a workspace";
         return;
     }
@@ -600,7 +601,6 @@ async function loadKanbanData() {
         renderProjects(projects);
     } catch (error) {
         console.error("Failed to load projects:", error);
-        // Có thể hiển thị thông báo lỗi cho người dùng ở đây
     }
 }
 
