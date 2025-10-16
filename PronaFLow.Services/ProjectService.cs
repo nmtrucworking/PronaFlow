@@ -88,7 +88,7 @@ public class ProjectService : IProjectService
                 {
                     UserId = pm.UserId,
                     FullName = pm.User.FullName,
-                    // AvatarUrl = pm.User.AvatarUrl // Cần thêm AvatarUrl vào MemberDto và User model
+                    //AvatarUrl = pm.User.AvatarUrl // Cần thêm AvatarUrl vào MemberDto và User model
                 }).ToList(),
                 Tags = p.Tags.Select(t => new TagDto
                 {
