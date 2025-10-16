@@ -88,11 +88,6 @@ const MyCalendarPage = {
             </aside>
         </div>
     </main>
-
-    <button id="sidebar-toggle-button" class="sidebar-toggle">
-        <i class="icon-open" data-lucide="chevrons-left"></i>
-        <i class="icon-closed" data-lucide="chevrons-right"></i>
-    </button>
     
     <!-- =============================================================== -->
     <!--                  NEW: POPOVER COMPONENTS                        -->

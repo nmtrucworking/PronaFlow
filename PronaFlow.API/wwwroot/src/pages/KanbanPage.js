@@ -539,12 +539,7 @@ const KanbanPage = {
         </div>
 
 
-    </main>
-
-    <button id="sidebar-toggle-button" class="sidebar-toggle" type="button">
-        <i class="icon-open" data-lucide="chevrons-left"></i>
-        <i class="icon-closed" data-lucide="chevrons-right"></i>
-    </button>`;
+    </main>`;
     },
 
     /**

@@ -73,13 +73,7 @@ const NotificationPage = {
                     <button class="btn btn--tertiary">Cancel</button>
                     <button class="btn btn--primary">Confirm</button>
                 </div>
-            </div>
-
-            <button id="sidebar-toggle-button" class="sidebar-toggle">
-                <i class="icon-open" data-lucide="chevrons-left"></i>
-                <i class="icon-closed" data-lucide="chevrons-right"></i>
-            </button>
-        `;
+            </div>`;
     },
     
     /**

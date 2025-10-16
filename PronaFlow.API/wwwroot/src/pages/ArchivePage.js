@@ -71,12 +71,7 @@ const ArchivePage = {
                 <span>Restore</span>
             </button>
         </div>
-    </div>
-
-    <button id="sidebar-toggle-button" class="sidebar-toggle">
-        <i class="icon-open" data-lucide="chevrons-left"></i>
-        <i class="icon-closed" data-lucide="chevrons-right"></i>
-    </button>`;
+    </div>`;
     },
 
     after_render: async () => {
