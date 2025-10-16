@@ -8,6 +8,24 @@
 
 USE db_PronaFlow;
 GO
+SELECT * FROM notification_recipients;
+SELECT * FROM task_dependencies;
+SELECT * FROM project_tags;
+SELECT * FROM task_assignees;
+SELECT * FROM project_members;
+SELECT * FROM password_resets;
+SELECT * FROM user_preferences;
+SELECT * FROM comments;
+SELECT * FROM invitations;
+SELECT * FROM attachments;
+SELECT * FROM activities;
+SELECT * FROM tags;
+SELECT * FROM subtasks;
+SELECT * FROM tasks;
+SELECT * FROM task_lists;
+SELECT * FROM projects;
+SELECT * FROM workspaces;
+SELECT * FROM users;
 
 -- ========================================================================================
 -- PRE-INSERT SETUP
@@ -30,6 +48,7 @@ BEGIN TRY
     TRUNCATE TABLE [dbo].[notification_recipients];
 	TRUNCATE TABLE [dbo].[task_dependencies];
 	TRUNCATE TABLE [dbo].[project_tags];
+	TRUNCATE TABLE [dbo].[tags];
 	TRUNCATE TABLE [dbo].[task_assignees];
 	TRUNCATE TABLE [dbo].[project_members];
 	TRUNCATE TABLE [dbo].[password_resets];
@@ -38,31 +57,31 @@ BEGIN TRY
 	TRUNCATE TABLE [dbo].[invitations];
 	TRUNCATE TABLE [dbo].[attachments];
 	TRUNCATE TABLE [dbo].[activities];
-	TRUNCATE TABLE [dbo].[tags];
+	
 	TRUNCATE TABLE [dbo].[subtasks];
 	TRUNCATE TABLE [dbo].[tasks];
 	TRUNCATE TABLE [dbo].[task_lists];
 	TRUNCATE TABLE [dbo].[projects];
 	TRUNCATE TABLE [dbo].[workspaces];
 	TRUNCATE TABLE [dbo].[users];
-    GO
+    
 
     -- ========================================================================================
     -- STEP 2: INSERT DATA FROM FILES (in correct dependency order)
     -- ========================================================================================
     PRINT '2. Populating data from individual files...';
-    :r .\01_users_data.sql
-	:r .\02_workspaces_data.sql
-	:r .\03_tags_data.sql
-	:r .\04_projects_data.sql
-	:r .\05_project_members_data.sql
-	:r .\06_project_tags_data.sql
-	:r .\07_task_lists_data.sql
-	:r .\08_tasks_data.sql
-	:r .\09_task_assignees_data.sql
-	:r .\10_subtasks_data.sql
-	:r .\11_comments_data.sql
-	:r .\12_attachments_data.sql
+    --:r .\01_users_data.sql
+	--:r .\02_workspaces_data.sql
+	--:r .\03_tags_data.sql
+	--:r .\04_projects_data.sql
+	--:r .\05_project_members_data.sql
+	--:r .\06_project_tags_data.sql
+	--:r .\07_task_lists_data.sql
+	--:r .\08_tasks_data.sql
+	--:r .\09_task_assignees_data.sql
+	--:r .\10_subtasks_data.sql
+	--:r .\11_comments_data.sql
+	--:r .\12_attachments_data.sql
 
     COMMIT TRANSACTION;
     PRINT '--- Data seeding committed successfully. ---';

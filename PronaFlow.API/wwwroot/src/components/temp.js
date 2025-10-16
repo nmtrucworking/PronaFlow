@@ -1,38 +1,4 @@
 /**
- * Tải sidebar, chèn vào trang, và khởi tạo các chức năng liên quan.
- */
-export function loadSidebarAndSetActiveLink() {
-    const sidebarContainer = document.getElementById('sidebar-container');
-    if (!sidebarContainer) return;
-
-    fetch('../../../pages/sidebar.html')
-        .then(response => response.ok ? response.text() : Promise.reject('Could not load sidebar.html'))
-        .then(html => {
-            sidebarContainer.innerHTML = html;
-            setActiveSidebarLink();
-            initializeSidebar();
-            lucide.createIcons();
-        })
-        .catch(error => console.error('Error loading sidebar:', error));
-}
-
-export function setActiveSidebarLink() {
-    const currentPagePath = window.location.pathname;
-    document.querySelectorAll('#sidebar .sidebar__nav-item').forEach(link => {
-        // Sử dụng getAttribute('href') để lấy đường dẫn tương đối chính xác
-        const linkPath = link.getAttribute('href');
-        // Lấy tên file từ đường dẫn trang hiện tại
-        const currentPageFile = currentPagePath.substring(currentPagePath.lastIndexOf('/') + 1);
-
-        if (linkPath.includes(currentPageFile)) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-    });
-}
-
-/**
  * Hàm này QUYẾT ĐỊNH trạng thái của sidebar (đóng hay mở)
  * dựa trên kích thước màn hình hiện tại và lựa chọn đã lưu của người dùng.
  * Đây là phần logic cốt lõi.

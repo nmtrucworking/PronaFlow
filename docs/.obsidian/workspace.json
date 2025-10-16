@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "3258631bd76170cd",
+        "id": "79569d9a7e607cba",
         "type": "tabs",
         "children": [
           {
-            "id": "f8ac6b992a7e5f71",
+            "id": "c73a7fc83556cb55",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "outline",
               "state": {
-                "file": "Database/CreateDBForPronaFlow.md",
-                "mode": "source",
-                "source": false
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
-              "icon": "lucide-file",
-              "title": "CreateDBForPronaFlow"
+              "icon": "lucide-list",
+              "title": "Outline"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 397.5,
-    "collapsed": true
+    "width": 221.5
   },
   "right": {
     "id": "7ed4e8f5e29b036a",
@@ -170,12 +169,14 @@
       "bases:Create new base": false
     }
   },
-  "active": "f8ac6b992a7e5f71",
+  "active": "c73a7fc83556cb55",
   "lastOpenFiles": [
+    "Database/data/inserting-sample-data/yk0mel3x.yx0~",
+    "Database/User Flow/UserFlow - Tags.md",
     "Database/Database - PronaFlow.md",
+    "Database/CreateDBForPronaFlow.md",
     "Database/User Flow/UserFlow - Workspace.md",
     "Database/User Flow/UserFlow - Projects.md",
-    "Database/User Flow/UserFlow - Tags.md",
     "Database/User Flow/UserFlow - Task.md",
     "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Chi tiết Bước 6 - API Manager Workspace (CRUD).md",
     "Test API.md",
@@ -196,10 +197,8 @@
     "README.md.md",
     "PronaFlow/PronaFlow-web.md",
     "PronaFlow/Step 02. Thiết lập Cơ sở dữ liệu SQLite và Prisma.md",
-    "PronaFlow/Plan for PronaFlow.md",
     "img",
     "img/Cấu hình cài đặt project (VS).png",
-    "Resources/Standard HTML Form.md",
     "PronaFlow by using C#-sharp/Step/Phrase2-Detail",
     "PronaFlow by using C#-sharp/Step/Phrase1-Detail",
     "PronaFlow by using C#-sharp/Step",
