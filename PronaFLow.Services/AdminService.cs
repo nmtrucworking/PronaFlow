@@ -81,16 +81,14 @@ namespace PronaFlow.Services
                 }).ToListAsync();
         }
 
-        private async Task<int> GetCurrentAdminIdAsync()
+        private int GetCurrentAdminIdAsync()
         {
             var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
             {
                 throw new UnauthorizedAccessException("Cannot identify current admin user.");
             }
-            // Asynchronous check could be added here if needed, for example:
-            // var adminExists = await _context.Users.AnyAsync(u => u.Id == userId && u.Role == "admin");
-            // if (!adminExists) throw new UnauthorizedAccessException("User is not an admin.");
+            
             return userId;
         }
 
@@ -102,7 +100,7 @@ namespace PronaFlow.Services
                 return false;
             }
 
-            var adminId = await GetCurrentAdminIdAsync();
+            var adminId = GetCurrentAdminIdAsync();
             var normalizedRole = newRole.ToLower();
 
             if (normalizedRole != "admin" && normalizedRole != "user")
@@ -132,7 +130,7 @@ namespace PronaFlow.Services
                 return false;
             }
 
-            var adminId = await GetCurrentAdminIdAsync();
+            var adminId =  GetCurrentAdminIdAsync();
             user.IsDeleted = true;
             user.DeletedAt = DateTime.UtcNow;
 
@@ -157,7 +155,7 @@ namespace PronaFlow.Services
                 return false;
             }
 
-            var adminId = await GetCurrentAdminIdAsync();
+            var adminId = GetCurrentAdminIdAsync();
             user.IsDeleted = false;
             user.DeletedAt = null;
 
@@ -179,7 +177,7 @@ namespace PronaFlow.Services
             var project = await _context.Projects.FindAsync(projectId);
             if (project == null || project.IsArchived) return false;
 
-            var adminId = await GetCurrentAdminIdAsync();
+            var adminId = GetCurrentAdminIdAsync();
             project.IsArchived = true;
 
             _context.Activities.Add(new Activity
@@ -200,7 +198,7 @@ namespace PronaFlow.Services
             var project = await _context.Projects.FindAsync(projectId);
             if (project == null || !project.IsArchived) return false;
 
-            var adminId = await GetCurrentAdminIdAsync();
+            var adminId = GetCurrentAdminIdAsync();
             project.IsArchived = false;
 
             _context.Activities.Add(new Activity
@@ -248,8 +246,8 @@ namespace PronaFlow.Services
                     UserFullName = a.User.FullName,
                     ActionType = a.ActionType,
                     TargetType = a.TargetType,
-                    TargetId = a.TargetId,
-                    Description = a.Description // Assuming 'Content' maps to 'Description'
+                    TargetId = (int)a.TargetId,
+                    Description = a.Content 
                 })
                 .ToListAsync();
         }

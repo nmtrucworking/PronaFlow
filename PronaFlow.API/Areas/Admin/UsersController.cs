@@ -4,15 +4,10 @@ using PronaFlow.Core.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Threading.Tasks;
+using PronaFlow.Core.DTOs.Admin;
 
 namespace PronaFlow.API.Areas.Admin.Controllers
 {
-    public class UpdateRoleDto
-    {
-        [Required]
-        public string Role { get; set; }
-    }
-
     [Authorize(Roles = "admin")]
     [ApiController]
     [Area("Admin")]
