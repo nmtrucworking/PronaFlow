@@ -134,7 +134,10 @@ const Sidebar = {
             </div>
         </div>
     </nav>
-    `;
+    <button id="sidebar-toggle-button" class="sidebar-toggle resize-handle">
+        <i class="icon-open" data-lucide="chevrons-left"></i>
+        <i class="icon-closed" data-lucide="chevrons-right"></i>
+    </button>`;
     },
 
     after_render: async () => {
@@ -258,24 +261,6 @@ function handleSidebarState() {
     applySidebarState(shouldBeCollapsed);
 }
 
-/**
- * Cập nhật giao diện của sidebar dựa trên trạng thái được quyết định.
- * @param {boolean} isCollapsed - True nếu sidebar nên được đóng.
- */
-function applySidebarState(isCollapsed) {
-    const sidebar = document.getElementById('sidebar');
-    const root = document.documentElement;
-    if (!sidebar) return;
-
-    if (isCollapsed) {
-        sidebar.classList.add('collapsed');
-        root.style.setProperty('--sidebar-width', 'var(--sidebar-width-collapsed)');
-    } else {
-        sidebar.classList.remove('collapsed');
-        const lastWidth = localStorage.getItem('sidebarWidth') || '240px';
-        root.style.setProperty('--sidebar-width', lastWidth);
-    }
-}
 
 /**
  * Initializes the resize functionality for the sidebar.
@@ -321,50 +306,7 @@ function initResize(sidebar, root, minWidth, maxWidth, onResizeEnd) {
     });
 }
 
-/**
- * Saves the current state of the sidebar (collapsed status and width) to localStorage.
- * @param {HTMLElement} sidebar - The sidebar element.
- * @param {HTMLElement} root - The root element to get the current width from.
- */
-function saveSidebarState(sidebar, root) {
-    const isCollapsed = sidebar.classList.contains('collapsed');
-    localStorage.setItem('sidebarCollapsed', isCollapsed);
-    if (!isCollapsed) {
-        const currentWidth = root.style.getPropertyValue('--sidebar-width');
-        localStorage.setItem('sidebarWidth', currentWidth);
-    }
-}
 
-/**
- * Loads and applies the saved sidebar state from localStorage when the application starts.
- * @param {HTMLElement} sidebar - The sidebar element.
- * @param {HTMLElement} root - The root element.
- */
-function loadSidebarState(sidebar, root) {
-    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-    if (isCollapsed) {
-        sidebar.classList.add('collapsed');
-        root.style.setProperty('--sidebar-width', 'var(--sidebar-width-collapsed)');
-    } else {
-        sidebar.classList.remove('collapsed');
-        const savedWidth = localStorage.getItem('sidebarWidth') || '240px';
-        root.style.setProperty('--sidebar-width', savedWidth);
-    }
-}
-
-/**
- * Handles the user's click action to toggle the sidebar's collapsed state.
- * NOTE: This action is only effective on screens wider than the mobile breakpoint.
- * @param {HTMLElement} sidebar - The sidebar element.
- * @param {HTMLElement} root - The root element.
- */
-function toggleSidebarAction(sidebar, root) {
-    if (window.innerWidth >= BREAKPOINTS.TABLET) {
-        sidebar.classList.toggle('collapsed');
-        saveSidebarState(sidebar, root);
-        applySidebarState(sidebar.classList.contains('collapsed'));
-    }
-}
 
 /**
  * The main initialization function for all sidebar-related functionalities.
@@ -409,4 +351,75 @@ function initializeSidebar() {
 
     window.addEventListener('resize', handleSidebarState);
     handleSidebarState(); // Gọi lần đầu để thiết lập trạng thái ban đầu
+}
+
+/**
+ * Handles the user's click action to toggle the sidebar's collapsed state.
+ * NOTE: This action is only effective on screens wider than the mobile breakpoint.
+ * @param {HTMLElement} sidebar - The sidebar element.
+ * @param {HTMLElement} root - The root element.
+ */
+function toggleSidebarAction(sidebar, root) {
+    if (window.innerWidth >= BREAKPOINTS.TABLET) {
+        sidebar.classList.toggle('collapsed');
+        saveSidebarState(sidebar, root);
+        applySidebarState(sidebar.classList.contains('collapsed'));
+    }
+}
+
+/**
+ * Saves the current state of the sidebar (collapsed status and width) to localStorage.
+ * @param {HTMLElement} sidebar - The sidebar element.
+ * @param {HTMLElement} root - The root element to get the current width from.
+ */
+function saveSidebarState(sidebar, root) {
+    const isCollapsed = sidebar.classList.contains('collapsed'); // if contains return `true`
+    localStorage.setItem('sidebarCollapsed', isCollapsed);
+    if (!isCollapsed) {
+        const currentWidth = root.style.getPropertyValue('--sidebar-width-collapsed');
+        localStorage.setItem('sidebarWidth', currentWidth);
+    }
+}
+
+/**
+ * Loads and applies the saved sidebar state from localStorage when the application starts.
+ * @param {HTMLElement} sidebar - The sidebar element.
+ * @param {HTMLElement} root - The root element.
+ */
+function loadSidebarState(sidebar, root) {
+    const togglePointOpen = document.querySelector('.icon-open');
+    const togglePointClosed = document.querySelector('.icon-closed');
+    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    if (isCollapsed) {
+        sidebar.classList.add('collapsed');
+        root.style.setProperty('--sidebar-width', 'var(--sidebar-width-collapsed)');
+        togglePointOpen.setAttribute('visibility', 'hidden');
+        togglePointOpen.removeAttribute('visibility', 'hidden');
+    } else {
+        sidebar.classList.remove('collapsed');
+        const savedWidth = localStorage.getItem('sidebarWidth') || '240px';
+        root.style.setProperty('--sidebar-width', savedWidth);
+
+        togglePointOpen.removeAttribute('visibility');
+        togglePointOpen.setAttribute('visibility', 'hidden');
+    }
+}
+
+/**
+ * Cập nhật giao diện của sidebar dựa trên trạng thái được quyết định.
+ * @param {boolean} isCollapsed - True nếu sidebar nên được đóng.
+ */
+function applySidebarState(isCollapsed) {
+    const sidebar = document.getElementById('sidebar');
+    const root = document.documentElement;
+    if (!sidebar) return;
+
+    if (isCollapsed) {
+        sidebar.classList.add('collapsed');
+        root.style.setProperty('--sidebar-width', 'var(--sidebar-width-collapsed)');
+    } else {
+        sidebar.classList.remove('collapsed');
+        const lastWidth = localStorage.getItem('sidebarWidth') || '240px';
+        root.style.setProperty('--sidebar-width', lastWidth);
+    }
 }

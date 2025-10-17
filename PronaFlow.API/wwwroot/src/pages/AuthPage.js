@@ -75,6 +75,14 @@ const AuthPage = {
 
 export default AuthPage;
 
+function toggleForms(container, show) {
+    if (show === 'register') {
+        container.classList.add('active');
+    } else {
+        container.classList.remove('active');
+    }
+}
+
 /**
  * Initializes the toggle functionality between the login and register panels.
  */
@@ -84,13 +92,8 @@ function initializeToggleButtons() {
     const loginCard = document.querySelector('.login-card');
 
     if (registerToggleBtn && loginToggleBtn && loginCard) {
-        registerToggleBtn.addEventListener('click', () => {
-            loginCard.classList.add('login-card--right-panel-active');
-        });
-
-        loginToggleBtn.addEventListener('click', () => {
-            loginCard.classList.remove('login-card--right-panel-active');
-        });
+        registerToggleBtn.addEventListener('click', () => { toggleForms(loginCard, 'active'); });
+        loginToggleBtn.addEventListener('click', () => { toggleForms(loginCard, 'active'); });
     }
 }
 

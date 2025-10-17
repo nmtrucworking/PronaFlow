@@ -5304,6 +5304,7 @@ input:focus::placeholder {
     position: fixed;
     top: 0;
     left: calc(var(--sidebar-width));
+    cursor: pointer;
 
     display: flex;
     justify-content: center;

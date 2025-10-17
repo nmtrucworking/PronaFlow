@@ -69,28 +69,18 @@ PronaFlow được xây dựng theo kiến trúc 3 lớp (3-Tier Architecture) k
 ### **Backend (.NET 8)**
 
 - **Framework:** ASP.NET Core 8
-    
 - **Ngôn ngữ:** C#
-    
 - **Kiến trúc:** Clean Architecture với 3 project chính:
-    
     - `PronaFlow.Core`: Chứa các Models (Entities), Interfaces, và DTOs.
-        
     - `PronaFlow.Services`: Chứa business logic, tương tác trực tiếp với cơ sở dữ liệu.
-        
     - `PronaFlow.API`: Chứa các Controllers, chịu trách nhiệm xử lý request/response và authentication.
-        
 - **Database:** SQL Server
-    
 - **ORM:** Entity Framework Core
-    
 - **Authentication:** JWT (JSON Web Tokens)
-    
 
 ### **Frontend (Vanilla JavaScript)**
 
 - **Ngôn ngữ:** JavaScript (ES6 Modules), HTML5, CSS3
-    
 - **Kiến trúc:** Single Page Application (SPA) với hệ thống routing dựa trên hash (`#/`).
     
 - **Thư viện:**
