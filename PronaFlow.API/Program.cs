@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore; // using .UseSqlServer
 using Microsoft.AspNetCore.Authentication.JwtBearer; // using JwtBearerDefaults
-using System.Text; // using Encoding
+using Microsoft.EntityFrameworkCore; // using .UseSqlServer
 using Microsoft.IdentityModel.Tokens; // using SymmetricSecurityKey, TokenValidationParameters
-
+using PronaFlow.Core.Data;
 using PronaFlow.Core.Interfaces;
 using PronaFlow.Services; // using UserService
-using PronaFlow.Core.Data;
+//using PronaFLow.Services;
+using System.Text; // using Encoding
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,6 +61,7 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ITrashService, TrashService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 
 // CORS Configuration: Allow any origin, header, and method (for development purposes)
