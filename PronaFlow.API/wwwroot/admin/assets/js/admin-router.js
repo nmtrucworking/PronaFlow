@@ -4,6 +4,16 @@ import { initUsersPage } from '../pages/users.js';
 import { initProjectsPage } from '../pages/projects.js';
 import { initLogsPage } from '../pages/logs.js';
 
+(function() {
+    const token = localStorage.getItem('adminToken');
+    const isLoginPage = window.location.pathname.endsWith('login.html');
+
+    if (!token && !isLoginPage) {
+        // Nếu không có token và không phải trang login, chuyển hướng về trang login
+        window.location.href = '/admin/login.html';
+    }
+})();
+
 const routes = {
     '/admin/dashboard': { html: '/admin/pages/dashboard.html', init: initDashboardPage },
     '/admin/users': { html: '/admin/pages/users.html', init: initUsersPage },
