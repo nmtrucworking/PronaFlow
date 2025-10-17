@@ -1754,6 +1754,7 @@ input:focus::placeholder {
     background-repeat: no-repeat;
     background-position: center;
 
+    position: relative;
     display: grid;
     grid-template-rows: 76px var(--divider-height) calc(30vh + 40px) var(--divider-height) 1fr;
 }
@@ -1796,6 +1797,7 @@ input:focus::placeholder {
     overflow-y: auto;
     gap: 20px;
     margin-top: 20px;
+    height: fit-content;
 }
 
 .kanban__col {
