@@ -1,10 +1,14 @@
 import { getCurrentUser } from './services/adminAuthService.js';
+import { initDashboardPage } from '../pages/dashboard.js';
+import { initUsersPage } from '../pages/users.js';
+import { initProjectsPage } from '../pages/projects.js';
+import { initLogsPage } from '../pages/logs.js';
 
 const routes = {
-    '/admin/dashboard': '/admin/pages/dashboard.html',
-    '/admin/users': '/admin/pages/users.html',
-    '/admin/projects': '/admin/pages/projects.html',
-    '/admin/logs': '/admin/pages/logs.html',
+    '/admin/dashboard': { html: '/admin/pages/dashboard.html', init: initDashboardPage },
+    '/admin/users': { html: '/admin/pages/users.html', init: initUsersPage },
+    '/admin/projects': { html: '/admin/pages/projects.html', init: initProjectsPage },
+    '/admin/logs': { html: '/admin/pages/logs.html', init: initLogsPage },
 };
 
 // Admin Guard - Chốt chặn an ninh
@@ -28,8 +32,10 @@ export async function router() {
         const response = await fetch(route);
         const html = await response.text();
         document.getElementById('admin-app').innerHTML = html;
-        // Tùy chọn: gọi hàm init cho trang tương ứng
-        // Ví dụ: if (path === '/admin/users') { initUsersPage(); }
+        
+        if (route.init) {
+            route.init();
+        }
     } else {
         document.getElementById('admin-app').innerHTML = '<h2>404 Page Not Found</h2>';
     }

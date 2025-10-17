@@ -20,7 +20,7 @@ async function loadLogs() {
     const params = new URLSearchParams();
     const user = document.getElementById('log-user-filter').value;
     const action = document.getElementById('log-action-filter').value;
-    // ... thêm logic cho ngày tháng
+    
 
     if (user) params.append('user', user);
     if (action) params.append('action', action);
@@ -42,5 +42,3 @@ export function initLogsPage() {
     loadLogs(); // Tải log ban đầu
     document.getElementById('log-filter-btn').addEventListener('click', loadLogs);
 }
-
-initLogsPage();

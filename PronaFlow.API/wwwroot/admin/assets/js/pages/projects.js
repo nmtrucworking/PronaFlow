@@ -74,5 +74,3 @@ export function initProjectsPage() {
         // Thêm logic cho nút "View" (có thể mở một modal read-only)
     });
 }
-
-initProjectsPage();

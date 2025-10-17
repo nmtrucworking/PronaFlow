@@ -59,5 +59,3 @@ function renderNewUsersChart(data = []) {
 export function initDashboardPage() {
     loadStats();
 }
-
-initDashboardPage();

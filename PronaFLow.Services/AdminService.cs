@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using PronaFlow.Core.Data;
 using PronaFlow.Core.DTOs.Admin;
 using PronaFlow.Core.Interfaces;
+using PronaFlow.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PronaFlow.Services
@@ -11,10 +14,12 @@ namespace PronaFlow.Services
     public class AdminService : IAdminService
     {
         private readonly PronaFlowDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AdminService(PronaFlowDbContext context)
+        public AdminService(PronaFlowDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<AdminDashboardStatsDto> GetDashboardStatsAsync()
@@ -47,7 +52,7 @@ namespace PronaFlow.Services
             return await _context.Users
                 .Select(u => new AdminUserViewDto
                 {
-                    Id = u.Id,
+                    Id = (int)u.Id,
                     FullName = u.FullName,
                     Email = u.Email,
                     Role = u.Role,
@@ -64,18 +69,29 @@ namespace PronaFlow.Services
             return await _context.Projects
                 .Include(p => p.Workspace)
                 .ThenInclude(w => w.Owner)
-                .Include(p => p.Members)
+                .Include(p => p.ProjectMembers)
                 .Select(p => new AdminProjectViewDto
                 {
-                    Id = p.Id,
+                    Id = (int)p.Id,
                     ProjectName = p.Name,
                     WorkspaceName = p.Workspace.Name,
                     WorkspaceOwner = p.Workspace.Owner.FullName,
-                    MemberCount = p.Members.Count(),
+                    MemberCount = p.ProjectMembers.Count(),
                     Status = p.Status,
                     CreatedAt = p.CreatedAt,
                     IsArchived = p.IsArchived
                 }).ToListAsync();
+        }
+
+        private int GetCurrentAdminId()
+        {
+            // Lấy ID từ claims của JWT token
+            var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
+            {
+                throw new UnauthorizedAccessException("Cannot identify current admin user.");
+            }
+            return userId;
         }
 
         public async Task<bool> UpdateUserRoleAsync(int userId, string newRole)
@@ -85,6 +101,8 @@ namespace PronaFlow.Services
             {
                 return false; // Hoặc ném ra một Exception cụ thể
             }
+
+            var adminId = GetCurrentAdminId();
 
             // Validate newRole
             if (newRole.ToLower() != "admin" && newRole.ToLower() != "user")
@@ -96,11 +114,11 @@ namespace PronaFlow.Services
             // Ghi lại hoạt động này
             _context.Activities.Add(new Activity
             {
-                UserId = 1, // ✨ Chỗ này cần thay bằng ID của Admin đang đăng nhập
+                UserId = adminId, 
                 ActionType = "admin_update_role",
                 TargetId = user.Id,
                 TargetType = "User",
-                Description = $"Admin changed role of user '{user.FullName}' to '{newRole}'."
+                Content = $"Admin changed role of user '{user.FullName}' to '{newRole}'."
             });
 
             return await _context.SaveChangesAsync() > 0;
@@ -171,9 +189,9 @@ namespace PronaFlow.Services
                 .Take(100) // ✨ Giới hạn kết quả để tránh quá tải, nên kết hợp phân trang
                 .Select(a => new AdminActivityLogDto
                 {
-                    Id = a.Id,
+                    Id = (int)a.Id,
                     CreatedAt = a.CreatedAt,
-                    UserId = a.UserId,
+                    UserId = (int)a.UserId,
                     UserFullName = a.User.FullName,
                     ActionType = a.ActionType,
                     TargetType = a.TargetType,

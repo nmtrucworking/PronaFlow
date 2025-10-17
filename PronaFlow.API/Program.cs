@@ -63,6 +63,7 @@ builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 builder.Services.AddScoped<IAdminService, AdminService>();
 
+builder.Services.AddHttpContextAccessor();
 
 // CORS Configuration: Allow any origin, header, and method (for development purposes)
 // In production, restrict this to specific origins

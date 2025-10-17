@@ -109,5 +109,3 @@ export function initUsersPage() {
         }
     });
 }
-
-initUsersPage();
