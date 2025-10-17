@@ -109,7 +109,7 @@ Lớp này chứa các đối tượng truyền tải dữ liệu (DTOs) và mod
     
     - Tạo một file `admin-layout.html` hoặc `admin-sidebar.html` riêng. File này có thể kế thừa cấu trúc từ `sidebar.html` của người dùng nhưng chứa các mục điều hướng dành riêng cho Admin như đã thiết kế.
         
-### **II. Tổ chức Lưu trữ Database**
+### **II. Tổ chức Lưu trữ** #Database
 
 Dựa trên tài liệu `Database - PronaFlow.md` và các file SQL, thiết kế cơ sở dữ liệu hiện tại của bạn đã **rất phù hợp** và **không cần thay đổi lớn** để triển khai trang Admin. Chúng ta chỉ cần tận dụng và chuẩn hóa cách sử dụng các bảng hiện có.
 
