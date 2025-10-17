@@ -4,6 +4,7 @@ using PronaFlow.Core.Data;
 using PronaFlow.Core.DTOs.Admin;
 using PronaFlow.Core.Interfaces;
 using PronaFlow.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -29,7 +30,6 @@ namespace PronaFlow.Services
             var totalWorkspaces = await _context.Workspaces.CountAsync();
             var totalTasks = await _context.Tasks.CountAsync();
 
-            // Dữ liệu tăng trưởng người dùng trong 7 ngày gần nhất
             var userGrowth = await _context.Users
                 .Where(u => u.CreatedAt >= DateTime.UtcNow.AddDays(-7))
                 .GroupBy(u => u.CreatedAt.Date)
@@ -62,8 +62,6 @@ namespace PronaFlow.Services
                 .ToListAsync();
         }
 
-        // ... (Triển khai các phương thức còn lại cho Project, Logs, Update Role, Deactivate,...)
-        // Ví dụ cho GetAllProjectsAsync
         public async Task<IEnumerable<AdminProjectViewDto>> GetAllProjectsAsync()
         {
             return await _context.Projects
@@ -83,14 +81,16 @@ namespace PronaFlow.Services
                 }).ToListAsync();
         }
 
-        private int GetCurrentAdminId()
+        private async Task<int> GetCurrentAdminIdAsync()
         {
-            // Lấy ID từ claims của JWT token
             var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
             {
                 throw new UnauthorizedAccessException("Cannot identify current admin user.");
             }
+            // Asynchronous check could be added here if needed, for example:
+            // var adminExists = await _context.Users.AnyAsync(u => u.Id == userId && u.Role == "admin");
+            // if (!adminExists) throw new UnauthorizedAccessException("User is not an admin.");
             return userId;
         }
 
@@ -99,26 +99,26 @@ namespace PronaFlow.Services
             var user = await _context.Users.FindAsync(userId);
             if (user == null)
             {
-                return false; // Hoặc ném ra một Exception cụ thể
+                return false;
             }
 
-            var adminId = GetCurrentAdminId();
+            var adminId = await GetCurrentAdminIdAsync();
+            var normalizedRole = newRole.ToLower();
 
-            // Validate newRole
-            if (newRole.ToLower() != "admin" && newRole.ToLower() != "user")
+            if (normalizedRole != "admin" && normalizedRole != "user")
             {
                 throw new ArgumentException("Invalid role specified.");
             }
 
-            user.Role = newRole.ToLower();
-            // Ghi lại hoạt động này
+            user.Role = normalizedRole;
             _context.Activities.Add(new Activity
             {
-                UserId = adminId, 
+                UserId = adminId,
                 ActionType = "admin_update_role",
                 TargetId = user.Id,
                 TargetType = "User",
-                Content = $"Admin changed role of user '{user.FullName}' to '{newRole}'."
+                Content = $"Admin changed role of user '{user.FullName}' to '{newRole}'.",
+                CreatedAt = DateTime.UtcNow
             });
 
             return await _context.SaveChangesAsync() > 0;
@@ -132,8 +132,20 @@ namespace PronaFlow.Services
                 return false;
             }
 
+            var adminId = await GetCurrentAdminIdAsync();
             user.IsDeleted = true;
             user.DeletedAt = DateTime.UtcNow;
+
+            _context.Activities.Add(new Activity
+            {
+                UserId = adminId,
+                ActionType = "admin_deactivate_user",
+                TargetId = user.Id,
+                TargetType = "User",
+                Content = $"Admin deactivated user '{user.FullName}'.",
+                CreatedAt = DateTime.UtcNow
+            });
+
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -145,8 +157,20 @@ namespace PronaFlow.Services
                 return false;
             }
 
+            var adminId = await GetCurrentAdminIdAsync();
             user.IsDeleted = false;
             user.DeletedAt = null;
+
+            _context.Activities.Add(new Activity
+            {
+                UserId = adminId,
+                ActionType = "admin_restore_user",
+                TargetId = user.Id,
+                TargetType = "User",
+                Content = $"Admin restored user '{user.FullName}'.",
+                CreatedAt = DateTime.UtcNow
+            });
+
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -155,7 +179,19 @@ namespace PronaFlow.Services
             var project = await _context.Projects.FindAsync(projectId);
             if (project == null || project.IsArchived) return false;
 
+            var adminId = await GetCurrentAdminIdAsync();
             project.IsArchived = true;
+
+            _context.Activities.Add(new Activity
+            {
+                UserId = adminId,
+                ActionType = "admin_archive_project",
+                TargetId = project.Id,
+                TargetType = "Project",
+                Content = $"Admin archived project '{project.Name}'.",
+                CreatedAt = DateTime.UtcNow
+            });
+
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -164,7 +200,19 @@ namespace PronaFlow.Services
             var project = await _context.Projects.FindAsync(projectId);
             if (project == null || !project.IsArchived) return false;
 
+            var adminId = await GetCurrentAdminIdAsync();
             project.IsArchived = false;
+
+            _context.Activities.Add(new Activity
+            {
+                UserId = adminId,
+                ActionType = "admin_unarchive_project",
+                TargetId = project.Id,
+                TargetType = "Project",
+                Content = $"Admin unarchived project '{project.Name}'.",
+                CreatedAt = DateTime.UtcNow
+            });
+
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -184,9 +232,14 @@ namespace PronaFlow.Services
                 query = query.Where(a => a.ActionType.Contains(queryParams.Action));
             }
 
+            // Implement pagination
+            var page = queryParams.Page > 0 ? queryParams.Page : 1;
+            var pageSize = queryParams.PageSize > 0 ? queryParams.PageSize : 20;
+
             return await query
                 .OrderByDescending(a => a.CreatedAt)
-                .Take(100) // ✨ Giới hạn kết quả để tránh quá tải, nên kết hợp phân trang
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(a => new AdminActivityLogDto
                 {
                     Id = (int)a.Id,
@@ -196,7 +249,7 @@ namespace PronaFlow.Services
                     ActionType = a.ActionType,
                     TargetType = a.TargetType,
                     TargetId = a.TargetId,
-                    Description = a.Description
+                    Description = a.Description // Assuming 'Content' maps to 'Description'
                 })
                 .ToListAsync();
         }
