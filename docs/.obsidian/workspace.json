@@ -6,38 +6,75 @@
       {
         "id": "79569d9a7e607cba",
         "type": "tabs",
+        "dimension": 60.31496062992125,
         "children": [
-          {
-            "id": "c73a7fc83556cb55",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "README.md.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "Outline of README.md"
-            }
-          },
           {
             "id": "5f33eaadeccc2171",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md.md",
+                "file": "Database/Database - PronaFlow.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README.md"
+              "title": "Database - PronaFlow"
+            },
+            "group": "ab225f8beaa9dc3e"
+          },
+          {
+            "id": "497e22cbe79be1f4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "UserFlow - user_preferences.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "UserFlow - user_preferences"
+            }
+          },
+          {
+            "id": "74950176bc39edfd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Database/User Flow/UserFlow - Task.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "UserFlow - Task"
             }
           }
-        ],
-        "currentTab": 1
+        ]
+      },
+      {
+        "id": "a7f8c4e0fe83c3dd",
+        "type": "tabs",
+        "dimension": 39.68503937007874,
+        "children": [
+          {
+            "id": "1c47e045675d5ea7",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Database/Database - PronaFlow.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Database - PronaFlow"
+            },
+            "group": "ab225f8beaa9dc3e"
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -187,13 +224,19 @@
   },
   "active": "5f33eaadeccc2171",
   "lastOpenFiles": [
+    "UserFlow - user_preferences.md",
+    "Database/Database - PronaFlow.md",
+    "Database/User Flow/UserFlow - More.md",
+    "Database/User Flow/UserFlow - Task.md",
+    "Database/User Flow/UserFlow - Workspace.md",
+    "Database/User Flow/UserFlow - Users.md",
+    "Database/User Flow/UserFlow - Attachments.md",
+    "README.md.md",
+    "Database/data/admin account.sql",
     "Database/data/inserting-sample-data/yk0mel3x.yx0~",
     "Database/User Flow/UserFlow - Tags.md",
-    "Database/Database - PronaFlow.md",
     "Database/CreateDBForPronaFlow.md",
-    "Database/User Flow/UserFlow - Workspace.md",
     "Database/User Flow/UserFlow - Projects.md",
-    "Database/User Flow/UserFlow - Task.md",
     "PronaFlow by using C#-sharp/Step/Phrase1-Detail/Chi tiết Bước 6 - API Manager Workspace (CRUD).md",
     "Test API.md",
     "API - Application Programming Interface.md",
@@ -209,10 +252,6 @@
     "PronaFlow by using C#-sharp/Plan.md",
     "PronaFlow by using C#-sharp/Bioplate.md",
     "Admin Pages.md",
-    "PronaFlow/Match pronaflow-web and pronaflow-api.md",
-    "README.md.md",
-    "PronaFlow/PronaFlow-web.md",
-    "PronaFlow/Step 02. Thiết lập Cơ sở dữ liệu SQLite và Prisma.md",
     "img",
     "img/Cấu hình cài đặt project (VS).png",
     "PronaFlow by using C#-sharp/Step/Phrase2-Detail",
@@ -225,8 +264,6 @@
     "Pasted image 20250926160951.png",
     "PronaFlow/PronaFlow by using NestJS",
     "Untitled.canvas",
-    "Untitled.base",
-    "Database",
     "Code flow - Backend/imgs/root folder - backend.png",
     "Pasted image 20250926160203.png",
     "Code flow - Backend/imgs/Code Flow - Backend.png",

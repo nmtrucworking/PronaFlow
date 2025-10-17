@@ -226,3 +226,35 @@ Cho phép người dùng dễ dàng tìm thấy các công việc cụ thể.
     *   Sử dụng `JOIN` với `projects`, `users`, `task_assignees` để lấy dữ liệu liên quan.
 3.  **Phản hồi (Response):**
     *   Trả về `200 OK` cùng với danh sách các task phù hợp.
+# **Nghiệp vụ Tự động hóa Nâng cao.**
+## **1. Công Việc Lặp Lại (Recurring Tasks)**
+
+*   **Vấn đề/Nhu cầu:** Người dùng có những công việc cần thực hiện định kỳ (hàng ngày, hàng tuần) như "Báo cáo cuối ngày", "Kiểm tra email". Việc tạo lại thủ công rất tốn thời gian.
+*   **Giải pháp/Nghiệp vụ đề xuất:**
+    *   Thêm các cột mới vào bảng `tasks`:
+
+| Tên Cột | Kiểu Dữ Liệu | Ràng Buộc | Ghi Chú |
+| :--- | :--- | :--- | :--- |
+| `is_recurring` | `BOOLEAN` | `DEFAULT FALSE` | Đánh dấu đây có phải là task lặp lại không. |
+| `recurrence_rule` | `VARCHAR(255)`| `NULL` | Lưu quy tắc lặp lại, ví dụ theo chuẩn iCalendar: `FREQ=WEEKLY;BYDAY=MO,WE,FR`. |
+| `next_recurrence_date`| `DATE` | `NULL` | Ngày mà task lặp lại tiếp theo sẽ được tạo. |
+*   **Luồng hoạt động:**
+    1.  Khi người dùng tạo một task, họ có thể chọn các tùy chọn lặp lại.
+    2.  Khi một task lặp lại được hoàn thành (`is_completed = TRUE`), backend sẽ dựa vào `recurrence_rule` để tính toán `next_recurrence_date`.
+    3.  Một tác vụ nền (cron job) chạy hàng ngày, tìm tất cả các task có `next_recurrence_date` là ngày hôm nay, sao chép chúng thành một task mới (với `is_recurring = FALSE`) và cập nhật lại `next_recurrence_date` cho task gốc.
+
+## **2. Sự Phụ Thuộc Giữa Các Công Việc (Task Dependencies)**
+
+*   **Vấn đề/Nhu cầu:** Trong nhiều quy trình, "Công việc B" chỉ có thể bắt đầu sau khi "Công việc A" đã hoàn thành.
+*   **Giải pháp/Nghiệp vụ đề xuất:**
+    *   Tạo một bảng nối mới: `task_dependencies`.
+
+| Tên Cột            | Kiểu Dữ Liệu     | Ràng Buộc                                | Ghi Chú                          |
+| :----------------- | :--------------- | :--------------------------------------- | :------------------------------- |
+| `task_id`          | `INT` / `BIGINT` | `FK(tasks.id)`                           | Công việc bị chặn.               |
+| `blocking_task_id` | `INT` / `BIGINT` | `FK(tasks.id)`                           | Công việc phải hoàn thành trước. |
+|                    |                  | *PRIMARY KEY(task_id, blocking_task_id)* |                                  |
+*   **Luồng hoạt động:**
+    1.  Trên giao diện, người dùng có thể thiết lập rằng Task B phụ thuộc vào Task A.
+    2.  Hệ thống tạo một bản ghi trong `task_dependencies` với `task_id` là của B và `blocking_task_id` là của A.
+    3.  Giao diện sẽ không cho phép người dùng thay đổi trạng thái của Task B sang `in-progress` hoặc `done` nếu trạng thái của Task A chưa phải là `done`.
