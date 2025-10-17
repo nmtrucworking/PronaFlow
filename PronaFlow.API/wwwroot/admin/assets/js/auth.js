@@ -1,5 +1,3 @@
-// File: /admin/assets/js/auth.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const errorMessage = document.getElementById('error-message');
