@@ -1,46 +1,25 @@
+import { login } from './services/adminAuthService.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const errorMessage = document.getElementById('error-message');
 
-    // Nếu người dùng đã đăng nhập, chuyển hướng ngay đến dashboard
-    if (localStorage.getItem('adminToken')) {
-        window.location.href = '/admin/index.html';
-        return;
-    }
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        errorMessage.style.display = 'none';
+            // Sử dụng hàm đăng nhập giả lập
+            const result = login(email, password);
 
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
-
-            if (!response.ok) {
-                // Thử đọc chi tiết lỗi từ API
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Login failed');
+            if (result.success) {
+                // Chuyển hướng đến trang dashboard chính khi đăng nhập thành công
+                window.location.href = '/admin/index.html#admin/dashboard';
+            } else {
+                errorMessage.textContent = result.message || 'Login failed!';
+                errorMessage.style.display = 'block';
             }
-
-            const data = await response.json();
-
-            // Quan trọng: Lưu token vào localStorage
-            localStorage.setItem('adminToken', data.token);
-
-            // Chuyển hướng đến trang dashboard sau khi đăng nhập thành công
-            window.location.href = '/admin/index.html';
-
-        } catch (error) {
-            errorMessage.textContent = error.message;
-            errorMessage.style.display = 'block';
-        }
-    });
+        });
+    }
 });
