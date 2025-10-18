@@ -424,3 +424,9 @@ button {
     transform: rotate(1turn);
   }
 }
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

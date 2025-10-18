@@ -3973,11 +3973,7 @@ input:focus::placeholder {
     margin-left: -10px;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
+
 
 .btn--success-state {
     background-color: #22c55e;
@@ -3997,6 +3993,11 @@ input:focus::placeholder {
     background-color: #d9372e;
     /* Darker red */
     transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(2px) scale(0.96);
+    transition: all 0.3s ease-in ;
 }
 
 .danger-zone__actions .btn-delete {
