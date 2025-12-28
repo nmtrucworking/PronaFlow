@@ -11,10 +11,24 @@
             "id": "e294d303c9cc5a30",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "Tab mới"
+              "title": "2 - Multi-tenancy Workspace Governance"
             }
           }
         ]
@@ -74,7 +88,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -195,8 +210,9 @@
   },
   "active": "e294d303c9cc5a30",
   "lastOpenFiles": [
+    "Functional Modules/1 - Identity and Access Management.md",
+    "Application Structure.md",
     "Overview.md",
-    "Kiến trúc phần mềm PronaFlow.md",
     "Kiến truc",
     "Kiến truc/Desktop - Application Wrapper.md",
     "Kiến truc/Backend - INFERENCE SERVICE.md",
@@ -217,7 +233,6 @@
     "Functional Modules/7 - Even-Driven Notification System.md",
     "Functional Modules/9 - User Experience Personalization.md",
     "Functional Modules/10 - Intelligent Decision Support System.md",
-    "Functional Modules/1 - Identity and Access Management.md",
     "Functional Modules"
   ]
 }

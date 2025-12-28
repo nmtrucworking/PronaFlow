@@ -24,7 +24,7 @@ Dự án lựa chọn các công nghệ tiên tiến nhất hiện nay để đ�
 | #Backend-API     | #Python-FastAPI             | Đây là trái tim của hệ thống. Python là ngôn ngữ chủ đạo của ngàng Khoa-học-Dữ-liệu, cho phép tích hợp trực tiếp các thư viện AI/ML vào luồng xử lý nghiệp vụ mà không cần qua trung gian. FastAPI cung câp hiệu năng xử lý bất đồng bộ (Asynchronous) vượt trội. |
 | #Database        | #PostgreSQL                 | Hệ quản trị CSDL quan hệ mã nguồn mở mạnh mẽ nhất, hỗ trợ các kiểu dữ liệu phức tạp (JSONB) và mở rộng cho dữ liệu Vector (cần thiết cho AI RAG sau này).                                                                                                         |
 | #AI-Engine       | #Scikit-learn / #TensorFlow | Module phân tích dữ liệu tích hợp sẵn trong Backend để thực heienj các tác vụ dự báo và gợi ý thông minh                                                                                                                                                          |
-Xem chi tiết hơn về Kiến trúc phần mềm tại [[Kiến trúc phần mềm PronaFlow]]
+Xem chi tiết hơn về Kiến trúc phần mềm tại [[Application Structure]]
 # 4. Đặc tả Các Phân hệ Chức năng
 Hệ thống PronaFlow được kiến trúc dựa trên mô hình #Domain-Driven-Design ( #DDD), phân tách thành 10 phân hệ nghiệp vụ cốt lỗi. Mỗi phân hệ đóng vai trò một dịch vụ ( #Service) riêng biệt, đảm bảo tính gắn kết cao (High Cohesion) và phụ thuộc thấp (Low Coupling).
 
