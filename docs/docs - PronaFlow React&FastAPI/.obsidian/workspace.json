@@ -13,6 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "System Functional Modules.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "System Functional Modules"
+            }
+          },
+          {
+            "id": "7ddd539c17a61899",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
                 "mode": "source",
                 "source": false,
@@ -31,7 +55,8 @@
               "title": "2 - Multi-tenancy Workspace Governance"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -208,9 +233,15 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "e294d303c9cc5a30",
+  "active": "7ddd539c17a61899",
   "lastOpenFiles": [
+    "System Functional Modules.md",
+    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
     "Functional Modules/1 - Identity and Access Management.md",
+    "Functional Modules/6 - Unified Collaboration Hub.md",
+    "Functional Modules/5 - Temporal Planning and Scheduling.md",
+    "Functional Modules/4 - Task Execution and Orchestration.md",
+    "Functional Modules/3 - Project Lifecycle Management.md",
     "Application Structure.md",
     "Overview.md",
     "Kiến truc",
@@ -221,14 +252,8 @@
     "Backend -.md",
     "Kiến truc/Frontend Core Technology Stack.md",
     "Contents.base",
-    "System Functional Modules.md",
     "Functional Modules/0 - Overview.md",
     "System Architecture Design.canvas",
-    "Functional Modules/5 - Temporal Planning and Scheduling.md",
-    "Functional Modules/6 - Unified Collaboration Hub.md",
-    "Functional Modules/3 - Project Lifecycle Management.md",
-    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
-    "Functional Modules/4 - Task Execution and Orchestration.md",
     "Functional Modules/8 - Data Archiving and Compliance.md",
     "Functional Modules/7 - Even-Driven Notification System.md",
     "Functional Modules/9 - User Experience Personalization.md",
