@@ -32,12 +32,12 @@ Xem chi tiết tại: [[2 - Multi-tenancy Workspace Governance]]
 Module trung tâm điều phốit oàn bộ hoạt động quản trị.
 - Workflow Engien: Cho phép tùy biến quy trình làm việc (Custom Workflows) phù hợp với các phương pháo luận quản trị khác nhau (Scum, Kanban, Waterfall). Người dùng có thể định nghĩa các trạng thái (States) và quy tắc chuyển đổi (Transitions).
 - Project Meta-data: Quản lý các thuộc tính mở rộng dự án, thiết lập các ràng buộc về thời gian, ngân sách và phạm vi (Scope).
+- Interactive Kanban Interface: Giao điện tương tác trực quan (Visual Management) hỗ trợ kéo thả, cập nhật trạng thái tức thời (Real-time State Synchronization).
 Xem chi tiết tại: [[3 - Project Lifecycle Management]]
 # 4. Task Execution & Orchestration
 Được thiết kế để tối ưu hóa hiệu suất làm việc của người dùng cuối (End-user).
-- Atomic Task Unit: Quản lý công việc ở mức độ nguyên tử, hỗ trợ phân rã cấu trúc công việc ( #WBS) thành nhiều tầng: Epic -> Task -> Subtask
+- Atomic Task Unit: Quản lý công việc ở mức độ nguyên tử, hỗ trợ phân rã cấu trúc công việc ( #WBS) thành nhiều tầng: Task List -> Task -> Subtask
 - Dependency Management: Xử lý các mối quan hệ phụ thuộc giữa các công việc (FS, SS, v.v.), tự động hóa phát hiện và cảnh báo xung đột lịch trình.
-- Interactive Kanban Interface: Giao điện tương tác trực quan (Visual Management) hỗ trợ kéo thả, cập nhật trạng thái tức thời (Real-time State Synchronization).
 Xem chi tiết tại: [[4 - Task Execution and Orchestration]]
 # 5. Temporal Planning & Scheduling
 - Timeline Visulization: Trực quan hóa tiến độ dự án dưới dạng biểu đồ Gantt và Lịch biểu (Calendar View), giúp người quản lý xác định đường găng (Critical Path) của dự án.

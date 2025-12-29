@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "d280ad6daa5d7416",
+        "id": "64e3ec43c5d08a39",
         "type": "tabs",
         "children": [
           {
@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "System Functional Modules.md",
+                "file": "Functional Modules/5 - Temporal Planning and Scheduling.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,31 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "System Functional Modules"
-            }
-          },
-          {
-            "id": "7ddd539c17a61899",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "2 - Multi-tenancy Workspace Governance"
+              "title": "5 - Temporal Planning and Scheduling"
             }
           }
         ],
@@ -233,16 +209,16 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "7ddd539c17a61899",
+  "active": "e294d303c9cc5a30",
   "lastOpenFiles": [
-    "System Functional Modules.md",
-    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
     "Functional Modules/1 - Identity and Access Management.md",
-    "Functional Modules/6 - Unified Collaboration Hub.md",
-    "Functional Modules/5 - Temporal Planning and Scheduling.md",
-    "Functional Modules/4 - Task Execution and Orchestration.md",
-    "Functional Modules/3 - Project Lifecycle Management.md",
     "Application Structure.md",
+    "Functional Modules/10 - Intelligent Decision Support System.md",
+    "Functional Modules/9 - User Experience Personalization.md",
+    "Functional Modules/8 - Data Archiving and Compliance.md",
+    "Functional Modules/6 - Unified Collaboration Hub.md",
+    "Functional Modules/7 - Even-Driven Notification System.md",
+    "Chưa đặt tên.canvas",
     "Overview.md",
     "Kiến truc",
     "Kiến truc/Desktop - Application Wrapper.md",
@@ -254,6 +230,11 @@
     "Contents.base",
     "Functional Modules/0 - Overview.md",
     "System Architecture Design.canvas",
+    "Functional Modules/5 - Temporal Planning and Scheduling.md",
+    "Functional Modules/6 - Unified Collaboration Hub.md",
+    "Functional Modules/3 - Project Lifecycle Management.md",
+    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
+    "Functional Modules/4 - Task Execution and Orchestration.md",
     "Functional Modules/8 - Data Archiving and Compliance.md",
     "Functional Modules/7 - Even-Driven Notification System.md",
     "Functional Modules/9 - User Experience Personalization.md",

@@ -1,5 +1,9 @@
 > Module định danh và kiểm soát quyền truy cập
 
+*Last updated: Decem 28, 2025*
+
+---
+
 # 1. Module Overview
 Phân hệ IAM đóng vai trò là "Cổng an ninh" của toàn bộ hệ thống PronaFlow. Mục tiêu cốt lỗic ủa phân hệ này là đảm bảo nguyên tắc #AAA 
 - Authentication (Xác thực): Xác minh danh tính người dùng.
