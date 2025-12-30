@@ -4,31 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "26dcea6b044f3ec1",
+        "id": "5743c34c3f78b1c1",
         "type": "tabs",
         "children": [
           {
-            "id": "6f742e5b37807add",
+            "id": "c9170cae081b14c1",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "5 - Temporal Planning and Scheduling"
+              "title": "Tab mới"
             }
           }
         ]
@@ -88,8 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -208,12 +193,18 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "6f742e5b37807add",
+  "active": "c9170cae081b14c1",
   "lastOpenFiles": [
+    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
+    "01-Requirements/System Functional Modules.md",
+    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
+    "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
+    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
+    "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+    "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
     "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
     "Project Documentation Structure.md",
     "00-General/Overview.md",
-    "01-Requirements/System Functional Modules.md",
     "00-General/Glossary.md.md",
     "00-General/Technology-Stack/Frontend Core Technology Stack.md",
     "00-General/Technology-Stack/Desktop - Application Wrapper.md",
@@ -229,14 +220,8 @@
     "01-Requirements",
     "00-General",
     "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
-    "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
     "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
-    "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
-    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
     "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
-    "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
-    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
-    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
     "Chưa đặt tên.canvas",
     "00-General/Technology-Stack",
     "Backend - 1.md",
@@ -244,8 +229,6 @@
     "Functional Modules/0 - Overview.md",
     "02-Architeture/System Architecture Design.canvas",
     "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
-    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
-    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
     "01-Requirements/Functional-Modules"
   ]
 }
