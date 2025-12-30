@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "64e3ec43c5d08a39",
+        "id": "26dcea6b044f3ec1",
         "type": "tabs",
         "children": [
           {
-            "id": "e294d303c9cc5a30",
+            "id": "6f742e5b37807add",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Functional Modules/5 - Temporal Planning and Scheduling.md",
+                "file": "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -31,8 +31,7 @@
               "title": "5 - Temporal Planning and Scheduling"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -209,36 +208,44 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "e294d303c9cc5a30",
+  "active": "6f742e5b37807add",
   "lastOpenFiles": [
-    "Functional Modules/1 - Identity and Access Management.md",
-    "Application Structure.md",
-    "Functional Modules/10 - Intelligent Decision Support System.md",
-    "Functional Modules/9 - User Experience Personalization.md",
-    "Functional Modules/8 - Data Archiving and Compliance.md",
-    "Functional Modules/6 - Unified Collaboration Hub.md",
-    "Functional Modules/7 - Even-Driven Notification System.md",
+    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
+    "Project Documentation Structure.md",
+    "00-General/Overview.md",
+    "01-Requirements/System Functional Modules.md",
+    "00-General/Glossary.md.md",
+    "00-General/Technology-Stack/Frontend Core Technology Stack.md",
+    "00-General/Technology-Stack/Desktop - Application Wrapper.md",
+    "00-General/Technology-Stack/Backend - INFERENCE SERVICE.md",
+    "00-General/Technology-Stack/Backend - CORE SERVICE.md",
+    "02-Architeture/Application Structure.md",
+    "Contents.base",
+    "01-Requirements/Non-Functional.md.md",
+    "05-Deployment-Operations",
+    "04-AI-Specifications",
+    "03-UI-UX-Design",
+    "02-Architeture",
+    "01-Requirements",
+    "00-General",
+    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
+    "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
+    "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
+    "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
+    "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
+    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
+    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
     "Chưa đặt tên.canvas",
-    "Overview.md",
-    "Kiến truc",
-    "Kiến truc/Desktop - Application Wrapper.md",
-    "Kiến truc/Backend - INFERENCE SERVICE.md",
-    "Kiến truc/Backend - CORE SERVICE.md",
+    "00-General/Technology-Stack",
     "Backend - 1.md",
     "Backend -.md",
-    "Kiến truc/Frontend Core Technology Stack.md",
-    "Contents.base",
     "Functional Modules/0 - Overview.md",
-    "System Architecture Design.canvas",
-    "Functional Modules/5 - Temporal Planning and Scheduling.md",
-    "Functional Modules/6 - Unified Collaboration Hub.md",
-    "Functional Modules/3 - Project Lifecycle Management.md",
-    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
-    "Functional Modules/4 - Task Execution and Orchestration.md",
-    "Functional Modules/8 - Data Archiving and Compliance.md",
-    "Functional Modules/7 - Even-Driven Notification System.md",
-    "Functional Modules/9 - User Experience Personalization.md",
-    "Functional Modules/10 - Intelligent Decision Support System.md",
-    "Functional Modules"
+    "02-Architeture/System Architecture Design.canvas",
+    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
+    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
+    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
+    "01-Requirements/Functional-Modules"
   ]
 }
