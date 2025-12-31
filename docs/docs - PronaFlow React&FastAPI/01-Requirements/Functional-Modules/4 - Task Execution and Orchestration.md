@@ -1,7 +1,9 @@
+Project**: PronaFlow
+**Version**: 1.0
+**State**: Draft
 *Last updated: Decem 28, 2025*
 
 ---
-
 # 1. Business Overview
 Trong hệ thống PronaFlow, việc thực thi dự án được chia nhỏ theo cấu trúc cây để dễ dàng quản lý.
 1.  Task Lists (Danh sách công việc): Đóng vai trò là các "Container" dùng để gom nhóm các công việc. Tùy theo phương pháp quản lý (Waterfall hay Agile), Task List có thể đại diện cho các Giai đoạn (Phrase), Print, hoặc các Nhóm chức năng tùy theo cấu hình mà người dùng triển khai trong dự án của họ.

@@ -1,5 +1,7 @@
-Version 1.0
-Last Update: Dec 31, 2025.
+Project**: PronaFlow
+**Version**: 1.0
+**State**: Draft
+_Last updated: Dec 31, 2025_
 
 ---
 # 1. Business Overview

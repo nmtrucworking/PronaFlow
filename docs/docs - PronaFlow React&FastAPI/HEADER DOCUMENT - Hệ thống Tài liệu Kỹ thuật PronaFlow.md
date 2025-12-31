@@ -9,7 +9,7 @@ Folder này chứa các thông tin định hướng chiến lược và nền t�
 - Tổng quan dự án (Overview):
 	- Xác định mục tiêu xây dựng hệ thống quản lý dự án theo mô hình "Agile/Kanban" kết hợp với Data Science.
 	- Giải quyết bài toán "đảo thông tin" (Information Silos) và tích hợp AI để hỗ trợ ra quyết định.
-	- Chi tiết tại: [[Overview |Overview.md]]
+	- Chi tiết tại: [[00-General/Overview|Overview.md]]
 - Technology Stack (Kiến trúc công nghệ)
 	- Frontend:
 	- Backend - Core Service:

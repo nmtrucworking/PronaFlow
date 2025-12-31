@@ -4,55 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "66dd54e89dc29ae9",
+        "id": "ec69aaf38a831572",
         "type": "tabs",
         "children": [
           {
-            "id": "3613557ce40d8009",
+            "id": "efda5a18c35101d7",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "01-Requirements/Functional-Modules/14 - System Administration.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "14 - System Administration"
-            }
-          },
-          {
-            "id": "6ac9de06abbfe62c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "01-Requirements/System Functional Modules.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "System Functional Modules"
+              "title": "Tab mới"
             }
           }
         ]
@@ -231,44 +193,44 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "3613557ce40d8009",
+  "active": "efda5a18c35101d7",
   "lastOpenFiles": [
-    "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
-    "05-Deployment-Operations/Logging-Standard.md",
-    "Check list - Docs & Templates.md",
+    "07-References/Overview.md",
+    "07-References/metric-definitions.md",
+    "07-References/feature-store-registry.yaml",
+    "07-References/data-dictionary.csv",
+    "07-References/keyboard-shortcuts.json",
+    "07-References/api-response-codes.json",
+    "07-References/git-convention.md",
+    "07-References/email-signatures.html",
+    "07-References/iconography-map.md",
+    "07-References/glossary.json",
+    "07-References/security-checklist.md",
+    "07-References/test-case-standard.xlsx",
+    "07-References/system-error-codes.md",
+    "07-References/api-endpoints-catalog.md",
+    "07-References/permission-scopes.yaml",
+    "07-References/data-retention-rules.csv",
+    "07-References/notification-templates-library.json",
+    "01-Requirements/Non-Functional.md.md",
     "01-Requirements/System Functional Modules.md",
-    "00-General/Technology-Stack/Frontend-Core.md",
-    "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
-    "01-Requirements/Functional-Modules/PronaFlow_Admin_Roles.xlsx",
-    "01-Requirements/Functional-Modules/~$PronaFlow_Admin_Roles.xlsx",
-    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
+    "01-Requirements/Functional-Modules/16 - User Onboarding and Adoption.md",
+    "01-Requirements/Functional-Modules/15 - Help Center and Knowledge Base.md",
     "01-Requirements/Functional-Modules/14 - System Administration.md",
+    "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
     "01-Requirements/Functional-Modules/12 - Integration Ecosystem.md",
-    "01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md",
     "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
-    "06-Quality-Assurance/AI-Evaluation-Metrics.md",
-    "04-AI-Specifications/Data-Goverance-Ethis.md",
-    "05-Deployment-Operations/Disaster-Recovery-Plan.md",
-    "05-Deployment-Operations/Troubleshooting-Common-Errors.md",
-    "05-Deployment-Operations/Runbooks",
-    "06-Quality-Assurance/Acceptance-Testing.md",
-    "06-Quality-Assurance/Testing-Strategy.md",
-    "06-Quality-Assurance",
-    "02-Architeture/Decisions/ADR-003-AI-Model-Selection.md",
-    "02-Architeture/Decisions/ADR-002-Database-PostgreSQL.md",
-    "02-Architeture/Decisions/ADR-001-Choose-FastAPI.md",
-    "02-Architeture/Decisions",
-    "00-General/Technology-Stack/Desktop-Application-Wrapper.md",
-    "00-General/Technology-Stack/Backend-Inference-Service.md",
-    "00-General/Technology-Stack/Backend-Core-Service.md",
-    "02-Architeture/Database-Schema.md",
-    "02-Architeture/API-Design.md",
-    "03-UI-UX-Design/Design-System.md",
-    "03-UI-UX-Design/Wireframes",
-    "04-AI-Specifications/Wireframes",
-    "Contents.base",
-    "05-Deployment-Operations",
-    "04-AI-Specifications",
+    "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
+    "01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md",
+    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
+    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
+    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
+    "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
+    "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
+    "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
+    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "05-Deployment-Operations/Logging-Standard.md",
     "Chưa đặt tên.canvas",
     "02-Architeture/System Architecture Design.canvas"
   ]

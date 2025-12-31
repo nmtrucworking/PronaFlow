@@ -1,8 +1,9 @@
+Project**: PronaFlow
+**Version**: 1.0
+**State**: Draft
 *Last updated: Decem 31, 2025*
-***Version***: 1.0
 
 ---
-
 # 1. Business Overview
 Module này đại diện cho phân hệ "Planning" (Hoạch định Dự án) chuyên sâu của dự án. Khác với việc quản lý thực thi hàng ngày (Task Execution - Module 4), module này tập truung vào tầm nhìn dài hạn và sự phụ thuộc giữa các đầu việc.
 **Triết lý Thiết kế**: "***Optional & Scalable***": Hệ thống PronaFlow tôn trọng quy mô của từng dự án. Không phải dự án nào cũng cần biểu đồ Gantt phức tạp hay cơ chế tính toán lịch trình.

@@ -1,6 +1,9 @@
 > Module định danh và kiểm soát quyền truy cập
 
-*Last updated: Decem 28, 2025*
+Project**: PronaFlow
+**Version**: 1.0
+**State**: Draft
+***Last updated:** Dec 28, 2025*
 
 ---
 

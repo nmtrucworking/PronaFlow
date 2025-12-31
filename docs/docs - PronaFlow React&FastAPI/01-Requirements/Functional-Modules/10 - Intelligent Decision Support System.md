@@ -1,5 +1,9 @@
+Project**: PronaFlow
+**Version**: 1.0
+**State**: Draft
 _Last updated: Dec 31, 2025_
 
+---
 # 1. Business Overview
 
 Trong các hệ thống quản trị dự án truyền thống, việc ra quyết định (ví dụ: gán việc cho ai, ước lượng thời gian bao lâu) thường dựa hoàn toàn vào trực giác (Intuition-based) hoặc kinh nghiệm chủ quan của người quản lý. Điều này dễ dẫn đến các sai số như "Lạc quan quá mức" (Optimism Bias) hoặc phân bổ nguồn lực không đồng đều.

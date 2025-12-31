@@ -1,3 +1,9 @@
+Project**: PronaFlow
+**Version**: 1.0
+**State**: Draft
+***Last updated:** Dec 30, 2025*
+
+---
 # 1. Business Overview
 Project (Dự án) là thực thể trung tâm nơi diễn ra sự cộng tác và làm việc của người dùng. Trong PronaFlow, một dự án không chỉ là một tập hợp Tasks (các Công việc) mà là một quy trình khép kín có Vòng đời (Lifecycle) rõ ràng.
 Module này chịu trách nhiệm quản lý toàn bộ các trạng thái của Project:
