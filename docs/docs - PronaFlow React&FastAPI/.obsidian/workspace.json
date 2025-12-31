@@ -4,17 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "5743c34c3f78b1c1",
+        "id": "eee69b76df830952",
         "type": "tabs",
         "children": [
           {
-            "id": "c9170cae081b14c1",
+            "id": "6e0bdd38b3bea91e",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "Tab mới"
+              "title": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow"
             }
           }
         ]
@@ -193,42 +207,45 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "c9170cae081b14c1",
+  "active": "6e0bdd38b3bea91e",
   "lastOpenFiles": [
-    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
+    "02-Architeture/Database-Schema.md",
+    "02-Architeture/API-Design.md",
+    "03-UI-UX-Design/Design-System.md",
+    "03-UI-UX-Design/Wireframes",
+    "04-AI-Specifications/Wireframes",
+    "04-AI-Specifications/Model-Card.md",
+    "04-AI-Specifications/AI-Workflows.md",
+    "05-Deployment-Operations/Git-Workflow.md",
+    "05-Deployment-Operations/Docker-Strategy.md",
+    "05-Deployment-Operations/Setup-Guide.md",
+    "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
+    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
+    "00-General/Technology-Stack/Technology-Stack.md",
     "01-Requirements/System Functional Modules.md",
+    "01-Requirements/Functional-Modules/14 - System Administration.md",
+    "01-Requirements/Functional-Modules/15 - Help Center and Knowledge Base.md",
+    "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
+    "01-Requirements/Functional-Modules/16 - User Onboarding and Adoption.md",
+    "01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md",
+    "01-Requirements/Functional-Modules/12 - Integration Ecosystem.md",
+    "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
+    "01-Requirements/Non-Functional.md.md",
+    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
     "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
     "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
     "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
     "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
     "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
-    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
-    "Project Documentation Structure.md",
-    "00-General/Overview.md",
-    "00-General/Glossary.md.md",
-    "00-General/Technology-Stack/Frontend Core Technology Stack.md",
-    "00-General/Technology-Stack/Desktop - Application Wrapper.md",
-    "00-General/Technology-Stack/Backend - INFERENCE SERVICE.md",
-    "00-General/Technology-Stack/Backend - CORE SERVICE.md",
-    "02-Architeture/Application Structure.md",
     "Contents.base",
-    "01-Requirements/Non-Functional.md.md",
     "05-Deployment-Operations",
     "04-AI-Specifications",
     "03-UI-UX-Design",
     "02-Architeture",
     "01-Requirements",
     "00-General",
-    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
-    "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
-    "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
     "Chưa đặt tên.canvas",
     "00-General/Technology-Stack",
-    "Backend - 1.md",
-    "Backend -.md",
-    "Functional Modules/0 - Overview.md",
-    "02-Architeture/System Architecture Design.canvas",
-    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
-    "01-Requirements/Functional-Modules"
+    "02-Architeture/System Architecture Design.canvas"
   ]
 }

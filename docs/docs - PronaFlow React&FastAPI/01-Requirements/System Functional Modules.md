@@ -1,3 +1,5 @@
+Project: PronaFlow
+Trạng thái: Bản thảo (Draft)
 *Last updated: Decem 26, 2025*
 
 ---
@@ -17,6 +19,12 @@ Hệ thống PronaFlow được kiến trúc dựa trên mô hình _Domain-Drive
 | 8   | Phân hệ Lưu trữ & Tuân thủ Dữ liệu               | [[8 - Data Archiving and Compliance]]        |
 | 9   | Phân hệ Cá nhân hóa Trải nghiệm                  | [[9 - User Experience Personalization]]      |
 | 10  | Phân hệ Hệ thống Hỗ trợ Ra quyết định Thông minh | [[10 - Intelligent Decision Support System]] |
+| 11  | Phân hệ Báo cáo & Phân tích Nâng cao             | [[11 - Advanced Analytics and Reporting]]    |
+| 12  | Phân hệ Hệ sinh thái tích hợp & Mở rộng          | [[12 - Integration Ecosystem]]               |
+| 13  | Phân hệ Gói cước & Thanh toán                    | [[13 - Subscription and Billing Management]] |
+| 14  | Phân hệ Quản trị Hệ thống & Vận hành             | [[14 - System Administration]]               |
+| 15  | Phân hệ Trung tâm Trợ giúp & Cơ sở Tri thức      | [[15 - Help Center and Knowledge Base]]      |
+| 16  | Phân hệ Dẫn nhập & Đào tạo Người dùng            | [[16 - User Onboarding and Adoption]]        |
 
 # 1. Identity & Access Management - IAM
 Đóng vai trò là cổng an ninh của toàn bộ hệ thống (Security Gateway)
@@ -65,3 +73,38 @@ Xem chi tiết tại: [[9 - User Experience Personalization]]
 - Prescriptive Analytics: Ứng dụng thuật toán gợi ý để đề xuất phân công nhân sự tối ưu dựa trên kỹ năng (Skill-set) và tải công việc.
 - Anomaly Detection: Tự động phát hiện các hành vi bất thường trong hệ thống hoặc các dự án có nguy cơ rủi ro cao.
 Xem chi tiết tại: [[10 - Intelligent Decision Support System]]
+# 11. Advanced Analytics & Reporting
+Cung cấp góc nhìn sâu sắc về hiệu suất vận hành doanh nghiệp thông qua dữ liệu lịch sử.
+- **Descriptive Analytics**: Báo cáo tổng hợp đa chiều về tiến độ, phân bổ nguồn lực và chi phí (Burn-down, Velocity, Resource Heatmap).
+- **Time Tracking & Timesheets**: Ghi nhận thời gian thực tế (Billable/Non-billable Hours) phục vụ công tác kế toán và tính lương.
+- **Custom Report Builder**: Cho phép người dùng tự định nghĩa báo cáo (Ad-hoc Reporting) bằng thao tác kéo thả. 
+Xem chi tiết tại: [[11 - Advanced Analytics and Reporting]]
+# 12. Integration Ecosystem
+Mở rộng khả năng của PronaFlow thông qua việc kết nối với các hệ thống bên ngoài.
+- **API Gateway & Webhooks**: Cung cấp cơ chế giao tiếp chuẩn (RESTful/GraphQL) để các bên thứ 3 (GitLab, Figma, Slack) tích hợp quy trình.
+- **Marketplace**: Kho ứng dụng tập trung (Plugin Architecture) cho phép cài đặt và quản lý các tiện ích mở rộng.
+- **Connector Hub**: Các đầu nối (Connectors) dựng sẵn giúp đồng bộ dữ liệu hai chiều (Bi-directional Sync) mà không cần viết code (No-code Integration). Xem chi tiết tại: [[12 - Integration Ecosystem]]
+# 13. Subscription & Billing Management
+Hệ thống quản trị tài chính và cấp phép sử dụng tài nguyên (Resource Provisioning).
+- **Plan Management**: Định nghĩa các gói dịch vụ (Tiered Pricing) và hạn ngạch tài nguyên (Quotas) cho từng gói (User limit, Storage limit).
+- **Automated Billing Cycle**: Tự động hóa quy trình tính cước (Recurring Billing), xuất hóa đơn (Invoicing) và xử lý gia hạn.
+- **Usage Metering**: Đo đếm mức độ sử dụng tài nguyên thực tế (API calls, AI tokens) để phục vụ mô hình tính phí theo nhu cầu (Pay-as-you-go). 
+Xem chi tiết tại: [[13 - Subscription and Billing Management]]
+# 14. System Administration
+Phân hệ dành riêng cho Super Admin để giám sát và vận hành toàn bộ hệ thống (Back-office).
+- **Global Tenant Management**: Quản lý vòng đời của tất cả các Tenant (Onboard, Suspend, Offboard).
+- **Operational Observability**: Dashboard giám sát sức khỏe hệ thống (Health Check), xem log lỗi tập trung và theo dõi hiệu năng (APM).
+- **Feature Flags**: Quản lý bật/tắt tính năng mới theo từng nhóm người dùng (A/B Testing) mà không cần redeploy. 
+Xem chi tiết tại: [[14 - System Administration]]
+# 15. Help Center & Knowledge Base
+Hệ thống tự phục vụ (Self-service) giúp giảm tải cho bộ phận hỗ trợ kỹ thuật.
+- **Contextual Help**: Nhúng tài liệu hướng dẫn (Embedded Docs) ngay tại nơi người dùng gặp khó khăn (Context-aware Widgets).
+- **CMS for Documentation**: Hệ thống quản lý nội dung bài viết, FAQ, Release Notes với khả năng tìm kiếm ngữ nghĩa (Semantic Search).
+- **Feedback Loop**: Thu thập đánh giá của người dùng về độ hữu ích của bài viết để liên tục cải thiện chất lượng tài liệu. 
+Xem chi tiết tại: [[15 - Help Center and Knowledge Base]]
+# 16. User Onboarding & Adoption
+Tối ưu hóa trải nghiệm người dùng mới và thúc đẩy hành vi sử dụng sản phẩm.
+- **Interactive Walkthroughs**: Các tour hướng dẫn từng bước (Step-by-step Guides) phủ lên giao diện ứng dụng để đào tạo người dùng (In-app Training).
+- **Progress Tracking**: Theo dõi tiến độ hoàn thành các bước thiết lập hồ sơ (Onboarding Checklist).
+- **Feature Discovery**: Giới thiệu tính năng mới thông qua các thông báo định hướng (Tooltips/Hotspots) dựa trên hành vi người dùng. 
+Xem chi tiết tại: [[16 - User Onboarding and Adoption]]
