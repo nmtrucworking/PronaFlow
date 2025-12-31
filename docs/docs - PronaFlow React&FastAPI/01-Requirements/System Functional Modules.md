@@ -1,11 +1,10 @@
-Project: PronaFlow
-Trạng thái: Bản thảo (Draft)
-*Last updated: Decem 26, 2025*
+**Project**: PronaFlow
+**Version**: 1.0
+**State**: Draft
+***Last updated:** Dec 31, 2025*
 
 ---
-
-Hệ thống PronaFlow được kiến trúc dựa trên mô hình _Domain-Driven Design (DDD)_, phân tách thành 10 phân hệ nghiệp vụ cốt lõi.
-
+Hệ thống PronaFlow được kiến trúc dựa trên mô hình _Domain-Driven Design (DDD)_, phân tách thành 16 phân hệ nghiệp vụ cốt lõi.
 
 | N.O | Function Modules                                 | Details                                      |
 | --- | ------------------------------------------------ | -------------------------------------------- |

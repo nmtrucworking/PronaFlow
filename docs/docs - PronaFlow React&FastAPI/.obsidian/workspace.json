@@ -4,17 +4,79 @@
     "type": "split",
     "children": [
       {
-        "id": "e672896d22dba162",
+        "id": "66dd54e89dc29ae9",
         "type": "tabs",
         "children": [
           {
-            "id": "5874dce347fcf04c",
+            "id": "3613557ce40d8009",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "01-Requirements/Functional-Modules/14 - System Administration.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "Tab mới"
+              "title": "14 - System Administration"
+            }
+          },
+          {
+            "id": "6ac9de06abbfe62c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "01-Requirements/System Functional Modules.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "System Functional Modules"
+            }
+          },
+          {
+            "id": "21bd3206e52c15f9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "00-General/Technology-Stack/Frontend-Core.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Frontend-Core"
             }
           }
         ]
@@ -74,7 +136,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -193,25 +256,31 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "5874dce347fcf04c",
+  "active": "3613557ce40d8009",
   "lastOpenFiles": [
-    "04-AI-Specifications/Data-Governance.md",
+    "01-Requirements/System Functional Modules.md",
+    "01-Requirements/Functional-Modules/14 - System Administration.md",
+    "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
+    "01-Requirements/Functional-Modules/12 - Integration Ecosystem.md",
+    "00-General/Technology-Stack/Frontend-Core.md",
+    "01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md",
+    "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
     "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
+    "06-Quality-Assurance/AI-Evaluation-Metrics.md",
+    "04-AI-Specifications/Data-Goverance-Ethis.md",
     "05-Deployment-Operations/Disaster-Recovery-Plan.md",
     "05-Deployment-Operations/Troubleshooting-Common-Errors.md",
     "05-Deployment-Operations/Runbooks",
     "06-Quality-Assurance/Acceptance-Testing.md",
-    "06-Quality-Assurance/AI-Evaluation-Metrics.md",
     "06-Quality-Assurance/Testing-Strategy.md",
     "06-Quality-Assurance",
-    "02-Architeture/ADR-003-AI-Model-Selection.md",
-    "02-Architeture/ADR-002-Database-PostgreSQL.md",
-    "02-Architeture/ADR-001-Choose-FastAPI.md",
+    "02-Architeture/Decisions/ADR-003-AI-Model-Selection.md",
+    "02-Architeture/Decisions/ADR-002-Database-PostgreSQL.md",
+    "02-Architeture/Decisions/ADR-001-Choose-FastAPI.md",
     "02-Architeture/Decisions",
     "00-General/Technology-Stack/Desktop-Application-Wrapper.md",
     "00-General/Technology-Stack/Backend-Inference-Service.md",
     "00-General/Technology-Stack/Backend-Core-Service.md",
-    "00-General/Technology-Stack/Frontend-Core.md",
     "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
     "02-Architeture/Database-Schema.md",
     "02-Architeture/API-Design.md",
@@ -220,12 +289,6 @@
     "04-AI-Specifications/Wireframes",
     "04-AI-Specifications/Model-Card.md",
     "04-AI-Specifications/AI-Workflows.md",
-    "05-Deployment-Operations/Git-Workflow.md",
-    "05-Deployment-Operations/Docker-Strategy.md",
-    "05-Deployment-Operations/Setup-Guide.md",
-    "00-General/Technology-Stack/Technology-Stack.md",
-    "01-Requirements/System Functional Modules.md",
-    "01-Requirements/Functional-Modules/14 - System Administration.md",
     "Contents.base",
     "05-Deployment-Operations",
     "04-AI-Specifications",
