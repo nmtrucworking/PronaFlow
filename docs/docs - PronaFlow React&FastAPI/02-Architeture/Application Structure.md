@@ -5,7 +5,7 @@
 
 Hệ thống giao diện người dùng (Frontend) của Pronaflow được xây dựng dựa trên mô hình #SPA, áp dụng triệt để kiến trúc Component-Based Architecture.
 Toàn bộ mã nguồn Frontend được đóng gói và tải xuống trình duyệt người dùng một lần duy nhất (hoặc tải lười - Lazy Loading). Việc giao tiếp với Backend chỉ diễn ra thông qua các RESTful API để trao đổi dữ liệu JSON, giúp tách biệt hoàn toàn tầng hiển thị (Presentation Layer) và tầng nghiệp vụ (Business Logic Layer).
-Xem chi tiết: [[Frontend Core Technology Stack | PronaFow - Frontend]]
+Xem chi tiết: [[Frontend-Core| PronaFow - Frontend]]
 
 ```bash
 frontend/src/
@@ -37,7 +37,7 @@ frontend/src/
 - **Mô hình:** RESTful API.
 - **Nguyên lý thiết kế:** Clean Architecture kết hợp với Domain-Driven Design ( #DDD).
 - **Vai trò trong hệ thống phân tán:** Đóng vai trò là Orchestrator (Người điều phối), tiếp nhận yêu cầu từ Client (Web/Desktop) và điều phối các tác vụ sang các dịch vụ phụ trợ (như AI Service).
-Xem chi tiết: [[Backend - CORE SERVICE| Pronaflow Backend]]
+Xem chi tiết: [[Backend-Core-Service| Pronaflow Backend]]
 
 ```bash
 backend-core/
@@ -68,7 +68,7 @@ backend-core/
 - **Đặc tính:** Stateless (Không trạng thái) - Không lưu trữ dữ liệu nghiệp vụ lâu dài.
 - **Input/Output:** Nhận dữ liệu thô (Raw Data) từ Main Backend -> Tiền xử lý -> Chạy Model -> Trả về kết quả dự báo (Prediction).
 
-Xem chi tiết [[Backend - INFERENCE SERVICE | PronaFlow AI Service]]
+Xem chi tiết [[Backend-Inference-Service| PronaFlow AI Service]]
 
 ``` bash
 ai-serving/
@@ -96,7 +96,7 @@ ai-serving/
 # D. Desktop Wrapper: Application
 Phân hệ Desktop của PronaFlow được xây dựng dựa trên mô hình **Hybrid Desktop Application** (Ứng dụng Lai). Chúng ta sử dụng **Electron.js** làm lớp bao đóng (Wrapper Layer), cho phép chạy ứng dụng Frontend (React) trong một môi trường Chromium được tùy biến riêng biệt, đồng thời có khả năng truy cập sâu vào API của hệ điều hành thông qua Node.js.
 Kiến trúc này tuân thủ nguyên lý **"Write Once, Run Everywhere"**, đảm bảo sự nhất quán về trải nghiệm người dùng trên cả Windows, macOS và Linux mà không cần duy trì nhiều đội ngũ phát triển Native riêng biệt.
-Xem chi tiết [[Desktop - Application Wrapper | PronaFlow Desktop Wrapper]]
+Xem chi tiết [[Desktop-Application-Wrapper| PronaFlow Desktop Wrapper]]
 
 ```bash
 electron/

@@ -36,13 +36,24 @@ Hệ thống được chia thành 16 phân hệ chức năng (Functional Modules
 ```bash
 docs/
 ├── 01-Requirements/
-│   ├── Functional-Modules/
-│   │   ├── 01-IAM.md
-│   │   ├── 02-MultiTenancy.md
-│   │   ├── 03-ProjectLifecycle.md
-│   │   ├── ...
-│   │   └── 10-DecisionSupport.md
-│   └── Non-Functional.md
+│ ├── Functional-Modules/
+│ │ ├── 01-Identity-Access-Management.md 
+│ │ ├── 02-MultiTenancy-Workspace.md 
+│ │ ├── 03-Project-Lifecycle-Management.md 
+│ │ ├── 04-Task-Execution-Orchestration.md 
+│ │ ├── 05-Temporal-Planning-Scheduling.md 
+│ │ ├── 06-Unified-Collaboration-Hub.md 
+│ │ ├── 07-Event-Driven-Notification.md 
+│ │ ├── 08-Data-Archiving-Compliance.md 
+│ │ ├── 09-User-Experience-Personalization.md 
+│ │ ├── 10-Intelligent-Decision-Support.md 
+│ │ ├── 11-Advanced-Analytics-Reporting.md
+│ │ ├── 12-Integration-Ecosystem.md
+│ │ ├── 13-Subscription-Billing.md
+│ │ ├── 14-System-Administration.md
+│ │ ├── 15-Help-Center-Knowledge-Base.md
+│ │ └── 16-User-Onboarding-Adoption.md
+│ └── Non-Functional.md
 ```
 
 # 3 - `/02-Architecture` : Kiến trúc Hệ thống

@@ -4,31 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "eee69b76df830952",
+        "id": "e672896d22dba162",
         "type": "tabs",
         "children": [
           {
-            "id": "6e0bdd38b3bea91e",
+            "id": "5874dce347fcf04c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow"
+              "title": "Tab mới"
             }
           }
         ]
@@ -207,8 +193,26 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "6e0bdd38b3bea91e",
+  "active": "5874dce347fcf04c",
   "lastOpenFiles": [
+    "04-AI-Specifications/Data-Governance.md",
+    "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
+    "05-Deployment-Operations/Disaster-Recovery-Plan.md",
+    "05-Deployment-Operations/Troubleshooting-Common-Errors.md",
+    "05-Deployment-Operations/Runbooks",
+    "06-Quality-Assurance/Acceptance-Testing.md",
+    "06-Quality-Assurance/AI-Evaluation-Metrics.md",
+    "06-Quality-Assurance/Testing-Strategy.md",
+    "06-Quality-Assurance",
+    "02-Architeture/ADR-003-AI-Model-Selection.md",
+    "02-Architeture/ADR-002-Database-PostgreSQL.md",
+    "02-Architeture/ADR-001-Choose-FastAPI.md",
+    "02-Architeture/Decisions",
+    "00-General/Technology-Stack/Desktop-Application-Wrapper.md",
+    "00-General/Technology-Stack/Backend-Inference-Service.md",
+    "00-General/Technology-Stack/Backend-Core-Service.md",
+    "00-General/Technology-Stack/Frontend-Core.md",
+    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
     "02-Architeture/Database-Schema.md",
     "02-Architeture/API-Design.md",
     "03-UI-UX-Design/Design-System.md",
@@ -219,33 +223,15 @@
     "05-Deployment-Operations/Git-Workflow.md",
     "05-Deployment-Operations/Docker-Strategy.md",
     "05-Deployment-Operations/Setup-Guide.md",
-    "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
-    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
     "00-General/Technology-Stack/Technology-Stack.md",
     "01-Requirements/System Functional Modules.md",
     "01-Requirements/Functional-Modules/14 - System Administration.md",
-    "01-Requirements/Functional-Modules/15 - Help Center and Knowledge Base.md",
-    "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
-    "01-Requirements/Functional-Modules/16 - User Onboarding and Adoption.md",
-    "01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md",
-    "01-Requirements/Functional-Modules/12 - Integration Ecosystem.md",
-    "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
-    "01-Requirements/Non-Functional.md.md",
-    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
-    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
-    "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
-    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
-    "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
-    "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
     "Contents.base",
     "05-Deployment-Operations",
     "04-AI-Specifications",
     "03-UI-UX-Design",
     "02-Architeture",
-    "01-Requirements",
-    "00-General",
     "Chưa đặt tên.canvas",
-    "00-General/Technology-Stack",
     "02-Architeture/System Architecture Design.canvas"
   ]
 }
