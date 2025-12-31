@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01-Requirements/Functional-Modules/14 - System Administration.md",
+                "file": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "14 - System Administration"
+              "title": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow"
             }
           },
           {
@@ -136,8 +136,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -256,10 +255,13 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "3613557ce40d8009",
+  "active": "6a30ca8d9f254414",
   "lastOpenFiles": [
-    "01-Requirements/System Functional Modules.md",
+    "01-Requirements/Functional-Modules/PronaFlow_Admin_Roles.xlsx",
+    "01-Requirements/Functional-Modules/~$PronaFlow_Admin_Roles.xlsx",
+    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
     "01-Requirements/Functional-Modules/14 - System Administration.md",
+    "01-Requirements/System Functional Modules.md",
     "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
     "01-Requirements/Functional-Modules/12 - Integration Ecosystem.md",
     "00-General/Technology-Stack/Frontend-Core.md",
@@ -281,19 +283,16 @@
     "00-General/Technology-Stack/Desktop-Application-Wrapper.md",
     "00-General/Technology-Stack/Backend-Inference-Service.md",
     "00-General/Technology-Stack/Backend-Core-Service.md",
-    "Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md",
     "02-Architeture/Database-Schema.md",
     "02-Architeture/API-Design.md",
     "03-UI-UX-Design/Design-System.md",
     "03-UI-UX-Design/Wireframes",
     "04-AI-Specifications/Wireframes",
     "04-AI-Specifications/Model-Card.md",
-    "04-AI-Specifications/AI-Workflows.md",
     "Contents.base",
     "05-Deployment-Operations",
     "04-AI-Specifications",
     "03-UI-UX-Design",
-    "02-Architeture",
     "Chưa đặt tên.canvas",
     "02-Architeture/System Architecture Design.canvas"
   ]
