@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "ed680366c08f0f74",
+        "id": "05406e2de946674c",
         "type": "tabs",
         "children": [
           {
-            "id": "4a0177f5e62b5b86",
+            "id": "db4bb2ff207b13d3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
+                "file": "Chưa đặt tên.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "4 - Task Execution and Orchestration"
+              "title": "Chưa đặt tên"
+            }
+          },
+          {
+            "id": "7b7454578dbb6efb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "5 - Temporal Planning and Scheduling"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -88,7 +113,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -207,9 +233,15 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "4a0177f5e62b5b86",
+  "active": "7b7454578dbb6efb",
   "lastOpenFiles": [
+    "Chưa đặt tên.md",
     "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+    "assets/Chưa đặt tên.md",
+    "assets/images",
+    "assets",
+    "Logic SLA.drawio 1.png",
+    "assets/images/Logic SLA.drawio.png",
     "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
     "07-References/dependency-types.json",
     "07-References/New Text Document.txt",
@@ -229,9 +261,7 @@
     "07-References/iconography-map.md",
     "07-References/glossary.json",
     "07-References/security-checklist.md",
-    "07-References/test-case-standard.xlsx",
     "07-References/api-endpoints-catalog.md",
-    "07-References/permission-scopes.yaml",
     "01-Requirements/Non-Functional.md.md",
     "01-Requirements/System Functional Modules.md",
     "01-Requirements/Functional-Modules/16 - User Onboarding and Adoption.md",
@@ -242,8 +272,6 @@
     "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
     "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
     "01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md",
-    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
-    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
     "Chưa đặt tên.canvas",
     "02-Architeture/System Architecture Design.canvas"
   ]
