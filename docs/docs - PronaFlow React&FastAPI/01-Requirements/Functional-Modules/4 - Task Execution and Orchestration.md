@@ -139,15 +139,51 @@ Là một Stakeholder, Tôi muốn theo dõi một Task mà tôi không trực t
 - **Auto-watch:** Người tạo Task (Creator) và Người comment (Commenter) tự động được thêm vào danh sách Watchers (trừ khi họ tắt thủ công).
 #### AC 2 - Notification Trigger
 - Danh sách Watchers sẽ được [[7 - Even-Driven Notification System|Module 7]] sử dụng để gửi thông báo khi có sự kiện thay đổi (`task.updated`, `comment.created`).
+
+## 2.11. Feature: Execution Constraints under Locked Plan (Ràng buộc Thực thi khi Kế hoạch bị Khóa)
+### User Story 4.11
+Là một Thành viên dự án, Tôi muốn biết những thông tin nào mình được phép chỉnh sửa khi dự án đã chốt kế hoạch (Baseline), Để tôi cập nhật tiến độ mà không vô tình phá vỡ cam kết với khách hàng.
+### Acceptance Criteria (#AC)
+
+#### AC 1 - Allowed Actions (Hành động được phép)
+
+- Dù Plan đang ở trạng thái **Locked**, User vẫn được quyền:
+    - Thay đổi `Status` (Ví dụ: In-Progress -> Done).
+    - Cập nhật `% Complete`.
+    - Thêm `Comment`, `Attachment`.
+    - Log `Time` (Time Tracking).
+    - Đánh dấu `Subtask` là hoàn thành.
+    - **Lý do:** Đây là các hành động thuộc về **Thực thi (Execution)**, không làm thay đổi cấu trúc kế hoạch.
+#### AC 2 - Restricted Actions (Hành động bị hạn chế)
+- Khi Plan = **Locked**, hệ thống vô hiệu hóa (Disable/Gray-out) các trường sau trên Form chi tiết Task:
+    - `Start Date` / `End Date` (Ngày kế hoạch).
+    - `Duration`.
+    - `Dependency` (Không được nối thêm hoặc cắt bỏ dây).
+- **Exception:** Chỉ **Project Manager** mới có quyền mở khóa tạm thời (Override) hoặc phải đi qua quy trình Change Request (Module 5).
+#### AC 3 - Scope Creep Prevention (Ngăn chặn phình to phạm vi)
+- **Constraint:** Không cho phép tạo mới **Task cha (Parent Task)** trực tiếp vào danh sách khi Plan đang Lock.
+- **Allowed:** Vẫn cho phép tạo thêm **Subtask** (vì Subtask được xem là chi tiết hóa cách làm, miễn là không làm thay đổi ngày kết thúc của Task cha).
 # 3. Business Rules
-1. **Quy tắc Kế thừa (Inheritance):**
-    - Task con không tự động kế thừa Assignee từ Task cha (để linh hoạt), nhưng nên kế thừa quyền truy cập (Permissions).
-2. **Quy tắc Ràng buộc Custom Fields:**
-    - Tối đa 50 Custom Fields cho mỗi dự án (để bảo đảm hiệu năng render UI).
-    - Custom Field khi xóa sẽ mất vĩnh viễn dữ liệu đã nhập trong các Task, cần cảnh báo kỹ.
-3. **Quy tắc Dependency Chặt chẽ (Strict Dependency):**
-    - Nếu cấu hình Project là `Strict Mode`: Hệ thống **khóa** (Disable) nút "Start" hoặc "Complete" của Task Successor nếu Task Predecessor chưa xong.
-    - Nếu `Loose Mode` (Mặc định): Chỉ hiển thị cảnh báo (Warning Toast) nhưng vẫn cho phép làm.
+## 3.1. Quy tắc Kế thừa (Inheritance):
+- Task con không tự động kế thừa Assignee từ Task cha (để linh hoạt), nhưng nên kế thừa quyền truy cập (Permissions).
+## 3.2. Quy tắc Ràng buộc Custom Fields:
+- Tối đa 50 Custom Fields cho mỗi dự án (để bảo đảm hiệu năng render UI).
+- Custom Field khi xóa sẽ mất vĩnh viễn dữ liệu đã nhập trong các Task, cần cảnh báo kỹ.
+## 3.3. Quy tắc Dependency Chặt chẽ (Strict Dependency):
+- Nếu cấu hình Project là `Strict Mode`: Hệ thống **khóa** (Disable) nút "Start" hoặc "Complete" của Task Successor nếu Task Predecessor chưa xong.
+- Nếu `Loose Mode` (Mặc định): Chỉ hiển thị cảnh báo (Warning Toast) nhưng vẫn cho phép làm.
+## 3.4. Quy tắc "Actual vs Planned" (Thực tế vs Kế hoạch)
+- Phân hệ 4 cần phân biệt rõ hai bộ dữ liệu ngày tháng:
+    1. **Planned Dates (Baseline):** Ngày cam kết (Do Module 5 quản lý, bị Read-only khi Lock).
+    2. **Actual Dates:** Ngày thực tế (Do Module 4 ghi nhận).
+        - _Actual Start:_ Tự động điền `NOW()` khi Task chuyển sang `In-Progress`.
+        - _Actual End:_ Tự động điền `NOW()` khi Task chuyển sang `Done`.
+- **Logic:** Việc nhân viên làm xong sớm hay muộn (Actual khác Planned) là chuyện bình thường, hệ thống ghi nhận sự chênh lệch này để tính KPI, chứ không chặn nhập liệu.
+## 3.5. Quy tắc "Auto-Push" khi trễ hạn
+- **Vấn đề:** Task A có Deadline hôm qua (Planned End = Yesterday), nhưng hôm nay vẫn chưa xong (`Status != Done`).
+- **Xử lý:**
+    - Nếu Plan **Unlocked**: Hệ thống có thể tự động đẩy Planned End sang hôm nay (Auto-reschedule).
+    - Nếu Plan **Locked**: Giữ nguyên Planned End là ngày hôm qua (để ghi nhận là Trễ hạn - Overdue). Hệ thống hiển thị nhãn **"Overdue by X days"** màu đỏ.
 # 4. Theoretical Basis (Cơ sở Lý luận)
 ## 4.1. Work Breakdown Structure (WBS)
 Module này tuân thủ nguyên tắc phân rã công việc WBS:
@@ -166,7 +202,6 @@ Hỗ trợ tư duy GTD thông qua các trạng thái Task:
 - **Next Action:** Task có ngày và người làm cụ thể.
 - **Waiting For:** Task bị chặn (Blocked by dependency).
 - **Someday/Maybe:** Task ở trạng thái "Hold".
-
 ## 4.4. Sơ đồ Luồng xử lý Dependency:
 ```mermaid
 graph TD
@@ -185,3 +220,8 @@ graph TD
 | **SS**        | **Start-to-Start**   | $Start_A \rightarrow Start_B$ | **Task B** không thể bắt đầu cho đến khi **Task A** bắt đầu.<br>($Start_B \geq Start_A$) | Khi bắt đầu _viết code_ (A) thì có thể bắt đầu _viết test case_ (B) song song.      | ⚠️ **Optional**<br>(Cân nhắc cho Phase 2). |
 | **FF**        | **Finish-to-Finish** | $End_A \rightarrow End_B$     | **Task B** không thể kết thúc cho đến khi **Task A** kết thúc.<br>($End_B \geq End_A$)   | Việc _nghiệm thu_ (B) chỉ xong khi việc _sửa lỗi_ (A) đã xong hoàn toàn.            | ⚠️ **Optional**<br>(Cân nhắc cho Phase 2). |
 | **SF**        | **Start-to-Finish**  | $Start_A \rightarrow End_B$   | **Task B** không thể kết thúc cho đến khi **Task A** bắt đầu.<br>($End_B \geq Start_A$)  | Ca trực của _bảo vệ cũ_ (B) chỉ kết thúc khi _bảo vệ mới_ (A) đã đến và bắt đầu ca. | ❌ **Không hỗ trợ**<br>(Ít dùng, gây rối).  |
+## 4.6. Iron Triangle Constraints (Ràng buộc Tam giác sắt)
+Trong quản lý dự án, thay đổi một cạnh sẽ ảnh hưởng các cạnh còn lại. Phân hệ 4 thực thi các ràng buộc này:
+- **Scope (Phạm vi):** Được cố định bởi danh sách Task. Khi Lock Plan -> Cố định Scope.
+- **Time (Thời gian):** Được cố định bởi Start/End Date.
+- **Cost (Chi phí):** Được cố định bởi Resource Assignee. -> Việc ngăn chặn thêm Task mới hoặc đổi người khi Plan Locked chính là bảo vệ sự toàn vẹn của Tam giác sắt dự án.

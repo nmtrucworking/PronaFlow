@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+                "file": "01-Requirements/System Functional Modules.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,7 +52,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "5 - Temporal Planning and Scheduling"
+              "title": "System Functional Modules"
             }
           }
         ],
@@ -235,19 +235,19 @@
   },
   "active": "7b7454578dbb6efb",
   "lastOpenFiles": [
-    "Fix.md",
+    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
     "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+    "Fix.md",
     "assets/Chưa đặt tên.md",
     "assets/images",
     "assets",
     "Logic SLA.drawio 1.png",
     "assets/images/Logic SLA.drawio.png",
-    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
     "07-References/dependency-types.json",
     "07-References/New Text Document.txt",
     "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
     "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
-    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
     "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
     "07-References/system-error-codes.md",
     "07-References/00-Overview.md",
