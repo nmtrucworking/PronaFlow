@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Chưa đặt tên.md",
+                "file": "Fix.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Chưa đặt tên"
+              "title": "Fix"
             }
           },
           {
@@ -235,7 +235,7 @@
   },
   "active": "7b7454578dbb6efb",
   "lastOpenFiles": [
-    "Chưa đặt tên.md",
+    "Fix.md",
     "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
     "assets/Chưa đặt tên.md",
     "assets/images",
