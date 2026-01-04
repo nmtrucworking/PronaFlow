@@ -1,7 +1,7 @@
 **Project**: PronaFlow
 **Version**: 1.0
 **State**: Draft
-*Last updated: Jan 4, 2026*
+*Last updated: Jan 04, 2026*
 
 ---
 # 1. Business Overview
@@ -62,15 +62,16 @@ Là một Thành viên dự án, Tôi muốn tạo một Task mới nằm trong 
 - Scope: Đối với gán Subtask chỉ cho phép gán cho những người được gán trong Task cha.
 #### AC 3 - Ordering:
 - Các Subtask có thể được sắp xếp lại thứ tự (`position`) để thể hiện quy trình thực hiện các bước.
-## 2.4. Feature: Task Dependencies.
+## 2.4. Feature: Task Dependencies (Predecessor & Successor).
 ### User Story 4.4.
 - Là một Quản lý dự án, 
 - Tôi muốn thiết lập các mối quan hệ giữa Task A và  Task B, 
 - Để đảm bảo quy trình thực hiện đúng trình tự.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Dependency Types:
-- Hỗ trợ định nghĩa quan hệ giữa `Predecessor` (Việc trước) và `Success` (Việc sau)
-- Lưu trữ loại quan hệ, mặc định FS (**F**insish-to-**S**tart)
+#### AC 1 - Dependency Definition
+- **Data Model:** Định nghĩa quan hệ `Predecessor` (Task A - Việc trước) và `Successor` (Task B - Việc sau).
+- **Default Type:** Hỗ trợ chuẩn **Finish-to-Start (FS)**.
+    - *Logic:* Task B không thể chuyển sang `In-Progress` nếu Task A chưa `Done`.
 #### AC 2 - Cycle Detection Validation
 - **Logic:** Khi User cố gắng nối A -> B, hệ thống kiểm tra đồ thị. Nếu phát hiện B đang gián tiếp chặn A (A -> ... -> B), ngăn chặn hành động và báo lỗi `TASK_001: Circular dependency detected`.
 ## 2.5. Feature: Recurring Tasks (Công việc lặp lại)
@@ -87,18 +88,66 @@ Là một Team Lead, Tôi muốn thiết lập Task "Gửi báo cáo tuần" t�
 - **Lazy Generation:** Hệ thống không sinh ra hàng nghìn task tương lai ngay lập tức.
 - **Logic:** Chỉ sinh ra Task tiếp theo (Next Instance) khi Task hiện tại được đánh dấu là **Done** hoặc đến ngày kích hoạt.
 - **Prefix:** Tự động thêm suffix vào tên task (e.g., "Report [2025-01-01]", "Report [2025-01-08]").
+## 2.6. Feature: Milestones (Cột mốc Dự án)
+### User Story 4.6
+Là một Project Manager, Tôi muốn đánh dấu các Task quan trọng là "Cột mốc", Để dễ dàng theo dõi các điểm chốt (Checkpoints) quan trọng của dự án trên timeline.
+### Acceptance Criteria ( #AC)
+#### AC 1 - Milestone Definition
+- **Input:** Toggle `Is Milestone = True`.
+- **Constraint:** Milestone có `Duration = 0` (Start Date = End Date). Không cho phép nhập Estimated Hours.
+#### AC 2 - Visual Distinction
+- Hiển thị dưới dạng hình thoi (Diamond shape) trên biểu đồ Gantt và có icon nổi bật trong danh sách Task để phân biệt với Task thường.
+
+## 2.7. Feature: Bulk Actions (Thao tác hàng loạt)
+### User Story 4.7
+Là một Người dùng, Tôi muốn chọn và chỉnh sửa nhiều Task cùng một lúc, Để tiết kiệm thời gian khi cần thay đổi trạng thái hoặc người thực hiện cho cả nhóm việc.
+### Acceptance Criteria ( #AC)
+#### AC 1 - Multi-select Interaction
+- **Interaction:** Giữ phím `Shift` hoặc `Ctrl/Cmd` để chọn nhiều Task, hoặc tick vào checkbox đầu dòng.
+- **Floating Toolbar:** Khi có >1 task được chọn, hiển thị thanh công cụ nổi phía dưới màn hình: "X Tasks selected".
+#### AC 2 - Batch Operations
+- Hỗ trợ các hành động:
+    - `Move to...`: Di chuyển sang List khác hoặc Dự án khác.
+    - `Set Status/Priority/Assignee`: Cập nhật đồng loạt giá trị mới.
+    - `Delete`: Xóa nhiều task (Yêu cầu confirm).
+## 2.8. Feature: Custom Fields (Trường tùy chỉnh)
+### User Story 4.8
+Là một **Pro User**, Tôi muốn định nghĩa thêm các trường dữ liệu đặc thù (như "Ticket ID", "Khách hàng"), Để quản lý thông tin sát với nghiệp vụ thực tế của công ty.
+### Acceptance Criteria ( #AC)
+#### AC 1 - Field Definition (Project Level)
+- PM có thể tạo Custom Field trong Project Settings.
+- **Data Types:** Text, Number, Dropdown (Single/Multi select), Date, Checkbox, URL.
+#### AC 2 - Tier Enforcement (RBAC)
+- Tính năng này chỉ khả dụng cho Workspace sử dụng gói **Pro** hoặc **Enterprise** (Check quota từ Module 13). Gói Free bị khóa chức năng này.
+#### AC 3 - Task Input
+- Các trường tùy chỉnh sẽ hiển thị ở khu vực riêng trong Task Detail. Dữ liệu nhập vào phải được Validate theo kiểu dữ liệu đã định nghĩa.
+## 2.9. Feature: Task Templates
+### User Story 4.9
+Là một Team Lead, Tôi muốn lưu cấu trúc của một Task mẫu (gồm mô tả, checklist, tag) và tái sử dụng nó, Để chuẩn hóa quy trình giao việc cho nhân viên.
+### Acceptance Criteria ( #AC)
+#### AC 1 - Save as Template
+- Từ một Task đang có, chọn "Save as Template". Hệ thống lưu lại: Description, Subtasks, Tags, Priority (không lưu Assignee và Due Date).
+#### AC 2 - Instantiate from Template
+- Khi tạo Task mới, hiển thị dropdown: "Apply Template".
+- Khi chọn, dữ liệu từ Template sẽ đổ vào form tạo Task.
+## 2.10. Feature: Watchers/Followers (Người theo dõi)
+### User Story 4.10
+Là một Stakeholder, Tôi muốn theo dõi một Task mà tôi không trực tiếp thực hiện, Để nhận được thông báo mỗi khi có cập nhật mới về tiến độ hoặc thảo luận.
+### Acceptance Criteria ( #AC)
+#### AC 1 - Watch Logic
+- **Manual:** Nút toggle hình con mắt (Eye Icon). Bấm để Follow/Unfollow.
+- **Auto-watch:** Người tạo Task (Creator) và Người comment (Commenter) tự động được thêm vào danh sách Watchers (trừ khi họ tắt thủ công).
+#### AC 2 - Notification Trigger
+- Danh sách Watchers sẽ được [[7 - Even-Driven Notification System|Module 7]] sử dụng để gửi thông báo khi có sự kiện thay đổi (`task.updated`, `comment.created`).
 # 3. Business Rules
-1. **Quy tắc Vòng đời (Parent-Child Lifecycle):**
-    - Việc hoàn thành tất cả Subtask **KHÔNG** tự động chuyển trạng thái Task cha sang "Done" (Vì có thể còn việc khác chưa liệt kê). User phải xác nhận thủ công.
-    - Tuy nhiên, nếu Re-open một Subtask, Task cha (nếu đang Done) nên tự động chuyển về In-Progress.
-2. **Quy tắc Xóa (Deletion Rules):**
-    - **Archive:** Ẩn Task khỏi giao diện nhưng vẫn giữ trong DB và Search. (Khuyên dùng).
-    - **Delete:** Chuyển vào thùng rác (Module 8).
-    - Nếu xóa Task List -> Yêu cầu xác nhận xóa toàn bộ Task bên trong hoặc di chuyển chúng sang List khác ("Move to...").
-3. **Quy tắc cập nhật Task lặp lại:**
-    - Khi sửa một Task lặp lại, hệ thống phải hỏi:
-        - "Chỉ sửa task này?" (This instance only).
-        - "Sửa task này và các task tương lai?" (This and future instances).
+1. **Quy tắc Kế thừa (Inheritance):**
+    - Task con không tự động kế thừa Assignee từ Task cha (để linh hoạt), nhưng nên kế thừa quyền truy cập (Permissions).
+2. **Quy tắc Ràng buộc Custom Fields:**
+    - Tối đa 50 Custom Fields cho mỗi dự án (để bảo đảm hiệu năng render UI).
+    - Custom Field khi xóa sẽ mất vĩnh viễn dữ liệu đã nhập trong các Task, cần cảnh báo kỹ.
+3. **Quy tắc Dependency Chặt chẽ (Strict Dependency):**
+    - Nếu cấu hình Project là `Strict Mode`: Hệ thống **khóa** (Disable) nút "Start" hoặc "Complete" của Task Successor nếu Task Predecessor chưa xong.
+    - Nếu `Loose Mode` (Mặc định): Chỉ hiển thị cảnh báo (Warning Toast) nhưng vẫn cho phép làm.
 # 4. Theoretical Basis (Cơ sở Lý luận)
 ## 4.1. Work Breakdown Structure (WBS)
 Module này tuân thủ nguyên tắc phân rã công việc WBS:
@@ -117,3 +166,22 @@ Hỗ trợ tư duy GTD thông qua các trạng thái Task:
 - **Next Action:** Task có ngày và người làm cụ thể.
 - **Waiting For:** Task bị chặn (Blocked by dependency).
 - **Someday/Maybe:** Task ở trạng thái "Hold".
+
+## 4.4. Sơ đồ Luồng xử lý Dependency:
+```mermaid
+graph TD
+    Start([User Connects Task A to Task B]) --> CheckLoop{Check Cycle: A->...->B->A?}
+    CheckLoop -- Yes --> Error[Return Error: Circular Dependency]
+    CheckLoop -- No --> CreateLink[Create Record: A is Predecessor of B]
+    CreateLink --> CheckStatus{Check Project Mode}
+    CheckStatus -- Strict --> LockB[Lock Task B Action]
+    CheckStatus -- Loose --> WarnB[UI Warning Only]
+```
+
+## 4.5. Dependency Types Matrix
+| **Mã (Code)** | **Tên loại (Type)**  | **Ký hiệu**                   | **Mô tả Quy chuẩn (Logic)**                                                              | **Ví dụ Thực tế (Business Case)**                                                   | **Mức độ Hỗ trợ trong PronaFlow**          |
+| ------------- | -------------------- | ----------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------ |
+| **FS**        | **Finish-to-Start**  | $A \rightarrow B$             | **Task B** không thể bắt đầu cho đến khi **Task A** kết thúc.<br>($Start_B \geq End_A$)  | Phải _đổ móng_ (A) xong thì mới được _xây tường_ (B).                               | **Mặc định (Default)**<br>✅ Hỗ trợ đầy đủ. |
+| **SS**        | **Start-to-Start**   | $Start_A \rightarrow Start_B$ | **Task B** không thể bắt đầu cho đến khi **Task A** bắt đầu.<br>($Start_B \geq Start_A$) | Khi bắt đầu _viết code_ (A) thì có thể bắt đầu _viết test case_ (B) song song.      | ⚠️ **Optional**<br>(Cân nhắc cho Phase 2). |
+| **FF**        | **Finish-to-Finish** | $End_A \rightarrow End_B$     | **Task B** không thể kết thúc cho đến khi **Task A** kết thúc.<br>($End_B \geq End_A$)   | Việc _nghiệm thu_ (B) chỉ xong khi việc _sửa lỗi_ (A) đã xong hoàn toàn.            | ⚠️ **Optional**<br>(Cân nhắc cho Phase 2). |
+| **SF**        | **Start-to-Finish**  | $Start_A \rightarrow End_B$   | **Task B** không thể kết thúc cho đến khi **Task A** bắt đầu.<br>($End_B \geq Start_A$)  | Ca trực của _bảo vệ cũ_ (B) chỉ kết thúc khi _bảo vệ mới_ (A) đã đến và bắt đầu ca. | ❌ **Không hỗ trợ**<br>(Ít dùng, gây rối).  |
