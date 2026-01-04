@@ -4,17 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "ec69aaf38a831572",
+        "id": "c537ade56105ab69",
         "type": "tabs",
         "children": [
           {
-            "id": "efda5a18c35101d7",
+            "id": "bbca5c2819500bf5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "Tab mới"
+              "title": "1 - Identity and Access Management"
             }
           }
         ]
@@ -74,7 +88,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -193,9 +208,10 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "efda5a18c35101d7",
+  "active": "bbca5c2819500bf5",
   "lastOpenFiles": [
-    "07-References/Overview.md",
+    "07-References/system-error-codes.md",
+    "07-References/00-Overview.md",
     "07-References/metric-definitions.md",
     "07-References/feature-store-registry.yaml",
     "07-References/data-dictionary.csv",
@@ -207,7 +223,6 @@
     "07-References/glossary.json",
     "07-References/security-checklist.md",
     "07-References/test-case-standard.xlsx",
-    "07-References/system-error-codes.md",
     "07-References/api-endpoints-catalog.md",
     "07-References/permission-scopes.yaml",
     "07-References/data-retention-rules.csv",

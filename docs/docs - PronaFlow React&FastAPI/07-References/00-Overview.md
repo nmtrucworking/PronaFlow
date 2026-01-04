@@ -12,7 +12,7 @@ Danh cho Dev copy vào code (Frontend/Backend) để mapping
 | **`project-statuses.json`**    | JSON           |                            | **Danh sách trạng thái dự án:**<br>Chứa ID, Tên hiển thị (VN/EN), Mã màu Hex. Dev không cần đoán màu hay ID nữa.                            |
 | **`task-priorities.json`**     | JSON           |                            | **Độ ưu tiên & SLA:**<br>Quy định rõ: `Urgent` = 4h, `High` = 8h. Dùng để tính toán deadline tự động.                                       |
 | **`subscription-quotas.yaml`** | YAML           |                            | **Hạn mức gói cước:**<br>Quy định rõ: Gói `Free` (3 projects, 5 members), `Pro` (Unlimited). Dùng cho logic chặn người dùng (Enforcement).  |
-| **`system-error-codes.md`**    | Markdown Table |                            | **Bảng mã lỗi chuẩn:**<br>Ví dụ: `ERR_001`: Sai mật khẩu, `ERR_429`: Quá giới hạn request. Giúp Frontend hiển thị thông báo lỗi thống nhất. |
+| **`system-error-codes.md`**    | Markdown Table | [[system-error-codes]]     | **Bảng mã lỗi chuẩn:**<br>Ví dụ: `ERR_001`: Sai mật khẩu, `ERR_429`: Quá giới hạn request. Giúp Frontend hiển thị thông báo lỗi thống nhất. |
 
 # 2. Nhóm Cấu hình Mặc định (Default Configurations)
 Dành cho việc khởi tạo hệ thống hoặc onboarding người dùng mới.
@@ -20,8 +20,8 @@ Dành cho việc khởi tạo hệ thống hoặc onboarding người dùng mớ
 | **Tên File Đề xuất**                      | **Định dạng** | **Nội dung trích xuất từ** | **Mục đích hiển thị**                                                                                                          |
 | ----------------------------------------- | ------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | **`default-user-settings.json`**          | JSON          |                            | **Cài đặt mặc định:**<br>Theme: `light`, Language: `vi-VN`, Font-size: `14px`. Dùng khi tạo user mới.                          |
-| **`notification-templates-library.json`** | JSON          |                            | **Kho mẫu thông báo:**<br>Chứa các câu văn mẫu cho Email/Push. Ví dụ: `TASK_ASSIGNED`: "Bạn vừa được giao việc {{task_name}}". |
-| **`data-retention-rules.csv`**            | CSV           |                            | **Quy tắc lưu trữ:**<br>Dòng 1: `Trash Bin`, `30 days`. Dòng 2: `Audit Log`, `90 days`. Dùng cho các Cronjob dọn dẹp DB.       |
+| **`notification-templates-library.json`** | JSON          | [[]]                       | **Kho mẫu thông báo:**<br>Chứa các câu văn mẫu cho Email/Push. Ví dụ: `TASK_ASSIGNED`: "Bạn vừa được giao việc {{task_name}}". |
+| **`data-retention-rules.csv`**            | CSV           | [[]]                       | **Quy tắc lưu trữ:**<br>Dòng 1: `Trash Bin`, `30 days`. Dòng 2: `Audit Log`, `90 days`. Dùng cho các Cronjob dọn dẹp DB.       |
 
 # 3. Nhóm Quy định Kỹ thuật (Technical Governance)
 Dành cho Dev tuân thủ quy tắc đặt tên và cấu trúc.
