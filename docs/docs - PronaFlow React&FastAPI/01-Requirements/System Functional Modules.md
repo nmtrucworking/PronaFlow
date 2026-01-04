@@ -1,7 +1,7 @@
 **Project**: PronaFlow
 **Version**: 1.0
 **State**: Draft
-***Last updated:** Dec 31, 2025*
+***Last updated:** Jan 4, 2025*
 
 ---
 Hệ thống PronaFlow được kiến trúc dựa trên mô hình _Domain-Driven Design (DDD)_, phân tách thành 16 phân hệ nghiệp vụ cốt lõi.
@@ -40,15 +40,21 @@ Module trung tâm điều phốit oàn bộ hoạt động quản trị.
 - Workflow Engien: Cho phép tùy biến quy trình làm việc (Custom Workflows) phù hợp với các phương pháo luận quản trị khác nhau (Scum, Kanban, Waterfall). Người dùng có thể định nghĩa các trạng thái (States) và quy tắc chuyển đổi (Transitions).
 - Project Meta-data: Quản lý các thuộc tính mở rộng dự án, thiết lập các ràng buộc về thời gian, ngân sách và phạm vi (Scope).
 - Interactive Kanban Interface: Giao điện tương tác trực quan (Visual Management) hỗ trợ kéo thả, cập nhật trạng thái tức thời (Real-time State Synchronization).
+- **Standardization:** Chuẩn hóa quy trình khởi tạo thông qua **Project Templates** và thiết lập quyền hạn (Roles).
+- **Portfolio Organization:** Tổ chức dự án theo Danh mục (Portfolios/Programs) để phục vụ quản lý vĩ mô.
+- **Lifecycle Governance:** Kiểm soát chuyển đổi trạng thái dự án thông qua các cổng kiểm tra (Transition Gates) và tích hợp quy trình lưu trữ (Archiving Strategy).
 Xem chi tiết tại: [[3 - Project Lifecycle Management]]
 # 4. Task Execution & Orchestration
-Được thiết kế để tối ưu hóa hiệu suất làm việc của người dùng cuối (End-user).
-- Atomic Task Unit: Quản lý công việc ở mức độ nguyên tử, hỗ trợ phân rã cấu trúc công việc ( #WBS) thành nhiều tầng: Task List -> Task -> Subtask
-- Dependency Management: Xử lý các mối quan hệ phụ thuộc giữa các công việc (FS, SS, v.v.), tự động hóa phát hiện và cảnh báo xung đột lịch trình.
+Được thiết kế để tối ưu hóa hiệu suất thực thi và đảm bảo kỷ luật vận hành.
+- **WBS & Atomic Units:** Quản lý cấu trúc phân rã công việc đa tầng (Task List -> Task -> Subtask) và các thuộc tính mở rộng (Custom Fields).
+- **Productivity Tools:** Cung cấp bộ công cụ tăng tốc độ làm việc: Time Tracking, Task Templates, và Thao tác hàng loạt (Bulk Actions).
+- **Orchestration & Compliance:** Quản lý sự phụ thuộc (Dependencies) và thực thi các ràng buộc từ kế hoạch tổng thể (Planning Constraints), đảm bảo tiến độ thực tế (Actual) luôn được đối chiếu chặt chẽ với kế hoạch (Baseline).
 Xem chi tiết tại: [[4 - Task Execution and Orchestration]]
 # 5. Temporal Planning & Scheduling
-- Timeline Visulization: Trực quan hóa tiến độ dự án dưới dạng biểu đồ Gantt và Lịch biểu (Calendar View), giúp người quản lý xác định đường găng (Critical Path) của dự án.
-- SLA Tracking: Giám sát cam kết mức độ dịch vụ ( #SLA) và thời hạn (Deadline), tự động tính toán độ trễ và kích hoạt quy trình leo thang (Escalation) khi cần thiết.
+Phân hệ hoạch định chiến lược và quản trị thời gian dự án nâng cao.
+- **Advanced Gantt & CPM:** Trực quan hóa tiến độ, xác định đường găng (Critical Path) và xử lý phụ thuộc đa dự án (Cross-Project Dependencies).
+- **Planning Governance:** Thiết lập kỷ luật vận hành thông qua quy trình phê duyệt kế hoạch (Approval Workflow), quản lý phiên bản Baseline và phân tích tác động thay đổi (Change Impact Analysis).
+- **Optimization & Simulation:** Hỗ trợ ra quyết định chiến lược với các công cụ mô phỏng rủi ro (What-If Simulation), dự báo xác suất (P50/P90) và tự động cân bằng nguồn lực (Resource Leveling).
 Xem chi tiết tại: [[5 - Temporal Planning and Scheduling]]
 # 6. Unified Collaboration Hub
 - Contextual Communication: Tích hợp luồng thảo luận (Threaded Comments) gắn liền với ngữ cảnh công việc cụ thể, hỗ trợ định dạng Rich Text và các tương tác xã hội (@mention, reaction).

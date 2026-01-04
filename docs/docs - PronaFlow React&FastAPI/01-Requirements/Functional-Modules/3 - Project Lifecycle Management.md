@@ -79,17 +79,61 @@ Là một Chủ dự án, Tôi muốn thiết lập dự án là Riêng tư (Pri
 - **Reference:** Các Task thuộc dự án này cũng bị ẩn theo (Query Filter), nhưng không bị update trong DB ngay lập tức (Lazy Update).
 #### AC 2 - Hard Delete Constraint
 - Dự án trong thùng rác quá 30 ngày sẽ bị xóa vĩnh viễn bởi Cronjob (Theo quy định tại Module 8).
+## 2.6. Feature: Project Templates (Mẫu Dự án)
+### User Story 3.6
+Là một PMO (Project Management Officer), Tôi muốn tạo các mẫu dự án chuẩn (ví dụ: "Quy trình Phần mềm", "Chiến dịch Marketing") bao gồm sẵn danh sách công việc mẫu và cấu hình, Để các PM không phải thiết lập lại từ đầu và đảm bảo tuân thủ quy trình công ty.
+### Acceptance Criteria ( #AC)
+#### AC 1 - Template Scope
+- Khi lưu một Dự án thành Template, hệ thống lưu lại:
+    - Cấu trúc **Task Lists** (Phases).
+    - Các **Tasks/Subtasks** mẫu (bao gồm Mô tả, Checklist, Tags).
+    - Cấu hình **Project Settings** (Workflow, Custom Fields).
+    - _Không lưu:_ Thành viên cụ thể và Ngày tháng cụ thể (Dates).
+#### AC 2 - Project Initialization from Template
+- **Action:** Khi tạo dự án mới, User chọn "Use a Template".
+- **Logic:** Hệ thống clone toàn bộ cấu trúc từ Template sang Dự án mới.
+- **Date Remapping:** Hệ thống hỏi "Ngày bắt đầu dự án mới?", sau đó tự động tịnh tiến (Shift) ngày của các Task mẫu dựa trên khoảng cách tương đối (Relative Duration) so với ngày bắt đầu.
+## 2.7. Feature: Project Categories & Portfolios (Phân loại & Danh mục)
+
+### User Story 3.7
+Là một Giám đốc Khối, Tôi muốn gom nhóm các dự án liên quan thành một "Chương trình" (Program) hoặc "Danh mục" (Portfolio), Để theo dõi sức khỏe tổng thể của cả nhóm dự án thay vì xem lẻ tẻ.
+### Acceptance Criteria ( #AC)
+#### AC 1 - Categorization
+- Cho phép gắn **Category** (Ví dụ: "Internal", "Client A", "R&D") cho dự án.
+- Cho phép gắn **Portfolio Tag** (Ví dụ: "Chiến lược 2025").
+- Các nhãn này dùng để lọc (Filter) và gom nhóm (Group By) trên Dashboard tổng hợp (Module 11).
+#### AC 2 - Hierarchy Support (Hỗ trợ Module 5)
+- Việc phân loại này là cơ sở dữ liệu để Phân hệ 5 thực hiện tính năng **"Cross-Project Dependencies"** (Chỉ cho phép nối dependency giữa các dự án trong cùng Portfolio nếu cấu hình hạn chế).
+## 2.8. Feature: Status Transition Gates (Cổng kiểm soát trạng thái)
+### User Story 3.8
+Là một Quản trị viên, Tôi muốn thiết lập các điều kiện bắt buộc trước khi dự án được phép chuyển trạng thái, Để ngăn chặn sai sót quy trình (ví dụ: Đóng dự án khi vẫn còn việc đang làm).
+### Acceptance Criteria ( #AC)
+#### AC 1 - "Definition of Done" Gate
+- **Condition:** Khi User chuyển trạng thái Project sang **DONE**.
+- **Check:** Hệ thống kiểm tra xem còn Task nào có trạng thái `!= DONE` không.
+- **Action:**
+    - Nếu còn: Hiển thị Modal liệt kê các Task chưa xong và yêu cầu xác nhận: _"Hủy bỏ (Cancel) các task này"_ hay _"Di chuyển (Move) sang dự án khác"_.
+#### AC 2 - "Planning Approval" Gate (Integration with Module 5)
+- **Condition:** Khi chuyển sang **IN_PROGRESS**.
+- **Check:** Kiểm tra xem Dự án đã có **Baseline** nào được phê duyệt chưa (nếu bật chế độ Strict Governance).
 # 3. Business Rules
-1. **Project Key Generation:**
-	 - Mỗi dự án có một `Prefix Key` (ví dụ: "Marketing Campaign" -> Key: `MAR`).
-	 - Các Task trong dự án sẽ có ID dựa trên Key này: `MAR-1`, `MAR-2`.
-	 - Quy tắc: Tự động lấy 3-4 chữ cái đầu, in hoa. Cho phép User sửa lại lúc tạo dự án, nhưng phải duy nhất trong Workspace.
-2. **Date Constraint Logic:**
-	 - `start_date` và `end_date` là Optional.
-	 - Tuy nhiên, nếu Task con có thời hạn nằm ngoài khoảng thời gian của Dự án -> Hệ thống hiển thị Cảnh báo (Warning) nhưng không chặn (Soft Constraint).
-3. **Kanban View Logic:**
-	 - Màn hình "All Projects" nhóm dự án theo `Status`.
-	 - Sắp xếp mặc định: `Priority` (High -> Low) sau đó đến `Last Updated`.
+## 3.1. Project Key Generation:
+ - Mỗi dự án có một `Prefix Key` (ví dụ: "Marketing Campaign" -> Key: `MAR`).
+ - Các Task trong dự án sẽ có ID dựa trên Key này: `MAR-1`, `MAR-2`.
+ - Quy tắc: Tự động lấy 3-4 chữ cái đầu, in hoa. Cho phép User sửa lại lúc tạo dự án, nhưng phải duy nhất trong Workspace.
+## 3.2. Date Constraint Logic:
+ - `start_date` và `end_date` là Optional.
+ - Tuy nhiên, nếu Task con có thời hạn nằm ngoài khoảng thời gian của Dự án -> Hệ thống hiển thị Cảnh báo (Warning) nhưng không chặn (Soft Constraint).
+## 3.3. Kanban View Logic:
+ - Màn hình "All Projects" nhóm dự án theo `Status`.
+ - Sắp xếp mặc định: `Priority` (High -> Low) sau đó đến `Last Updated`.
+## 3.4. Quy tắc Định danh (Project Key Immutability)
+- **Project Key** (ví dụ: `PROJ-1`) là định danh duy nhất dùng trong URL và commit message (Git Integration).
+- Sau khi dự án đã tạo Task đầu tiên, **KHÔNG** cho phép đổi Project Key nữa để đảm bảo tính toàn vẹn của các đường dẫn (Deep Links) và lịch sử hoạt động.
+## 3.5. Quy tắc Lưu trữ (Archiving Strategy - Integration with Module 8)
+- Khi Dự án chuyển sang trạng thái **DONE** hoặc **CANCELLED**:
+    - Sau 30 ngày (cấu hình mặc định): Hệ thống gợi ý **Archive** (Lưu trữ) để ẩn khỏi danh sách chọn nhanh, giúp giao diện gọn gàng.
+    - Dự án Archived chuyển sang chế độ **Read-only** hoàn toàn (bao gồm cả Task và Comment). Muốn sửa phải **Unarchive**.
 # 4. Theoretical Basis (Cơ sở Lý luận)
 ## 4.1. Finite State Machine (Máy trạng thái hữu hạn)
 Dự án được mô hình hóa như một máy trạng thái đơn chiều.
