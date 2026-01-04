@@ -65,6 +65,72 @@ Là một Thành viên mới gia nhập dự án, Tôi muốn tìm kiếm các t
     3. Nội dung File văn bản (Parse nội dung bên trong PDF, DOCX - _Tính năng nâng cao_).
 #### AC 2 - Contextual Result Highlighting
 - **Display:** Kết quả trả về phải hiển thị đoạn văn bản chứa từ khóa (Snippet) và link trực tiếp đến vị trí của comment đó trong luồng thảo luận (Deep Linking).
+
+## 2.6. Feature: Project Notes (Wiki)
+### User Story 6.6.
+- Là một **Project Manager**
+- Tôi muốn tạo các trang chi chú (Note) rich-text bên trong dự án và tổ chức chúng theo cấu trúc cây (Hierachy).
+- Để lưu trữ các nội dung cần thiết như quy định, biên bản họp và tài liệu đặc tả ngay tại nơi làm việc mà không cần dùng GG Docs rời rạc.
+### Acceptance Criteria ( #AC)
+#### AC 1 - - **Rich Text Editor:** 
+- Hỗ trợ soạn thảo văn bản định dạng (Bold, Italic, Heading, Checkbox) và nhúng ảnh (tương tự như mô tả trong Module 15).
+#### **AC 2 - Hierarchy:** 
+- Cho phép tạo ghi chú con (Nested Notes) không giới hạn cấp độ (Parent Note -> Child Note).
+#### **AC 3 - Linkage:** 
+- Cho phép `@mention` Task hoặc Project khác ngay trong nội dung ghi chú để tạo liên kết ngữ cảnh.
+## 2.7. Feature: Personal Notes
+### User Story 6.7.
+- Là một Thành viên dự án.
+- Tôi muốn có một khu vực ghi chú cá nhân riêng tư (Private Notes) truy cập nhanh từ Sidebar,
+- Để ghi lại các ý tưởng tạm thời hoặc Todo list trong ngay trước khi chuyển đổi chúng thành Task chính thức.
+### Acceptance Criteria ( #AC)
+#### **AC 1 - Privacy:** 
+- Dữ liệu này chỉ hiển thị với chính người dùng đó (Private by default).
+#### **AC 2 - Convert to Task:** 
+- Cung cấp nút "Convert to Task" để chuyển đổi nhanh một dòng ghi chú thành Task và chọn Project đích.
+## 2.8. Feature: Note Templates
+### User Story 6.8: 
+- **Là một** Project Manager,
+- **Tôi muốn** tạo và quản lý các mẫu ghi chú (Templates) như "Biên bản cuộc họp", "Báo cáo lỗi", "Đặc tả tính năng",
+- **Để** cả team tuân thủ một chuẩn trình bày chung và tiết kiệm thời gian soạn thảo.
+### **Acceptance Criteria (#AC):**
+- **AC 1 - Template Library:** Hệ thống cung cấp sẵn thư viện mẫu (System Templates) và cho phép người dùng lưu một ghi chú bất kỳ thành mẫu riêng (Custom Templates).
+- **AC 2 - Quick Apply:** Khi tạo Note mới, hiển thị popup: "Start with a template?". Khi chọn, nội dung mẫu sẽ được điền vào trình soạn thảo.
+- **AC 3 - Variable Placeholders:** Hỗ trợ các biến giữ chỗ như `{{Current_Date}}`, `{{User_Name}}` để tự động điền dữ liệu khi áp dụng mẫu.
+## 2.9. Feature: Public Publishing
+### User Story 6.8: 
+- **Là một** Chủ sở hữu dự án, 
+- **Tôi muốn** xuất bản một trang ghi chú thành trang web công khai (Public Link),
+- **Để** chia sẻ thông tin với khách hàng bên ngoài mà không cần mời họ vào Workspace (tiết kiệm license user).
+### **Acceptance Criteria (#AC):**
+#### **AC 1 - Generate Public Link:** 
+- Tạo một URL ngẫu nhiên (hoặc tùy chỉnh slug) để truy cập ghi chú ở chế độ Read-only.
+#### **AC 2 - Access Control:** 
+- Tùy chọn đặt mật khẩu (Password Protection) hoặc thời hạn hết hạn (Expiration Date) cho link đó.
+#### **AC 3 - Live Update:** 
+- Khi nội dung gốc trong PronaFlow thay đổi, nội dung trên link public cũng tự động cập nhật theo (hoặc tùy chọn phải nhấn "Republish").
+## 2.10. Feature: Document Versioning.
+### User Story 6.10
+- **Là một** Admin,
+- **Tôi muốn** xem lại lịch sử thay đổi của tài liệu và biết ai đã sửa cái gì vào lúc nào,
+- **Để** khôi phục lại phiên bản cũ nếu có sai sót hoặc tranh chấp nội dung.
+### **Acceptance Criteria (#AC):**
+#### **AC 1 - Auto-Snapshot:** 
+- Hệ thống tự động lưu phiên bản (Snapshot) mỗi khi người dùng nhấn Save hoặc sau mỗi 10 phút soạn thảo liên tục.
+#### **AC 2 - Diff View:** 
+- Chế độ so sánh (Compare) làm nổi bật (Highlight) phần văn bản đã thêm (xanh) hoặc đã xóa (đỏ) giữa 2 phiên bản.
+#### **AC 3 - Restore:** 
+- Nút "Khôi phục phiên bản này" sẽ đưa nội dung hiện tại về trạng thái cũ.
+## 2.11. Feature: Smart Backlinks
+### **User Story 6.11.** 
+- **Là một** Business Analyst,
+- **Tôi muốn** nhìn thấy danh sách các trang hoặc Task đang nhắc đến trang hiện tại (Linked Mentions),
+- **Để** đánh giá tác động (Impact Analysis) trước khi tôi sửa đổi nội dung trang này.
+### **Acceptance Criteria (#AC):**
+#### **AC 1 - Reference Detection:** 
+- Hệ thống tự động quét và hiển thị danh sách "References" ở cuối trang Note.
+#### **AC 2 - Unlinked Mentions:** 
+- Gợi ý các từ khóa trong bài khớp với tên các Note khác nhưng chưa được tạo link, cho phép tạo link nhanh chỉ với 1 click.
 # 3. Business Rules & Constraints
 ## 3.1. Quy tắc Bảo mật & Quyền riêng tư (Security & Privacy)
 1. **Inherited Permissions (Quyền thừa kế):** Quyền truy cập vào Comment/File được thừa kế trực tiếp từ quyền truy cập Task.
