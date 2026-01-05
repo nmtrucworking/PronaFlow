@@ -30,33 +30,8 @@
               "icon": "lucide-file",
               "title": "Fix"
             }
-          },
-          {
-            "id": "6e6d6e673b766b1a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "3 - Project Lifecycle Management"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -233,12 +208,12 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "6e6d6e673b766b1a",
+  "active": "db4bb2ff207b13d3",
   "lastOpenFiles": [
-    "Fix.md",
-    "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
-    "01-Requirements/System Functional Modules.md",
     "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
+    "Fix.md",
+    "01-Requirements/System Functional Modules.md",
     "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
     "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
     "assets/Chưa đặt tên.md",

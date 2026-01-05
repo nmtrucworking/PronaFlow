@@ -457,32 +457,179 @@ Hệ thống quy định chi tiết phạm vi cho phép thao tác đối với c
     - Cho phép chuyển đổi, NHƯNG hệ thống hiển thị cảnh báo: _"Việc chuyển về Simple Mode sẽ bỏ qua các quy trình kiểm soát. Lịch sử duyệt PCR có thể không còn hiệu lực tham chiếu."_
     - Các Change Request đang chờ duyệt (Pending) sẽ tự động bị Hủy (Cancelled).
 # 4. Theoretical Basis (Cơ sở Lý luận)
-## 4.1. Finite State Machine (Máy trạng thái hữu hạn)
-Dự án được mô hình hóa như một máy trạng thái đơn chiều.
-```mermaid
-stateDiagram-v2
-    [*] --> NotStarted: Create
-    NotStarted --> InProgress: Start
-    NotStarted --> Cancelled: Terminate
-    
-    InProgress --> Hold: Pause
-    Hold --> InProgress: Resume
-    Hold --> Cancelled: Terminate
-    
-    InProgress --> InReview: Submit
-    InProgress --> Cancelled: Terminate
-    
-    InReview --> Done: Approve (Success)
-    InReview --> InProgress: Reject
-    InReview --> Cancelled: Terminate (Fail)
-    
-    Done --> [*]: Archive
-    Cancelled --> [*]: Archive
-```
-## 4.2. Tam giác sắt trong Quản trị Thay đổi (Iron Triangle in Change Management)
+## 4.1. Tam giác sắt trong Quản trị Thay đổi (Iron Triangle in Change Management)
 Tính năng PCR (Feature 2.11) dựa trên lý thuyết Tam giác dự án (Scope, Time, Cost).
 - PronaFlow buộc người dùng phải đánh đổi: Nếu muốn thay đổi **Scope** (thêm tính năng), buộc phải điều chỉnh **Time** (dời lịch) hoặc **Cost** (thêm người).
 - PCR là văn bản hóa sự đánh đổi này, đảm bảo tính minh bạch (Transparency) và trách nhiệm giải trình (Accountability).
-## 4.3. Vòng lặp Học tập (Double-Loop Learning)
+## 4.2. Vòng lặp Học tập (Double-Loop Learning)
 Tính năng **Closure & Lessons Learned** (Feature 2.12) hỗ trợ mô hình học tập vòng lặp kép của _Argyris & Schön_.
 - Thay vì chỉ sửa lỗi (Single-loop), hệ thống khuyến khích đội ngũ đặt câu hỏi về các giả định và quy trình cốt lõi (Double-loop) để cải tiến Template dự án cho các lần sau.
+# Diagram
+## 1. Project State Machine Diagram
+**Mục đích:** Mô tả các trạng thái cứng của dự án và các hành động (Transition) được phép để chuyển đổi giữa chúng. Đây là "xương sống" của Module 3.
+```mermaid
+stateDiagram-v2
+    direction LR
+    
+    state "NOT_STARTED" as NS
+    state "IN_PROGRESS" as IP
+    state "IN_REVIEW" as IR
+    state "DONE" as D
+    state "HOLD" as H
+    state "CANCELLED" as C
+
+    [*] --> NS: Create Project
+
+    NS --> IP: Start Project
+    NS --> C: Terminate
+    
+    IP --> H: Pause (Blockers)
+    IP --> IR: Submit for Review
+    IP --> C: Terminate (Mid-way)
+
+    H --> IP: Resume
+    H --> C: Terminate
+
+    IR --> D: Approve (Success)
+    IR --> IP: Reject (Fix required)
+    IR --> C: Terminate (Fail)
+
+    D --> [*]: Archive (After 30 days)
+    C --> [*]: Archive
+```
+## 2. PCR & Baseline Workflow
+**Mục đích:** Minh họa quy trình "Strict Governance". Làm rõ mối quan hệ giữa **Change Request (PCR)**, **Impact Analysis** (từ Module 5) và **Baseline**.
+```mermaid
+flowchart TD
+    Start([User wants to Change Plan]) --> CheckMode{Is Strict Mode?}
+    
+    CheckMode -- No (Simple) --> DirectEdit[Direct Edit on Gantt]
+    DirectEdit --> UpdateDB[(Update Live Data)]
+    
+    CheckMode -- Yes (Strict) --> CreatePCR[Create Change Request - PCR]
+    CreatePCR --> ImpactAnalysis[[Module 5: Impact Analysis]]
+    ImpactAnalysis --> Review{Admin Review}
+    
+    Review -- Reject --> End([Change Discarded])
+    
+    Review -- Approve --> Unlock[Unlock Freeze Window]
+    Unlock --> ApplyChange[Apply Changes to Plan]
+    ApplyChange --> Snapshot[Create Baseline v2.x]
+    Snapshot --> UpdateDB
+    UpdateDB --> Notify[Notify Stakeholders]
+    Notify --> End
+```
+
+## 3. ERD - Conceptual Level
+**Mục đích:** Giúp DB Designer thiết kế bảng. Biểu đồ này làm rõ các quan hệ mới thêm vào như `Portfolio`, `Baseline`, `Scenarios` (Simulation).
+```mermaid
+erDiagram
+    WORKSPACE ||--|{ PROJECT : owns
+    PORTFOLIO ||--|{ PROJECT : categorizes
+    
+    PROJECT ||--|{ PROJECT_MEMBER : has
+    PROJECT ||--o{ TASK_LIST : contains
+    
+    %% Governance Entities
+    PROJECT ||--o{ PROJECT_BASELINE : versions
+    PROJECT ||--o{ CHANGE_REQUEST : manages
+    PROJECT ||--o{ SIMULATION_SCENARIO : sandboxes
+    
+    %% Details
+    PROJECT {
+        string key PK
+        string title
+        enum status "NotStarted, InProgress..."
+        enum priority "High, Med, Low"
+        enum governance_mode "Simple, Strict"
+        json objectives
+        json health_score
+    }
+
+    PROJECT_BASELINE {
+        int id PK
+        string version "v1.0, v1.1"
+        datetime created_at
+        json snapshot_data
+    }
+
+    CHANGE_REQUEST {
+        int id PK
+        enum type "Scope, Schedule, Cost"
+        string justification
+        enum status "Pending, Approved"
+    }
+```
+
+## 4. Luồng Mô phỏng & Phân tích Tác động
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor PM as Project Manager
+    participant FE as Frontend (React)
+    participant M3 as Mod 3 (Lifecycle Service)
+    participant DB as Redis/Temp Storage
+    participant M5 as Mod 5 (Calculation Engine)
+    participant LiveDB as PostgreSQL (Live Data)
+
+    Note over PM, LiveDB: Giai đoạn 1: Khởi tạo Sandbox
+    PM->>FE: Click "Enter Simulation Mode"
+    FE->>M3: POST /projects/{id}/simulation/init
+    M3->>LiveDB: Fetch Current Project State
+    M3->>DB: Clone State to Sandbox (SessionID)
+    M3-->>FE: Return SessionID (Simulation Ready)
+
+    Note over PM, LiveDB: Giai đoạn 2: Thao tác & Tính toán
+    PM->>FE: Drag Task A (Delay +5 days)
+    FE->>M5: POST /calculate/impact (SessionID, Delta)
+    M5->>DB: Read Sandbox State
+    M5->>M5: Run CPM & Resource Leveling
+    M5-->>FE: Return Impact Metrics (Diff: +5d End Date)
+    FE->>PM: Show "Impact Alert Panel"
+
+    Note over PM, LiveDB: Giai đoạn 3: Quyết định
+    alt Apply Changes
+        PM->>FE: Click "Apply to Live"
+        FE->>M3: POST /projects/{id}/simulation/promote
+        M3->>LiveDB: Overwrite Live Data
+        M3->>LiveDB: Create New Baseline Audit
+        M3-->>FE: Success
+    else Discard
+        PM->>FE: Click "Discard"
+        FE->>M3: DELETE /simulation/{id}
+        M3->>DB: Flush Sandbox Data
+    end
+```
+
+## 5. Luồng Khởi tạo Dự án từ Template
+
+```mermaid
+flowchart TD
+    %% Node Khởi đầu - Dùng ngoặc kép bao quanh text để an toàn
+    Start(["User clicks Create Project"]) --> ChooseSource{"Source Type?"}
+    
+    %% Nhánh Template
+    ChooseSource -- From Template --> SelectTemp["Select Template from Library"]
+    SelectTemp --> LoadConfig["Load Settings: Simple/Strict Mode"]
+    LoadConfig --> LoadTasks["Load Task Structure & Tags"]
+    LoadTasks --> RemapDates["User inputs Start Date<br/>(System shifts Task dates)"]
+    
+    %% Nhánh Mới
+    ChooseSource -- Blank Project --> InputMeta["Input Title, Key, Priority"]
+    InputMeta --> SelectMode{"Select Governance Mode?"}
+    SelectMode -- Simple --> ConfigSimple["Disable PCR, Baseline, Gates"]
+    SelectMode -- Strict --> ConfigStrict["Enable PCR, Baseline, Gates"]
+    
+    %% Gộp các nhánh về Review (Thay thế cú pháp & bằng dòng riêng để tránh lỗi)
+    RemapDates --> Review["Review Project Summary"]
+    ConfigStrict --> Review
+    ConfigSimple --> Review
+    
+    Review --> CreateDB[("Save to Database")]
+    
+    CreateDB --> CheckStrict{"Is Strict Mode?"}
+    CheckStrict -- Yes --> CreateBaseline["Auto-create Baseline v1.0"]
+    CheckStrict -- No --> EndNode(["Done - Navigate to Board"])
+    CreateBaseline --> EndNode
+```
