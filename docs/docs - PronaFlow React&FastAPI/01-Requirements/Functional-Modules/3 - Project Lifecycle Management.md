@@ -66,10 +66,20 @@ Là một Project Manager, Tôi muốn thêm thành viên vào dự án và phâ
 - **Condition:** Chỉ thêm được những người ĐÃ là thành viên của Workspace (kết quả từ Module 2).
 - **Notification:** Gửi thông báo cho người được thêm: "Bạn đã được thêm vào dự án X".
 #### AC 2 - Project Roles (Vai trò cục bộ)
-Khác với vai trò trong Workspace, vai trò trong dự án quy định quyền hạn cụ thể:
-1. **Project Manager (PM):** Full quyền trong dự án (Sửa settings, xóa dự án, quản lý thành viên).
-2. **Editor (Collaborator):** Quyền tạo/sửa Task, Comment, Upload file. Không được sửa thông tin dự án.
-3. **Viewer (Stakeholder):** Chỉ được xem (Read-only), không được chỉnh sửa bất cứ thứ gì.
+Khác với vai trò trong Workspace, vai trò trong dự án quy định quyền hạn cụ thể hơn. Hệ thống định nghĩa 4 vai trò cốt lõi để đáp ứng cả nhu cầu quản lý linh hoạt lẫn kiểm soát chặt chẽ:
+1. **Project Manager** ( #PM - Quản trị dự án)
+	- **Định nghĩa**: Người chịu trách nhiệm cao nhất về sự thành bại của dự án. Là người tạo ra dự án.
+	- **Đặc quyền**: Toàn quyền cấu hình dự án, phê duyệt kế hoạch (Baseline), quản lý thành viên và quyết định các thay đổi phạm vi (Scope).
+2. **Planner** (Người hoạch định): (Vai trò đặc thù cho Module 5) [[5 - Temporal Planning and Scheduling]]
+	- **Định nghĩa**: Người hỗ trợ #PM trong việc xây dựng lịch trình. Thường là Team Leader hoặc Scheduler chuyên nghiệp.
+	- **Đặc quyền**: Có quyền chỉnh sửa biểu đồ Gantt, thiết lập các mối quan hệ phụ thuộc (Dependencies), đề xuất Baseline mới. Tuy nhiên, họ _**không**_ có quyền xóa dự án hoặc thay đổi các thiết lập quảnn trị (Billing, Governannce Mode).
+3. **Member** (Thành viên thực thi):
+	- **Định nghĩa**: Các nhân sự trực tiếp làm việc (Dev, Designer, Tester, ...)
+	- **Đặc quyền**: Tập trung vào thực thi (Execution). Có quyền cập nhật trạng thái Task, log thời gian (Timesheet), comment, upload file. **Hạn chế:** Không được tự ý thay đổi ngày bắt đầu/kết thúc của Task nếu dự án đang bị khóa kế hoạch (Locked Plan).
+4. **Viewer** (Người quan sát / Stakeholder):
+	- **Định nghĩa**: Khách hàng hoặc quản lý cấp cao muốn theo dõi tiến độ.
+	- **Đặc quyền**: Chỉ xem (Read-only) báo cáo, tiến độ và tài liệu. Không được tương tác ghi (Writer).
+> Ma trận phân quyền chi tiết: [[#3. Business Rules#3.21. Ma trận Phân quyền Chi tiết (Permission Matrix) |Permission Matrix: Project Permission Rules]]
 ## 2.4. Feature: Thiết lập Quyền Riêng tư (Privacy Settings)
 ### User Story 2.3
 Là một Chủ dự án, Tôi muốn thiết lập dự án là Riêng tư (Private), Để bảo mật thông tin nhạy cảm khỏi các thành viên khác trong cùng Workspace.
@@ -456,6 +466,26 @@ Hệ thống quy định chi tiết phạm vi cho phép thao tác đối với c
 - **Downgrading (Strict $\rightarrow$ Simple):**
     - Cho phép chuyển đổi, NHƯNG hệ thống hiển thị cảnh báo: _"Việc chuyển về Simple Mode sẽ bỏ qua các quy trình kiểm soát. Lịch sử duyệt PCR có thể không còn hiệu lực tham chiếu."_
     - Các Change Request đang chờ duyệt (Pending) sẽ tự động bị Hủy (Cancelled).
+## 3.21. Ma trận Phân quyền Chi tiết (Permission Matrix)
+Bảng đặc tả chi tiết các quyền hạn dựa trên các Phân hệ chức năng:
+> Chi tiết trong file: ["E://Workspace//# project//pronaflow//docs//docs - PronaFlow React&FastAPI//01-Requirements//Functional-Modules//PronaFlow_Project_Roles.xlsx"](Project-Permission-Matrix)
+
+**Ghi chú Ràng buộc:**
+- **⚠️ (1) Thay đổi Deadline:**
+    - Nếu Dự án ở chế độ **Simple Mode**: Member được phép đổi ngày thoải mái.
+    - Nếu Dự án ở chế độ **Strict Mode (hoặc Locked)**: Member bị chặn đổi ngày. Họ phải comment yêu cầu PM/Planner đổi, hoặc tạo Change Request.
+- **⚠️ (2) Xóa Task:** Member chỉ được xóa Task do chính mình tạo ra (Creator), không được xóa Task của người khác.
+## 3.22. Quy tắc nghiệp vụ phân quyền:
+1. **Quy tắc "Chủ quyền riêng tư" (Privacy Sovereignty):**
+    - Nếu một dự án được set là **Private (Riêng tư)**: Chỉ những người có tên trong danh sách thành viên mới truy cập được.
+    - **Ngoại lệ:** Workspace Owner (người trả tiền) có quyền truy cập "cửa sau" (Backdoor access) để kiểm tra, nhưng hành động này phải được ghi log Audit rõ ràng ("Owner accessed private project X") và phải thông qua cơ chế gửi Request đến chủ Project-private để xin phép kiểm tra.
+2. **Quy tắc Bảo vệ Kế hoạch (Plan Protection):**
+    - Khi dự án đang ở trạng thái **Freeze (Đóng băng)** hoặc **Locked (Đã duyệt)**: Quyền `Sửa Gantt` của Planner cũng bị tạm khóa. Muốn sửa, họ phải mở khóa (Unlock) hoặc đi qua quy trình duyệt thay đổi.
+3. **Quy tắc Kế thừa từ Workspace (Inheritance):**
+    - Nếu tài khoản của một User bị `Deactive` ở cấp Workspace (Module 2), họ ngay lập tức mất quyền truy cập vào TẤT CẢ các dự án, bất kể vai trò trong dự án là gì.
+4. **Quy tắc Phân quyền Dữ liệu Nhạy cảm (Sensitive Data):**
+    - Chỉ **PM** (và Workspace Owner) mới nhìn thấy các trường dữ liệu liên quan đến tiền bạc như: `Hourly Rate` (Lương giờ), `Total Cost` (Tổng chi phí dự án), `Budget`.
+    - Planner và Member chỉ nhìn thấy `Hours` (Số giờ làm việc).
 # 4. Theoretical Basis (Cơ sở Lý luận)
 ## 4.1. Tam giác sắt trong Quản trị Thay đổi (Iron Triangle in Change Management)
 Tính năng PCR (Feature 2.11) dựa trên lý thuyết Tam giác dự án (Scope, Time, Cost).

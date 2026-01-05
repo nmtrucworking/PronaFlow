@@ -14,7 +14,7 @@ Module này chịu trách nhiệm quản lý:
 ## 2.1. Feature: Workspace Creation
 ### User Story 2.1:
 Là một Người dùng, Tôi muốn tạo một Workspace mới và đặt tên cho nó, Để phân tách các ngữ cảnh công việc khác nhau (ví dụ: Cá nhân, Công ty, Dự án Freelance) mà không bị lẫn lộn dữ liệu.
-### Acceptance Criteria (#AC)
+### Acceptance Criteria ( #AC)
 #### AC 1 - Khởi tạo thành công:
 - **Given:** Người dùng đang ở màn hình danh sách Workspace.
 - **When:** Người dùng nhập `Workspace Name` (Bắt buộc, Max 50 ký tự), `Description` (Tùy chọn) và nhấn "Create".
@@ -49,10 +49,19 @@ Là một Workspace Owner, Tôi muốn mời đồng nghiệp tham gia vào Work
 	 - Nếu Email chưa có tài khoản: Gửi Email chứa "Magic Link" để đăng ký tài khoản mới và tự động join Workspace sau khi đăng ký xong.
 - **Token:** Link mời có hiệu lực trong 48 giờ.
 #### AC 2 - Role Assignment (Gán vai trò)
-- Owner có quyền thay đổi vai trò của thành viên:
- - **Admin:** Có quyền quản lý Workspace, tạo Project.
- - **Member:** Chỉ có quyền thao tác trong Project được gán.
- - **Viewer:** Chỉ xem, không chỉnh sửa.
+1. Workspace Owner (Chủ sở hữu)
+	- **Định nghĩa**: Người tạo ra Workspace hoặc được chuyển giao quyền lực. Đây là vai trò có quyền lực tối cao trong Workspace.
+	- **Đặc quyền**: Nắm giữ quyền quyết định về tài chính (Billing), quản lý vòng đời tổ chức và quản lý các Admin khác
+2. Workspace Admin (Quản trị viên)
+	- **Định nghĩa**: Người hỗ trợ Owner vận hành tổ chức.
+	- **Đặc quyền**: Quản lý thành viên, thiết lập cấu hình chung (ngày làm việc, lễ tết), tạo dự án mới. Tuy nhiên, Admin không được truy cập thông tin thanh toán hoặc xóa Worksapce.
+3. Member (Thành viên)
+	- **Định nghĩa**: Nhân viên hoặc cộng tác viên chính thức.
+	- **Đặc quyền**: Có quyền truy cập và thao tác (tạo task, comment) trong các Dự án mà họ được gán. Không thể thay đổi cấu hình Workspace.
+4. Viewer (Người xem / Khách)
+	-  **Định nghĩa**: Stakeholder hoặc đối tác bên ngoài.
+	- **Đặc quyền**: Chỉ có quyền xem (Read-only) các tài nguyên được chia sẻ cụ thể. Không thể điều chỉnh dữ liệu.
+Ma trận phân quyền: [[#3. Business Rules & Constraints#3.1. Security & Permissions ( RBAC Matrix)|Permission Matrix: Workspace Permission Roles]]
 #### AC 3 - Remove Member (Xóa thành viên)
 - **Action:** Owner xóa một thành viên khỏi Workspace.
 - **Result:**
@@ -91,14 +100,23 @@ Là một System Admin (Quản trị viên hệ thống), Tôi muốn xem danh s
 #### AC 2 - Restore Capability
 - Admin có thể tìm kiếm Workspace theo ID hoặc Tên, sau đó nhấn "Restore" để khôi phục quyền truy cập cho Owner cũ.
 # 3. Business Rules & Constraints
-## 3.1. Security & Permissions (RBAC Matrix)
-|Permission Code|Owner|Admin|Member|Viewer|Mô tả|
-|---|---|---|---|---|---|
-|`WS.UPDATE`|✅|✅|❌|❌|Sửa tên, Logo, Cấu hình Timezone|
-|`WS.DELETE`|✅|❌|❌|❌|Xóa mềm Workspace|
-|`WS.MEMBER.INVITE`|✅|✅|❌|❌|Mời thành viên mới|
-|`WS.MEMBER.KICK`|✅|✅|❌|❌|Xóa thành viên (Admin không xóa được Owner)|
-|`WS.BILLING`|✅|❌|❌|❌|Quản lý gói cước thanh toán (Module 13)|
+## 3.1. Security & Permissions ( #RBAC Matrix)
+| Permission Code    | Owner | Admin  | Member | Viewer | Mô tả                                        |
+| ------------------ | ----- | ------ | ------ | ------ | -------------------------------------------- |
+| Quản trị Tổ chức   |       |        |        |        |                                              |
+| `WS.UPDATE`        | ✅     | ✅      | ❌      | ❌      | Sửa tên, Logo, Cấu hình Timezone             |
+| `WS.DELETE`        | ✅     | ❌      | ❌      | ❌      | Xóa mềm Workspace                            |
+| `WS.BILLING`       | ✅     | ❌      | ❌      | ❌      | Quản lý gói cước thanh toán (Module 13)      |
+| Quản trị Nhân sự   |       |        |        |        |                                              |
+| `WS.MEMBER.INVITE` | ✅     | ✅      | ❌      | ❌      | Mời thành viên mới                           |
+| `WS.MEMBER.UPDATE` | ✅     | ✅      | ❌      | ❌      | Thay đổi vai trò thành viên (Promote/Demote) |
+| `WS.MEMBER.KICK`   | ✅     | ✅(*)   | ❌      | ❌      | Xóa thành viên (Admin không xóa được Owner)  |
+| Quản trị Dự án     |       |        |        |        |                                              |
+| `PROJ.CREATE`      | ✅     | ✅      | ❌      | ❌      | Tạo dự án mới                                |
+| `PROJ.ACCESS_ALL`  | ✅     | ❌ (**) | ❌      | ❌      | Truy cập tất cả dự án (Kể cả Private)        |
+**Ghi chú:**
+- `(*)` **Admin** không thể xóa (Kick) hoặc hạ quyền (Demote) **Owner**.
+- `(**)` **Admin** không mặc định nhìn thấy các dự án Private trừ khi họ được mời vào dự án đó hoặc họ là người tạo ra nó.
 ## 3.2. Data Integrity Rules (Quy tắc Toàn vẹn Dữ liệu)
 1. **Isolation Query Rule:** Mọi câu truy vấn dữ liệu (Projects, Tasks, Tags) đều **BẮT BUỘC** phải có điều kiện `WHERE workspace_id = :current_ws_id`. Tuyệt đối không cho phép truy vấn dữ liệu "Global" (trừ System Admin).
 2. **Cascade Logic:** Khi Workspace bị xóa (Soft Delete), không cần update trạng thái `is_deleted` cho hàng nghìn Project/Task con ngay lập tức (gây lock table). Logic lọc sẽ nằm ở tầng Application (Nếu Parent deleted -> Children hidden).
@@ -107,7 +125,15 @@ Là một System Admin (Quản trị viên hệ thống), Tôi muốn xem danh s
 	 - Owner không thể rời khỏi (Leave) Workspace nếu họ là Owner duy nhất. Họ bắt buộc phải chuyển giao quyền lực (Transfer Ownership) cho một thành viên khác trước khi rời đi hoặc xóa Workspace.
 4. **Unique Constraints (Ràng buộc duy nhất):**
 	 - Một User không thể tham gia 2 lần vào cùng 1 Workspace.
-	 - ID của Workspace (UUID) là duy nhất toàn cục hệ thống.
+	 - ID của Workspace (UUID) là duy nhất toàn cục hệ thống
+## 3.3. Các quy tắc trong hệ thống phân quyền Workspace.
+1. **Quy tắc Kế thừa Quyền lực (Owner Succession):**
+    - Mỗi Workspace bắt buộc phải luôn có **ít nhất 01 Owner**.
+    - Owner hiện tại không thể rời khỏi (Leave) Workspace nếu họ là Owner duy nhất. Hệ thống buộc họ phải chuyển giao quyền lực (Transfer Ownership) cho một thành viên khác trước khi rời đi.
+2. **Quy tắc Cô lập Dữ liệu (Isolation Rule):**
+    - Thành viên của Workspace A **tuyệt đối không** thể nhìn thấy dữ liệu của Workspace B, ngay cả khi họ có tài khoản ở cả hai nơi. Việc chuyển đổi giữa các Workspace phải tải lại ngữ cảnh (Context Switching).
+3. **Quy tắc Bảo vệ Thanh toán (Billing Protection):**
+    - Chỉ **Owner** mới có quyền truy cập vào Module 13 (Subscription & Billing). Điều này ngăn chặn rủi ro Admin lạm quyền nâng cấp gói cước gây phát sinh chi phí cho doanh nghiệp.
 # 4. Theoretical Basis (Cơ sở Lý luận)
 ## 4.1. Kiến trúc Multi-tenancy: Shared Database, Shared Schema
 PronaFlow sử dụng chiến lược **Logical Isolation** (Cô lập logic).

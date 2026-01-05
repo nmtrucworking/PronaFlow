@@ -1,4 +1,4 @@
-Project**: PronaFlow
+**Project**: PronaFlow
 **Version**: 1.0
 **State**: Draft
 _Last updated: Dec 31, 2025_
