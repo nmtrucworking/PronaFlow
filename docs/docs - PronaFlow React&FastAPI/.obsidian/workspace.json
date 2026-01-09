@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Fix.md",
+                "file": "02-Architeture/Entity Relationship Diagram - Details/Functional Module 4 - Task Execution & Orchestration.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,35 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Fix"
-            }
-          },
-          {
-            "id": "447f5eb2c30e0822",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "13 - Subscription and Billing Management"
+              "title": "Functional Module 4 - Task Execution & Orchestration"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -113,8 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 299.5
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -233,8 +207,37 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "447f5eb2c30e0822",
+  "active": "b57d08887a946fd0",
   "lastOpenFiles": [
+    "02-Architeture/ERDs/TaskWatcher.md",
+    "02-Architeture/ERDs/TaskTemplate.md",
+    "02-Architeture/ERDs/TaskCustomFieldValue.md",
+    "02-Architeture/ERDs/TaskCustomField.md",
+    "02-Architeture/ERDs/TaskRecurringRule.md",
+    "02-Architeture/ERDs/TaskTagMap.md",
+    "02-Architeture/ERDs/TaskDependency.md",
+    "02-Architeture/ERDs/Subtask.md",
+    "02-Architeture/ERDs/TaskAssignee.md",
+    "02-Architeture/ERDs/Task.md",
+    "02-Architeture/ERDs/TaskList.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 4 - Task Execution & Orchestration.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 3 -.md",
+    "02-Architeture/ERDs/ProjectArchive.md",
+    "02-Architeture/ERDs/ProjectTemplate.md",
+    "02-Architeture/ERDs/ProjectChangeRequest (PCR).md",
+    "02-Architeture/ERDs/ProjectBaseline.md",
+    "02-Architeture/ERDs/ProjectLifecycleState.md",
+    "02-Architeture/ERDs/ProjectMember.md",
+    "02-Architeture/ERDs/Project.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Funtional Module 2 -.md",
+    "02-Architeture/ERDs/WorkspaceAccessLog.md",
+    "02-Architeture/ERDs/WorkspaceSetting.md",
+    "02-Architeture/ERDs/WorkspaceInvitation.md",
+    "02-Architeture/ERDs/WorkspaceMember.md",
+    "02-Architeture/ERDs/Workspace.md",
+    "02-Architeture/Entity Relationship Diagram - Details",
+    "02-Architeture/System Architecture Design.canvas",
+    "02-Architeture/ERDs",
     "01-Requirements/Functional-Modules/22766310",
     "01-Requirements/Functional-Modules/09B46310",
     "01-Requirements/Functional-Modules/ECE16310",
@@ -243,38 +246,9 @@
     "01-Requirements/Functional-Modules/2BA44100",
     "01-Requirements/Functional-Modules/Quotas Adjustment.xlsx",
     "01-Requirements/Functional-Modules/New Microsoft Excel Worksheet.xlsx",
-    "Fix.md",
-    "01-Requirements/Functional-Modules/13 - Subscription and Billing Management.md",
-    "01-Requirements/Functional-Modules/12 - Integration Ecosystem.md",
-    "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
-    "Project-Permission-Matrix.md",
-    "01-Requirements/Functional-Modules/588FF000",
-    "01-Requirements/Functional-Modules/PronaFlow_Project_Roles.xlsx",
-    "01-Requirements/Functional-Modules/~$PronaFlow_Project_Roles.xlsx",
-    "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
-    "02-Architeture/System Architecture Design.canvas",
     "01-Requirements/Sơ đồ tổ chức Modules.canvas",
-    "01-Requirements/Non-Functional.md.md",
-    "01-Requirements/System Functional Modules.md",
-    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
-    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
-    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
-    "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
-    "assets/Chưa đặt tên.md",
     "Logic SLA.drawio 1.png",
     "assets/images/Logic SLA.drawio.png",
-    "07-References/system-error-codes.md",
-    "07-References/00-Overview.md",
-    "07-References/metric-definitions.md",
-    "07-References/git-convention.md",
-    "07-References/iconography-map.md",
-    "07-References/security-checklist.md",
-    "07-References/api-endpoints-catalog.md",
-    "01-Requirements/Functional-Modules/16 - User Onboarding and Adoption.md",
-    "01-Requirements/Functional-Modules/15 - Help Center and Knowledge Base.md",
-    "01-Requirements/Functional-Modules/14 - System Administration.md",
-    "01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md",
-    "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
     "Chưa đặt tên.canvas"
   ]
 }
