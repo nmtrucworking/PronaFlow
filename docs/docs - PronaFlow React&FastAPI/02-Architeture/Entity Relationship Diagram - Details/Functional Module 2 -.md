@@ -1,3 +1,4 @@
+# Relationship
 ## Quan hệ & Cardinality
 - **User 1–N WorkspaceMember**
 - **Workspace 1–N WorkspaceMember**
@@ -5,6 +6,7 @@
 - **Workspace 1–1 WorkspaceSetting**
 - **User 1–N WorkspaceInvitation (invited_by)**
 - **User 1–N WorkspaceAccessLog**
+# ERD
 ```mermaid
 erDiagram
     USER ||--o{ WORKSPACE_MEMBER : participates

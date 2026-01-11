@@ -1,3 +1,4 @@
+
 ```mermaid
 erDiagram
     USER ||--o{ USER_AUTH : authenticates
@@ -41,5 +42,5 @@ erDiagram
         string ip_address
         timestamp last_active_at
     }
-
 ```
+
