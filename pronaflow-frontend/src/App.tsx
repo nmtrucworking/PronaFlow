@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Sidebar from './components/layout/Sidebar.tsx';
-import MyWorkPage from './pages/Dashboard.tsx';
-import AllProjectsPage from './pages/All_Projects.tsx';
+import Sidebar from './components/layout/Sidebar';
+import MyWorkPage from './pages/Dashboard';
+import AllProjectsPage from './pages/All_Projects';
 
 // Mock workspace data dựa trên Workspace.md
 const MOCK_WORKSPACE = {
@@ -18,7 +18,8 @@ function App() {
       {/* Sidebar - Component điều hướng chính */}
       <Sidebar 
         currentWorkspace={MOCK_WORKSPACE} 
-        activePath={currentPath} 
+        activePath={currentPath}
+        onNavigate={setCurrentPath}
       />
 
       {/* Main Container - Khu vực hiển thị nội dung */}
