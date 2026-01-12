@@ -1,12 +1,16 @@
-@import "tailwindcss";
+/* pronaflow-frontend/src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Định nghĩa Theme theo nguyên tắc thiết kế PronaFlow */
-@theme {
+:root {
   --color-urgent: #EF4444;
   --color-done: #22C55E;
   --color-in-progress: #0EA5E9;
-  
-  /* Density support */
   --spacing-compact: 0.5rem;
   --spacing-comfortable: 1rem;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
 }
