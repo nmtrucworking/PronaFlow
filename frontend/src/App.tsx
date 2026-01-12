@@ -12,6 +12,7 @@ import HelperCenter from './pages/Helper_center';
 import TrashBin from './pages/Trash';
 import MyCalendar from './pages/MyCalendar';
 import WorkspaceSetting from './features/workspace/components/Setting_workspace';
+import WorkspaceMember from './pages/WorkspaceMember';
 
 /*
  * Configure routing for the application using React Router v6.
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: 'trash', element: <TrashBin /> },
       { path: 'calendar', element: <MyCalendar /> },
       { path: 'workspace-settings', element: <WorkspaceSetting /> },
+      { path: 'members' , element: <WorkspaceMember /> },
       // Điều hướng mặc định nếu vào /
       { path: 'home', element: <Navigate to="/dashboard" replace /> },
     ],

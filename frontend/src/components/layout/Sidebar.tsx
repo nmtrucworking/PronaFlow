@@ -76,6 +76,15 @@ const NAVIGATION_DATA: SectionData[] = [
       { id: 'archive', label: 'Archive Store', icon: Archive, badge: '99+', badgeType: 'info', path: '/archive' },
       { id: 'trash', label: 'Thùng rác', icon: Trash2, path: '/trash' },
     ]
+  },
+  {
+    id: 'footer',
+    title: 'Footer',
+    items: [
+      { id: 'notifications', label: 'Thông báo hệ thống', icon: Megaphone, badge: '1', badgeType: 'urgent', path: '/notifications' },
+      { id: 'help', label: 'Help & Support', icon: LifeBuoy, path: '/help' },
+      { id: 'account-settings', label: 'Account Settings', icon: User, path: '/account-settings' },
+    ]
   }
 ];
 

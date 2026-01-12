@@ -1,670 +1,324 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
-  Search, Home, Rocket, Layers, Users, CreditCard, ChevronRight, ChevronDown, 
-  Sparkles, Eye, ThumbsUp, ThumbsDown, HelpCircle, BookOpen, PlayCircle, 
-  MessageSquare, ArrowLeft, Menu, X, FileText, Share2, Copy, Check
+  Search, GitBranch, Activity, Code, MessageCircle, 
+  Rocket, Trello, UserCog, Plug, Shield, Smartphone,
+  FileText, ArrowRight, ChevronDown, Headphones, Zap,
+  SearchCheck
 } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 
-// --- UTILS ---
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+/**
+ * Interface định nghĩa cấu trúc dữ liệu cho danh mục hướng dẫn
+ */
+interface Article {
+  id: number;
+  title: string;
+  slug: string;
 }
 
-// --- TYPES ---
 interface Category {
   id: string;
-  name: string;
-  icon: React.ElementType;
-  description: string;
-}
-
-interface Article {
-  id: string;
+  icon: React.ReactNode;
+  color: string;
   title: string;
-  category_id: string;
-  views: number;
-  last_updated: string;
-  content_html: string;
-  tags: string[];
-  toc: { id: string; title: string; level: number }[];
+  desc: string;
+  articles: Article[];
 }
 
-interface FaqItem {
+interface FAQItem {
+  id: number;
   question: string;
   answer: string;
 }
 
-// --- MOCK DATA ---
-const CATEGORIES: Category[] = [
-  { id: 'home', name: 'Trang chủ', icon: Home, description: 'Tổng quan và tìm kiếm' },
-  { id: 'onboarding', name: 'Bắt đầu (Onboarding)', icon: Rocket, description: 'Thiết lập tài khoản và workspace' },
-  { id: 'project_mgmt', name: 'Quản lý Dự án', icon: Layers, description: 'Kanban, Gantt và Task' },
-  { id: 'team', name: 'Đội nhóm & User', icon: Users, description: 'Phân quyền và quản lý thành viên' },
-  { id: 'billing', name: 'Thanh toán & Gói', icon: CreditCard, description: 'Hóa đơn và nâng cấp' },
-];
-
-const ARTICLES_DB: Article[] = [
-  // --- PROJECT MANAGEMENT ---
-  {
-    id: 'kanban-guide',
-    title: 'Hướng dẫn sử dụng Kanban Board từ A-Z',
-    category_id: 'project_mgmt',
-    views: 12500,
-    last_updated: '2 ngày trước',
-    tags: ['Kanban', 'Module 4', 'Productivity'],
-    content_html: `
-      <p class="lead text-lg text-slate-600 mb-6">Kanban là phương pháp trực quan giúp quản lý dòng chảy công việc. Trong PronaFlow, chúng tôi tối ưu hóa Kanban với khả năng kéo thả mượt mà và tích hợp AI.</p>
-      
-      <h2 id="section-1" class="text-2xl font-bold text-slate-900 mt-8 mb-4">1. Tạo cột trạng thái (Lists)</h2>
-      <p class="mb-4 text-slate-700 leading-relaxed">Mặc định, một dự án mới sẽ có 3 cột: <code class="bg-slate-100 px-1.5 py-0.5 rounded text-indigo-600 font-mono text-sm">To Do</code>, <code class="bg-slate-100 px-1.5 py-0.5 rounded text-indigo-600 font-mono text-sm">In Progress</code>, và <code class="bg-slate-100 px-1.5 py-0.5 rounded text-indigo-600 font-mono text-sm">Done</code>. Để thêm cột mới:</p>
-      <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-700">
-          <li>Nhấn vào nút <strong>+ Add List</strong> ở bên phải cùng của bảng.</li>
-          <li>Nhập tên danh sách (Ví dụ: "In Review", "Blocked").</li>
-          <li>Nhấn Enter để lưu.</li>
-      </ul>
-
-      <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 my-6 rounded-r-lg">
-          <h4 class="font-bold text-indigo-900 text-sm mb-1">Mẹo chuyên nghiệp</h4>
-          <p class="text-sm text-indigo-800">Bạn có thể thiết lập giới hạn công việc (WIP Limit) cho từng cột để tránh quá tải cho team. Vào <em>Column Settings > Set WIP Limit</em>.</p>
-      </div>
-
-      <h2 id="section-2" class="text-2xl font-bold text-slate-900 mt-8 mb-4">2. Di chuyển thẻ (Card Movement)</h2>
-      <p class="mb-4 text-slate-700 leading-relaxed">PronaFlow hỗ trợ kéo thả (Drag & Drop) mượt mà. Khi bạn kéo một thẻ từ cột này sang cột khác, hệ thống sẽ tự động cập nhật trạng thái (Status) của Task tương ứng.</p>
-      
-      <h3 id="section-2-1" class="text-xl font-semibold text-slate-800 mt-6 mb-3">Xử lý xung đột</h3>
-      <p class="mb-4 text-slate-700 leading-relaxed">Nếu hai người cùng di chuyển một thẻ, hệ thống sẽ ưu tiên hành động đến sau và thông báo cho người còn lại qua Socket Real-time.</p>
-    `,
-    toc: [
-      { id: 'section-1', title: '1. Tạo cột trạng thái', level: 2 },
-      { id: 'section-2', title: '2. Di chuyển thẻ', level: 2 },
-      { id: 'section-2-1', title: 'Xử lý xung đột', level: 3 },
-    ]
-  },
-  {
-    id: 'ai-prediction',
-    title: 'Thiết lập AI Prediction cho dự án',
-    category_id: 'project_mgmt',
-    views: 8200,
-    last_updated: '1 tuần trước',
-    tags: ['AI', 'Module 10', 'Automation'],
-    content_html: `<p>Kích hoạt Module 10 để hệ thống tự động gợi ý nhân sự.</p>`,
-    toc: []
-  },
-  {
-    id: 'gantt-chart',
-    title: 'Lập kế hoạch tổng thể với Gantt Chart',
-    category_id: 'project_mgmt',
-    views: 6400,
-    last_updated: '5 ngày trước',
-    tags: ['Gantt', 'Planning'],
-    content_html: `<p>Gantt Chart giúp bạn hình dung tiến độ dự án.</p>`,
-    toc: []
-  },
-  // --- TEAM ---
-  {
-    id: 'rbac-guide',
-    title: 'Hiểu về phân quyền (RBAC) trong Workspace',
-    category_id: 'team',
-    views: 5100,
-    last_updated: '3 tuần trước',
-    tags: ['Security', 'Module 2'],
-    content_html: `<p>Chi tiết về các quyền Owner, Admin, Member...</p>`,
-    toc: []
-  },
-  {
-    id: 'invite-members',
-    title: 'Mời thành viên mới và tạo Nhóm',
-    category_id: 'team',
-    views: 3200,
-    last_updated: '1 tháng trước',
-    tags: ['Onboarding', 'Team'],
-    content_html: `<p>Hướng dẫn cách mời đồng nghiệp vào Workspace.</p>`,
-    toc: []
-  },
-  // --- ONBOARDING ---
-  {
-    id: 'workspace-setup',
-    title: 'Thiết lập Workspace đầu tiên của bạn',
-    category_id: 'onboarding',
-    views: 15000,
-    last_updated: '2 ngày trước',
-    tags: ['Getting Started', 'Setup'],
-    content_html: `<p>5 bước cơ bản để khởi tạo không gian làm việc.</p>`,
-    toc: []
-  },
-  {
-    id: 'import-data',
-    title: 'Import dữ liệu từ Trello, Jira hoặc Excel',
-    category_id: 'onboarding',
-    views: 9800,
-    last_updated: '1 tuần trước',
-    tags: ['Migration', 'Data'],
-    content_html: `<p>Sử dụng công cụ Import của chúng tôi.</p>`,
-    toc: []
-  },
-  // --- BILLING ---
-  {
-    id: 'billing-plans',
-    title: 'So sánh các gói cước: Free vs Pro',
-    category_id: 'billing',
-    views: 4500,
-    last_updated: '2 ngày trước',
-    tags: ['Pricing', 'Upgrade'],
-    content_html: `<p>Chọn gói cước phù hợp.</p>`,
-    toc: []
-  },
-  {
-    id: 'invoices',
-    title: 'Hướng dẫn xem và tải hóa đơn VAT',
-    category_id: 'billing',
-    views: 2100,
-    last_updated: '1 tháng trước',
-    tags: ['Finance', 'Legal'],
-    content_html: `<p>Hệ thống tự động xuất hóa đơn.</p>`,
-    toc: []
-  }
-];
-
-const FAQS: FaqItem[] = [
-  { question: "Làm sao để khôi phục dự án đã xóa?", answer: "Truy cập mục <strong>Trash</strong> trong Settings. Lưu trữ 30 ngày." },
-  { question: "Tôi có thể mời khách (Guest) không?", answer: "Có. Mời với vai trò <strong>Viewer</strong>." },
-  { question: "Hỗ trợ xuất hóa đơn VAT không?", answer: "Có, tự động xuất vào ngày 5 hàng tháng." },
-];
-
-// --- COMPONENTS ---
-
-// 1. HEADER
-const Header = ({ onToggleMobileMenu }: { onToggleMobileMenu: () => void }) => (
-  <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 shrink-0 z-30 sticky top-0">
-    <div className="flex items-center gap-3">
-      <button 
-        onClick={onToggleMobileMenu} 
-        className="md:hidden p-2 -ml-2 text-slate-500 hover:bg-slate-100 rounded-lg transition-colors"
-      >
-        <Menu className="w-5 h-5" />
-      </button>
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-sm">P</div>
-        <div className="flex flex-col">
-          <span className="font-bold text-slate-900 leading-tight">PronaFlow</span>
-          <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Help Center</span>
-        </div>
-      </div>
-    </div>
-    <div className="flex items-center gap-4">
-      <a href="#" className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors hidden sm:block">
-        Quay lại Workspace
-      </a>
-      <div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 overflow-hidden hover:ring-2 hover:ring-indigo-100 transition-all cursor-pointer">
-        <img src="https://ui-avatars.com/api/?name=Truc+Nguyen&background=6366f1&color=fff" alt="User" className="w-full h-full object-cover" />
-      </div>
-    </div>
-  </header>
-);
-
-// 2. SIDEBAR
-const Sidebar = ({ 
-  currentCategory, 
-  onSelectCategory, 
-  isOpen, 
-  onClose 
-}: { 
-  currentCategory: string, 
-  onSelectCategory: (id: string) => void,
-  isOpen: boolean,
-  onClose: () => void
-}) => {
-  return (
-    <>
-      {/* Mobile Overlay */}
-      <div 
-        className={cn(
-          "fixed inset-0 bg-slate-900/50 z-40 md:hidden transition-opacity duration-300",
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        )}
-        onClick={onClose}
-      />
-      
-      <aside className={cn(
-        "bg-white border-r border-slate-200 flex-col shrink-0 flex h-full z-50 transition-transform duration-300",
-        "fixed md:relative top-0 left-0 w-64 md:translate-x-0",
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
-        {/* Mobile Header in Sidebar */}
-        <div className="md:hidden h-16 flex items-center justify-between px-4 border-b border-slate-100">
-          <span className="font-bold text-slate-800">Danh mục</span>
-          <button onClick={onClose} className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="p-4 flex-1 overflow-y-auto">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-3">Danh mục hỗ trợ</h3>
-          <nav className="space-y-1">
-            {CATEGORIES.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = currentCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    onSelectCategory(cat.id);
-                    onClose();
-                  }}
-                  className={cn(
-                    "w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 group",
-                    isActive 
-                      ? "bg-indigo-50 text-indigo-700 shadow-sm ring-1 ring-indigo-200" 
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                  )}
-                >
-                  <Icon className={cn("w-4.5 h-4.5 transition-colors", isActive ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600")} />
-                  {cat.name}
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-        
-        <div className="p-4 border-t border-slate-100 bg-slate-50/50">
-          <div className="bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl p-4 text-white shadow-lg relative overflow-hidden group cursor-pointer hover:shadow-xl transition-all hover:-translate-y-0.5">
-            <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-              <MessageSquare className="w-16 h-16 transform rotate-12" />
-            </div>
-            <h4 className="text-sm font-bold mb-1 relative z-10">Vẫn cần hỗ trợ?</h4>
-            <p className="text-xs text-indigo-100 mb-3 relative z-10 opacity-90">Đội ngũ kỹ thuật sẵn sàng trả lời 24/7.</p>
-            <button className="w-full py-2 bg-white text-indigo-600 text-xs font-bold rounded-lg shadow-sm hover:bg-indigo-50 transition-colors relative z-10">
-              Gửi Ticket
-            </button>
-          </div>
-        </div>
-      </aside>
-    </>
-  );
-};
-
-// 3. TOAST NOTIFICATION
-const Toast = ({ message, visible }: { message: string, visible: boolean }) => (
-  <div className={cn(
-    "fixed top-20 right-6 z-[60] bg-slate-800 text-white px-4 py-3 rounded-lg shadow-xl flex items-center gap-3 transition-all duration-300",
-    visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
-  )}>
-    <Check className="w-4 h-4 text-emerald-400" />
-    <span className="text-sm font-medium">{message}</span>
-  </div>
-);
-
-// 4. ARTICLE VIEWER
-const ArticleViewer = ({ article, onBack, onShowToast }: { article: Article, onBack: () => void, onShowToast: (msg: string) => void }) => {
-  const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
-
-  useEffect(() => {
-    document.getElementById('mainContent')?.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [article.id]);
-
-  // Tìm bài viết liên quan (cùng category, khác ID)
-  const relatedArticles = useMemo(() => 
-    ARTICLES_DB.filter(a => a.category_id === article.category_id && a.id !== article.id).slice(0, 3),
-  [article]);
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    onShowToast("Đã sao chép liên kết bài viết");
-  };
-
-  return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-7xl mx-auto px-4 md:px-8 py-8 grid grid-cols-12 gap-8">
-      {/* Main Content */}
-      <div className="col-span-12 lg:col-span-9">
-        {/* Navigation */}
-        <nav className="flex items-center gap-2 text-sm text-slate-500 mb-6">
-          <button onClick={onBack} className="hover:text-indigo-600 transition-colors flex items-center gap-1">
-            <ArrowLeft className="w-3.5 h-3.5" /> Help Center
-          </button>
-          <ChevronRight className="w-3 h-3 text-slate-300" />
-          <span className="truncate max-w-[150px]">{CATEGORIES.find(c => c.id === article.category_id)?.name}</span>
-        </nav>
-
-        {/* Header */}
-        <header className="mb-8 pb-8 border-b border-slate-200">
-          <div className="flex gap-2 mb-4">
-            {article.tags.map(tag => (
-              <span key={tag} className="px-2 py-0.5 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-md border border-indigo-100">
-                {tag}
-              </span>
-            ))}
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">{article.title}</h1>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <img src="https://ui-avatars.com/api/?name=Admin&background=0f172a&color=fff" className="w-8 h-8 rounded-full border-2 border-white shadow-sm" alt="Author" />
-                <div>
-                  <p className="font-semibold text-slate-900 text-xs">PronaFlow Team</p>
-                  <p className="text-slate-500 text-[10px]">Tác giả</p>
-                </div>
-              </div>
-              <div className="h-8 w-px bg-slate-200" />
-              <div>
-                <p className="text-slate-500 text-xs">Cập nhật lần cuối</p>
-                <p className="font-medium text-slate-700 text-xs">{article.last_updated}</p>
-              </div>
-            </div>
-            
-            <button 
-              onClick={handleCopyLink}
-              className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors" 
-              title="Sao chép liên kết"
-            >
-              <Share2 className="w-5 h-5" />
-            </button>
-          </div>
-        </header>
-
-        {/* Content */}
-        <article className="prose prose-slate max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: article.content_html }} />
-        </article>
-
-        {/* Feedback */}
-        <div className="mt-16 p-8 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-200 text-center shadow-sm">
-          <h4 className="font-bold text-slate-900 mb-2 text-lg">Bài viết này có hữu ích không?</h4>
-          <p className="text-sm text-slate-500 mb-6">Phản hồi của bạn giúp chúng tôi cải thiện.</p>
-          <div className="flex justify-center gap-4">
-            <button 
-              onClick={() => { setFeedback('up'); onShowToast("Cảm ơn đánh giá của bạn!"); }}
-              className={cn(
-                "flex items-center gap-2 px-6 py-3 rounded-xl border transition-all duration-200 shadow-sm",
-                feedback === 'up' ? "bg-emerald-50 border-emerald-500 text-emerald-700" : "bg-white border-slate-200 hover:border-emerald-400 hover:text-emerald-600 text-slate-600"
-              )}
-            >
-              <ThumbsUp className={cn("w-5 h-5", feedback === 'up' && "fill-current")} />
-              <span>Có, rất hữu ích</span>
-            </button>
-            <button 
-              onClick={() => { setFeedback('down'); onShowToast("Chúng tôi sẽ cải thiện hơn."); }}
-              className={cn(
-                "flex items-center gap-2 px-6 py-3 rounded-xl border transition-all duration-200 shadow-sm",
-                feedback === 'down' ? "bg-red-50 border-red-500 text-red-700" : "bg-white border-slate-200 hover:border-red-400 hover:text-red-600 text-slate-600"
-              )}
-            >
-              <ThumbsDown className={cn("w-5 h-5", feedback === 'down' && "fill-current")} />
-              <span>Không, cần cải thiện</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Sidebar */}
-      <div className="hidden lg:block col-span-3">
-        <div className="sticky top-24">
-          {article.toc.length > 0 && (
-            <div className="mb-8">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Menu className="w-3 h-3" /> Mục lục
-              </h4>
-              <ul className="space-y-3 border-l-2 border-slate-200 pl-4">
-                {article.toc.map((item, index) => (
-                  <li key={item.id} className={cn("text-sm transition-colors", item.level === 3 ? "ml-3" : "")}>
-                    <a 
-                      href={`#${item.id}`} 
-                      className={cn(
-                        "block hover:text-indigo-600 transition-colors duration-200",
-                        index === 0 ? "text-indigo-600 font-medium -ml-[18px] pl-4 border-l-2 border-indigo-600" : "text-slate-500"
-                      )}
-                    >
-                      {item.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="pt-8 border-t border-slate-200">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Bài viết liên quan</h4>
-            {relatedArticles.length > 0 ? (
-              <div className="space-y-4">
-                {relatedArticles.map(rel => (
-                  <a key={rel.id} href="#" className="group block p-3 rounded-lg bg-slate-50 hover:bg-indigo-50 transition-colors">
-                    <span className="text-xs text-slate-500 group-hover:text-indigo-500 font-medium block mb-1">
-                      {CATEGORIES.find(c => c.id === rel.category_id)?.name}
-                    </span>
-                    <span className="text-sm text-slate-700 group-hover:text-indigo-900 font-semibold block leading-tight">
-                      {rel.title}
-                    </span>
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-slate-400">Không có bài viết liên quan.</p>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// 5. MAIN APP
-export default function HelpCenterApp() {
-  const [currentView, setCurrentView] = useState<'HOME' | 'ARTICLE'>('HOME');
-  const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('home');
+const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [toast, setToast] = useState<{ msg: string, visible: boolean }>({ msg: '', visible: false });
+  const [openFaqId, setOpenFaqId] = useState<number | null>(null);
 
-  const showToast = (msg: string) => {
-    setToast({ msg, visible: true });
-    setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 3000);
-  };
-
-  // Logic lọc bài viết: theo Category + Search Query
-  const displayArticles = useMemo(() => {
-    let filtered = ARTICLES_DB;
-
-    // 1. Filter by Category
-    if (selectedCategory !== 'home') {
-      filtered = filtered.filter(a => a.category_id === selectedCategory);
+  // Dữ liệu danh mục hướng dẫn chuẩn hóa
+  const categories: Category[] = [
+    {
+      id: 'getting-started',
+      icon: <Rocket className="w-6 h-6" />,
+      color: 'blue',
+      title: 'Khởi tạo & Nhập môn',
+      desc: 'Hướng dẫn thiết lập không gian làm việc (Workspace) và làm quen với giao diện nghiệp vụ.',
+      articles: [
+        { id: 1, title: 'Tổng quan hệ sinh thái PronaFlow', slug: 'overview' },
+        { id: 2, title: 'Cấu hình Workspace cho doanh nghiệp', slug: 'create-workspace' },
+        { id: 3, title: 'Quản trị nhân sự và phân quyền dự án', slug: 'invite-members' }
+      ]
+    },
+    {
+      id: 'project-management',
+      icon: <Trello className="w-6 h-6" />,
+      color: 'purple',
+      title: 'Quản trị Dự án & Kanban',
+      desc: 'Quy trình khởi tạo Task, điều phối luồng công việc và tối ưu hóa bảng Kanban.',
+      articles: [
+        { id: 4, title: 'Khai thác tối đa Kanban Board', slug: 'kanban-guide' },
+        { id: 5, title: 'Phân loại mức độ ưu tiên hệ thống', slug: 'priority-guide' },
+        { id: 6, title: 'Cấu trúc hóa danh sách tác vụ', slug: 'task-lists' }
+      ]
+    },
+    {
+      id: 'account',
+      icon: <UserCog className="w-6 h-6" />,
+      color: 'orange',
+      title: 'Tài khoản & Phí dịch vụ',
+      desc: 'Quản lý thông tin định danh, bảo mật tài khoản và các gói tài nguyên.',
+      articles: [
+        { id: 7, title: 'Quy trình khôi phục định danh', slug: 'forgot-password' },
+        { id: 8, title: 'Thiết lập bảo mật hai lớp (2FA)', slug: '2fa-setup' },
+        { id: 9, title: 'Nâng cấp hạn mức tài nguyên', slug: 'upgrade-plan' }
+      ]
+    },
+    {
+      id: 'integrations',
+      icon: <Plug className="w-6 h-6" />,
+      color: 'emerald',
+      title: 'Tích hợp & Kết nối',
+      desc: 'Liên kết PronaFlow với các hạ tầng kỹ thuật và ứng dụng bên thứ ba.',
+      articles: [
+        { id: 10, title: 'Đồng bộ hóa dữ liệu Slack', slug: 'slack-integration' },
+        { id: 11, title: 'Tự động hóa qua Webhook', slug: 'webhooks' },
+        { id: 12, title: 'Tài liệu kỹ thuật REST API', slug: 'api-docs' }
+      ]
+    },
+    {
+      id: 'security',
+      icon: <Shield className="w-6 h-6" />,
+      color: 'rose',
+      title: 'An ninh & Bảo mật Dữ liệu',
+      desc: 'Các tiêu chuẩn bảo vệ thông tin và cơ chế kiểm soát truy cập.',
+      articles: [
+        { id: 13, title: 'Tiêu chuẩn an toàn dữ liệu Cloud', slug: 'data-security' },
+        { id: 14, title: 'Cơ chế phân quyền vai trò (RBAC)', slug: 'roles-permissions' }
+      ]
+    },
+    {
+      id: 'mobile',
+      icon: <Smartphone className="w-6 h-6" />,
+      color: 'indigo',
+      title: 'Ứng dụng Di động',
+      desc: 'Sử dụng các tính năng nghiệp vụ trên thiết bị di động iOS/Android.',
+      articles: [
+        { id: 15, title: 'Cài đặt và cấu hình ứng dụng', slug: 'mobile-install' },
+        { id: 16, title: 'Đồng bộ hóa ngoại tuyến (Offline)', slug: 'offline-sync' }
+      ]
     }
+  ];
 
-    // 2. Filter by Search Query
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(a => 
-        a.title.toLowerCase().includes(query) || 
-        a.tags.some(t => t.toLowerCase().includes(query))
-      );
+  const faqs: FAQItem[] = [
+    {
+      id: 1,
+      question: "Làm thế nào để khởi tạo một Workspace mới?",
+      answer: "Truy cập bảng điều khiển chính, chọn biểu tượng '+' tại thanh điều hướng bên trái. Hệ thống sẽ yêu cầu xác định tên và mục tiêu của Workspace để tối ưu hóa hạ tầng lưu trữ."
+    },
+    {
+      id: 2,
+      question: "Hệ thống có hỗ trợ tích hợp API từ bên thứ ba không?",
+      answer: "Có, PronaFlow cung cấp hệ thống REST API và Webhook chuẩn hóa cho phép tích hợp với Slack, GitHub, Jira và các hạ tầng doanh nghiệp khác."
+    },
+    {
+      id: 3,
+      question: "Làm thế nào để mời thành viên vào dự án hiện hành?",
+      answer: "Vào mục Cài đặt Dự án (Project Settings), chọn phân mục 'Nhân sự', nhập địa chỉ email và xác định vai trò (Admin/Member/Viewer) cho thành viên đó."
+    },
+    {
+      id: 4,
+      question: "Dữ liệu nghiệp vụ được bảo mật như thế nào?",
+      answer: "Chúng tôi áp dụng chuẩn mã hóa AES-256 cho dữ liệu tĩnh và TLS 1.3 cho quá trình truyền tải thông tin, đảm bảo tính toàn vẹn và bảo mật tuyệt đối."
     }
-    
-    // Sort by views if Home & No Search
-    if (selectedCategory === 'home' && !searchQuery) {
-      return [...filtered].sort((a, b) => b.views - a.views);
-    }
+  ];
 
-    return filtered;
-  }, [selectedCategory, searchQuery]);
-
-  const categoryInfo = useMemo(() => 
-    CATEGORIES.find(c => c.id === selectedCategory) || CATEGORIES[0], 
-  [selectedCategory]);
-
-  const handleArticleClick = (id: string) => {
-    setSelectedArticleId(id);
-    setCurrentView('ARTICLE');
-  };
-
-  const handleBackToHome = () => {
-    setCurrentView('HOME');
-    setSelectedArticleId(null);
-  };
-
-  const currentArticle = useMemo(() => 
-    ARTICLES_DB.find(a => a.id === selectedArticleId) || ARTICLES_DB[0], 
-  [selectedArticleId]);
+  // Logic tìm kiếm thời gian thực
+  const searchResults = useMemo(() => {
+    if (!searchQuery) return [];
+    return categories.flatMap(cat => 
+      cat.articles
+        .filter(art => art.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        .map(art => ({ ...art, category: cat.title }))
+    );
+  }, [searchQuery]);
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
-      <Header onToggleMobileMenu={() => setIsMobileMenuOpen(true)} />
-      <Toast message={toast.msg} visible={toast.visible} />
+    <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-emerald-100">
+      
+      {/* PHẦN ĐẦU TRANG & TÌM KIẾM (HERO SECTION) */}
+      <div className="bg-gradient-to-b from-slate-50 to-white border-b border-slate-200 py-16 md:py-24 relative overflow-hidden">
+        {/* Đồ họa trang trí nền */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-emerald-200 blur-3xl"></div>
+          <div className="absolute top-32 -left-24 w-72 h-72 rounded-full bg-blue-200 blur-3xl"></div>
+        </div>
 
-      <div className="flex flex-1 overflow-hidden relative">
-        <Sidebar 
-          currentCategory={selectedCategory} 
-          onSelectCategory={(id) => {
-            setSelectedCategory(id);
-            if(currentView === 'ARTICLE') setCurrentView('HOME');
-          }}
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-        />
+        <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 bg-white shadow-sm mb-6 text-xs font-bold text-slate-600 uppercase tracking-widest">
+            <Zap className="w-3 h-3 text-emerald-500" />
+            Cập nhật phiên bản v2.4 hiện hành
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 tracking-tight">
+            Trung tâm Hỗ trợ Kỹ thuật & Nghiệp vụ
+          </h1>
 
-        <main id="mainContent" className="flex-1 overflow-y-auto bg-slate-50 scroll-smooth w-full">
-          {currentView === 'HOME' ? (
-            <div className="animate-in fade-in duration-500">
-              {/* Hero Section */}
-              <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 py-12 md:py-16 px-6 text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-400/20 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl" />
+          <div className="relative max-w-2xl mx-auto group">
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
+            </div>
+            <input 
+              type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="block w-full pl-12 pr-4 py-4.5 border-2 border-slate-200 rounded-2xl bg-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/5 transition-all shadow-sm sm:text-base font-medium"
+              placeholder="Tìm kiếm tài liệu, giải pháp hoặc báo cáo sự cố..."
+            />
 
-                <div className="relative z-10 max-w-3xl mx-auto">
-                  <h1 className="text-2xl md:text-4xl font-bold text-white mb-3 tracking-tight">
-                    {searchQuery 
-                      ? `Kết quả tìm kiếm cho "${searchQuery}"`
-                      : (selectedCategory === 'home' ? "Xin chào, PronaFlow có thể giúp gì?" : `Hỗ trợ: ${categoryInfo.name}`)
-                    }
-                  </h1>
-                  <p className="text-indigo-100 mb-8 text-sm md:text-lg opacity-90 max-w-2xl mx-auto">
-                    {categoryInfo.description}
-                  </p>
-                  
-                  <div className="relative max-w-xl mx-auto group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Search className="w-5 h-5 text-indigo-300 group-focus-within:text-indigo-500 transition-colors" />
-                    </div>
-                    <input 
-                      type="text" 
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="block w-full pl-11 pr-12 py-3 md:py-4 bg-white text-slate-900 rounded-2xl shadow-xl border-0 ring-0 focus:ring-4 focus:ring-indigo-400/30 placeholder:text-slate-400 text-base transition-all" 
-                      placeholder="Tìm kiếm bài viết, hướng dẫn..."
-                    />
-                    {searchQuery && (
-                      <button 
-                        onClick={() => setSearchQuery('')}
-                        className="absolute inset-y-0 right-3 flex items-center p-2 text-slate-400 hover:text-slate-600"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="max-w-6xl mx-auto px-4 md:px-6 py-10">
-                {/* Article List */}
-                <div className="mb-12">
-                  <div className="flex items-center gap-2 mb-6">
-                    {searchQuery ? <Search className="w-5 h-5 text-indigo-500" /> : (selectedCategory === 'home' ? <Sparkles className="w-5 h-5 text-amber-500" /> : <FileText className="w-5 h-5 text-indigo-500" />)}
-                    <h2 className="text-xl font-bold text-slate-800">
-                      {searchQuery 
-                        ? `Tìm thấy ${displayArticles.length} kết quả` 
-                        : (selectedCategory === 'home' ? "Bài viết phổ biến" : "Danh sách bài viết")
-                      }
-                    </h2>
-                  </div>
-
-                  {displayArticles.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {displayArticles.map((article) => (
-                        <div 
-                          key={article.id}
-                          onClick={() => handleArticleClick(article.id)} 
-                          className="bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group h-full flex flex-col"
-                        >
-                          <div className="flex justify-between items-start mb-4">
-                            <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
-                              <BookOpen className="w-5 h-5" />
-                            </div>
-                            {article.tags[0] && (
-                              <span className="text-[10px] font-semibold bg-slate-100 text-slate-500 px-2 py-1 rounded-full uppercase tracking-wide">
-                                {article.tags[0]}
-                              </span>
-                            )}
-                          </div>
-                          
-                          <h3 className="font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors line-clamp-2 text-base">
-                            {article.title}
-                          </h3>
-                          <p className="text-sm text-slate-500 line-clamp-2 mb-4 flex-1">
-                            Tìm hiểu chi tiết về {article.title} và cách áp dụng trong công việc của bạn.
-                          </p>
-                          
-                          <div className="flex items-center gap-3 text-xs text-slate-400 border-t border-slate-50 pt-3 mt-auto">
-                            <span className="flex items-center gap-1"><Eye className="w-3.5 h-3.5" /> {article.views.toLocaleString()}</span>
-                            <span className="w-1 h-1 rounded-full bg-slate-300" />
-                            <span>{article.last_updated}</span>
-                          </div>
+            {/* Dropdown kết quả tìm kiếm */}
+            {searchQuery && (
+              <div className="absolute w-full mt-3 bg-white rounded-2xl shadow-2xl border border-slate-100 z-50 text-left max-h-96 overflow-y-auto animate-in fade-in slide-in-from-top-2">
+                {searchResults.length > 0 ? (
+                  searchResults.map(result => (
+                    <div key={result.id} className="px-5 py-4 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 group">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-4 h-4 text-slate-300 group-hover:text-emerald-500" />
+                        <div>
+                          <p className="text-sm font-bold text-slate-900">{result.title}</p>
+                          <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Phân mục: {result.category}</p>
                         </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center justify-center py-16 bg-white rounded-xl border border-dashed border-slate-300 text-center px-4">
-                      <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
-                        <Search className="w-8 h-8 text-slate-300" />
                       </div>
-                      <h3 className="text-lg font-medium text-slate-900 mb-1">Không tìm thấy kết quả</h3>
-                      <p className="text-slate-500 max-w-sm">
-                        Thử tìm kiếm với từ khóa khác hoặc quay lại trang chủ để xem các danh mục.
-                      </p>
-                      <button 
-                        onClick={() => { setSearchQuery(''); setSelectedCategory('home'); }}
-                        className="mt-4 text-indigo-600 font-medium hover:underline"
-                      >
-                        Xóa bộ lọc
-                      </button>
                     </div>
-                  )}
-                </div>
-
-                {/* FAQ Section (Hide when searching) */}
-                {!searchQuery && selectedCategory === 'home' && (
-                  <div className="max-w-3xl mx-auto pb-20 border-t border-slate-200 pt-12">
-                    <div className="flex items-center gap-2 mb-6 justify-center">
-                      <HelpCircle className="w-5 h-5 text-indigo-500" />
-                      <h2 className="text-xl font-bold text-slate-800">Câu hỏi thường gặp</h2>
-                    </div>
-                    <div className="space-y-4">
-                      {FAQS.map((faq, index) => (
-                        <div key={index} className="border border-slate-200 rounded-lg overflow-hidden bg-white hover:border-indigo-200 transition-colors">
-                          <details className="group">
-                            <summary className="flex items-center justify-between w-full p-4 text-left font-medium text-slate-700 hover:bg-slate-50 cursor-pointer list-none">
-                              <span>{faq.question}</span>
-                              <ChevronDown className="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180" />
-                            </summary>
-                            <div className="px-4 pb-4 pt-0 text-sm text-slate-600 leading-relaxed bg-slate-50/50 border-t border-slate-100 mt-2">
-                              <div className="pt-3" dangerouslySetInnerHTML={{ __html: faq.answer }} />
-                            </div>
-                          </details>
-                        </div>
-                      ))}
-                    </div>
+                  ))
+                ) : (
+                  <div className="px-5 py-8 text-center">
+                    <SearchCheck className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                    <p className="text-sm text-slate-500 italic">Không tìm thấy tài liệu phù hợp với từ khóa "{searchQuery}"</p>
                   </div>
                 )}
               </div>
-            </div>
-          ) : (
-            <ArticleViewer 
-              article={currentArticle} 
-              onBack={handleBackToHome} 
-              onShowToast={showToast}
-            />
-          )}
-        </main>
+            )}
+          </div>
+          <p className="mt-5 text-slate-400 text-xs font-bold uppercase tracking-widest">
+            Gợi ý tra cứu: 
+            <button onClick={() => setSearchQuery('Kanban')} className="ml-2 text-emerald-600 hover:underline">Kanban</button>, 
+            <button onClick={() => setSearchQuery('API')} className="ml-2 text-emerald-600 hover:underline">API Docs</button>, 
+            <button onClick={() => setSearchQuery('Bảo mật')} className="ml-2 text-emerald-600 hover:underline">Bảo mật</button>
+          </p>
+        </div>
       </div>
+
+      {/* LIÊN KẾT NHANH (QUICK LINKS) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { label: 'Changelog', desc: 'Nhật ký cập nhật', icon: <GitBranch className="text-purple-600" />, bg: 'bg-purple-50' },
+            { label: 'Hệ thống', desc: 'Trạng thái vận hành', icon: <Activity className="text-emerald-600" />, bg: 'bg-emerald-50' },
+            { label: 'Tài liệu API', desc: 'Cổng lập trình viên', icon: <Code className="text-blue-600" />, bg: 'bg-blue-50' },
+            { label: 'Liên hệ', desc: 'Yêu cầu hỗ trợ', icon: <MessageCircle className="text-orange-600" />, bg: 'bg-orange-50' }
+          ].map((link, idx) => (
+            <button key={idx} className="flex items-center gap-4 p-5 bg-white rounded-2xl border border-slate-200 hover:border-emerald-500 hover:shadow-xl transition-all group text-left">
+              <div className={`w-12 h-12 ${link.bg} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                {link.icon}
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm group-hover:text-emerald-600 transition-colors">{link.label}</h4>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{link.desc}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* DANH MỤC HƯỚNG DẪN (KNOWLEDGE BASE) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <h2 className="text-2xl font-black text-slate-900 mb-12 tracking-tight uppercase">Cơ sở Kiến thức & Hướng dẫn</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {categories.map((cat) => (
+            <div key={cat.id} className="bg-white rounded-2xl p-8 border border-slate-200 hover:border-emerald-500 hover:shadow-2xl transition-all duration-300 group">
+              <div className={`w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors`}>
+                {cat.icon}
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">{cat.title}</h3>
+              <p className="text-sm text-slate-500 mb-8 leading-relaxed italic">{cat.desc}</p>
+              <ul className="space-y-4">
+                {cat.articles.map((art) => (
+                  <li key={art.id}>
+                    <button className="text-sm text-slate-600 hover:text-emerald-600 flex items-start gap-2 group/link text-left">
+                      <FileText className="w-4 h-4 mt-0.5 text-slate-300 group-hover/link:text-emerald-500 transition-colors" />
+                      <span className="group-hover/link:underline font-medium">{art.title}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 pt-6 border-t border-slate-100">
+                <button className="text-xs font-black text-emerald-600 uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
+                  Toàn bộ tài liệu <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CÂU HỎI THƯỜNG GẶP (FAQ SECTION) */}
+      <div className="bg-slate-50 py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-black text-slate-900 mb-4 tracking-tight uppercase">Câu hỏi thường gặp</h2>
+            <p className="text-slate-500 font-medium">Phân tích và giải đáp các thắc mắc nghiệp vụ phổ biến.</p>
+          </div>
+          
+          <div className="space-y-4">
+            {faqs.map((faq) => (
+              <div key={faq.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:border-emerald-200 transition-colors">
+                <button 
+                  className="w-full flex items-center justify-between p-6 text-left" 
+                  onClick={() => setOpenFaqId(openFaqId === faq.id ? null : faq.id)}
+                >
+                  <span className="font-bold text-slate-900 leading-tight">{faq.question}</span>
+                  <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${openFaqId === faq.id ? 'rotate-180' : ''}`} />
+                </button>
+                {openFaqId === faq.id && (
+                  <div className="px-6 pb-6 animate-in slide-in-from-top-2">
+                    <p className="text-slate-600 text-sm leading-relaxed text-justify italic">{faq.answer}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* HỖ TRỢ TRỰC TIẾP (CONTACT CTA) */}
+      <div className="py-24">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="bg-slate-900 rounded-[2.5rem] p-12 md:p-16 relative overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-blue-600/10"></div>
+            <div className="relative z-10">
+              <div className="w-20 h-20 bg-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl shadow-emerald-900/40">
+                <Headphones className="w-10 h-10 text-white" />
+              </div>
+              <h2 className="text-3xl font-black text-white mb-4 tracking-tight uppercase">Yêu cầu hỗ trợ chuyên sâu?</h2>
+              <p className="text-slate-400 mb-10 max-w-lg mx-auto leading-relaxed">Đội ngũ kỹ thuật viên của chúng tôi luôn sẵn sàng tiếp nhận và giải quyết các yêu cầu đặc thù của quý khách.</p>
+              <button className="inline-flex items-center gap-3 px-10 py-4 bg-emerald-600 text-white font-bold rounded-2xl hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-900/20 active:scale-95">
+                Gửi yêu cầu hỗ trợ
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <footer className="py-12 border-t border-slate-100 bg-white">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-slate-400 text-xs font-bold uppercase tracking-[0.2em]">
+            &copy; {new Date().getFullYear()} PronaFlow Operational Intelligence. Toàn bộ nội dung được bảo hộ theo chính sách dữ liệu.
+          </p>
+        </div>
+      </footer>
+
     </div>
   );
-}
+};
+
+export default App;
