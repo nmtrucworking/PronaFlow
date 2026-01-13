@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import * as Label from '@radix-ui/react-label';
 import * as Checkbox from '@radix-ui/react-checkbox';
-import { 
-  LogIn, 
-  Loader2, 
-  Github, 
-  Mail, 
-  Eye, 
-  EyeOff, 
-  Check, 
-  Sun, 
+import {
+  LogIn,
+  Loader2,
+  Github,
+  Mail,
+  Eye,
+  EyeOff,
+  Check,
+  Sun,
   Moon,
   ChevronRight,
   ShieldCheck
@@ -21,6 +21,9 @@ import {
  * Styling: Tailwind CSS
  * Primitives: Radix UI
  */
+
+const logo = "../../../public/branding/logo-dark.svg";
+
 const App = () => {
   // --- State Management ---
   const [email, setEmail] = useState('');
@@ -34,7 +37,7 @@ const App = () => {
   const handleLogin = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setError('');
-    
+
     // Validation cơ bản
     if (!email.includes('@')) {
       setError('Vui lòng nhập địa chỉ email hợp lệ.');
@@ -58,41 +61,46 @@ const App = () => {
   return (
     <div className={`${isDarkMode ? 'dark' : ''} transition-colors duration-300`}>
       <div className="min-h-screen grid lg:grid-cols-2 bg-background text-foreground font-sans selection:bg-primary/30">
-        
+
         {/* --- PHẦN TRÁI: BRANDING & VISUALS (Chỉ hiện trên Desktop) --- */}
         <div className="hidden lg:flex relative flex-col justify-between p-12 overflow-hidden bg-slate-900">
           {/* Background Wallpaper với hiệu ứng Overlay */}
           <div className="absolute inset-0 z-0">
-            <img 
-              src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80" 
-              alt="PronaFlow Workspace" 
+            <img
+              src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80"
+              alt="PronaFlow Workspace"
               className="w-full h-full object-cover opacity-40 mix-blend-luminosity"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-slate-900/90" />
           </div>
 
-          {/* Logo Section */}
-          <div className="relative z-10 flex items-center gap-3">
+          {/* Logo Section, which is button access landing page*/}
+          <button
+            onClick={() => window.location.href = '/'}
+            className='relative z-10 flex items-center gap-3'>
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-              <ShieldCheck className="text-white w-6 h-6" />
+              <img
+                src={logo}
+                alt="PronaFlow Logo"
+                className='w-10 h-10' />
             </div>
             <span className="text-2xl font-bold tracking-tighter text-white">PronaFlow</span>
-          </div>
+          </button>
 
           {/* Marketing Copy */}
           <div className="relative z-10 space-y-6 max-w-md">
             <h1 className="text-5xl font-extrabold text-white leading-tight">
               Quản trị thông minh.<br />
-              <span className="text-primary-foreground/60 italic">Cộng tác không giới hạn.</span>
+              <span className="text-primary-foreground/60">Cộng tác không giới hạn.</span>
             </h1>
             <p className="text-slate-300 text-lg leading-relaxed">
               Hệ thống điều phối dự án thế hệ mới tích hợp AI giúp đội ngũ của bạn đạt hiệu suất tối ưu 40% ngay từ tháng đầu tiên.
             </p>
-            
+
             {/* Social Proof Placeholder */}
             <div className="flex items-center gap-4 pt-4">
               <div className="flex -space-x-2">
-                {[1,2,3,4].map(i => (
+                {[1, 2, 3, 4].map(i => (
                   <div key={i} className="w-8 h-8 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-[10px] text-white">
                     U{i}
                   </div>
@@ -110,9 +118,9 @@ const App = () => {
 
         {/* --- PHẦN PHẢI: AUTHENTICATION FORM --- */}
         <div className="flex flex-col items-center justify-center p-6 sm:p-12 lg:p-20 relative bg-white dark:bg-slate-950">
-          
+
           {/* Theme Toggle Button (Góc trên phải) */}
-          <button 
+          <button
             onClick={toggleTheme}
             className="absolute top-8 right-8 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             title="Chuyển chế độ sáng/tối"
@@ -121,7 +129,7 @@ const App = () => {
           </button>
 
           <div className="w-full max-w-[400px] space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            
+
             {/* Header Form */}
             <div className="space-y-2 text-center lg:text-left">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Chào mừng trở lại</h2>
@@ -147,17 +155,17 @@ const App = () => {
 
             {/* Main Form */}
             <form onSubmit={handleLogin} className="space-y-5">
-              
+
               {/* Email Field */}
               <div className="space-y-2">
-                <Label.Root 
-                  className="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1" 
+                <Label.Root
+                  className="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
                   htmlFor="email"
                 >
                   Địa chỉ Email
                 </Label.Root>
                 <div className="relative group">
-                  <input 
+                  <input
                     id="email"
                     type="email"
                     required
@@ -176,7 +184,7 @@ const App = () => {
                   <a href="#" className="text-xs font-bold text-primary hover:text-primary/80 transition-colors">Quên mật khẩu?</a>
                 </div>
                 <div className="relative group">
-                  <input 
+                  <input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     required
@@ -185,7 +193,7 @@ const App = () => {
                     placeholder="••••••••"
                     className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-transparent focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                   />
-                  <button 
+                  <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
@@ -204,8 +212,8 @@ const App = () => {
 
               {/* Remember Me */}
               <div className="flex items-center gap-2 ml-1">
-                <Checkbox.Root 
-                  id="remember" 
+                <Checkbox.Root
+                  id="remember"
                   className="w-4 h-4 rounded border border-slate-300 dark:border-slate-700 bg-transparent flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:border-primary transition-colors focus:ring-2 focus:ring-primary/20 outline-none"
                 >
                   <Checkbox.Indicator className="text-white">
@@ -216,8 +224,8 @@ const App = () => {
               </div>
 
               {/* Submit Button */}
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={isLoading}
                 className="w-full h-11 bg-primary text-white rounded-lg font-bold shadow-lg shadow-primary/25 hover:bg-primary/90 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 transition-all disabled:opacity-70 disabled:translate-y-0 disabled:shadow-none"
               >
@@ -230,13 +238,20 @@ const App = () => {
                     Tiếp tục <ChevronRight className="w-4 h-4" />
                   </>
                 )}
+                {/* Btn name */}
+                <span>Đăng nhập</span>
               </button>
             </form>
 
             {/* Footer Form */}
             <p className="text-center text-sm text-slate-500 dark:text-slate-400">
               Chưa có tài khoản?{' '}
-              <a href="#" className="font-bold text-primary hover:underline">Đăng ký ngay</a>
+              <button
+                onClick={() => window.location.href = '/register'}
+                className="inline-flex items-center gap-1 font-bold text-primary hover:underline"
+              >
+                <span className='text-primary'>Đăng ký ngay</span>
+              </button>
             </p>
           </div>
 
@@ -249,7 +264,8 @@ const App = () => {
       </div>
 
       {/* Global CSS for Animations */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           25% { transform: translateX(-4px); }

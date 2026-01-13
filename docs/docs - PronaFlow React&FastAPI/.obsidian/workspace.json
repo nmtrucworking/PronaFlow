@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "cbf0bcfc7f93be66",
+        "id": "80b8c4b0342fae1c",
         "type": "tabs",
         "children": [
           {
-            "id": "e37bf688b6c830b7",
+            "id": "4801b70168d14e3f",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -193,8 +193,9 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "e37bf688b6c830b7",
+  "active": "4801b70168d14e3f",
   "lastOpenFiles": [
+    "01-Requirements/Functional-Modules/14 - System Administration.md",
     "00-General/Technology-Stack/Desktop-Application-Wrapper.md",
     "02-Architeture/Application Structure.md",
     "02-Architeture/Database-Schema.md",
@@ -220,7 +221,6 @@
     "02-Architeture/Entities/ArchivedProject.md",
     "02-Architeture/Entities/ApprovalRequest.md",
     "02-Architeture/Entities/ApprovalAction.md",
-    "02-Architeture/Entities/ApiUsageLog.md",
     "02-Architeture/Entity Relationship Diagram - Details",
     "02-Architeture/System Architecture Design.canvas",
     "02-Architeture/Entities",
