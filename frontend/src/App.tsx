@@ -15,6 +15,7 @@ import Inbox from './pages/inbox';
 import Setting_1 from './pages/Setting_1';
 import HelperCenter from './pages/HelperCenter';
 import MyCalendar from './pages/MyCalendar';
+import Gantt from './pages/GanttChart';
 import WorkspaceSetting from './features/workspace/components/Setting_workspace';
 import WorkspaceMember from './pages/WorkspaceMember';
 // Import Trash and Archived Pages
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       { path: 'help', element: <HelperCenter /> },
       { path: 'trash', element: <TrashBin /> },
       { path: 'calendar', element: <MyCalendar /> },
+      { path: 'gantt', element: <Gantt /> },
       { path: 'workspace-settings', element: <WorkspaceSetting /> },
       { path: 'members' , element: <WorkspaceMember /> },
       { path: 'archive', element: <ArchivedStorePage /> },
