@@ -1,3 +1,10 @@
+**Project**: PronaFlow 
+**Version**: 1.0
+**State**: Draft 
+_**Last updated:** Jan 11, 2026_
+
+---
+
 >- Mục tiêu: **Right Person – Right Time – Right Channel**  
 >- Kiến trúc: **Event → Filter → Aggregate → Route → Deliver → Track**
 

@@ -1,3 +1,9 @@
+**Project**: PronaFlow 
+**Version**: 1.0
+**State**: Draft 
+_**Last updated:** Jan 9, 2026_
+
+---
 # Relationship
 ## Quan hệ & Cardinality
 - **User 1–N WorkspaceMember**

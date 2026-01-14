@@ -1,3 +1,10 @@
+**Project**: PronaFlow 
+**Version**: 1.0
+**State**: Draft 
+_**Last updated:** Jan 11, 2026_
+
+---
+
 > Vai trò: Decision Support - Không tự ý ra quyết định.
 > Triết lý: Explainable • Privacy-Preserving • Workspace-Isolated
 

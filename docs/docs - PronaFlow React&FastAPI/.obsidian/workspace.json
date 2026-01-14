@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02-Architeture/Entity Relationship Diagram - Details/Functional Module 11 - Advanced Analytics & Reporting.md",
+                "file": "02-Architeture/Entity Relationship Diagram - Details/Functional Module 13 - Subscription & Billing Management.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Functional Module 11 - Advanced Analytics & Reporting"
+              "title": "Functional Module 13 - Subscription & Billing Management"
             }
           }
         ]
@@ -88,7 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 299.5
+    "width": 310.5
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -209,32 +209,32 @@
   },
   "active": "4801b70168d14e3f",
   "lastOpenFiles": [
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 10 - Intelligent Decision Support System.md",
     "02-Architeture/Entity Relationship Diagram - Details/Functional Module 11 - Advanced Analytics & Reporting.md",
-    "02-Architeture/Entities/RiskSignal.md",
-    "02-Architeture/Entities/ModelMetric.md",
-    "02-Architeture/Entities/UserFeedback.md",
-    "02-Architeture/Entities/Explanation.md",
-    "02-Architeture/Entities/InferenceResult.md",
-    "02-Architeture/Entities/InferenceRequest.md",
-    "02-Architeture/Entities/ModelVersion.md",
-    "02-Architeture/Entities/MLModel.md",
-    "02-Architeture/Entities/FeatureSnapshot.md",
-    "01-Requirements/Functional-Modules/14 - System Administration.md",
-    "00-General/Technology-Stack/Desktop-Application-Wrapper.md",
-    "02-Architeture/Application Structure.md",
-    "02-Architeture/Database-Schema.md",
-    "02-Architeture/API-Design.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 4 - Task Execution & Orchestration.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 12 - Integration Ecosystem.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 13 - Subscription & Billing Management.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 7 - Event-Driven Notification System.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 8 - Data Archiving & Compliance.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 9 - User Experience Personalization.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 10 - Intelligent Decision Support System.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 6 - Unitied Collaboration Hub.md",
     "02-Architeture/Entity Relationship Diagram - Details/Functional Module 2 -.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 -.md",
-    "02-Architeture/Entity Relationship Diagram.md",
     "02-Architeture/Entity Relationship Diagram - Details/Functional Module 3 -.md",
-    "02-Architeture/Entities/DataTier.md",
-    "02-Architeture/Entities/DataExportRequest.md",
-    "02-Architeture/Entities/DataExportFile.md",
-    "02-Architeture/Entities/DashboardLayouts.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 4 - Task Execution & Orchestration.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 5 - Temporal Planning and Scheduling.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 -.md",
+    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Chưa đặt tên.md",
+    "02-Architeture/Entities/FreelancerInvoice.md",
+    "02-Architeture/Entities/TimesheetEntry.md",
+    "02-Architeture/Entities/Client.md",
+    "02-Architeture/Entities/InvoiceLineItem.md",
+    "02-Architeture/Entities/Invoice.md",
+    "02-Architeture/Entities/billing_transaction.md",
+    "02-Architeture/Entities/subscription_usage.md",
     "02-Architeture/Entities/0 - ConsentGrant.md",
+    "02-Architeture/Entities/workspace_subscription.md",
+    "02-Architeture/Entities/Plan.md",
+    "02-Architeture/Entities/ReportPermission.md",
     "02-Architeture/Entity Relationship Diagram - Details",
     "02-Architeture/System Architecture Design.canvas",
     "02-Architeture/Entities",

@@ -1,3 +1,10 @@
+**Project**: PronaFlow 
+**Version**: 1.0
+**State**: Draft 
+_**Last updated:** Jan 11, 2026_
+
+---
+
 > Mục tiêu: **Hiệu năng bền vững – Tuân thủ pháp lý – Quản trị vòng đời dữ liệu**
 
 # Entity

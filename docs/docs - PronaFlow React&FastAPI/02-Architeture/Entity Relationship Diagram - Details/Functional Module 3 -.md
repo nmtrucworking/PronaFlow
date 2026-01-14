@@ -1,3 +1,9 @@
+**Project**: PronaFlow 
+**Version**: 1.0
+**State**: Draft 
+_**Last updated:** Jan 9, 2026_
+
+---
 ## Quan hệ tổng thể (Cardinality)
 - **Workspace 1–N Project**
 - **Project 1–N ProjectMember**
