@@ -9,7 +9,7 @@ import Register from './pages/Auth/Register';
 // Import pages
 import LandingPage from './pages/landing-page';
 import MyWorkPage from './pages/Dashboard';
-import AllProjectsPage from './pages/All_Projects';
+import AllProjectsPage from './pages/projects/AllProjects';
 import MyTask from './pages/MyTask';
 import Inbox from './pages/inbox';
 import Setting_1 from './pages/Setting_1';

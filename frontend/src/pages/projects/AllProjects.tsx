@@ -26,7 +26,8 @@ import {
   Layers,
   Zap,
   Flag,
-  User as UserIcon
+  User as UserIcon,
+  FolderOpen
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
