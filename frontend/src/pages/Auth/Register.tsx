@@ -45,7 +45,7 @@ const App = () => {
 
   const handlePrev = () => setStep(s => s - 1);
 
-  const calculatePasswordStrength = (pass) => {
+  const calculatePasswordStrength = (pass: string) => {
     if (!pass) return 0;
     let score = 0;
     if (pass.length > 8) score += 25;

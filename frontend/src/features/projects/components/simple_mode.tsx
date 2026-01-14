@@ -37,13 +37,13 @@ const PRIORITY_COLORS = {
 };
 
 // Component: Thẻ Task tối giản cho Simple Mode
-const SimpleTaskCard = ({ task }) => (
+const SimpleTaskCard = ({ task }: { task: any }) => (
   <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all cursor-pointer group mb-4">
     <div className="flex items-start justify-between mb-3">
       <div className="flex items-center gap-2">
         <div 
           className="w-3 h-3 rounded-full" 
-          style={{ backgroundColor: PRIORITY_COLORS[task.priority] || '#cbd5e1' }}
+          style={{ backgroundColor: PRIORITY_COLORS[task.priority as keyof typeof PRIORITY_COLORS] || '#cbd5e1' }}
         />
         <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
           {task.task_id}
@@ -60,7 +60,7 @@ const SimpleTaskCard = ({ task }) => (
 
     <div className="flex items-center justify-between pt-4 border-t border-slate-50">
       <div className="flex -space-x-2">
-        {task.assignees?.map((user, idx) => (
+        {task.assignees?.map((user: any, idx: number) => (
           <img 
             key={idx} 
             src={user.avatar} 
