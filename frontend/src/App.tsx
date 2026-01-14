@@ -8,17 +8,17 @@ import Register from './pages/Auth/Register';
 
 // Import pages
 import LandingPage from './pages/landing-page';
-import MyWorkPage from './pages/Dashboard';
+import MyWorkPage from './pages/Dashboard/Dashboard';
 import AllProjectsPage from './pages/projects/AllProjectPage';
-import MyTask from './pages/MyTask';
+import MyTask from './pages/Tasks';
 import Inbox from './pages/inbox';
-import Setting_1 from './pages/Setting_1';
-import HelperCenter from './pages/HelperCenter';
-import MyCalendar from './pages/MyCalendar';
-import Gantt from './pages/GanttChart';
+import Setting_1 from './pages/Settings';
+import HelperCenter from './pages/Helper/index';
+import MyCalendar from './pages/Calendar';
+import Gantt from './pages/Workpsace/GanttChart';
 
 import WorkspaceSetting from './features/workspace/components/Setting_workspace';
-import WorkspaceMember from './pages/WorkspaceMember';
+import WorkspaceMember from './pages/Workpsace/Member';
 
 // Import Trash and Archived Pages
 import TrashBin from './pages/Trash';

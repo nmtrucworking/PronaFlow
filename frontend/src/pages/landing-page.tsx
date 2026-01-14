@@ -27,8 +27,8 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 // Import Modal Components
-import ModalLogin from './Modal_login';
-import ModalRegister from './Modal_register';
+import ModalLogin from './Auth/Modal_login';
+import ModalRegister from './Auth/Modal_register';
 import { useNavigate } from 'react-router-dom';
 
 // --- UTILS ---
