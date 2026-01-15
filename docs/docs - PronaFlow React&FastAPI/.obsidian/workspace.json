@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "80b8c4b0342fae1c",
+        "id": "babed1f99adf4d6f",
         "type": "tabs",
         "children": [
           {
-            "id": "4801b70168d14e3f",
+            "id": "c0cabf61dddd5cf7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02-Architeture/Entity Relationship Diagram - Details/Functional Module 13 - Subscription & Billing Management.md",
+                "file": "02-Architeture/Entity Relationship Diagram - Details/Functional Module 14 - System Administration.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Functional Module 13 - Subscription & Billing Management"
+              "title": "Functional Module 14 - System Administration"
             }
           }
         ]
@@ -207,34 +207,34 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "4801b70168d14e3f",
+  "active": "c0cabf61dddd5cf7",
   "lastOpenFiles": [
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 11 - Advanced Analytics & Reporting.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 12 - Integration Ecosystem.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 13 - Subscription & Billing Management.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 7 - Event-Driven Notification System.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 8 - Data Archiving & Compliance.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 9 - User Experience Personalization.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 10 - Intelligent Decision Support System.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 6 - Unitied Collaboration Hub.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 2 -.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 3 -.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 4 - Task Execution & Orchestration.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 5 - Temporal Planning and Scheduling.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 -.md",
-    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Chưa đặt tên.md",
-    "02-Architeture/Entities/FreelancerInvoice.md",
-    "02-Architeture/Entities/TimesheetEntry.md",
-    "02-Architeture/Entities/Client.md",
-    "02-Architeture/Entities/InvoiceLineItem.md",
-    "02-Architeture/Entities/Invoice.md",
-    "02-Architeture/Entities/billing_transaction.md",
-    "02-Architeture/Entities/subscription_usage.md",
-    "02-Architeture/Entities/0 - ConsentGrant.md",
-    "02-Architeture/Entities/workspace_subscription.md",
-    "02-Architeture/Entities/Plan.md",
-    "02-Architeture/Entities/ReportPermission.md",
+    "02-Architeture/Entities/AccessReview.md",
+    "02-Architeture/Entities/ChangeRequest.md",
+    "02-Architeture/Entities/SecurityIncident.md",
+    "02-Architeture/Entities/AdminAuditLog.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 14 - System Administration.md",
+    "02-Architeture/Entities/AuditLog.md",
+    "02-Architeture/Entities/FeatureFlag.md",
+    "02-Architeture/Entities/SystemConfig.md",
+    "02-Architeture/Entities/AdminUserRole.md",
+    "02-Architeture/Entities/AdminRolePermission.md",
+    "02-Architeture/Entities/AdminPermission.md",
+    "02-Architeture/Entities/AdminRole.md",
+    "02-Architeture/Entities/AdminUser.md",
+    "01-Requirements/Functional-Modules/14 - System Administration.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 16 - User Onboarding & Adoption.md",
+    "02-Architeture/Entities/OnboardingReward.md",
+    "02-Architeture/Entities/UserBeaconState.md",
+    "02-Architeture/Entities/FeatureBeacon.md",
+    "02-Architeture/Entities/UserChecklistProgress.md",
+    "02-Architeture/Entities/ChecklistItem.md",
+    "02-Architeture/Entities/OnboardingChecklist.md",
+    "02-Architeture/Entities/TourStep.md",
+    "02-Architeture/Entities/ProductTour.md",
+    "02-Architeture/Entities/UserOnboardingStatus.md",
+    "02-Architeture/Entities/FlowStep.md",
+    "02-Architeture/Entities/OnboardingFlow.md",
     "02-Architeture/Entity Relationship Diagram - Details",
     "02-Architeture/System Architecture Design.canvas",
     "02-Architeture/Entities",

@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar';
+import Sidebar from './components/Sidebar';
 
 const MOCK_WORKSPACE = { workspace_id: 'ws-1', name: 'PronaFlow Team' };
 
