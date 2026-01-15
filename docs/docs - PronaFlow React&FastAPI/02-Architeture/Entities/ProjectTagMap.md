@@ -1,7 +1,6 @@
-# Module 15
+# Module 3
 
 | Field      | Type | key |             |
 | ---------- | ---- | --- | ----------- |
-| article_id | UUID | FK  | [[Article]] |
+| project_id | UUID | FK  | [[Project]] |
 | tag_id     | UUID | FK  | [[Tag]]     |
-

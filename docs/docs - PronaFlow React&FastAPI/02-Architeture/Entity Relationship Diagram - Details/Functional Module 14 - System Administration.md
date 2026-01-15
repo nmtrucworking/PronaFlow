@@ -40,17 +40,17 @@ erDiagram
 
 ```
 # Mapping
-|Role|Entity liên quan|
-|---|---|
-|Super Admin|FeatureFlag, SystemConfig|
-|SRE Admin|SystemConfig (READ), AuditLog|
-|Release Admin|ChangeRequest|
-|Security Admin|SecurityIncident|
-|IAM Admin|AdminUserRole|
-|Compliance Admin|AuditLog|
-|Privacy / DPO|AccessReview|
-|Finance Admin|Billing (READ)|
-|AI Admin|FeatureFlag (AI)|
-|Data Admin|Analytics (READ)|
-|Support Admin|Ticket (Module khác)|
-|Audit-only|AuditLog (READ ONLY)|
+| Role             | Entity liên quan              |
+| ---------------- | ----------------------------- |
+| Super Admin      | FeatureFlag, SystemConfig     |
+| SRE Admin        | SystemConfig (READ), AuditLog |
+| Release Admin    | ChangeRequest                 |
+| Security Admin   | SecurityIncident              |
+| IAM Admin        | AdminUserRole                 |
+| Compliance Admin | AdminAuditLog                 |
+| Privacy / DPO    | AccessReview                  |
+| Finance Admin    | Billing (READ)                |
+| AI Admin         | FeatureFlag (AI)              |
+| Data Admin       | Analytics (READ)              |
+| Support Admin    | Ticket (Module khác)          |
+| Audit-only       | AuditLog (READ ONLY)          |

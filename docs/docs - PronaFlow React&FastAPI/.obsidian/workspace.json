@@ -4,31 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "babed1f99adf4d6f",
+        "id": "952b8327174c46cf",
         "type": "tabs",
         "children": [
           {
-            "id": "c0cabf61dddd5cf7",
+            "id": "ae5e6e38cde4b6de",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "02-Architeture/Entity Relationship Diagram - Details/Functional Module 14 - System Administration.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
+                "file": "02-Architeture/System Architecture Design.canvas",
+                "viewState": {
+                  "x": 375,
+                  "y": -228,
+                  "zoom": -2.3304451779172193
                 }
               },
-              "icon": "lucide-file",
-              "title": "Functional Module 14 - System Administration"
+              "icon": "lucide-layout-dashboard",
+              "title": "System Architecture Design"
             }
           }
         ]
@@ -88,7 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 310.5
+    "width": 420.5
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -207,34 +200,35 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "c0cabf61dddd5cf7",
+  "active": "ae5e6e38cde4b6de",
   "lastOpenFiles": [
+    "02-Architeture/Entity Relationship Diagram.md",
+    "02-Architeture/Database-Schema.md",
+    "02-Architeture/Application Structure.md",
+    "02-Architeture/API-Design.md",
+    "02-Architeture/Entities/WorkspaceSetting.md",
+    "02-Architeture/Entities/WorkspaceSubscription.md",
+    "02-Architeture/Entities/SubscriptionUsage.md",
+    "02-Architeture/Entities/BillingTransaction.md",
+    "02-Architeture/Entities/Chưa đặt tên.md",
+    "02-Architeture/Entities/Chưa đặt tên 1.md",
+    "Contents.base",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 3 - Project Lifecycle Management.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 2 - Multi-tenancy Workpspace Governance.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 - Identity and Access Management.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Chưa đặt tên.md",
+    "02-Architeture/Entities/ConsentGrant.md",
+    "02-Architeture/Entities/Note.md",
+    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
     "02-Architeture/Entities/AccessReview.md",
-    "02-Architeture/Entities/ChangeRequest.md",
-    "02-Architeture/Entities/SecurityIncident.md",
-    "02-Architeture/Entities/AdminAuditLog.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 14 - System Administration.md",
-    "02-Architeture/Entities/AuditLog.md",
-    "02-Architeture/Entities/FeatureFlag.md",
-    "02-Architeture/Entities/SystemConfig.md",
-    "02-Architeture/Entities/AdminUserRole.md",
-    "02-Architeture/Entities/AdminRolePermission.md",
-    "02-Architeture/Entities/AdminPermission.md",
-    "02-Architeture/Entities/AdminRole.md",
-    "02-Architeture/Entities/AdminUser.md",
-    "01-Requirements/Functional-Modules/14 - System Administration.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 16 - User Onboarding & Adoption.md",
-    "02-Architeture/Entities/OnboardingReward.md",
-    "02-Architeture/Entities/UserBeaconState.md",
-    "02-Architeture/Entities/FeatureBeacon.md",
-    "02-Architeture/Entities/UserChecklistProgress.md",
-    "02-Architeture/Entities/ChecklistItem.md",
-    "02-Architeture/Entities/OnboardingChecklist.md",
-    "02-Architeture/Entities/TourStep.md",
-    "02-Architeture/Entities/ProductTour.md",
-    "02-Architeture/Entities/UserOnboardingStatus.md",
-    "02-Architeture/Entities/FlowStep.md",
-    "02-Architeture/Entities/OnboardingFlow.md",
+    "02-Architeture/Entities/TaskTagMap.md",
+    "02-Architeture/Entities/Tag.md",
+    "02-Architeture/Entities/ProjectTagMap.md",
+    "02-Architeture/Entities/PluginTagMap.md",
+    "02-Architeture/Entities/ArticleTag.md",
+    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
+    "02-Architeture/Entities/NoteTagMap.md",
+    "02-Architeture/Entities/ProjectChangeRequest.md",
     "02-Architeture/Entity Relationship Diagram - Details",
     "02-Architeture/System Architecture Design.canvas",
     "02-Architeture/Entities",
@@ -245,7 +239,6 @@
     "01-Requirements/Functional-Modules/B4354100",
     "01-Requirements/Functional-Modules/2BA44100",
     "01-Requirements/Functional-Modules/Quotas Adjustment.xlsx",
-    "01-Requirements/Functional-Modules/New Microsoft Excel Worksheet.xlsx",
     "01-Requirements/Sơ đồ tổ chức Modules.canvas",
     "Logic SLA.drawio 1.png",
     "assets/images/Logic SLA.drawio.png",
