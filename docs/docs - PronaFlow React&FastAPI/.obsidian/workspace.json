@@ -4,17 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "3fd559ff97903a60",
+        "id": "1982d9b76c5da4be",
         "type": "tabs",
         "children": [
           {
-            "id": "d91979bb025fb896",
+            "id": "4f0d28251c170847",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "02-Architeture/Entities/Workspace.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "Tab mới"
+              "title": "Workspace"
             }
           }
         ]
@@ -74,7 +88,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 420.5
+    "width": 420.5,
+    "collapsed": true
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -193,12 +208,18 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "d91979bb025fb896",
+  "active": "4f0d28251c170847",
   "lastOpenFiles": [
+    "03-UI-UX-Design/Project-Presen.md",
+    "02-Architeture/Entity-Relationship-Diagram.md",
+    "02-Architeture/ERD.mmd",
+    "assets/images/Logic SLA.drawio.png",
+    "00-General/Overview.md",
+    "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
+    "Fix.md",
     "02-Architeture/Decisions/ADR-002-Database-PostgreSQL.md",
     "00-General/Glossary.md.md",
     "02-Architeture/System Architecture Design.canvas",
-    "02-Architeture/Entity Relationship Diagram.md",
     "02-Architeture/Database-Schema.md",
     "02-Architeture/Application Structure.md",
     "02-Architeture/API-Design.md",
@@ -219,10 +240,6 @@
     "02-Architeture/Entities/AccessReview.md",
     "02-Architeture/Entities/TaskTagMap.md",
     "02-Architeture/Entities/Tag.md",
-    "02-Architeture/Entities/ProjectTagMap.md",
-    "02-Architeture/Entities/PluginTagMap.md",
-    "02-Architeture/Entities/ArticleTag.md",
-    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
     "02-Architeture/Entity Relationship Diagram - Details",
     "02-Architeture/Entities",
     "01-Requirements/Functional-Modules/22766310",
@@ -231,10 +248,8 @@
     "01-Requirements/Functional-Modules/~$Quotas Adjustment.xlsx",
     "01-Requirements/Functional-Modules/B4354100",
     "01-Requirements/Functional-Modules/2BA44100",
-    "01-Requirements/Functional-Modules/Quotas Adjustment.xlsx",
     "01-Requirements/Sơ đồ tổ chức Modules.canvas",
     "Logic SLA.drawio 1.png",
-    "assets/images/Logic SLA.drawio.png",
     "Chưa đặt tên.canvas"
   ]
 }

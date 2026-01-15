@@ -1,4 +1,3 @@
-```mermaid
 erDiagram
     %% =========== Entity ===========
     %% Module 1
@@ -510,16 +509,150 @@ erDiagram
         uuid user_id
         string key_combo
     }
+
     %% Module 10
+    FEATURE_SNAPSHOT {
+        uuid snapshot_id PK
+        uuid project_id FK
+        timestamp created_at
+        jsonb feature_vector "Anonymized features"
+    }
+    ML_MODEL {
+        uuid model_id PK
+        string name
+        string type "REGRESSION, CLASSIFICATION, RANKING"
+        boolean is_active
+    }
+    MODEL_VERSION {
+        uuid version_id PK
+        uuid model_id FK
+        string version_tag
+        float confidence_threshold
+        timestamp deployed_at
+    }
+    INFERENCE_REQUEST {
+        uuid request_id PK
+        uuid version_id FK
+        uuid feature_snapshot_id FK
+        timestamp requested_at
+    }
+    INFERENCE_RESULT {
+        uuid result_id PK
+        uuid request_id FK
+        jsonb payload "Prediction result"
+        float confidence_score
+    }
+    EXPLANATION {
+        uuid explanation_id PK
+        uuid result_id FK
+        jsonb shap_values
+        text narrative "Human readable explanation"
+    }
+    USER_FEEDBACK {
+        uuid feedback_id PK
+        uuid result_id FK
+        uuid user_id FK
+        int rating "1-5 stars"
+        text comment
+    }
+    MODEL_METRIC {
+        uuid metric_id PK
+        uuid version_id FK
+        string metric_name "Accuracy, F1, Drift"
+        float value
+        timestamp measured_at
+    }
+    RISK_SIGNAL {
+        uuid signal_id PK
+        uuid project_id FK
+        string risk_type "VELOCITY_DROP, SCOPE_CREEP"
+        float severity
+        timestamp detected_at
+    }
+
     %% Module 11
+    METRIC_SNAPSHOT {
+        uuid snapshot_id PK
+        uuid project_id FK
+        string metric_type "CPI, SPI"
+        float value
+        timestamp snapshot_date
+    }
+    KPI {
+        uuid kpi_id PK
+        uuid project_id FK
+        string name
+        float target_value
+        float current_value
+    }
+    SPRINT_METRIC {
+        uuid metric_id PK
+        uuid sprint_id FK "Requires Sprint Entity"
+        float burnt_points
+        float velocity
+        timestamp calculated_at
+    }
+    RESOURCE_UTILIZATION {
+        uuid utilization_id PK
+        uuid user_id FK
+        uuid workspace_id FK
+        date date
+        float allocated_hours
+        float actual_hours
+    }
+    TIME_ENTRY {
+        uuid entry_id PK
+        uuid user_id FK
+        uuid task_id FK
+        timestamp start_time
+        timestamp end_time
+        float duration_hours
+        boolean is_billable
+        string source "TIMER, MANUAL"
+    }
+    TIMESHEET {
+        uuid timesheet_id PK
+        uuid user_id FK
+        date period_start
+        date period_end
+        enum status "DRAFT, SUBMITTED, APPROVED"
+    }
+    TIMESHEET_APPROVAL {
+        uuid approval_id PK
+        uuid timesheet_id FK
+        uuid approver_id FK
+        enum status
+        timestamp action_at
+    }
+    REPORT_DEFINITION {
+        uuid report_id PK
+        uuid workspace_id FK
+        string name
+        jsonb query_config
+        enum format "PDF, CSV, INTERACTIVE"
+    }
+    REPORT_EXECUTION {
+        uuid execution_id PK
+        uuid report_id FK
+        uuid executed_by FK
+        string file_path
+        timestamp generated_at
+    }
+    REPORT_PERMISSION {
+        uuid permission_id PK
+        uuid report_id FK
+        uuid role_id FK
+        boolean can_edit
+    }
+
     %% Module 12
-    Api_Scope {
+    API_SCOPE {
         UUID scope_id PK
         varchar code
         text description
     }
 
-    Api_Token {
+    API_TOKEN {
         UUID token_id "PK"
         UUID user_id "FK, Owner"
         varchar name 
@@ -529,12 +662,12 @@ erDiagram
         timestamp created_at "nullable"
     }
 
-    Api_Token_Scope {
+    API_TOKEN_SCOPE {
         UUID token_id FK
         UUID scope_id FK
     }
 
-    Api_Usage_Log {
+    API_USAGE_LOG {
         UUID log_id
         UUID token_id
         varchar endpoint
@@ -590,10 +723,318 @@ erDiagram
         text scopes
     }
     
-    %% Module 13
-    %% Module 14
-    %% Module 15
-    %% Module 16
+    %% Module 13: Subscription & Billing Management
+    PLAN {
+        uuid plan_id PK
+        string name "Free, Pro, Enterprise"
+        decimal price_monthly
+        decimal price_yearly
+        jsonb quotas "Limits configuration"
+        boolean is_active
+    }
+    WORKSPACE_SUBSCRIPTION {
+        uuid subscription_id PK
+        uuid workspace_id FK
+        uuid plan_id FK
+        enum status "ACTIVE, PAST_DUE, CANCELED"
+        timestamp current_period_start
+        timestamp current_period_end
+        boolean auto_renew
+    }
+    SUBSCRIPTION_USAGE {
+        uuid usage_id PK
+        uuid subscription_id FK
+        string metric_key "storage, members, etc."
+        float current_value
+        timestamp last_updated
+    }
+    INVOICE {
+        uuid invoice_id PK
+        uuid workspace_id FK
+        uuid subscription_id FK
+        string invoice_number
+        decimal amount_due
+        enum status "PAID, OPEN, VOID"
+        timestamp due_date
+        timestamp paid_at
+    }
+    INVOICE_LINE_ITEM {
+        uuid item_id PK
+        uuid invoice_id FK
+        string description
+        decimal amount
+        int quantity
+    }
+    BILLING_TRANSACTION {
+        uuid transaction_id PK
+        uuid invoice_id FK
+        uuid workspace_id FK
+        string gateway_reference_id
+        string gateway_name "Stripe, PayPal"
+        decimal amount
+        enum status "SUCCESS, FAILED"
+        timestamp processed_at
+    }
+    CLIENT {
+        uuid client_id PK
+        uuid owner_user_id FK "Freelancer user"
+        string name
+        string email
+        string tax_id
+    }
+    FREELANCER_INVOICE {
+        uuid invoice_id PK
+        uuid client_id FK
+        uuid created_by_user_id FK
+        decimal total_amount
+        enum status
+        timestamp created_at
+    }
+
+    %% Module 14: System Administration
+    ADMIN_USER {
+        uuid admin_id PK
+        string username
+        string email
+        string password_hash
+        boolean mfa_enabled
+        timestamp last_login
+    }
+    ADMIN_ROLE {
+        uuid role_id PK
+        string name "Super Admin, SRE, Support"
+        string description
+        boolean is_system_role
+    }
+    ADMIN_PERMISSION {
+        uuid permission_id PK
+        string code "SYSTEM_CONFIG_READ"
+        string description
+    }
+    ADMIN_USER_ROLE {
+        uuid id PK
+        uuid admin_id FK
+        uuid role_id FK
+    }
+    ADMIN_ROLE_PERMISSION {
+        uuid role_id FK
+        uuid permission_id FK
+    }
+    SYSTEM_CONFIG {
+        uuid config_id PK
+        string key
+        string value
+        string description
+        boolean is_encrypted
+    }
+    FEATURE_FLAG {
+        uuid flag_id PK
+        string key
+        boolean is_enabled
+        jsonb rollout_rules "Percentage, UserIDs"
+    }
+    ADMIN_AUDIT_LOG {
+        uuid log_id PK
+        uuid admin_id FK
+        string action
+        string target_entity
+        jsonb changes
+        string ip_address
+        timestamp created_at
+    }
+    SECURITY_INCIDENT {
+        uuid incident_id PK
+        string title
+        enum severity "LOW, MEDIUM, HIGH, CRITICAL"
+        enum status "OPEN, INVESTIGATING, RESOLVED"
+        uuid assigned_to_admin_id FK
+        timestamp detected_at
+    }
+    CHANGE_REQUEST {
+        uuid request_id PK
+        uuid requester_admin_id FK
+        uuid approver_admin_id FK
+        string type "CONFIG_CHANGE, DEPLOYMENT"
+        text description
+        enum status "PENDING, APPROVED, REJECTED"
+        timestamp created_at
+    }
+    ACCESS_REVIEW {
+        uuid review_id PK
+        string period
+        uuid reviewer_admin_id FK
+        enum status
+        timestamp completed_at
+    }
+
+    %% Module 15: Helper Center & Knowledge Base
+    ARTICLE {
+        uuid article_id PK
+        string slug
+        enum status "DRAFT, PUBLISHED, ARCHIVED"
+        uuid author_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    ARTICLE_VERSION {
+        uuid version_id PK
+        uuid article_id FK
+        int version_number
+        text content_raw "Markdown/HTML"
+        string changelog_summary
+        timestamp created_at
+    }
+    ARTICLE_TRANSLATION {
+        uuid translation_id PK
+        uuid version_id FK
+        string language_code "vi-VN, en-US"
+        string title
+        text content_localized
+    }
+    CATEGORY {
+        uuid category_id PK
+        uuid parent_id FK
+        string name
+        string slug
+        int display_order
+    }
+    TAG {
+        uuid tag_id PK
+        string name
+        string color_hex
+    }
+    ARTICLE_TAG {
+        uuid article_id FK
+        uuid tag_id FK
+    }
+    ROUTE_MAPPING {
+        uuid mapping_id PK
+        uuid article_id FK
+        string route_pattern "/projects/*"
+        string element_selector "#create-btn"
+        string context_description
+    }
+    SEARCH_INDEX {
+        uuid index_id PK
+        uuid article_id FK
+        text keywords
+        vector embedding_vector "For Semantic Search"
+        timestamp last_indexed
+    }
+    ARTICLE_FEEDBACK {
+        uuid feedback_id PK
+        uuid article_id FK
+        uuid user_id FK
+        boolean is_helpful
+        text comment
+        timestamp created_at
+    }
+    FAILED_SEARCH {
+        uuid search_id PK
+        uuid user_id FK
+        string query_text
+        timestamp searched_at
+    }
+    ARTICLE_VISIBILITY {
+        uuid visibility_id PK
+        uuid article_id FK
+        enum scope "PUBLIC, INTERNAL, ROLE_BASED"
+        jsonb allowed_roles
+    }
+
+    %% Module 16: User Onboarding & Adoption
+    ONBOARDING_SURVEY {
+        uuid survey_id PK
+        string name "Welcome Survey"
+        boolean is_active
+    }
+    SURVEY_QUESTION {
+        uuid question_id PK
+        uuid survey_id FK
+        string question_text
+        enum type "MULTIPLE_CHOICE, TEXT, RATING"
+        int order
+    }
+    SURVEY_RESPONSE {
+        uuid response_id PK
+        uuid question_id FK
+        uuid user_id FK
+        jsonb answer_value
+    }
+    PERSONA_PROFILE {
+        uuid profile_id PK
+        uuid user_id FK
+        string role_type "PM, DEV, STAKEHOLDER"
+        jsonb goals
+        timestamp created_at
+    }
+    ONBOARDING_FLOW {
+        uuid flow_id PK
+        string name
+        jsonb trigger_conditions "First Login, Feature Access"
+    }
+    FLOW_STEP {
+        uuid step_id PK
+        uuid flow_id FK
+        int step_order
+        enum action_type
+    }
+    USER_ONBOARDING_STATUS {
+        uuid status_id PK
+        uuid user_id FK
+        uuid flow_id FK
+        uuid current_step_id
+        boolean is_completed
+        timestamp last_updated
+    }
+    PRODUCT_TOUR {
+        uuid tour_id PK
+        string name
+        boolean is_skippable
+    }
+    TOUR_STEP {
+        uuid step_id PK
+        uuid tour_id FK
+        string target_element
+        text content
+        enum required_action "CLICK, HOVER, NEXT"
+    }
+    ONBOARDING_CHECKLIST {
+        uuid checklist_id PK
+        string title
+        uuid reward_id FK
+    }
+    CHECKLIST_ITEM {
+        uuid item_id PK
+        uuid checklist_id FK
+        string title
+        string action_link
+    }
+    USER_CHECKLIST_PROGRESS {
+        uuid progress_id PK
+        uuid user_id FK
+        uuid item_id FK
+        boolean is_checked
+        timestamp completed_at
+    }
+    FEATURE_BEACON {
+        uuid beacon_id PK
+        string feature_key
+        string message
+        string position_config
+    }
+    USER_BEACON_STATE {
+        uuid state_id PK
+        uuid user_id FK
+        uuid beacon_id FK
+        boolean is_dismissed
+        timestamp dismissed_at
+    }
+    ONBOARDING_REWARD {
+        uuid reward_id PK
+        enum type "BADGE, CREDIT, EXTENDED_TRIAL"
+        jsonb value
+    }
 
     %% =========== Relationship ===========
     %% Module 1
@@ -695,13 +1136,43 @@ erDiagram
     USER ||--o{ KEYBOARD_SHORTCUT : defines
     USER ||--o{ UI_VIEW_PREFERENCE : prefers
 
-    %% Module 10
-    %% Module 11
+    FEATURE_SNAPSHOT ||--o{ INFERENCE_REQUEST : feeds
+    ML_MODEL ||--o{ MODEL_VERSION : has
+    MODEL_VERSION ||--o{ INFERENCE_REQUEST : serves
+    MODEL_VERSION ||--o{ MODEL_METRIC : monitored_by
+    INFERENCE_REQUEST ||--|| INFERENCE_RESULT : produces
+    INFERENCE_RESULT ||--|| EXPLANATION : explained_by
+    INFERENCE_RESULT ||--o{ USER_FEEDBACK : reviewed_by
+    USER ||--o{ USER_FEEDBACK : provides
+    PROJECT ||--o{ RISK_SIGNAL : triggers
+    PROJECT ||--o{ FEATURE_SNAPSHOT : data_source
+
+    %% Module 11 Relationships
+    PROJECT ||--o{ KPI : evaluates
+    PROJECT ||--o{ METRIC_SNAPSHOT : measured_by
+    %% Lưu ý: Cần đảm bảo entity SPRINT tồn tại hoặc nối tạm vào PROJECT
+    PROJECT ||--o{ SPRINT_METRIC : context_for 
+    
+    USER ||--o{ TIME_ENTRY : logs
+    TASK ||--o{ TIME_ENTRY : consumes
+    USER ||--o{ RESOURCE_UTILIZATION : tracked_in
+    WORKSPACE ||--o{ RESOURCE_UTILIZATION : monitors
+
+    USER ||--o{ TIMESHEET : submits
+    TIMESHEET ||--o{ TIME_ENTRY : aggregates
+    TIMESHEET ||--o{ TIMESHEET_APPROVAL : reviewed_by
+    USER ||--o{ TIMESHEET_APPROVAL : approves
+
+    WORKSPACE ||--o{ REPORT_DEFINITION : defines
+    REPORT_DEFINITION ||--o{ REPORT_EXECUTION : generates
+    REPORT_DEFINITION ||--o{ REPORT_PERMISSION : secures
+    USER ||--o{ REPORT_EXECUTION : triggers
+
     %% Module 12
-    USER ||--o{ Api_Token : generates
-    Api_Token ||--o{ Api_Token_Scope : has
-    Api_Scope ||--o{ Api_Token_Scope : grants
-    Api_Token ||--o{ Api_Usage_Log : logs
+    USER ||--o{ API_TOKEN : generates
+    API_TOKEN ||--o{ API_TOKEN_SCOPE : has
+    API_SCOPE ||--o{ API_TOKEN_SCOPE : grants
+    API_TOKEN ||--o{ API_USAGE_LOG : logs
     WORKSPACE ||--o{ WEBHOOK_ENDPOINT : registers
     WEBHOOK_ENDPOINT ||--o{ WEBHOOK_EVENT : subscribes
     WEBHOOK_ENDPOINT ||--o{ WEBHOOK_DELIVERY : delivers
@@ -712,11 +1183,72 @@ erDiagram
     WORKSPACE ||--o{ PLUGIN_INSTALLATION : enables
     USER ||--o{ CONSENT_GRANT : authorizes
 
-    %% Module 13
-    %% Module 14
-    %% Module 15
-    %% Module 16
+    %% Module 13 Relationships
+    PLAN ||--o{ WORKSPACE_SUBSCRIPTION : defines
+    WORKSPACE ||--|| WORKSPACE_SUBSCRIPTION : has_active
+    WORKSPACE ||--o{ SUBSCRIPTION_USAGE : consumes
+    WORKSPACE_SUBSCRIPTION ||--o{ SUBSCRIPTION_USAGE : tracks
+    
+    WORKSPACE ||--o{ INVOICE : billed_to
+    WORKSPACE_SUBSCRIPTION ||--o{ INVOICE : generates
+    INVOICE ||--o{ INVOICE_LINE_ITEM : contains
+    INVOICE ||--o{ BILLING_TRANSACTION : paid_by
+    WORKSPACE ||--o{ BILLING_TRANSACTION : pays
 
+    USER ||--o{ CLIENT : manages_freelance
+    CLIENT ||--o{ FREELANCER_INVOICE : billed_to
+    %% Timesheet Entry đã được định nghĩa ở Module 11
+    FREELANCER_INVOICE ||--o{ TIME_ENTRY : aggregates
 
+    %% Module 14 Relationships
+    ADMIN_USER ||--o{ ADMIN_USER_ROLE : assigned
+    ADMIN_ROLE ||--o{ ADMIN_USER_ROLE : grants
+    ADMIN_ROLE ||--o{ ADMIN_ROLE_PERMISSION : contains
+    ADMIN_PERMISSION ||--o{ ADMIN_ROLE_PERMISSION : defines
+    
+    ADMIN_USER ||--o{ ADMIN_AUDIT_LOG : performs
+    ADMIN_USER ||--o{ SECURITY_INCIDENT : manages
+    ADMIN_USER ||--o{ CHANGE_REQUEST : requests
+    ADMIN_USER ||--o{ CHANGE_REQUEST : approves
+    ADMIN_USER ||--o{ ACCESS_REVIEW : conducts
 
-```
+    %% Module 15 Relationships
+    CATEGORY ||--o{ ARTICLE : groups
+    CATEGORY ||--o{ CATEGORY : sub_category
+    ARTICLE ||--o{ ARTICLE_VERSION : has_versions
+    ARTICLE_VERSION ||--o{ ARTICLE_TRANSLATION : localized_as
+    
+    ARTICLE ||--o{ ARTICLE_TAG : tagged
+    TAG ||--o{ ARTICLE_TAG : labels
+    
+    ARTICLE ||--o{ ROUTE_MAPPING : suggested_contextually
+    ARTICLE ||--|| SEARCH_INDEX : indexed_for_search
+    
+    ARTICLE ||--o{ ARTICLE_FEEDBACK : reviewed_by
+    USER ||--o{ ARTICLE_FEEDBACK : provides
+    
+    ARTICLE ||--o{ ARTICLE_VISIBILITY : restricted_by
+    USER ||--o{ FAILED_SEARCH : generated
+
+    %% Module 16 Relationships
+    ONBOARDING_SURVEY ||--o{ SURVEY_QUESTION : contains
+    SURVEY_QUESTION ||--o{ SURVEY_RESPONSE : answered_by
+    USER ||--o{ SURVEY_RESPONSE : submits
+    
+    USER ||--|| PERSONA_PROFILE : identified_as
+    PERSONA_PROFILE ||--o{ ONBOARDING_FLOW : triggers_personalized
+    ONBOARDING_FLOW ||--o{ FLOW_STEP : defines
+    
+    USER ||--o{ USER_ONBOARDING_STATUS : tracks_progress
+    ONBOARDING_FLOW ||--o{ USER_ONBOARDING_STATUS : instance_of
+    
+    PRODUCT_TOUR ||--o{ TOUR_STEP : guides
+    %% Tour có thể là một phần của Flow hoặc độc lập, tùy logic ứng dụng
+    
+    ONBOARDING_CHECKLIST ||--o{ CHECKLIST_ITEM : lists
+    ONBOARDING_CHECKLIST ||--o{ ONBOARDING_REWARD : grants
+    CHECKLIST_ITEM ||--o{ USER_CHECKLIST_PROGRESS : tracked_for
+    USER ||--o{ USER_CHECKLIST_PROGRESS : completes
+    
+    FEATURE_BEACON ||--o{ USER_BEACON_STATE : status_per_user
+    USER ||--o{ USER_BEACON_STATE : sees_or_dismisses
