@@ -1,11 +1,11 @@
->Liên kết User ↔ AuthProvider (OAuth / Local)
+>- Quản lý việc liên kết giữa người dùng và các phương pháp xác thực khác nhau (Local hoặc OAuth)
+>- Liên kết User ↔ AuthProvider (OAuth / Local)
+# Module 1
 
-# 1. Phân hệ 1
-
-|Field|Type|Note|
-|---|---|---|
-|user_auth_id (PK)|UUID||
-|user_id (FK)|UUID||
-|provider_id (FK)|UUID||
-|provider_user_id|varchar|id từ Google/GitHub|
-|created_at|timestamp||
+| Field            | Type      | PK  | Constrant | Note                                                     |                  |
+| ---------------- | --------- | --- | --------- | -------------------------------------------------------- | ---------------- |
+| user_auth_id     | UUID      | PK  |           | Định danh duy nhất kiểu UUID                             |                  |
+| user_id          | UUID      | FK  |           | Liên kết đến bảng Users                                  | [[Users]]        |
+| provider_id      | UUID      | FK  |           | Nhà cung cấp xác thực                                    | [[AuthProvider]] |
+| provider_user_id | varchar   |     |           | ID định danh người dùng cho phía GG hoặc Github cung cấp |                  |
+| created_at       | timestamp |     |           | Thời gian liên kết được tạo                              |                  |

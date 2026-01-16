@@ -1,8 +1,9 @@
 > Đơn vị quyền nhỏ nhất (fine-grained)
 
-# 1. Phân hệ 1
-|Field|Type|
-|---|---|
-|permission_id (PK)|UUID|
-|code|varchar|
-|description|text|
+# Module 1
+
+| Field         | Type    | Key | Constrant        | Note                                  |
+| ------------- | ------- | --- | ---------------- | ------------------------------------- |
+| permission_id | UUID    | PK  |                  | Định danh duy nhất kiểu UUID          |
+| code          | varchar |     | unique, not-null | Mã quyền định dạng chuỗi              |
+| description   | text    |     | not-null         | Mô tả chi tiết chức năng của quyền đó |

@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "1982d9b76c5da4be",
+        "id": "3f4ce9e95774f07a",
         "type": "tabs",
         "children": [
           {
-            "id": "4f0d28251c170847",
+            "id": "91081ba5f646b919",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02-Architeture/Entities/Workspace.md",
+                "file": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Workspace"
+              "title": "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow"
             }
           }
         ]
@@ -207,8 +207,29 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "4f0d28251c170847",
+  "active": "91081ba5f646b919",
   "lastOpenFiles": [
+    "Contents.base",
+    "Check list - Docs & Templates.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 - Identity and Access Management.md",
+    "02-Architeture/Entities/RolePermission.md",
+    "02-Architeture/Entities/AuditLog.md",
+    "02-Architeture/Entities/Permissions.md",
+    "02-Architeture/Entities/Session.md",
+    "02-Architeture/Entities/Roles.md",
+    "02-Architeture/Entities/AuthProvider.md",
+    "07-References/auth-privider.json",
+    "07-References/New Text Document.txt",
+    "02-Architeture/Entities/UserAuth.md",
+    "02-Architeture/Entities/Users.md",
+    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "07-References/user_status.json",
+    "07-References/Chưa đặt tên.md",
+    "02-Architeture/Entities/UserRole.md",
+    "07-References/system-error-codes.md",
+    "00-General/Glossary.md.md",
+    "00-General/Overview.md",
+    "02-Architeture/Entities/Workspace.md",
     "02-Architeture/files.txt",
     "02-Architeture/exportFiles.ipynb",
     "02-Architeture/Entities/files.txt",
@@ -216,37 +237,15 @@
     "02-Architeture/Entity-Relationship-Diagram.md",
     "02-Architeture/ERD.mmd",
     "assets/images/Logic SLA.drawio.png",
-    "00-General/Overview.md",
     "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
     "Fix.md",
     "02-Architeture/Decisions/ADR-002-Database-PostgreSQL.md",
-    "00-General/Glossary.md.md",
     "02-Architeture/System Architecture Design.canvas",
     "02-Architeture/Database-Schema.md",
     "02-Architeture/Application Structure.md",
     "02-Architeture/API-Design.md",
-    "02-Architeture/Entities/WorkspaceSetting.md",
-    "02-Architeture/Entities/WorkspaceSubscription.md",
-    "02-Architeture/Entities/SubscriptionUsage.md",
-    "02-Architeture/Entities/BillingTransaction.md",
-    "02-Architeture/Entities/Chưa đặt tên.md",
-    "02-Architeture/Entities/Chưa đặt tên 1.md",
-    "Contents.base",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 3 - Project Lifecycle Management.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 2 - Multi-tenancy Workpspace Governance.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 - Identity and Access Management.md",
-    "02-Architeture/Entity Relationship Diagram - Details/Chưa đặt tên.md",
-    "02-Architeture/Entities/ConsentGrant.md",
-    "02-Architeture/Entities/Note.md",
-    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
-    "02-Architeture/Entities/AccessReview.md",
-    "02-Architeture/Entities/TaskTagMap.md",
     "02-Architeture/Entity Relationship Diagram - Details",
     "02-Architeture/Entities",
-    "01-Requirements/Functional-Modules/22766310",
-    "01-Requirements/Functional-Modules/09B46310",
-    "01-Requirements/Functional-Modules/ECE16310",
-    "01-Requirements/Functional-Modules/~$Quotas Adjustment.xlsx",
     "01-Requirements/Sơ đồ tổ chức Modules.canvas",
     "Logic SLA.drawio 1.png",
     "Chưa đặt tên.canvas"

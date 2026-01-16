@@ -10,7 +10,7 @@ Phân hệ **Identity and Access Management (IAM)** đóng vai trò là tầng k
 ## 2.1. Feature: Identity Lifecycle Management (Quản lý Vòng đời Định danh)
 ### User Story 1.1
 Là một Người dùng mới, Tôi muốn đăng ký tài khoản và xác thực địa chỉ email, Để đảm bảo danh tính của tôi là duy nhất và an toàn trước khi tham gia vào các Workspace.
-### Acceptance Criteria (#AC)
+### Acceptance Criteria ( #AC)
 #### AC 1 - Input Validation (Kiểm tra dữ liệu đầu vào)
 - **Constraint:** Hệ thống phải kiểm tra định dạng dữ liệu trước khi xử lý:
  - `Email`: Phải đúng định dạng email tiêu chuẩn.
@@ -21,8 +21,10 @@ Là một Người dùng mới, Tôi muốn đăng ký tài khoản và xác th�
 - **System Behavior:** Hệ thống gửi một email chứa liên kết kích hoạt (có hiệu lực trong 24 giờ).
 - **Result:** Khi người dùng truy cập liên kết, trạng thái tài khoản chuyển sang `ACTIVE`. Nếu liên kết hết hạn, người dùng phải yêu cầu gửi lại email kích hoạt.
 ### User Story 1.2
-Là một Người dùng, Tôi muốn đăng nhập an toàn vào hệ thống và duy trì phiên làm việc trong một khoảng thời gian hợp lý, Để không phải nhập lại mật khẩu liên tục gây gián đoạn công việc.
-### Acceptance Criteria (#AC)
+- Là một Người dùng, 
+- Tôi muốn đăng nhập an toàn vào hệ thống và duy trì phiên làm việc trong một khoảng thời gian hợp lý, 
+- Để không phải nhập lại mật khẩu liên tục gây gián đoạn công việc.
+### Acceptance Criteria ( #AC)
 #### AC 1 - Authentication Mechanism (Cơ chế xác thực)
 - **Input:** Người dùng cung cấp thông tin đăng nhập (Email/Username và Password).
 - **Output:** Nếu thông tin chính xác, hệ thống cấp quyền truy cập phiên làm việc.
@@ -32,7 +34,7 @@ Là một Người dùng, Tôi muốn đăng nhập an toàn vào hệ thống v
 ## 2.2. Feature: Access Control & Authorization (Kiểm soát Truy cập & Phân quyền)
 ### User Story 1.3
 Là một Quản trị viên Workspace, Tôi muốn phân quyền cụ thể cho từng thành viên theo vai trò, Để đảm bảo mỗi người chỉ truy cập được những dữ liệu cần thiết cho công việc (Nguyên tắc đặc quyền tối thiểu).
-### Acceptance Criteria (#AC)
+### Acceptance Criteria ( #AC)
 #### AC 1 - Hierarchical Roles (Vai trò phân cấp)
 - Hệ thống hỗ trợ các vai trò tiêu chuẩn sau:
  - **Workspace Owner:** Toàn quyền quản lý tổ chức, thanh toán và dữ liệu.
