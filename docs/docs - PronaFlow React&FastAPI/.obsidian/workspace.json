@@ -88,8 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 420.5,
-    "collapsed": true
+    "width": 420.5
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -210,6 +209,9 @@
   },
   "active": "4f0d28251c170847",
   "lastOpenFiles": [
+    "02-Architeture/files.txt",
+    "02-Architeture/exportFiles.ipynb",
+    "02-Architeture/Entities/files.txt",
     "03-UI-UX-Design/Project-Presen.md",
     "02-Architeture/Entity-Relationship-Diagram.md",
     "02-Architeture/ERD.mmd",
@@ -239,15 +241,12 @@
     "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
     "02-Architeture/Entities/AccessReview.md",
     "02-Architeture/Entities/TaskTagMap.md",
-    "02-Architeture/Entities/Tag.md",
     "02-Architeture/Entity Relationship Diagram - Details",
     "02-Architeture/Entities",
     "01-Requirements/Functional-Modules/22766310",
     "01-Requirements/Functional-Modules/09B46310",
     "01-Requirements/Functional-Modules/ECE16310",
     "01-Requirements/Functional-Modules/~$Quotas Adjustment.xlsx",
-    "01-Requirements/Functional-Modules/B4354100",
-    "01-Requirements/Functional-Modules/2BA44100",
     "01-Requirements/Sơ đồ tổ chức Modules.canvas",
     "Logic SLA.drawio 1.png",
     "Chưa đặt tên.canvas"
