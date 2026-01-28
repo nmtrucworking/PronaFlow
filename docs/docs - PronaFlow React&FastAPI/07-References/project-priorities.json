@@ -1,38 +1,46 @@
 [
   {
     "id": 1,
-    "code": "PRJ_PRIORITY_CRITICAL",
-    "name_en": "Critical",
-    "name_vi": "Khẩn cấp",
-    "description": "Dự án ảnh hưởng trực tiếp đến sự sống còn của doanh nghiệp hoặc block các dự án khác. Cần nguồn lực ngay lập tức.",
-    "color_hex": "#DC2626",
-    "icon": "alert-triangle"
+    "code": "LOW",
+    "name_en": "Low",
+    "name_vi": "Thấp",
+    "description_en": "Tasks can be addressed when time permits.",
+    "description_vi": "Có thể thực hiện khi có thời gian, không gấp.",
+    "color": "#94a3b8",
+    "urgency_level": 1,
+    "order": 1
   },
   {
     "id": 2,
-    "code": "PRJ_PRIORITY_HIGH",
-    "name_en": "High",
-    "name_vi": "Cao",
-    "description": "Dự án quan trọng, đóng góp lớn vào mục tiêu chiến lược. Cần được ưu tiên thực hiện sau mức Khẩn cấp.",
-    "color_hex": "#EA580C",
-    "icon": "arrow-up-circle"
+    "code": "MEDIUM",
+    "name_en": "Medium",
+    "name_vi": "Trung bình",
+    "description_en": "Standard priority, should be addressed in normal workflow.",
+    "description_vi": "Ưu tiên tiêu chuẩn, cần thực hiện theo luồng công việc bình thường.",
+    "color": "#3b82f6",
+    "urgency_level": 2,
+    "order": 2
   },
   {
     "id": 3,
-    "code": "PRJ_PRIORITY_MEDIUM",
-    "name_en": "Medium",
-    "name_vi": "Trung bình",
-    "description": "Dự án cần thiết, thực hiện theo kế hoạch định kỳ. Mức độ ưu tiên mặc định cho hầu hết các dự án.",
-    "color_hex": "#2563EB",
-    "icon": "minus-circle"
+    "code": "HIGH",
+    "name_en": "High",
+    "name_vi": "Cao",
+    "description_en": "Important tasks that impact project timelines.",
+    "description_vi": "Quan trọng, ảnh hưởng đến tiến độ dự án.",
+    "color": "#f97316",
+    "urgency_level": 3,
+    "order": 3
   },
   {
     "id": 4,
-    "code": "PRJ_PRIORITY_LOW",
-    "name_en": "Low",
-    "name_vi": "Thấp",
-    "description": "Dự án nội bộ, cải tiến nhỏ hoặc 'có thì tốt' (nice-to-have). Có thể thực hiện khi dư thừa nguồn lực.",
-    "color_hex": "#16A34A",
-    "icon": "arrow-down-circle"
+    "code": "CRITICAL",
+    "name_en": "Critical",
+    "name_vi": "Khẩn cấp",
+    "description_en": "Must be addressed immediately to prevent project failure.",
+    "description_vi": "Phải xử lý ngay lập tức để tránh rủi ro cho dự án.",
+    "color": "#dc2626",
+    "urgency_level": 4,
+    "order": 4
   }
 ]

@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "544f0bd5d0705ec7",
+        "id": "fde88c66ee6c159a",
         "type": "tabs",
         "children": [
           {
-            "id": "f07c9f5b5c3fbad4",
+            "id": "ad0b8e7e483c284f",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -193,7 +193,7 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "f07c9f5b5c3fbad4",
+  "active": "6a30ca8d9f254414",
   "lastOpenFiles": [
     "07-References/user_status.json",
     "07-References/test-case-standard.xlsx",

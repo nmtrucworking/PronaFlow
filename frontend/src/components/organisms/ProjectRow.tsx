@@ -42,7 +42,7 @@ export const ProjectRow = ({ project }: { project: ProjectEntity }) => {
       <div className="w-32 px-4 flex-shrink-0 text-right text-xs text-slate-500">
         <div className="flex items-center justify-end gap-1">
             <Calendar className="w-3.5 h-3.5 text-slate-400" />
-            {new Date(project.dueDate).toLocaleDateString('vi-VN')}
+            {new Date(project.end_date).toLocaleDateString('vi-VN')}
         </div>
       </div>
 

@@ -3,9 +3,11 @@ import { Zap, Layers } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import type { ProjectEntity } from '../../types/project';
 import { StatusBadge } from '../ui/StatusBadge';
+
 import { PriorityBadge } from '../ui/PriorityBadge';
 import { ProgressBar } from '../ui/ProgressBar';
 import { AvatarStack } from '../molecules/AvatarStack';
+
 import { ProjectActionsMenu } from '../molecules/ProjectActionsMenu';
 
 export const ProjectCard = ({ project }: { project: ProjectEntity }) => {
@@ -41,7 +43,7 @@ export const ProjectCard = ({ project }: { project: ProjectEntity }) => {
         <div className="flex items-center gap-2 mb-4">
             <PriorityBadge priority={project.priority} />
             <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">{project.category}</span>
+            {/* <span className="text-xs text-slate-500">{project.category}</span> */}
         </div>
 
         <ProgressBar progress={project.progress} className="mb-4" />
