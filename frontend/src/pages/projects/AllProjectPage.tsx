@@ -6,13 +6,17 @@ import { cn } from '../../lib/utils';
 import type { ProjectEntity, ProjectStatus } from '../../types/project';
 import { FilterSortPopover } from '../../components/molecules/FilterSortPopover';
 import { CreateMenuPopover } from '../../components/molecules/CreateMenuPopover';
-import { ProjectCard } from '../../components/organisms/ProjectCard';
-import { ProjectRow } from '../../components/organisms/ProjectRow';
+import { ProjectCard } from '../../features/projects/components/ProjectCard';
+import { ProjectRow } from '../../features/projects/components/ProjectRow';
+
+
+// Mock data
+import { MOCK_PROJECTS } from '../../mocks/projects'
 
 type SortOption = 'NAME_ASC' | 'PRIORITY_DESC';
 
 // Mock dữ liệu ban đầu
-const INITIAL_PROJECTS: ProjectEntity[] = [];
+const INITIAL_PROJECTS: ProjectEntity[] = MOCK_PROJECTS;
 
 export default function AllProjectsPage() {
   // 1. Quản lý State
