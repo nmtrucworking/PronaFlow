@@ -15,7 +15,7 @@ import Inbox from './pages/inbox';
 import Setting_1 from './pages/Settings';
 import HelperCenter from './pages/Helper/index';
 import MyCalendar from './pages/Calendar';
-import Gantt from './pages/Workpsace/GanttChart';
+import Gantt from './pages/Workpsace/GanttChartEnhanced';
 
 import WorkspaceSetting from './features/workspace/components/Setting_workspace';
 import WorkspaceMember from './pages/Workpsace/Member';

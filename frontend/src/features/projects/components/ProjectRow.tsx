@@ -7,9 +7,18 @@ import { ProgressBar } from '../../../components/ui/ProgressBar';
 import { AvatarStack } from '../../../components/molecules/AvatarStack';
 import { ProjectActionsMenu } from './ProjectActionsMenu';
 
-export const ProjectRow = ({ project }: { project: Project }) => {
+interface ProjectRowProps {
+  project: Project;
+  onProjectClick?: (project: Project) => void;
+}
+
+export function ProjectRow({ project, onProjectClick }: ProjectRowProps) {
+  const handleClick = () => {
+    onProjectClick?.(project);
+  };
+
   return (
-    <div className="group flex items-center p-4 bg-white border-b border-slate-100 hover:bg-slate-50 transition-colors">
+    <div onClick={handleClick} className="group flex items-center p-4 bg-white border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
       <div className="w-10 mr-4 flex-shrink-0 text-center">
         <div className={cn(
             "w-8 h-8 rounded-lg flex items-center justify-center mx-auto transition-transform group-hover:scale-110",
@@ -21,10 +30,10 @@ export const ProjectRow = ({ project }: { project: Project }) => {
       
       <div className="flex-1 min-w-[200px] pr-4">
         <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-[10px] font-mono text-slate-400 border border-slate-200 px-1 rounded">{project.key}</span>
-            <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-700 truncate">{project.name}</h4>
+            <span className="text-micro font-mono text-slate-400 border border-slate-200 px-1 rounded">{project.key}</span>
+            <h4 className="text-subheading text-slate-900 group-hover:text-indigo-700 truncate">{project.name}</h4>
         </div>
-        <div className="text-xs text-slate-500">QL: {project.manager.name}</div>
+        <div className="text-caption text-slate-500">QL: {project.manager.name}</div>
       </div>
 
       <div className="w-32 px-4 flex-shrink-0">

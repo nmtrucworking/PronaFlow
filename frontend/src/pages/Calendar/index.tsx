@@ -208,7 +208,7 @@ const CalendarGanttPage: React.FC = () => {
                 headerHeight={60}
                 rowHeight={50}
                 barCornerRadius={8}
-                fontSize="12px"
+                fontSize="var(--font-size-xs)"
                 onDateChange={(task) => console.log('Update date:', task)}
                 onProgressChange={(task) => console.log('Update progress:', task)}
               />
@@ -221,7 +221,7 @@ const CalendarGanttPage: React.FC = () => {
       <style>{`
         /* FullCalendar Tailwind Integration */
         .fc { font-family: inherit; }
-        .fc .fc-toolbar-title { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
+        .fc .fc-toolbar-title { font-size: var(--font-size-xl); font-weight: 800; color: #0f172a; }
         .dark .fc .fc-toolbar-title { color: #f8fafc; }
         .fc .fc-button-primary { background: #3b82f6; border: none; font-weight: 600; text-transform: capitalize; border-radius: 8px; }
         .fc .fc-button-primary:hover { background: #2563eb; }

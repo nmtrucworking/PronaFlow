@@ -107,9 +107,6 @@ function useClickOutside(ref: React.RefObject<HTMLElement>, handler: () => void)
     }, [ref, handler]);
 }
 
-// --- 3. CONSTANTS & MOCK DATA (Defined at the top to avoid ReferenceErrors) ---
-
-
 
 
 // --- 4. BASE UI COMPONENTS ---
@@ -241,7 +238,7 @@ function TaskActionsMenu() {
 
 function ProjectStatusPopover({ currentStatus }: { currentStatus: ProjectStatus }) {
     const [isOpen, setIsOpen] = useState(false);
-    const statuses: ProjectStatus[] = ['DRAFT', 'PLANNING', 'EXECUTION', 'MONITORING', 'COMPLETED', 'ON_HOLD'];
+    const statuses: ProjectStatus[] = ['ON_HOLD', 'NOT_STARTED', 'IN_PROGRESS', 'IN_REVIEW', 'DONE'];
     return (
         <Popover
             isOpen={isOpen} setIsOpen={setIsOpen} align="start" width="w-56"
@@ -634,11 +631,48 @@ function ProjectSettings({ project }: { project: Project }) {
 
 // --- 7. MAIN APP ENTRY POINT ---
 
-export default function App() {
-    const [currentProject, setCurrentProject] = useState<Project>(MOCK_AGILE_PROJECT);
-    const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'GANTT' | 'LIST' | 'NOTES' | 'DOCS' | 'SETTINGS'>('OVERVIEW');
+interface ProjectDetailsProps {
+  project?: Project;
+  onBack?: () => void;
+  hideHeader?: boolean;
+  activeTab?: 'OVERVIEW' | 'GANTT' | 'LIST' | 'NOTES' | 'DOCS' | 'SETTINGS';
+  onTabChange?: (tab: 'OVERVIEW' | 'GANTT' | 'LIST' | 'NOTES' | 'DOCS' | 'SETTINGS') => void;
+}
 
-    const toggleDemoProject = () => setCurrentProject(prev => prev.type === 'AGILE' ? MOCK_WATERFALL_PROJECT : MOCK_AGILE_PROJECT);
+export default function ProjectDetails({ 
+  project: initialProject, 
+  onBack, 
+  hideHeader, 
+  activeTab: externalActiveTab, 
+  onTabChange 
+}: ProjectDetailsProps) {
+    const [currentProject, setCurrentProject] = useState<Project>(initialProject || MOCK_PROJECTS[0]);
+    const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'GANTT' | 'LIST' | 'NOTES' | 'DOCS' | 'SETTINGS'>(externalActiveTab || 'OVERVIEW');
+
+    // Update currentProject when initialProject changes
+    useEffect(() => {
+        if (initialProject) {
+            setCurrentProject(initialProject);
+        }
+    }, [initialProject]);
+
+    // Sync activeTab with external prop
+    useEffect(() => {
+        if (externalActiveTab) {
+            setActiveTab(externalActiveTab);
+        }
+    }, [externalActiveTab]);
+
+    const handleTabChange = (tab: 'OVERVIEW' | 'GANTT' | 'LIST' | 'NOTES' | 'DOCS' | 'SETTINGS') => {
+        setActiveTab(tab);
+        onTabChange?.(tab);
+    };
+
+    const toggleDemoProject = () => setCurrentProject(prev => 
+        prev.type === 'AGILE' 
+            ? MOCK_PROJECTS.find(p => p.type === 'WATERFALL') || MOCK_PROJECTS[0]
+            : MOCK_PROJECTS.find(p => p.type === 'AGILE') || MOCK_PROJECTS[0]
+    );
 
     const tabs = useMemo(() => [
         { id: 'OVERVIEW', label: 'Tổng quan', icon: BarChart2 },
@@ -649,81 +683,97 @@ export default function App() {
         { id: 'SETTINGS', label: 'Cấu hình', icon: Settings },
     ], []);
 
+    const handleBackClick = () => {
+        if (onBack) {
+            onBack();
+        } else {
+            // Fallback navigation logic
+            window.history.back();
+        }
+    };
+
     return (
         <div className="h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-hidden">
             <style>{`.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; } .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }`}</style>
 
-            <header className="bg-white border-b border-slate-200 z-30 flex-shrink-0">
-                <div className="px-6 py-2 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                    <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                        <button className="hover:text-indigo-600 flex items-center transition-colors"><ArrowLeft className="w-3 h-3 mr-1" /> Dự án</button>
-                        <ChevronRight className="w-3 h-3 text-slate-300" />
-                        <span className="text-slate-800 font-bold">{currentProject.key}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <button onClick={toggleDemoProject} className="text-[10px] font-bold px-2 py-1 bg-slate-800 text-white rounded hover:bg-slate-700 transition-colors uppercase tracking-widest">Switch Demo</button>
-                        <div className="h-3 w-px bg-slate-200 mx-1"></div>
-                        <div className="flex items-center gap-1 text-[10px] text-slate-400 font-bold uppercase"><History className="w-3 h-3" /> Cập nhật: 2h trước</div>
-                    </div>
-                </div>
-
-                <div className="px-6 pt-6">
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
-                        <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                                <ProjectStatusPopover currentStatus={currentProject.status} />
-                                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">{currentProject.name}</h1>
-                            </div>
-                            <p className="text-slate-500 max-w-3xl text-sm leading-relaxed mb-3">{currentProject.description}</p>
-                            <div className="flex items-center gap-4">
-                                <ProjectPriorityPopover currentPriority={currentProject.priority} />
-                                <div className="h-3 w-px bg-slate-200"></div>
-                                <ProjectTags tags={currentProject.tags} />
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-8 self-start bg-slate-50 p-4 rounded-2xl border border-slate-100 shadow-sm">
-                            <div className="text-right">
-                                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1.5">Project Manager</div>
-                                <div className="flex items-center justify-end gap-2 group cursor-pointer">
-                                    <span className="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">{currentProject.manager.name}</span>
-                                    <img src={currentProject.manager.avatar_url} className="w-8 h-8 rounded-full ring-2 ring-white shadow-sm" />
-                                </div>
-                            </div>
-                            <div className="h-10 w-px bg-slate-200"></div>
-                            <div className="text-right">
-                                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1.5">Thời hạn cuối</div>
-                                <div className="flex items-center justify-end gap-1.5 text-sm font-bold text-slate-800">
-                                    <Calendar className="w-4 h-4 text-indigo-500" />
-                                    {new Date(currentProject.end_date).toLocaleDateString('vi-VN')}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-8 border-b border-slate-200">
-                        {tabs.map(tab => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id as any)}
-                                className={cn(
-                                    "flex items-center gap-2 pb-3 text-sm font-bold transition-all border-b-2 relative",
-                                    activeTab === tab.id ? "border-indigo-600 text-indigo-600" : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
-                                )}
+            {!hideHeader && (
+                <header className="bg-white border-b border-slate-200 z-30 flex-shrink-0">
+                    <div className="px-6 py-2 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+                            <button 
+                                onClick={handleBackClick}
+                                className="hover:text-indigo-600 flex items-center transition-colors"
                             >
-                                <tab.icon className={cn("w-4 h-4", activeTab === tab.id ? "text-indigo-600" : "text-slate-400")} />
-                                {tab.label}
-                                {activeTab === tab.id && <div className="absolute -bottom-[2px] left-0 right-0 h-[2px] bg-indigo-600 animate-in fade-in duration-300"></div>}
+                                <ArrowLeft className="w-3 h-3 mr-1" /> Dự án
                             </button>
-                        ))}
+                            <ChevronRight className="w-3 h-3 text-slate-300" />
+                            <span className="text-slate-800 font-bold">{currentProject.key}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button onClick={toggleDemoProject} className="text-[10px] font-bold px-2 py-1 bg-slate-800 text-white rounded hover:bg-slate-700 transition-colors uppercase tracking-widest">Switch Demo</button>
+                            <div className="h-3 w-px bg-slate-200 mx-1"></div>
+                            <div className="flex items-center gap-1 text-[10px] text-slate-400 font-bold uppercase"><History className="w-3 h-3" /> Cập nhật: 2h trước</div>
+                        </div>
                     </div>
-                </div>
-            </header>
+
+                    <div className="px-6 pt-6">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
+                            <div className="flex-1">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <ProjectStatusPopover currentStatus={currentProject.status} />
+                                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">{currentProject.name}</h1>
+                                </div>
+                                <p className="text-slate-500 max-w-3xl text-sm leading-relaxed mb-3">{currentProject.description}</p>
+                                <div className="flex items-center gap-4">
+                                    <ProjectPriorityPopover currentPriority={currentProject.priority} />
+                                    <div className="h-3 w-px bg-slate-200"></div>
+                                    <ProjectTags tags={currentProject.tags} />
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-8 self-start bg-slate-50 p-4 rounded-2xl border border-slate-100 shadow-sm">
+                                <div className="text-right">
+                                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1.5">Project Manager</div>
+                                    <div className="flex items-center justify-end gap-2 group cursor-pointer">
+                                        <span className="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">{currentProject.manager.name}</span>
+                                        <img src={currentProject.manager.avatar_url} className="w-8 h-8 rounded-full ring-2 ring-white shadow-sm" />
+                                    </div>
+                                </div>
+                                <div className="h-10 w-px bg-slate-200"></div>
+                                <div className="text-right">
+                                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1.5">Thời hạn cuối</div>
+                                    <div className="flex items-center justify-end gap-1.5 text-sm font-bold text-slate-800">
+                                        <Calendar className="w-4 h-4 text-indigo-500" />
+                                        {new Date(currentProject.end_date).toLocaleDateString('vi-VN')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-8 border-b border-slate-200">
+                            {tabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => handleTabChange(tab.id as any)}
+                                    className={cn(
+                                        "flex items-center gap-2 pb-3 text-sm font-bold transition-all border-b-2 relative",
+                                        activeTab === tab.id ? "border-indigo-600 text-indigo-600" : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                                    )}
+                                >
+                                    <tab.icon className={cn("w-4 h-4", activeTab === tab.id ? "text-indigo-600" : "text-slate-400")} />
+                                    {tab.label}
+                                    {activeTab === tab.id && <div className="absolute -bottom-[2px] left-0 right-0 h-[2px] bg-indigo-600 animate-in fade-in duration-300"></div>}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </header>
+            )}
 
             <main className="flex-1 overflow-y-auto bg-white p-8 scroll-smooth custom-scrollbar">
                 <div className="max-w-7xl mx-auto h-full">
                     {activeTab === 'OVERVIEW' && <ProjectOverview project={currentProject} />}
-                    {activeTab === 'GANTT' && <div className="h-full flex flex-col"><GanttChart tasks={MOCK_PROJECT_TASKS} /></div>}
+                    {activeTab === 'GANTT' && <div className="h-full flex flex-col"><GanttChart tasks={MOCK_TASKS} /></div>}
                     {activeTab === 'LIST' && <ProjectTaskList />}
 
                     {activeTab === 'NOTES' && (

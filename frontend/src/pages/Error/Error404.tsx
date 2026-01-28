@@ -118,7 +118,7 @@ const App: React.FC<ErrorPageProps> = ({
 
               {/* Biểu tượng cảnh báo trung tâm */}
               <circle cx="250" cy="200" r="50" fill="url(#grad1)" className="animate-pulse" />
-              <text x="250" y="220" fontFamily="sans-serif" fontSize="60" textAnchor="middle" fill="white" fontWeight="bold">!</text>
+              <text x="250" y="220" fontFamily="sans-serif" fontSize="var(--font-size-6xl)" textAnchor="middle" fill="white" fontWeight="bold">!</text>
 
               {/* Các khối trang trí hỗ trợ */}
               <rect x="380" y="240" width="80" height="80" rx="10" fill="#a7f3d0" opacity="0.5" className="animate-bounce" style={{ animationDuration: '3s' }} />

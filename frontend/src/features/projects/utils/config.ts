@@ -1,12 +1,11 @@
 import type { ProjectStatus, ProjectPriority} from '../../../types/project';
 
 export const PROJECT_STATUS_CONFIG: Record<ProjectStatus, { label: string, color: string }> = {
-    DRAFT: { label: 'Khởi tạo', color: 'bg-slate-500' },
-    PLANNING: { label: 'Lập kế hoạch', color: 'bg-sky-500' },
-    EXECUTION: { label: 'Thực thi', color: 'bg-indigo-500' },
-    MONITORING: { label: 'Kiểm soát', color: 'bg-amber-500' },
-    COMPLETED: { label: 'Hoàn thành', color: 'bg-emerald-500' },
-    ON_HOLD: { label: 'Tạm dừng', color: 'bg-orange-500' }
+    ON_HOLD: { label: 'Tạm dừng', color: 'bg-orange-500' },
+    NOT_STARTED: { label: 'Chưa bắt đầu', color: 'bg-slate-500' },
+    IN_PROGRESS: { label: 'Thực thi', color: 'bg-indigo-500' },
+    IN_REVIEW: { label: 'Kiểm soát', color: 'bg-amber-500' },
+    DONE: { label: 'Hoàn thành', color: 'bg-emerald-500' },
 };
 
 export const PRIORITY_CONFIG: Record<ProjectPriority, { label: string, color: string, bg: string }> = {

@@ -8,7 +8,8 @@ import { FilterSortPopover } from '../../components/molecules/FilterSortPopover'
 import { CreateMenuPopover } from '../../components/molecules/CreateMenuPopover';
 import { ProjectCard } from '../../features/projects/components/ProjectCard';
 import { ProjectRow } from '../../features/projects/components/ProjectRow';
-
+import ProjectDetails from '../../features/projects/components/ProjectDetails';
+import ProjectDetailsSidebar from '../../features/projects/components/ProjectDetailsSidebar';
 
 // Mock data
 import { MOCK_PROJECTS } from '../../mocks/projects'
@@ -25,6 +26,9 @@ export default function AllProjectsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'ALL'>('ALL');
   const [sortOption, setSortOption] = useState<SortOption>('NAME_ASC');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [showFullPage, setShowFullPage] = useState(false);
 
   // 2. Logic Lọc và Sắp xếp (Computed State)
   const filteredProjects = useMemo(() => {
@@ -43,76 +47,127 @@ export default function AllProjectsPage() {
     return result;
   }, [projects, searchQuery, statusFilter, sortOption]);
 
+  const handleProjectClick = (project: Project) => {
+    setSelectedProject(project);
+    setShowSidebar(true);
+    setShowFullPage(false);
+  };
+
+  const handleCloseSidebar = () => {
+    setShowSidebar(false);
+    setSelectedProject(null);
+  };
+
+  const handleFullPage = () => {
+    // Đóng sidebar trước, sau đó mở full page
+    setShowSidebar(false);
+    setTimeout(() => {
+      setShowFullPage(true);
+    }, 150); // Delay nhỏ để có animation mượt
+  };
+
+  const handleBackToList = () => {
+    setShowFullPage(false);
+    setSelectedProject(null);
+  };
+
+  // Nếu đã chọn project và hiển thị full page, hiển thị ProjectDetails
+  if (selectedProject && showFullPage) {
+    return (
+      <div className="h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-hidden">
+        <ProjectDetails project={selectedProject} onBack={handleBackToList} />
+      </div>
+    );
+  }
+
   return (
-    <div className="h-screen flex flex-col bg-slate-50/50 overflow-hidden">
-      {/* HEADER AREA */}
-      <header className="px-6 py-5 bg-white border-b border-slate-200 sticky top-0 z-30">
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900">Tất cả dự án</h1>
-              <p className="text-sm text-slate-500">Quản lý và theo dõi tiến độ dự án tổ chức.</p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input 
-                  type="text" 
-                  placeholder="Tìm dự án..." 
-                  className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm w-64"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              
-              <FilterSortPopover 
-                currentSort={sortOption} 
-                onSortChange={setSortOption}
-                statusFilter={statusFilter}
-                onStatusFilterChange={setStatusFilter}
-              />
-
-              <div className="flex items-center p-1 bg-slate-100 rounded-lg border">
-                <button onClick={() => setViewMode('GRID')} className={cn("p-1.5 rounded-md", viewMode === 'GRID' ? "bg-white shadow text-indigo-600" : "text-slate-500")}><LayoutGrid className="w-4 h-4" /></button>
-                <button onClick={() => setViewMode('LIST')} className={cn("p-1.5 rounded-md", viewMode === 'LIST' ? "bg-white shadow text-indigo-600" : "text-slate-500")}><ListIcon className="w-4 h-4" /></button>
-                <button onClick={() => setViewMode('KANBAN')} className={cn("p-1.5 rounded-md", viewMode === 'KANBAN' ? "bg-white shadow text-indigo-600" : "text-slate-500")}><KanbanIcon className="w-4 h-4" /></button>
-              </div>
-
-              <CreateMenuPopover onOpenCreateModal={() => {}} />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* MAIN CONTENT AREA */}
-      <main className="flex-1 overflow-y-auto p-6">
-        {filteredProjects.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full gap-4">
-            <p className="text-slate-500">Không có dự án nào</p>
-          </div>
-        ) : (
-          <>
-            {viewMode === 'GRID' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in duration-500">
-                {filteredProjects.map(p => <ProjectCard key={p.id} project={p} />)}
-              </div>
-            )}
-
-            {viewMode === 'LIST' && (
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                {filteredProjects.map(p => <ProjectRow key={p.id} project={p} />)}
-              </div>
-            )}
-            
-            {viewMode === 'KANBAN' && (
-              <div className="text-slate-500 text-center py-8">
-                Chế độ Kanban đang được phát triển
-              </div>
-            )}
-          </>
+    <div className="h-screen flex bg-slate-50/50 overflow-hidden">
+      {/* Main Content Area */}
+      <div 
+        className={cn(
+          "flex-1 flex flex-col transition-all duration-300 ease-out",
+          showSidebar && !showFullPage ? "mr-[900px]" : "mr-0"
         )}
-      </main>
+      >
+        {/* HEADER AREA */}
+        <header className="px-6 py-5 bg-white border-b border-slate-200 sticky top-0 z-30">
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-title text-slate-900">Tất cả dự án</h1>
+                <p className="text-body text-slate-500">Quản lý và theo dõi tiến độ dự án tổ chức.</p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <input 
+                    type="text" 
+                    placeholder="Tìm dự án..." 
+                    className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm w-64"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                
+                <FilterSortPopover 
+                  currentSort={sortOption} 
+                  onSortChange={setSortOption}
+                  statusFilter={statusFilter}
+                  onStatusFilterChange={setStatusFilter}
+                />
+
+                <div className="flex items-center p-1 bg-slate-100 rounded-lg border">
+                  <button onClick={() => setViewMode('GRID')} className={cn("p-1.5 rounded-md", viewMode === 'GRID' ? "bg-white shadow text-indigo-600" : "text-slate-500")}><LayoutGrid className="w-4 h-4" /></button>
+                  <button onClick={() => setViewMode('LIST')} className={cn("p-1.5 rounded-md", viewMode === 'LIST' ? "bg-white shadow text-indigo-600" : "text-slate-500")}><ListIcon className="w-4 h-4" /></button>
+                  <button onClick={() => setViewMode('KANBAN')} className={cn("p-1.5 rounded-md", viewMode === 'KANBAN' ? "bg-white shadow text-indigo-600" : "text-slate-500")}><KanbanIcon className="w-4 h-4" /></button>
+                </div>
+
+                <CreateMenuPopover onOpenCreateModal={() => {}} />
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* MAIN CONTENT AREA */}
+        <main className="flex-1 overflow-y-auto p-6">
+          {filteredProjects.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full gap-4">
+              <p className="text-slate-500">Không có dự án nào</p>
+            </div>
+          ) : (
+            <>
+              {viewMode === 'GRID' && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in duration-500">
+                  {filteredProjects.map(p => <ProjectCard key={p.id} project={p} onProjectClick={handleProjectClick} />)}
+                </div>
+              )}
+
+              {viewMode === 'LIST' && (
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                  {filteredProjects.map(p => <ProjectRow key={p.id} project={p} onProjectClick={handleProjectClick} />)}
+                </div>
+              )}
+              
+              {viewMode === 'KANBAN' && (
+                <div className="text-slate-500 text-center py-8">
+                  Chế độ Kanban đang được phát triển
+                </div>
+              )}
+            </>
+          )}
+        </main>
+      </div>
+
+      {/* Project Details Sidebar */}
+      {selectedProject && (
+        <ProjectDetailsSidebar
+          project={selectedProject}
+          isOpen={showSidebar}
+          onClose={handleCloseSidebar}
+          onFullPage={handleFullPage}
+        />
+      )}
     </div>
   );
 }
