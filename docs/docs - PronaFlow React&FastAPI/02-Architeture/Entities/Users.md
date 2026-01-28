@@ -1,10 +1,10 @@
 > Định danh cốt lõi của hệ thống
 
-## Module 1
+# Module 1
 
 | Field             | Type      | Key | Constrant                                                     | Note                                                                             |
 | ----------------- | --------- | --- | ------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| user_id           | UUID      | PK  |                                                               | Định danh duy nhất kiểu UUID                                                     |
+| id                | UUID      | PK  |                                                               | Định danh duy nhất kiểu UUID                                                     |
 | email             | varchar   |     | unique                                                        | Địa chỉ email của người dùng                                                     |
 | username          | varchar   |     | unique                                                        | Tên đăng nhập                                                                    |
 | password_hash     | varchar   |     | nullable (OAuth user)                                         | Chuỗi mật khẩu đã mã hóa. Có thể để trống đối với người dùng đăng nhập qua OAuth |
