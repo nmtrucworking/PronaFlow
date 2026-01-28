@@ -1,51 +1,36 @@
-# Import libs
-from datetime import datetime
-from uuid import uuid4
-from sqlalchemy import DateTime, ForeignKey, Boolean, text
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, declared_attr
-from typing import Optional
+"""
+Summary-func: Cấu hình Declarative Base cho SQLAlchemy với quy tắc đặt tên chuẩn.
+"""
+from typing import Any, Dict
+from sqlalchemy import MetaData
+from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.dialects.postgresql import JSONB
+
+# Namping Convention
+# Reference: https://alembic.sqlalchemy.org/en/latest/naming.html
+naming_convention = {
+    "ix": "ix_%(column_0_label)s",                                          # Index
+    "uq": "uq_%(table_name)s_%(column_0_name)s",                            # Unique Constraint
+    "ck": "ck_%(table_name)s_%(constraint_name)s",                          # Check Constraint
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",    # Foreign Key
+    "pk": "pk_%(table_name)s"                                               # Primary Key
+}
 
 class Base(DeclarativeBase):
     """
-    Base class for all ORM models. 
-    Using SQLAlchemy's DeclarativeBase to define common configurations with Mapped and mapped_column.
+    Custom Declarative Base with naming conventions and table name generation.
     """
-    pass
-
-class AuditMixin:
-    """
-    Mixin class to add auditing fields to ORM models.
-    Includes created_by, created_at, updated_at, is_deleted, and deleted_at fields.
-    """
-    @declared_attr
-    def created_by(cls) -> Mapped[Optional[UUID]]:
-        return mapped_column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=True)
-
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), 
-        server_default=text("TIMEZONE('utc', NOW())")
-    )
-    
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), 
-        server_default=text("TIMEZONE('utc', NOW())"),
-        onupdate=datetime.utcnow
-    )
-
-    is_deleted: Mapped[bool] = mapped_column(Boolean, default=False, server_default=text("false"))
-    deleted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
-
-class MultiTenantMixin:
-    """
-    Mixin class to add multi-tenancy support to ORM models.
-    Includes workspace_id field to associate records with specific workspaces.
-    """
-    @declared_attr
-    def workspace_id(cls) -> Mapped[UUID]:
-        return mapped_column(
-            UUID(as_uuid=True), 
-            ForeignKey("workspaces.id"), 
-            nullable=False,
-            index=True
-        )
+    metadata = MetaData(naming_convention=naming_convention)
+    # Type annotation map
+    type_annotation_map = {
+        dict: JSONB,
+        Dict[str, Any]: JSONB,
+    }
+    # Table Name Generation Rule
+    @declared_attr.directive
+    def __tablename__(cls) -> str:
+        # Step 1: add underscore before capital letters (without first letter)
+        name = re.sub(r'(?<!^)(?=[A-Z])', '_', cls.__name__)
+        # Step 2: convert to lowercase and add 's' for plural
+        return name.lower() + 's'
