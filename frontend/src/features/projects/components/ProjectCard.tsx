@@ -1,14 +1,14 @@
 import React from 'react';
 import { Zap, Layers } from 'lucide-react';
-import { cn } from '../../lib/utils';
-import type { ProjectEntity } from '../../types/project';
-import { StatusBadge } from '../ui/StatusBadge';
+import { cn } from '../../../lib/utils';
+import type { ProjectEntity } from '../../../types/project';
 
-import { PriorityBadge } from '../ui/PriorityBadge';
-import { ProgressBar } from '../ui/ProgressBar';
-import { AvatarStack } from '../molecules/AvatarStack';
+import { PriorityBadge } from '../../../components/ui/PriorityBadge';
+import { StatusBadge } from '../../../components/ui/StatusBadge';
+import { ProgressBar } from '../../../components/ui/ProgressBar';
+import { AvatarStack } from '../../../components/molecules/AvatarStack';
 
-import { ProjectActionsMenu } from '../molecules/ProjectActionsMenu';
+import { ProjectActionsMenu } from './ProjectActionsMenu';
 
 export const ProjectCard = ({ project }: { project: ProjectEntity }) => {
   return (
