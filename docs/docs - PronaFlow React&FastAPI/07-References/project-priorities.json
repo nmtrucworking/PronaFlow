@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "code": "PRJ_PRIORITY_CRITICAL",
+    "name_en": "Critical",
+    "name_vi": "Khẩn cấp",
+    "description": "Dự án ảnh hưởng trực tiếp đến sự sống còn của doanh nghiệp hoặc block các dự án khác. Cần nguồn lực ngay lập tức.",
+    "color_hex": "#DC2626",
+    "icon": "alert-triangle"
+  },
+  {
+    "id": 2,
+    "code": "PRJ_PRIORITY_HIGH",
+    "name_en": "High",
+    "name_vi": "Cao",
+    "description": "Dự án quan trọng, đóng góp lớn vào mục tiêu chiến lược. Cần được ưu tiên thực hiện sau mức Khẩn cấp.",
+    "color_hex": "#EA580C",
+    "icon": "arrow-up-circle"
+  },
+  {
+    "id": 3,
+    "code": "PRJ_PRIORITY_MEDIUM",
+    "name_en": "Medium",
+    "name_vi": "Trung bình",
+    "description": "Dự án cần thiết, thực hiện theo kế hoạch định kỳ. Mức độ ưu tiên mặc định cho hầu hết các dự án.",
+    "color_hex": "#2563EB",
+    "icon": "minus-circle"
+  },
+  {
+    "id": 4,
+    "code": "PRJ_PRIORITY_LOW",
+    "name_en": "Low",
+    "name_vi": "Thấp",
+    "description": "Dự án nội bộ, cải tiến nhỏ hoặc 'có thì tốt' (nice-to-have). Có thể thực hiện khi dư thừa nguồn lực.",
+    "color_hex": "#16A34A",
+    "icon": "arrow-down-circle"
+  }
+]
