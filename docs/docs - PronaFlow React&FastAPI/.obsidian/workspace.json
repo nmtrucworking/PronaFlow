@@ -4,31 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "64e3ec43c5d08a39",
+        "id": "544f0bd5d0705ec7",
         "type": "tabs",
         "children": [
           {
-            "id": "986ed704a852772b",
+            "id": "f07c9f5b5c3fbad4",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Functional Modules/5 - Temporal Planning and Scheduling.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "5 - Temporal Planning and Scheduling"
+              "title": "Tab mới"
             }
           }
         ]
@@ -88,8 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 305.5
   },
   "right": {
     "id": "65640aa453316ec1",
@@ -208,32 +193,48 @@
       "publish:Xuất bản các thay đổi...": false
     }
   },
-  "active": "986ed704a852772b",
+  "active": "f07c9f5b5c3fbad4",
   "lastOpenFiles": [
-    "Functional Modules/4 - Task Execution and Orchestration.md",
-    "Functional Modules/5 - Temporal Planning and Scheduling.md",
-    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
-    "Functional Modules/1 - Identity and Access Management.md",
-    "System Functional Modules.md",
-    "Functional Modules/3 - Project Lifecycle Management.md",
-    "Application Structure.md",
-    "Functional Modules/10 - Intelligent Decision Support System.md",
-    "Functional Modules/9 - User Experience Personalization.md",
-    "Functional Modules/8 - Data Archiving and Compliance.md",
-    "Functional Modules/6 - Unified Collaboration Hub.md",
-    "Functional Modules/7 - Even-Driven Notification System.md",
-    "Chưa đặt tên.canvas",
-    "Overview.md",
-    "Kiến truc",
+    "Kiến truc/Frontend Core Technology Stack.md",
     "Kiến truc/Desktop - Application Wrapper.md",
     "Kiến truc/Backend - INFERENCE SERVICE.md",
     "Kiến truc/Backend - CORE SERVICE.md",
-    "Backend - 1.md",
-    "Backend -.md",
-    "Kiến truc/Frontend Core Technology Stack.md",
-    "Contents.base",
-    "Functional Modules/0 - Overview.md",
-    "System Architecture Design.canvas",
-    "Functional Modules"
+    "Kiến truc",
+    "Functional Modules/9 - User Experience Personalization.md",
+    "Functional Modules/8 - Data Archiving and Compliance.md",
+    "Functional Modules/7 - Even-Driven Notification System.md",
+    "Functional Modules/6 - Unified Collaboration Hub.md",
+    "Functional Modules/5 - Temporal Planning and Scheduling.md",
+    "Functional Modules/4 - Task Execution and Orchestration.md",
+    "Functional Modules/3 - Project Lifecycle Management.md",
+    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
+    "Functional Modules/10 - Intelligent Decision Support System.md",
+    "Functional Modules/1 - Identity and Access Management.md",
+    "Functional Modules",
+    "Application Structure.md",
+    "07-References/project-visibility.json",
+    "07-References/project-roles.json",
+    "07-References/project-priorities.json",
+    "07-References/project-health.json",
+    "07-References/project-categories.json",
+    "07-References/default-project-templates.json",
+    "01-Requirements/Functional-Modules/Quotas Adjustment.xlsx",
+    "01-Requirements/Functional-Modules/PronaFlow_Project_Roles.xlsx",
+    "01-Requirements/Functional-Modules/9 - User Experience Personalization.md",
+    "01-Requirements/Functional-Modules/12 - Integration Ecosystem.md",
+    "01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md",
+    "01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md",
+    "01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md",
+    "01-Requirements/Functional-Modules/14 - System Administration.md",
+    "01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md",
+    "01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md",
+    "01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md",
+    "01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md",
+    "01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md",
+    "01-Requirements/Sơ đồ tổ chức Modules.canvas",
+    "assets/images/Logic SLA.drawio.png",
+    "02-Architeture/System Architecture Design.canvas",
+    "Logic SLA.drawio 1.png",
+    "Chưa đặt tên.canvas"
   ]
 }
