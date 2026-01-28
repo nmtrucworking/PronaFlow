@@ -195,6 +195,7 @@
   },
   "active": "6a30ca8d9f254414",
   "lastOpenFiles": [
+<<<<<<< HEAD
     "Kiến truc/Frontend Core Technology Stack.md",
     "Kiến truc/Desktop - Application Wrapper.md",
     "Kiến truc/Backend - INFERENCE SERVICE.md",
@@ -211,6 +212,8 @@
     "Functional Modules/10 - Intelligent Decision Support System.md",
     "Functional Modules/1 - Identity and Access Management.md",
     "Functional Modules",
+=======
+>>>>>>> 3aadcd335548ac8d152296853e870d33c2b1122b
     "07-References/user_status.json",
     "07-References/test-case-standard.xlsx",
     "07-References/task-priorities.json",
@@ -223,7 +226,14 @@
     "07-References/metric-definitions.md",
     "07-References/keyboard-shortcuts.json",
     "07-References/iconography-map.md",
+<<<<<<< HEAD
     "07-References/git-convention.md",
+=======
+    "07-References/glossary.json",
+    "07-References/git-convention.md",
+    "07-References/feature-store-registry.yaml",
+    "07-References/email-signatures.html",
+>>>>>>> 3aadcd335548ac8d152296853e870d33c2b1122b
     "07-References/api-endpoints-catalog.md",
     "07-References/00-Overview.md",
     "02-Architeture/Entity Relationship Diagram - Details/Functional Module 4 - Task Execution & Orchestration.md",
@@ -231,6 +241,22 @@
     "02-Architeture/Entity Relationship Diagram - Details/Functional Module 2 - Multi-tenancy Workpspace Governance.md",
     "02-Architeture/Entities/Session.md",
     "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 - Identity and Access Management.md",
+<<<<<<< HEAD
+=======
+    "02-Architeture/Entities/AuditLog.md",
+    "02-Architeture/Entities/Users.md",
+    "02-Architeture/Entities/MFABackupCode.md",
+    "02-Architeture/Entities/AuthProvider.md",
+    "02-Architeture/Entities/Permissions.md",
+    "02-Architeture/Entities/MFAConfig.md",
+    "02-Architeture/Entities/Roles.md",
+    "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
+    "Check list - Docs & Templates.md",
+    "02-Architeture/Entities/RolePermission.md",
+    "02-Architeture/Entities/UserAuth.md",
+    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "07-References/Chưa đặt tên.md",
+>>>>>>> 3aadcd335548ac8d152296853e870d33c2b1122b
     "assets/images/Logic SLA.drawio.png",
     "02-Architeture/System Architecture Design.canvas",
     "01-Requirements/Sơ đồ tổ chức Modules.canvas",

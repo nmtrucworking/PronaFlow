@@ -2,5 +2,6 @@
   "showLineNumber": true,
   "spellcheck": false,
   "alwaysUpdateLinks": true,
-  "attachmentFolderPath": "/"
+  "attachmentFolderPath": "assets/images",
+  "showUnsupportedFiles": true
 }
