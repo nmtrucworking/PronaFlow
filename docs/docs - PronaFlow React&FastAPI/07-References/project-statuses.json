@@ -1,8 +1,8 @@
 [
   {
     "id": 0,
-    "code": "HOLD",
-    "name_en": "Hold",
+    "code": "ON_HOLD",
+    "name_en": "On-Hold",
     "name_vi": "Tạm dừng",
     "description": "The project is currently paused or frozen.",
     "color_hex": ""
