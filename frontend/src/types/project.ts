@@ -1,15 +1,11 @@
 export type ProjectStatus = 'DRAFT' | 'PLANNING' | 'EXECUTION' | 'MONITORING' | 'COMPLETED' | 'ON_HOLD' | 'CANCELLED';
 export type ProjectType = 'WATERFALL' | 'AGILE'; 
 export type ProjectPriority = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+export type FileType = 'PDF' | 'DOC' | 'IMG' | 'XLS' | 'OTHER';
 
-export interface Member {
-  id: string;
-  name: string;
-  avatar_url: string;
-}
+import type { Member } from './member';
 
-
-export interface ProjectEntity {
+export interface Project {
   id: string;
   name: string;
   key: string; // e.g., "PRJ-01"
@@ -24,5 +20,14 @@ export interface ProjectEntity {
   tags: string[];
   thumbnail_url?: string; // Optional cover image
   type: ProjectType;
+}
+
+export interface ProjectFile {
+  id: string;
+  name: string;
+  type: FileType;
+  size: string;
+  uploader: Member;
+  uploadedAt: string;
 }
 

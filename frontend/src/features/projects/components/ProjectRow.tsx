@@ -1,13 +1,13 @@
 import React from 'react';
 import { Calendar, Zap, Layers } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import type { ProjectEntity } from '../../../types/project';
+import type { Project } from '../../../types/project';
 import { StatusBadge } from '../../../components/ui/StatusBadge';
 import { ProgressBar } from '../../../components/ui/ProgressBar';
 import { AvatarStack } from '../../../components/molecules/AvatarStack';
 import { ProjectActionsMenu } from './ProjectActionsMenu';
 
-export const ProjectRow = ({ project }: { project: ProjectEntity }) => {
+export const ProjectRow = ({ project }: { project: Project }) => {
   return (
     <div className="group flex items-center p-4 bg-white border-b border-slate-100 hover:bg-slate-50 transition-colors">
       <div className="w-10 mr-4 flex-shrink-0 text-center">

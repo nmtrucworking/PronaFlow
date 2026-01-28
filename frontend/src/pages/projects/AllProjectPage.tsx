@@ -3,7 +3,7 @@ import { Search, LayoutGrid, List as ListIcon, Kanban as KanbanIcon } from 'luci
 import { cn } from '../../lib/utils';
 
 // Import các thành phần đã phân rã
-import type { ProjectEntity, ProjectStatus } from '../../types/project';
+import type { Project, ProjectStatus } from '../../types/project';
 import { FilterSortPopover } from '../../components/molecules/FilterSortPopover';
 import { CreateMenuPopover } from '../../components/molecules/CreateMenuPopover';
 import { ProjectCard } from '../../features/projects/components/ProjectCard';
@@ -16,11 +16,11 @@ import { MOCK_PROJECTS } from '../../mocks/projects'
 type SortOption = 'NAME_ASC' | 'PRIORITY_DESC';
 
 // Mock dữ liệu ban đầu
-const INITIAL_PROJECTS: ProjectEntity[] = MOCK_PROJECTS;
+const INITIAL_PROJECTS: Project[] = MOCK_PROJECTS;
 
 export default function AllProjectsPage() {
   // 1. Quản lý State
-  const [projects] = useState<ProjectEntity[]>(INITIAL_PROJECTS); 
+  const [projects] = useState<Project[]>(INITIAL_PROJECTS); 
   const [viewMode, setViewMode] = useState<'GRID' | 'LIST' | 'KANBAN'>('GRID');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'ALL'>('ALL');

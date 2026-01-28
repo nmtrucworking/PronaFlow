@@ -1,7 +1,7 @@
 import React from 'react';
 import { Zap, Layers } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import type { ProjectEntity } from '../../../types/project';
+import type { Project } from '../../../types/project';
 
 import { PriorityBadge } from '../../../components/ui/PriorityBadge';
 import { StatusBadge } from '../../../components/ui/StatusBadge';
@@ -10,7 +10,7 @@ import { AvatarStack } from '../../../components/molecules/AvatarStack';
 
 import { ProjectActionsMenu } from './ProjectActionsMenu';
 
-export const ProjectCard = ({ project }: { project: ProjectEntity }) => {
+export const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <div className="group bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden h-full cursor-pointer">
       {/* Visual Stripe: Phân biệt Agile/Waterfall */}
