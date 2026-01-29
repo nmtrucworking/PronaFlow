@@ -20,6 +20,9 @@ import Gantt from './pages/Workpsace/GanttChartEnhanced';
 import WorkspaceSetting from './features/workspace/components/Setting_workspace';
 import WorkspaceMember from './pages/Workpsace/Member';
 
+// Import Workspace Feature Routes
+import { workspaceRoutes } from './features/workspace';
+
 // Import Trash and Archived Pages
 import TrashBin from './pages/Trash';
 import ArchivedStorePage from './pages/Archived';
@@ -62,6 +65,8 @@ const router = createBrowserRouter([
       { path: 'workspace-settings', element: <WorkspaceSetting /> },
       { path: 'members' , element: <WorkspaceMember /> },
       { path: 'archive', element: <ArchivedStorePage /> },
+      // Workspace routes
+      ...workspaceRoutes,
       // Điều hướng mặc định nếu vào /
       { path: 'home', element: <Navigate to="/dashboard" replace /> },
     ],

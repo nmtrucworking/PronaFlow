@@ -84,6 +84,7 @@ class User(Base, TimestampMixin, SoftDeleteMixin):
     # Relationships
     roles: Mapped[List["Role"]] = relationship(secondary=user_roles, back_populates="users")
     owned_workspaces: Mapped[List["Workspace"]] = relationship(back_populates="owner")
+    workspace_memberships: Mapped[List["WorkspaceMember"]] = relationship(back_populates="user")
     
 
 class Role(Base):
