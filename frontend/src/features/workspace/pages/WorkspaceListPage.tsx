@@ -62,18 +62,25 @@ export const WorkspaceListPage: React.FC = () => {
                 New Workspace
               </Button>
             </Dialog.Trigger>
-            <Dialog.Content className="sm:max-w-[600px]">
-              <Dialog.Header>
-                <Dialog.Title>Create New Workspace</Dialog.Title>
-                <Dialog.Description>
-                  Create a new workspace to collaborate with your team
-                </Dialog.Description>
-              </Dialog.Header>
-              <CreateWorkspaceForm
-                onSubmit={handleCreateWorkspace}
-                isLoading={createWorkspaceMutation.isPending}
-              />
-            </Dialog.Content>
+            <Dialog.Portal>
+              <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50" />
+              <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-6 w-full max-w-[600px] z-50">
+                <div className="space-y-4">
+                  <div>
+                    <Dialog.Title className="text-xl font-bold text-slate-900">
+                      Create New Workspace
+                    </Dialog.Title>
+                    <Dialog.Description className="text-sm text-slate-600 mt-1">
+                      Create a new workspace to collaborate with your team
+                    </Dialog.Description>
+                  </div>
+                  <CreateWorkspaceForm
+                    onSubmit={handleCreateWorkspace}
+                    isLoading={createWorkspaceMutation.isPending}
+                  />
+                </div>
+              </Dialog.Content>
+            </Dialog.Portal>
           </Dialog.Root>
         </div>
 
@@ -105,7 +112,7 @@ export const WorkspaceListPage: React.FC = () => {
             {workspacesData.total > 10 && (
               <div className="flex justify-center gap-2 mt-8">
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   disabled={page === 0}
                   onClick={() => setPage(Math.max(0, page - 1))}
                 >
@@ -115,7 +122,7 @@ export const WorkspaceListPage: React.FC = () => {
                   Page {page + 1} of {Math.ceil(workspacesData.total / 10)}
                 </span>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   disabled={page >= Math.ceil(workspacesData.total / 10) - 1}
                   onClick={() => setPage(page + 1)}
                 >

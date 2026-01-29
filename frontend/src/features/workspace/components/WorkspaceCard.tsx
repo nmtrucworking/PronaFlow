@@ -11,8 +11,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+} from '@/components/ui/Card';
+import { Button } from '@/components/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -11,7 +11,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/Card';
 import { Button } from '@/components/ui/button';
 import { Mail, Trash2, Copy, Clock } from 'lucide-react';
 import { toast } from 'sonner';
@@ -64,7 +64,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           {!isExpired && (
             <>
               <Button
-                variant="outline"
+                variant="secondary" // Changed from "outline" to "secondary"
                 size="sm"
                 onClick={handleCopyEmail}
                 title="Copy email"
@@ -72,7 +72,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
                 <Copy className="w-4 h-4" />
               </Button>
               <Button
-                variant="outline"
+                variant="secondary" // Changed from "outline" to "secondary"
                 size="sm"
                 onClick={() => onResend?.(invitation.id)}
               >

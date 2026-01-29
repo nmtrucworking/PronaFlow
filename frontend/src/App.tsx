@@ -1,35 +1,33 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import { MainLayout } from './components/layout/MainLayout';
+import { PublicLayout } from './components/layout/PublicLayout';
+import { HelpLayout } from './components/layout/HelpLayout';
 
 // Import Auth Pages
-import Login from './pages/Auth/Login';
-import Register from './pages/Auth/Register';
-
+import { LoginPage, RegisterPage } from './features/auth';
 
 // Import pages
-import LandingPage from './pages/landing-page';
-import MyWorkPage from './pages/Dashboard/Dashboard';
-import AllProjectsPage from './pages/projects/AllProjectPage';
-import MyTask from './pages/Tasks';
-import Inbox from './pages/inbox';
-import Setting_1 from './pages/Settings';
-import HelperCenter from './pages/Helper/index';
-import MyCalendar from './pages/Calendar';
-import Gantt from './pages/Workpsace/GanttChartEnhanced';
+import { LandingPage } from './features/landing';
+import { DashboardPage } from './features/dashboard';
+import { AllProjectsPage } from './features/projects';
+import { TasksPage } from './features/tasks';
+import { InboxPage } from './features/inbox';
+import { SettingsPage } from './features/settings';
+import { HelperCenterPage, ApiPage, ChangelogPage, ContactSupportPage, LegalPage, PrivacyPage, StatusPage, TermsPage } from './features/helper';
+import { CalendarPage } from './features/calendar';
+import { GanttChartPage, WorkspaceMemberPage } from './features/workspace/pages';
 
 import WorkspaceSetting from './features/workspace/components/Setting_workspace';
-import WorkspaceMember from './pages/Workpsace/Member';
 
 // Import Workspace Feature Routes
 import { workspaceRoutes } from './features/workspace';
 
 // Import Trash and Archived Pages
-import TrashBin from './pages/Trash';
-import ArchivedStorePage from './pages/Archived';
+import { TrashPage } from './features/trash';
+import { ArchivedPage } from './features/archived';
 
 // Import Error Pages
-import Error404 from './pages/Error/Error404';
-import Error500 from './pages/Error/Error500';
+import { Error404Page, Error500Page } from './features/error';
 
 /*
  * Configure routing for the application using React Router v6.
@@ -38,33 +36,32 @@ import Error500 from './pages/Error/Error500';
 const router = createBrowserRouter([
   { path: '/',
     element: <LandingPage />,
-    errorElement: <Error500 />,
+    errorElement: <Error500Page />,
   },
   {
     path: '/login',
-    element: <Login />
+    element: <LoginPage />
   },
   {
     path: '/register',
-    element: <Register />
+    element: <RegisterPage />
   },
   {
     element: <MainLayout />, // Bọc các trang nội bộ trong Layout có Sidebar
-    errorElement: <Error500 />,
+    errorElement: <Error500Page />,
     children: [
-      { path: 'dashboard', element: <MyWorkPage /> },
+      { path: 'dashboard', element: <DashboardPage /> },
       { path: 'projects', element: <AllProjectsPage /> },
-      { path: 'tasks', element: <MyTask /> },
-      { path: 'inbox', element: <Inbox /> },
-      { path: 'settings', element: <Setting_1 /> },
-      { path: 'account-settings', element: <Setting_1 /> },
-      { path: 'help', element: <HelperCenter /> },
-      { path: 'trash', element: <TrashBin /> },
-      { path: 'calendar', element: <MyCalendar /> },
-      { path: 'gantt', element: <Gantt /> },
+      { path: 'tasks', element: <TasksPage /> },
+      { path: 'inbox', element: <InboxPage /> },
+      { path: 'settings', element: <SettingsPage /> },
+      { path: 'account-settings', element: <SettingsPage /> },
+      { path: 'trash', element: <TrashPage /> },
+      { path: 'calendar', element: <CalendarPage /> },
+      { path: 'gantt', element: <GanttChartPage /> },
       { path: 'workspace-settings', element: <WorkspaceSetting /> },
-      { path: 'members' , element: <WorkspaceMember /> },
-      { path: 'archive', element: <ArchivedStorePage /> },
+      { path: 'members' , element: <WorkspaceMemberPage /> },
+      { path: 'archive', element: <ArchivedPage /> },
       // Workspace routes
       ...workspaceRoutes,
       // Điều hướng mặc định nếu vào /
@@ -72,8 +69,21 @@ const router = createBrowserRouter([
     ],
   },
   {
+    element: <HelpLayout />,
+    children: [
+      { path: '/help', element: <HelperCenterPage /> },
+      { path: '/help/api', element: <ApiPage /> },
+      { path: '/help/changelog', element: <ChangelogPage /> },
+      { path: '/help/contact', element: <ContactSupportPage /> },
+      { path: '/help/legal', element: <LegalPage /> },
+      { path: '/help/privacy', element: <PrivacyPage /> },
+      { path: '/help/status', element: <StatusPage /> },
+      { path: '/help/terms', element: <TermsPage /> },
+    ],
+  },
+  {
     path: '*',
-    element: <Error404 />,
+    element: <Error404Page />,
   }
 ]);
 

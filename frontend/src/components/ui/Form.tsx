@@ -34,6 +34,51 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
 
 FormField.displayName = 'FormField';
 
+interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+}
+
+export const FormItem = forwardRef<HTMLDivElement, FormItemProps>(
+  ({ className = '', children, ...props }, ref) => (
+    <div ref={ref} className={`space-y-2 ${className}`} {...props}>
+      {children}
+    </div>
+  )
+);
+
+FormItem.displayName = 'FormItem';
+
+interface FormControlProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+}
+
+export const FormControl = forwardRef<HTMLDivElement, FormControlProps>(
+  ({ className = '', children, ...props }, ref) => (
+    <div ref={ref} className={`${className}`} {...props}>
+      {children}
+    </div>
+  )
+);
+
+FormControl.displayName = 'FormControl';
+
+interface FormMessageProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  children?: ReactNode;
+}
+
+export const FormMessage = forwardRef<HTMLParagraphElement, FormMessageProps>(
+  ({ className = '', children, ...props }, ref) => {
+    if (!children) return null;
+    return (
+      <p ref={ref} className={`text-sm text-red-600 ${className}`} {...props}>
+        {children}
+      </p>
+    );
+  }
+);
+
+FormMessage.displayName = 'FormMessage';
+
 interface FormLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   children: ReactNode;
 }

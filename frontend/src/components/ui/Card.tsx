@@ -38,6 +38,34 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
 
 CardHeader.displayName = 'CardHeader';
 
+interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  children: ReactNode;
+}
+
+export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
+  ({ className = '', children, ...props }, ref) => (
+    <h3 ref={ref} className={`text-lg font-semibold text-gray-900 ${className}`} {...props}>
+      {children}
+    </h3>
+  )
+);
+
+CardTitle.displayName = 'CardTitle';
+
+interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  children: ReactNode;
+}
+
+export const CardDescription = forwardRef<HTMLParagraphElement, CardDescriptionProps>(
+  ({ className = '', children, ...props }, ref) => (
+    <p ref={ref} className={`text-sm text-gray-600 ${className}`} {...props}>
+      {children}
+    </p>
+  )
+);
+
+CardDescription.displayName = 'CardDescription';
+
 interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }

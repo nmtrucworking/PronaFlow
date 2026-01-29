@@ -15,7 +15,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from '@/components/ui/Form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { CreateWorkspaceDTO, UpdateWorkspaceDTO, CreateInvitationDTO, UpdateSettingsDTO } from '@/types/workspace';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 // ============================================================================
 // Validation Schemas
@@ -79,9 +80,8 @@ export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
-          control={form.control}
           name="name"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<CreateWorkspaceDTO> }) => (
             <FormItem>
               <FormLabel>Workspace Name *</FormLabel>
               <FormControl>
@@ -96,11 +96,9 @@ export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({
             </FormItem>
           )}
         />
-
         <FormField
-          control={form.control}
           name="description"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<CreateWorkspaceDTO> }) => (
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
@@ -148,9 +146,8 @@ export const UpdateWorkspaceForm: React.FC<UpdateWorkspaceFormProps> = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
-          control={form.control}
           name="name"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<UpdateWorkspaceDTO> }) => (
             <FormItem>
               <FormLabel>Workspace Name</FormLabel>
               <FormControl>
@@ -162,9 +159,8 @@ export const UpdateWorkspaceForm: React.FC<UpdateWorkspaceFormProps> = ({
         />
 
         <FormField
-          control={form.control}
           name="description"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<UpdateWorkspaceDTO> }) => (
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
@@ -208,9 +204,8 @@ export const InviteUserForm: React.FC<InviteUserFormProps> = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
-          control={form.control}
           name="email"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<CreateInvitationDTO> }) => (
             <FormItem>
               <FormLabel>Email Address *</FormLabel>
               <FormControl>
@@ -227,9 +222,8 @@ export const InviteUserForm: React.FC<InviteUserFormProps> = ({
         />
 
         <FormField
-          control={form.control}
           name="invited_role"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<CreateInvitationDTO> }) => (
             <FormItem>
               <FormLabel>Role</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -283,9 +277,8 @@ export const WorkspaceSettingsForm: React.FC<WorkspaceSettingsFormProps> = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
-          control={form.control}
           name="timezone"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<UpdateSettingsDTO> }) => (
             <FormItem>
               <FormLabel>Timezone</FormLabel>
               <Select onValueChange={field.onChange} value={field.value || ''}>
@@ -314,9 +307,8 @@ export const WorkspaceSettingsForm: React.FC<WorkspaceSettingsFormProps> = ({
         />
 
         <FormField
-          control={form.control}
           name="work_days"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<UpdateSettingsDTO> }) => (
             <FormItem>
               <FormLabel>Working Days</FormLabel>
               <FormControl>
@@ -333,9 +325,8 @@ export const WorkspaceSettingsForm: React.FC<WorkspaceSettingsFormProps> = ({
         />
 
         <FormField
-          control={form.control}
           name="work_hours"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<UpdateSettingsDTO> }) => (
             <FormItem>
               <FormLabel>Working Hours</FormLabel>
               <FormControl>
@@ -352,9 +343,9 @@ export const WorkspaceSettingsForm: React.FC<WorkspaceSettingsFormProps> = ({
         />
 
         <FormField
-          control={form.control}
+          // control={form.control} // Add this line to pass the control prop
           name="logo_url"
-          render={({ field }) => (
+          render={({ field }: { field: UseFormRegister<UpdateSettingsDTO> }) => (
             <FormItem>
               <FormLabel>Logo URL</FormLabel>
               <FormControl>

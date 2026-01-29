@@ -6,7 +6,7 @@ import {
   LifeBuoy, Search, PlusCircle, Settings,
   User, Sliders, Moon, LogOut, Check, MoreHorizontal
 } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 /** * ĐỊNH NGHĨA TYPES & INTERFACES 
  * Đảm bảo tính minh bạch về kiểu dữ liệu và ngăn chặn lỗi runtime.
@@ -42,14 +42,15 @@ const NAVIGATION_DATA: SectionData[] = [
       { id: 'tasks', label: 'Công việc của tôi', icon: CheckCircle2, badge: 3, badgeType: 'urgent', path: '/tasks' },
       { id: 'calendar', label: 'Lịch cá nhân', icon: Calendar, path: '/calendar' },
       { id: 'inbox', label: 'Hộp thư đến', icon: Inbox, badge: 12, badgeType: 'count', path: '/inbox' },
-      { id: 'settings-over', label: 'Over-Setting', icon: Activity, path: '/workspace-settings' },
+      { id: 'workspaces', label: 'Workspaces', icon: Sliders, path: '/workspaces' },
+      { id: 'settings-over', label: 'Workspace Settings', icon: Activity, path: '/workspace-settings' },
     ]
   },
   {
     id: 'favorites',
     title: 'Yêu thích',
     items: [
-      { id: 'marketing-q1', label: 'Q1 Marketing', icon: Star, statusColor: '#F59E0B', path: '/projects/marketing-q1' }
+      { id: 'marketing-q1', label: 'Q1 Marketing', icon: Star, statusColor: '#F59E0B', path: '/projects' }
     ]
   },
   {
@@ -65,8 +66,8 @@ const NAVIGATION_DATA: SectionData[] = [
     id: 'active-projects',
     title: 'Đang hoạt động',
     items: [
-      { id: 'web-redesign', label: 'Website Redesign', icon: ({ className }) => <StatusDot color="#10B981" className={className} />, path: '/projects/web-redesign' },
-      { id: 'mobile-app', label: 'Mobile App MVP', icon: ({ className }) => <StatusDot color="#F59E0B" className={className} />, path: '/projects/mobile-app' },
+      { id: 'web-redesign', label: 'Website Redesign', icon: ({ className }) => <StatusDot color="#10B981" className={className} />, path: '/projects' },
+      { id: 'mobile-app', label: 'Mobile App MVP', icon: ({ className }) => <StatusDot color="#F59E0B" className={className} />, path: '/projects' },
     ]
   },
   {
@@ -81,7 +82,7 @@ const NAVIGATION_DATA: SectionData[] = [
     id: 'footer',
     title: 'Footer',
     items: [
-      { id: 'notifications', label: 'Thông báo hệ thống', icon: Megaphone, badge: '1', badgeType: 'urgent', path: '/notifications' },
+      { id: 'notifications', label: 'Thông báo hệ thống', icon: Megaphone, badge: '1', badgeType: 'urgent', path: '/inbox' },
       { id: 'help', label: 'Help & Support', icon: LifeBuoy, path: '/help' },
       { id: 'account-settings', label: 'Account Settings', icon: User, path: '/account-settings' },
     ]
@@ -276,18 +277,24 @@ export default function App({
         {/* 4. Footer Section */}
         <footer className="mt-auto border-t border-slate-200 p-3 bg-slate-50/80 space-y-1">
           {/* Thông báo hệ thống */}
-          <button className="w-full flex items-center gap-3 p-2 bg-green-50 border border-green-200 rounded-lg text-green-700 hover:bg-green-100 transition-colors group relative overflow-hidden">
+          <NavLink
+            to="/inbox"
+            className="w-full flex items-center gap-3 p-2 bg-green-50 border border-green-200 rounded-lg text-green-700 hover:bg-green-100 transition-colors group relative overflow-hidden"
+          >
             <Megaphone className="w-4 h-4 flex-shrink-0" />
             {!isCollapsed && <span className="text-[13px] font-medium whitespace-nowrap truncate">Maintenance at 22:00</span>}
             {isCollapsed && <Tooltip text="Maintenance: 22:00" />}
-          </button>
+          </NavLink>
 
           {/* Trợ giúp */}
-          <button className="w-full flex items-center gap-3 p-2 rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-900 transition-all group relative">
+          <NavLink
+            to="/help"
+            className="w-full flex items-center gap-3 p-2 rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-900 transition-all group relative"
+          >
             <LifeBuoy className="w-5 h-5 flex-shrink-0" />
             {!isCollapsed && <span className="text-[14px] font-medium whitespace-nowrap">Help & Support</span>}
             {isCollapsed && <Tooltip text="Help & Support" />}
-          </button>
+          </NavLink>
 
           {/* Thông tin người dùng */}
           <div
@@ -426,22 +433,38 @@ function WorkspacePopover({ onClose }: { onClose: () => void }) {
   return (
     <div className="absolute top-16 left-3 right-3 bg-white border border-slate-200 rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] p-1 z-50 animate-in fade-in zoom-in-95 duration-100">
       <div className="px-3 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Switch Workspace</div>
-      <button className="w-full flex items-center gap-3 p-2 bg-blue-50/50 text-blue-700 rounded-lg cursor-pointer border border-blue-100/50">
+      <Link
+        to="/workspaces"
+        onClick={onClose}
+        className="w-full flex items-center gap-3 p-2 bg-blue-50/50 text-blue-700 rounded-lg cursor-pointer border border-blue-100/50"
+      >
         <div className="w-6 h-6 bg-blue-600 rounded text-white text-[10px] flex items-center justify-center font-bold">P</div>
         <span className="text-sm font-semibold flex-1 text-left">PronaFlow Corp</span>
         <Check className="w-4 h-4" />
-      </button>
-      <button className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-600 transition-colors mt-1">
+      </Link>
+      <Link
+        to="/workspaces"
+        onClick={onClose}
+        className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-600 transition-colors mt-1"
+      >
         <div className="w-6 h-6 bg-slate-400 rounded text-white text-[10px] flex items-center justify-center font-bold">M</div>
         <span className="text-sm font-medium flex-1 text-left">My Freelance</span>
-      </button>
+      </Link>
       <div className="h-px bg-slate-100 my-1.5" />
-      <button className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-700 transition-colors font-medium">
+      <Link
+        to="/workspaces"
+        onClick={onClose}
+        className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-700 transition-colors font-medium"
+      >
         <PlusCircle className="w-4 h-4 text-slate-400" /> Create Workspace
-      </button>
-      <button className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-700 transition-colors font-medium">
+      </Link>
+      <Link
+        to="/workspace-settings"
+        onClick={onClose}
+        className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-700 transition-colors font-medium"
+      >
         <Settings className="w-4 h-4 text-slate-400" /> Workspace Settings
-      </button>
+      </Link>
     </div>
   );
 }
@@ -455,17 +478,25 @@ function UserPopover({ onClose }: { onClose: () => void }) {
       <div className="px-3 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">My Account</div>
       <div className="space-y-0.5">
         {[
-          { icon: User, label: 'Profile & Status' },
-          { icon: Sliders, label: 'Preferences' },
-          { icon: Moon, label: 'Dark Mode' },
+          { icon: User, label: 'Profile & Status', to: '/account-settings' },
+          { icon: Sliders, label: 'Preferences', to: '/settings' },
+          { icon: Moon, label: 'Dark Mode', to: '/settings' },
         ].map((item, idx) => (
-          <button key={idx} className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-700 transition-colors font-medium">
+          <Link
+            key={idx}
+            to={item.to}
+            onClick={onClose}
+            className="w-full flex items-center gap-3 p-2 hover:bg-slate-100 rounded-lg text-sm text-slate-700 transition-colors font-medium"
+          >
             <item.icon className="w-4 h-4 text-slate-400" /> {item.label}
-          </button>
+          </Link>
         ))}
       </div>
       <div className="h-px bg-slate-100 my-1.5" />
-      <button className="w-full flex items-center gap-3 p-2 hover:bg-red-50 rounded-lg text-sm text-red-600 transition-colors font-semibold">
+      <button
+        onClick={onClose}
+        className="w-full flex items-center gap-3 p-2 hover:bg-red-50 rounded-lg text-sm text-red-600 transition-colors font-semibold"
+      >
         <LogOut className="w-4 h-4" /> Log Out
       </button>
     </div>
