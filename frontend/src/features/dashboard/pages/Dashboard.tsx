@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MOCK_TASKS, CURRENT_USER } from '@/mocks/tasks';
+import { MOCK_TASKS, CURRENT_USER } from '@/mocks/task';
 import {
   DashboardHeader,
   DashboardMain,

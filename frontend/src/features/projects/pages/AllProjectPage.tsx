@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type { Project, ProjectStatus } from '@/types/project';
 import { MOCK_PROJECTS } from '@/mocks/projects';
-import { ProjectHeader } from './ProjectHeader';
-import { ProjectList } from './ProjectList';
-import { ProjectLayout } from './ProjectLayout';
-import { ProjectDetailsView } from './ProjectDetailsView';
+import { ProjectHeader } from '../components/ProjectHeader';
+import { ProjectList } from '../components/ProjectList';
+import { ProjectLayout } from '../components/ProjectLayout';
+import { ProjectDetailsView } from '../components/ProjectDetailsView';
 import { useFilteredProjects } from '../hooks/useFilteredProjects';
 import { useProjectSelection } from '../hooks/useProjectSelection';
 import type { ViewMode, SortOption } from '../constants/viewModes';
