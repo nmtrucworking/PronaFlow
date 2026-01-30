@@ -1,0 +1,266 @@
+{
+  "main": {
+    "id": "893960f3be7d0261",
+    "type": "split",
+    "children": [
+      {
+        "id": "fde88c66ee6c159a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ad0b8e7e483c284f",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Tab mới"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a860c44975f3e92a",
+    "type": "split",
+    "children": [
+      {
+        "id": "7a594fd27730c24f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6a30ca8d9f254414",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Trình duyệt tệp"
+            }
+          },
+          {
+            "id": "67d2d80170d6760f",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Tìm kiếm"
+            }
+          },
+          {
+            "id": "d8feaa3519c8e1a2",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 305.5
+  },
+  "right": {
+    "id": "65640aa453316ec1",
+    "type": "split",
+    "children": [
+      {
+        "id": "900ad440beb75836",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dcc7418aab3b5ba2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "System Functional Modules.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for System Functional Modules"
+            }
+          },
+          {
+            "id": "99e34fb13f4add7f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "System Functional Modules.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from System Functional Modules"
+            }
+          },
+          {
+            "id": "96f057f335ed62ac",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "e30499fc11557e05",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f4eb008f047c609b",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "System Functional Modules.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of System Functional Modules"
+            }
+          },
+          {
+            "id": "9eca08b698a13895",
+            "type": "leaf",
+            "state": {
+              "type": "footnotes",
+              "state": {},
+              "icon": "lucide-file-signature",
+              "title": "Footnotes"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Mở bộ chuyển đổi nhanh": false,
+      "graph:Mở xem biểu đồ": false,
+      "canvas:Tạo bảng mới": false,
+      "daily-notes:Mở ghi chú hôm nay": false,
+      "templates:Chèn mẫu": false,
+      "command-palette:Mở khay lệnh": false,
+      "bases:Create new base": false,
+      "markdown-importer:Mở trình chuyển đổi Markdown": false,
+      "random-note:Mở ghi chú ngẫu nhiên": false,
+      "workspaces:Quản lý cấu trúc khung làm việc": false,
+      "publish:Xuất bản các thay đổi...": false
+    }
+  },
+  "active": "6a30ca8d9f254414",
+  "lastOpenFiles": [
+<<<<<<< HEAD
+    "Kiến truc/Frontend Core Technology Stack.md",
+    "Kiến truc/Desktop - Application Wrapper.md",
+    "Kiến truc/Backend - INFERENCE SERVICE.md",
+    "Kiến truc/Backend - CORE SERVICE.md",
+    "Kiến truc",
+    "Functional Modules/6 - Unified Collaboration Hub.md",
+    "Functional Modules/9 - User Experience Personalization.md",
+    "Functional Modules/8 - Data Archiving and Compliance.md",
+    "Functional Modules/7 - Even-Driven Notification System.md",
+    "Functional Modules/5 - Temporal Planning and Scheduling.md",
+    "Functional Modules/4 - Task Execution and Orchestration.md",
+    "Functional Modules/3 - Project Lifecycle Management.md",
+    "Functional Modules/2 - Multi-tenancy Workspace Governance.md",
+    "Functional Modules/10 - Intelligent Decision Support System.md",
+    "Functional Modules/1 - Identity and Access Management.md",
+    "Functional Modules",
+=======
+>>>>>>> 3aadcd335548ac8d152296853e870d33c2b1122b
+    "07-References/user_status.json",
+    "07-References/test-case-standard.xlsx",
+    "07-References/task-priorities.json",
+    "07-References/system-error-codes.md",
+    "07-References/subscription-quotas.yaml",
+    "07-References/security-checklist.md",
+    "07-References/project-statuses.json",
+    "07-References/permission-scopes.yaml",
+    "07-References/notification-templates-library.json",
+    "07-References/metric-definitions.md",
+    "07-References/keyboard-shortcuts.json",
+    "07-References/iconography-map.md",
+<<<<<<< HEAD
+    "07-References/git-convention.md",
+=======
+    "07-References/glossary.json",
+    "07-References/git-convention.md",
+    "07-References/feature-store-registry.yaml",
+    "07-References/email-signatures.html",
+>>>>>>> 3aadcd335548ac8d152296853e870d33c2b1122b
+    "07-References/api-endpoints-catalog.md",
+    "07-References/00-Overview.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 4 - Task Execution & Orchestration.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 3 - Project Lifecycle Management.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 2 - Multi-tenancy Workpspace Governance.md",
+    "02-Architeture/Entities/Session.md",
+    "02-Architeture/Entity Relationship Diagram - Details/Functional Module 1 - Identity and Access Management.md",
+<<<<<<< HEAD
+=======
+    "02-Architeture/Entities/AuditLog.md",
+    "02-Architeture/Entities/Users.md",
+    "02-Architeture/Entities/MFABackupCode.md",
+    "02-Architeture/Entities/AuthProvider.md",
+    "02-Architeture/Entities/Permissions.md",
+    "02-Architeture/Entities/MFAConfig.md",
+    "02-Architeture/Entities/Roles.md",
+    "HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md",
+    "Check list - Docs & Templates.md",
+    "02-Architeture/Entities/RolePermission.md",
+    "02-Architeture/Entities/UserAuth.md",
+    "01-Requirements/Functional-Modules/1 - Identity and Access Management.md",
+    "07-References/Chưa đặt tên.md",
+>>>>>>> 3aadcd335548ac8d152296853e870d33c2b1122b
+    "assets/images/Logic SLA.drawio.png",
+    "02-Architeture/System Architecture Design.canvas",
+    "01-Requirements/Sơ đồ tổ chức Modules.canvas",
+    "Logic SLA.drawio 1.png",
+    "Chưa đặt tên.canvas"
+  ]
+}

@@ -1,6 +1,7 @@
 """
 Summary-func: Cấu hình Declarative Base cho SQLAlchemy với quy tắc đặt tên chuẩn.
 """
+import re
 from typing import Any, Dict
 from sqlalchemy import MetaData
 from sqlalchemy.ext.declarative import declared_attr

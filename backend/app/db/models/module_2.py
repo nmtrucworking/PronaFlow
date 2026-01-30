@@ -1,18 +1,8 @@
-import uuid
-from enum import Enum
-from typing import Optional, List
-from datetime import datetime
-import uuid
- 
+"""
+Entity Models for Functional Module 2 Extensions: Advanced Identity & Access Management.
+Additional IAM models and extensions for security and compliance features.
+Ref: Entities/Session.md, Entities/AuditLog.md
+"""
+# Note: Session and AuditLog are already defined in module_1.py
+# This module is reserved for future extended IAM features
 
-from sqlalchemy import String, Integer, DateTime, ForeignKey, Index, Table, Column
-from sqlalchemy.dialects.postgresql import UUID, JSONB
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.db.base_class import Base
-from app.db.mixins import TimestampMixin, AuditMixin, SoftDeleteMixin
-from app.db.enums import UserStatus, AuthProvider
-
-# ======= Association Tables =======
-
-# ======= Entity Tables =======

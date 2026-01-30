@@ -4,19 +4,19 @@ Prividers core user identity, roles, and permissions management.
 Includes User, Role, Permission models with relationships.
 """
 import uuid
-from enum import Enum
-from typing import Optional, List
+from typing import Optional, List, TYPE_CHECKING
 from datetime import datetime
-import uuid
- 
 
-from sqlalchemy import String, Integer, DateTime, ForeignKey, Index, Table, Column
+from sqlalchemy import String, Integer, DateTime, ForeignKey, Index, Table, Column, Boolean
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base
-from app.db.mixins import TimestampMixin, AuditMixin, SoftDeleteMixin
-from app.db.enums import UserStatus, AuthProvider
+from app.db.mixins import TimestampMixin, SoftDeleteMixin
+from app.db.enums import UserStatus
+
+if TYPE_CHECKING:
+    from app.db.models.workspaces import Workspace, WorkspaceMember
 
 # ======= Association Tables =======
 user_roles = Table(
@@ -196,12 +196,13 @@ class AuditLog(Base, TimestampMixin):
     entity_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
     ip_address: Mapped[Optional[str]] = mapped_column(String(45), nullable=True)
 
-class session(Base, TimestampMixin):
+class Session(Base, TimestampMixin):
     """
-    Login Sessions for Users.
-    Ref: Entities/Sessions.md
+    Session Model - Login Sessions for Users.
+    Ref: Entities/Session.md
     """
     __tablename__ = "sessions"
+    
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), 
         primary_key=True, 
@@ -215,6 +216,9 @@ class session(Base, TimestampMixin):
     device_info: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     ip_address: Mapped[Optional[str]] = mapped_column(String(45), nullable=True)
     geo_location: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    last_active_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+    last_active_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     is_current: Mapped[bool] = mapped_column(default=True)
     revoked_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    
+    # Relationships
+    user: Mapped["User"] = relationship(foreign_keys=[user_id])
