@@ -4,7 +4,7 @@ Ensures all models are registered with SQLAlchemy metadata.
 """
 
 # Module 1: Identity & Access Management (IAM)
-from app.db.models.module_1 import (
+from app.db.models.users import (
     User,
     Role,
     Permission,

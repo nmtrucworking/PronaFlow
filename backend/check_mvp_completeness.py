@@ -9,7 +9,7 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from app.db.base_class import Base
+from app.db.declarative_base import Base
 from app.db.models import *
 
 def main():

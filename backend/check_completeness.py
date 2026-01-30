@@ -18,7 +18,7 @@ for md_file in docs_path.glob("*.md"):
 print(f"Total entities in docs: {len(entities_from_docs)}")
 
 # Get all models from current implementation
-from app.db.base_class import Base
+from app.db.declarative_base import Base
 from app.db import models
 
 # Get model class names

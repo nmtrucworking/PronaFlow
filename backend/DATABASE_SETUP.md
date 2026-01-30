@@ -27,7 +27,7 @@ psql -U postgres
 CREATE DATABASE pronaflow_db;
 
 -- Tạo user
-CREATE USER pronaflow_user WITH PASSWORD 'your_password_here';
+CREATE USER pronaflow_user WITH PASSWORD 'pronaflow@123';
 
 -- Cấp quyền
 GRANT ALL PRIVILEGES ON DATABASE pronaflow_db TO pronaflow_user;
@@ -35,6 +35,31 @@ ALTER DATABASE pronaflow_db OWNER TO pronaflow_user;
 
 -- Thoát
 \q
+```
+
+#### Kết quả khởi chạy
+```bash
+(.venv) PS E:\Workspace\project\pronaflow\backend> psql -U postgres
+Password for user postgres: 
+
+psql (16.11)
+Type "help" for help.
+
+postgres=# CREATE DATABASE pronaflow_db
+postgres-# CREATE USER pronaflow_user WITH PASSWORD 'pronaflow@123'        
+postgres-# GRANT ALL PRIVILEGES ON DATABASE pronaflow_db TO pronaflow_user;
+ERROR:  syntax error at or near "CREATE"
+LINE 2: CREATE USER pronaflow_user WITH PASSWORD 'pronaflow@123'
+        ^
+postgres=# CREATE USER pronaflow_user WITH PASSWORD 'pronaflow@123';       
+CREATE ROLE
+postgres=# GRANT ALL PRIVILEGES ON DATABASE pronaflow_db TO pronaflow_user;
+ERROR:  database "pronaflow_db" does not exist
+postgres=# CREATE DATABASE pronaflow_db;
+CREATE DATABASE
+postgres=# GRANT ALL PRIVILEGES ON DATABASE pronaflow_db TO pronaflow_user;
+GRANT
+postgres=# ALTER DATABASE pronaflow_db OWNER TO pronaflow_user;
 ```
 
 ### 2.2 Cấu hình Environment Variables

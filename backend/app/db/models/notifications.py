@@ -11,11 +11,11 @@ from sqlalchemy import String, DateTime, ForeignKey, Index, Table, Column, Boole
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.db.base_class import Base
+from app.db.declarative_base import Base
 from app.db.mixins import TimestampMixin
 
 if TYPE_CHECKING:
-    from app.db.models.module_1 import User
+    from app.db.models.users import User
 
 
 # ======= Entity Tables =======

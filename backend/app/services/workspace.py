@@ -19,7 +19,7 @@ from app.db.models.workspaces import (
     WorkspaceAccessLog,
     WorkspaceSetting,
 )
-from app.db.models.module_1 import User
+from app.db.models.users import User
 from app.db.enums import WorkspaceRole
 from app.schemas.workspace import (
     WorkspaceCreate,

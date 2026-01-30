@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.core.security import get_current_user
-from app.db.models.module_1 import User
+from app.db.models.users import User
 from app.schemas.workspace import (
     WorkspaceCreate,
     WorkspaceUpdate,

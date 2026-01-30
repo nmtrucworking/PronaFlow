@@ -1,47 +1,49 @@
 """
-Import all models here to ensure they are registered with SQLAlchemy.
-This file is imported by Alembic to discover all models for migrations.
+Central registry for all database models and metadata.
+This module imports all ORM models to ensure they are registered with SQLAlchemy.
+Used by Alembic for automatic migration generation.
 """
 
-from app.db.base_class import Base
+from app.db.declarative_base import Base
 
-# Import all models - ensure they are registered with Base.metadata
-# Module 1: Identity & Access Management (IAM)
-from app.db.models.module_1 import User, Role, Permission, MFAConfig, MFABackupCode, AuthProvider, AuditLog
-
-# Module 2: Multi-tenancy Workspace Governance
-from app.db.models.workspaces import (
+# Import all models - ensures they are registered with Base.metadata for Alembic
+from app.db.models import (
+    # Module 1: Identity & Access Management (IAM)
+    User,
+    Role,
+    Permission,
+    MFAConfig,
+    MFABackupCode,
+    AuthProvider,
+    AuditLog,
+    Session,
+    # Module 2: Multi-tenancy Workspace Governance
     Workspace,
     WorkspaceMember,
     WorkspaceInvitation,
     WorkspaceAccessLog,
     WorkspaceSetting,
+    # Module 3: Project Lifecycle Management
+    Project,
+    # Module 4 & 15: Tag & Categorization System
+    Tag,
 )
-
-# Module 3: Project Lifecycle Management
-from app.db.models.projects import Project
-
-# Module 4 & 15: Tag & Categorization System
-from app.db.models.tags import Tag
 
 __all__ = [
     "Base",
-    # Module 1
     "User",
-    "Role", 
+    "Role",
     "Permission",
     "MFAConfig",
     "MFABackupCode",
     "AuthProvider",
     "AuditLog",
-    # Workspace
+    "Session",
     "Workspace",
     "WorkspaceMember",
     "WorkspaceInvitation",
     "WorkspaceAccessLog",
     "WorkspaceSetting",
-    # Module 3
     "Project",
-    # Module 4 & 15
     "Tag",
 ]

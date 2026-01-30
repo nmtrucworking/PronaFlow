@@ -1,6 +1,6 @@
 """
 Alembic environment configuration for PronaFlow database migrations.
-This script is executed by Alembic when running migrations.
+This script is executed by Alembic when running migrations (upgrade/downgrade).
 """
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config
@@ -13,10 +13,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from app.core.config import settings
-from app.db.base_class import Base
+from app.db.declarative_base import Base
 
 # Import all models to ensure they are registered with Base.metadata
-from app.db import base  # This imports all models
+from app.db.base import (
+    User, Role, Permission, MFAConfig, MFABackupCode, AuthProvider, AuditLog, Session,
+    Workspace, WorkspaceMember, WorkspaceInvitation, WorkspaceAccessLog, WorkspaceSetting,
+    Project, Tag,
+)
 
 # This is the Alembic Config object
 config = context.config

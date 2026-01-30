@@ -11,7 +11,7 @@ from sqlalchemy import String, Integer, DateTime, ForeignKey, Index, Table, Colu
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.db.base_class import Base
+from app.db.declarative_base import Base
 from app.db.mixins import TimestampMixin, SoftDeleteMixin
 from app.db.enums import UserStatus
 

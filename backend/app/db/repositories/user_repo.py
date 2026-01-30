@@ -5,7 +5,7 @@ from typing import Optional, List
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
-from app.db.models.module_1 import User
+from app.db.models.users import User
 from app.db.repositories.base import BaseRepository
 
 
