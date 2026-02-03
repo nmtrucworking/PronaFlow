@@ -1,5 +1,72 @@
 {
+  "name": "pronaflow",
+  "version": "2.0.0",
+  "description": "Intelligent AI-powered project management platform with task execution, scheduling, and collaboration",
+  "private": true,
+  "type": "module",
+  "author": "PronaFlow Team",
+  "license": "PROPRIETARY",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "workspaces": [
+    "apps/backend",
+    "apps/frontend",
+    "apps/electron",
+    "services/ai-serving"
+  ],
+  "scripts": {
+    "install-all": "npm install && npm install --workspace=backend && npm install --workspace=frontend && npm install --workspace=electron",
+    "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:electron": "npm run dev --workspace=electron",
+    "dev:ai": "npm run dev --workspace=ai-serving",
+    "build": "npm run build --workspace=backend && npm run build --workspace=frontend && npm run build --workspace=electron",
+    "build:backend": "npm run build --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "build:electron": "npm run build --workspace=electron",
+    "test": "npm run test --workspace=backend && npm run test --workspace=frontend",
+    "test:backend": "npm run test --workspace=backend",
+    "test:frontend": "npm run test --workspace=frontend",
+    "lint": "npm run lint --workspace=backend && npm run lint --workspace=frontend",
+    "lint:backend": "npm run lint --workspace=backend",
+    "lint:frontend": "npm run lint --workspace=frontend",
+    "format": "npm run format --workspace=backend && npm run format --workspace=frontend",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "setup": "node scripts/setup/setup.js",
+    "setup:dev": "node scripts/setup/setup-dev.js",
+    "setup:prod": "node scripts/setup/setup-prod.js",
+    "deploy:dev": "node scripts/deploy/deploy-dev.js",
+    "deploy:prod": "node scripts/deploy/deploy-prod.js",
+    "clean": "rm -rf node_modules && find . -name 'node_modules' -type d -prune -exec rm -rf {} + && find . -name '.next' -o -name 'dist' -o -name 'build' | xargs rm -rf"
+  },
+  "keywords": [
+    "project-management",
+    "task-execution",
+    "scheduling",
+    "collaboration",
+    "ai-powered",
+    "workspace",
+    "planning"
+  ],
   "dependencies": {
     "date-fns": "^4.1.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "concurrently": "^8.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pronaflow/pronaflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pronaflow/pronaflow/issues"
   }
 }
+

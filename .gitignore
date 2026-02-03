@@ -47,7 +47,64 @@ release/
 
 Không commit file model nặng lên git, dùng Git LFS nếu cần
 
-ai-serving/app/ml_engine/artifacts/.pkl
+ai-serving/app/ml_engine/artifacts/*.pkl
+ai-serving/models/**/*.pkl
+ai-serving/models/**/*.h5
+ai-serving/models/**/*.pth
+
+--- Jupyter Notebooks (AI) ---
+
+services/ai-serving/notebooks/**/.ipynb_checkpoints
+services/ai-serving/**/*.ipynb
+
+--- Build & Distribution ---
+
+dist/
+build/
+*.egg-info/
+.eggs/
+wheel/
+*.whl
+
+--- IDE & Editors ---
+
+*.sublime-project
+*.sublime-workspace
+*.tern-port
+
+--- OS Files ---
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.Spotlight-V100
+.Trashes
+
+--- Temporary Files ---
+
+*.tmp
+*.bak
+~*
+.~*
+
+--- Environment & Secrets ---
+
+.env.production
+.env.staging
+secrets.json
+.secrets.yaml
+
+--- Misc ---
+
+TODO.txt
+TEMP/
+temp/
+.cache/
+cache/
+
 ai-serving/app/ml_engine/artifacts/.h5
 ai-serving/app/ml_engine/artifacts/.onnx
 ai-serving/app/ml_engine/artifacts/.joblib

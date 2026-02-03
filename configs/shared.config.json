@@ -1,0 +1,71 @@
+{
+  "app": {
+    "name": "PronaFlow",
+    "version": "2.0.0",
+    "description": "Intelligent AI-powered project management platform"
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "outputs": ["console", "file"]
+  },
+  "database": {
+    "poolMinSize": 5,
+    "poolMaxSize": 20,
+    "connectionTimeout": 5000,
+    "statementTimeout": 30000,
+    "idleTimeout": 600000
+  },
+  "cache": {
+    "enabled": true,
+    "ttl": 3600,
+    "maxSize": 1000,
+    "strategy": "lru"
+  },
+  "api": {
+    "baseUrl": "http://localhost:8000",
+    "timeout": 30000,
+    "retryAttempts": 3,
+    "retryDelay": 1000
+  },
+  "security": {
+    "passwordMinLength": 8,
+    "passwordRequireSpecialChars": true,
+    "sessionTimeout": 3600000,
+    "enableMFA": true,
+    "allowedOrigins": [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://localhost:8080"
+    ]
+  },
+  "features": {
+    "webhooks": true,
+    "plugins": true,
+    "billing": true,
+    "advancedAnalytics": false,
+    "aiIntegration": true
+  },
+  "storage": {
+    "type": "s3",
+    "maxFileSize": 104857600,
+    "allowedMimeTypes": [
+      "image/*",
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ]
+  },
+  "notifications": {
+    "enabled": true,
+    "channels": ["email", "in_app", "webhook"],
+    "emailBatchSize": 100,
+    "emailBatchInterval": 60
+  },
+  "aiService": {
+    "enabled": true,
+    "url": "http://localhost:8001",
+    "timeout": 60000,
+    "batchSize": 32
+  }
+}

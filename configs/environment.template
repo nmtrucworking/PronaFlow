@@ -1,0 +1,162 @@
+# Environment Variables Template
+
+This file serves as a template for environment configuration. Copy this file to `.env` in each service directory and fill in the actual values.
+
+## General
+
+```env
+# Application Environment
+NODE_ENV=development
+PYTHON_ENV=development
+
+# Application Version
+APP_VERSION=2.0.0
+
+# Application Timezone
+TZ=UTC
+```
+
+## Backend (FastAPI)
+
+```env
+# Backend Server
+BACKEND_HOST=localhost
+BACKEND_PORT=8000
+BACKEND_LOG_LEVEL=INFO
+
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/pronaflow
+DATABASE_POOL_SIZE=20
+DATABASE_POOL_TIMEOUT=30
+
+# Redis Cache
+REDIS_URL=redis://localhost:6379/0
+REDIS_TTL=3600
+
+# JWT Security
+JWT_SECRET_KEY=your-secret-key-change-in-production
+JWT_ALGORITHM=HS256
+JWT_EXPIRATION_HOURS=24
+JWT_REFRESH_EXPIRATION_DAYS=7
+
+# CORS
+CORS_ORIGINS=["http://localhost:5173","http://localhost:3000","http://localhost:8080"]
+
+# Email
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+FROM_EMAIL=noreply@pronaflow.com
+
+# AWS S3 (if using for file storage)
+AWS_ACCESS_KEY_ID=your-access-key
+AWS_SECRET_ACCESS_KEY=your-secret-key
+AWS_S3_BUCKET=pronaflow-uploads
+AWS_REGION=us-east-1
+
+# AI Service
+AI_SERVICE_URL=http://localhost:8001
+AI_SERVICE_API_KEY=your-ai-service-key
+
+# Third-party APIs
+GITHUB_API_TOKEN=your-github-token
+JIRA_API_TOKEN=your-jira-token
+SLACK_BOT_TOKEN=your-slack-token
+```
+
+## Frontend (React)
+
+```env
+# Frontend
+VITE_API_URL=http://localhost:8000/api
+VITE_APP_NAME=PronaFlow
+VITE_APP_VERSION=2.0.0
+VITE_LOG_LEVEL=info
+
+# Authentication
+VITE_JWT_STORAGE_KEY=auth_token
+VITE_SESSION_TIMEOUT_MINUTES=60
+
+# Analytics
+VITE_ANALYTICS_ENABLED=false
+VITE_SENTRY_DSN=
+
+# Feature Flags
+VITE_FEATURE_WEBHOOKS=true
+VITE_FEATURE_PLUGINS=true
+VITE_FEATURE_BILLING=true
+VITE_FEATURE_ADVANCED_ANALYTICS=false
+```
+
+## AI Service
+
+```env
+# AI Service Server
+AI_HOST=localhost
+AI_PORT=8001
+AI_LOG_LEVEL=INFO
+
+# Model Configuration
+MODEL_PATH=/app/models
+MODEL_VERSION=latest
+
+# GPU Support
+USE_GPU=false
+GPU_MEMORY_FRACTION=0.7
+
+# Inference Settings
+BATCH_SIZE=32
+MAX_INFERENCE_TIME=30
+
+# Redis
+REDIS_URL=redis://localhost:6379/1
+CACHE_PREDICTIONS=true
+CACHE_TTL=3600
+```
+
+## Electron (Desktop)
+
+```env
+# Electron
+VITE_API_URL=http://localhost:8000/api
+VITE_APP_VERSION=2.0.0
+VITE_APP_NAME=PronaFlow
+
+# Auto-update
+AUTO_UPDATE_ENABLED=false
+AUTO_UPDATE_URL=https://releases.pronaflow.com
+
+# Logging
+ELECTRON_LOG_LEVEL=info
+```
+
+## Docker & Deployment
+
+```env
+# Docker Registry
+DOCKER_REGISTRY=docker.io
+DOCKER_USERNAME=your-docker-username
+DOCKER_PASSWORD=your-docker-password
+
+# Kubernetes
+K8S_NAMESPACE=pronaflow
+K8S_REPLICAS=3
+
+# SSL/TLS
+SSL_CERT_PATH=/etc/ssl/certs/certificate.crt
+SSL_KEY_PATH=/etc/ssl/private/key.key
+
+# Let's Encrypt (if using)
+LETS_ENCRYPT_EMAIL=admin@pronaflow.com
+LETS_ENCRYPT_DOMAIN=pronaflow.com
+```
+
+## Notes
+
+- Never commit `.env` files or actual secrets to git
+- Use `.env.local` for local development overrides
+- For production, use proper secrets management (HashiCorp Vault, AWS Secrets Manager, etc.)
+- Change all `your-*` values with actual credentials
+- Use strong, random values for all secret keys
+- Rotate credentials regularly

@@ -1,0 +1,177 @@
+# Docker Compose Production Configuration
+
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15-alpine
+    container_name: pronaflow-db-prod
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "${DATABASE_PORT}:5432"
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+      - ./apps/backend/migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pronaflow-network
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  redis:
+    image: redis:7-alpine
+    container_name: pronaflow-cache-prod
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data_prod:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pronaflow-network
+    restart: always
+    command: redis-server --appendonly yes
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  backend:
+    image: ${DOCKER_REGISTRY}/pronaflow-backend:${APP_VERSION}
+    container_name: pronaflow-backend-prod
+    environment:
+      NODE_ENV: production
+      PYTHON_ENV: production
+      DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:5432/${DATABASE_NAME}
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      LOG_LEVEL: WARNING
+    ports:
+      - "${BACKEND_PORT}:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - pronaflow-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  frontend:
+    image: ${DOCKER_REGISTRY}/pronaflow-frontend:${APP_VERSION}
+    container_name: pronaflow-frontend-prod
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_APP_NAME: ${VITE_APP_NAME}
+    ports:
+      - "${FRONTEND_PORT}:80"
+    depends_on:
+      - backend
+    networks:
+      - pronaflow-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  ai-service:
+    image: ${DOCKER_REGISTRY}/pronaflow-ai:${APP_VERSION}
+    container_name: pronaflow-ai-prod
+    environment:
+      PYTHON_ENV: production
+      AI_HOST: 0.0.0.0
+      AI_PORT: 8001
+      REDIS_URL: redis://redis:6379/1
+      LOG_LEVEL: WARNING
+    ports:
+      - "${AI_PORT}:8001"
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ai_models_prod:/app/models
+    networks:
+      - pronaflow-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  nginx:
+    image: nginx:alpine
+    container_name: pronaflow-nginx-prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deployment/infrastructure/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deployment/infrastructure/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./deployment/infrastructure/nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - pronaflow-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+volumes:
+  postgres_data_prod:
+    driver: local
+  redis_data_prod:
+    driver: local
+  ai_models_prod:
+    driver: local
+
+networks:
+  pronaflow-network:
+    driver: bridge
