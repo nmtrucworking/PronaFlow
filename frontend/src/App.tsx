@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import { MainLayout } from './components/layout/MainLayout';
-import { PublicLayout } from './components/layout/PublicLayout';
 import { HelpLayout } from './components/layout/HelpLayout';
 
 // Import Auth Pages
@@ -26,8 +26,26 @@ import { workspaceRoutes } from './features/workspace';
 import { TrashPage } from './features/trash';
 import { ArchivedPage } from './features/archived';
 
+// Import Integration Pages (Module 12)
+import IntegrationsPage from './features/integrations/pages/IntegrationsPage';
+import ApiTokensPage from './features/integrations/pages/ApiTokensPage';
+import WebhooksPage from './features/integrations/pages/WebhooksPage';
+import ConnectedAppsPage from './features/integrations/pages/ConnectedAppsPage';
+import PluginMarketplacePage from './features/integrations/pages/PluginMarketplacePage';
+
+// Import Billing and Analytics Pages
+import { BillingPage } from './features/billing';
+import AnalyticsPage from './features/analytics/pages/AnalyticsPage';
+
+// Import Module 9 Components
+import CommandPalette from './components/CommandPalette';
+import KeyboardShortcutsModal from './components/KeyboardShortcutsModal';
+
 // Import Error Pages
 import { Error404Page, Error500Page } from './features/error';
+
+// Import Agentation
+import { Agentation } from 'agentation';
 
 /*
  * Configure routing for the application using React Router v6.
@@ -62,6 +80,15 @@ const router = createBrowserRouter([
       { path: 'workspace-settings', element: <WorkspaceSetting /> },
       { path: 'members' , element: <WorkspaceMemberPage /> },
       { path: 'archive', element: <ArchivedPage /> },
+      // Integration routes (Module 12)
+      { path: 'integrations', element: <IntegrationsPage /> },
+      { path: 'integrations/api-tokens', element: <ApiTokensPage /> },
+      { path: 'integrations/webhooks', element: <WebhooksPage /> },
+      { path: 'integrations/connected-apps', element: <ConnectedAppsPage /> },
+      { path: 'integrations/plugins', element: <PluginMarketplacePage /> },
+      // Billing and Analytics routes
+      { path: 'billing', element: <BillingPage /> },
+      { path: 'analytics', element: <AnalyticsPage /> },
       // Workspace routes
       ...workspaceRoutes,
       // Điều hướng mặc định nếu vào /
@@ -88,7 +115,45 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Command Palette: Cmd/Ctrl + K
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(true);
+      }
+      // Keyboard Shortcuts: ?
+      if (e.key === '?' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const target = e.target as HTMLElement;
+        // Don't open if user is typing in an input field
+        if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          setIsShortcutsModalOpen(true);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  return (
+    <>
+      <RouterProvider router={router} />
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+      />
+      <KeyboardShortcutsModal
+        isOpen={isShortcutsModalOpen}
+        onClose={() => setIsShortcutsModalOpen(false)}
+      />
+      <Agentation />
+    </>
+  );
 }
 
 export default App;

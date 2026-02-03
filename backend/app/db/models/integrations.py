@@ -7,7 +7,7 @@ import uuid
 from typing import Optional, List, TYPE_CHECKING
 from datetime import datetime
 
-from sqlalchemy import String, DateTime, ForeignKey, Index, Table, Column, Boolean, Text, Integer, Enum as SQLEnum
+from sqlalchemy import String, DateTime, ForeignKey, Index, Table, Column, Boolean, Text, Integer, Enum as SQLEnum, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -89,7 +89,6 @@ class ApiToken(Base, TimestampMixin):
 
     # Relationships
     user: Mapped["User"] = relationship(foreign_keys=[user_id])
-    scopes: Mapped[List["ApiScope"]] = relationship(secondary="api_token_scopes", back_populates="tokens")
 
     # Indexes
     __table_args__ = (
@@ -129,17 +128,44 @@ class ApiScope(Base, TimestampMixin):
         comment="Scope description"
     )
 
-    # Relationships
-    tokens: Mapped[List["ApiToken"]] = relationship(secondary="api_token_scopes", back_populates="scopes")
 
+class ApiTokenScope(Base):
+    """
+    ApiTokenScope Model - Junction table for API tokens and scopes.
+    Maps API tokens to their assigned scopes for permission control.
+    Ref: Module 12 - Feature 2.1 - AC 3
+    """
+    __tablename__ = "api_token_scopes"
 
-# Association table for many-to-many relationship between ApiToken and ApiScope
-api_token_scopes = Table(
-    'api_token_scopes',
-    Base.metadata,
-    Column('token_id', UUID(as_uuid=True), ForeignKey('api_tokens.id'), primary_key=True),
-    Column('scope_id', UUID(as_uuid=True), ForeignKey('api_scopes.id'), primary_key=True),
-)
+    # Primary Key
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        comment="Global unique UUID for token-scope mapping"
+    )
+
+    # Foreign Keys
+    token_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("api_tokens.id", ondelete="CASCADE"),
+        nullable=False,
+        comment="API token reference"
+    )
+
+    scope_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("api_scopes.id", ondelete="CASCADE"),
+        nullable=False,
+        comment="API scope reference"
+    )
+
+    # Indexes and Constraints
+    __table_args__ = (
+        UniqueConstraint('token_id', 'scope_id', name='uq_token_scope'),
+        Index("ix_api_token_scopes_token_id", "token_id"),
+        Index("ix_api_token_scopes_scope_id", "scope_id"),
+    )
 
 
 class WebhookEndpoint(Base, TimestampMixin):
@@ -484,4 +510,498 @@ class IntegrationBinding(Base, TimestampMixin):
         Index('ix_integration_bindings_workspace_id', 'workspace_id'),
         Index('ix_integration_bindings_provider', 'provider'),
         Index('ix_integration_bindings_is_active', 'is_active'),
+    )
+
+
+class ApiUsageLog(Base, TimestampMixin):
+    """
+    ApiUsageLog Model - Tracks API usage for rate limiting and analytics.
+    Records each API request for quota management and monitoring.
+    Ref: Module 12 - Feature 2.1 - Rate Limiting
+    """
+    __tablename__ = "api_usage_logs"
+
+    # Primary Key
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        comment="Global unique UUID for usage log entry"
+    )
+
+    # Foreign Keys
+    api_token_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('api_tokens.id', ondelete='CASCADE'),
+        nullable=False,
+        index=True,
+        comment="API token used for the request"
+    )
+
+    # Request Details
+    method: Mapped[str] = mapped_column(
+        String(10),
+        nullable=False,
+        comment="HTTP method (GET, POST, PATCH, DELETE)"
+    )
+
+    endpoint: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+        comment="API endpoint path"
+    )
+
+    status_code: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+        comment="HTTP response status code"
+    )
+
+    response_time_ms: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+        comment="Response time in milliseconds"
+    )
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_api_usage_logs_api_token_id', 'api_token_id'),
+        Index('ix_api_usage_logs_created_at', 'created_at'),
+    )
+
+
+class OAuthApp(Base, TimestampMixin):
+    """
+    OAuthApp Model - OAuth provider applications.
+    Defines external services that can be integrated via OAuth (GitHub, Google, Slack, etc.).
+    Ref: Module 12 - Feature 3 - OAuth
+    """
+    __tablename__ = "oauth_apps"
+
+    # Primary Key
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        comment="Global unique UUID for OAuth app"
+    )
+
+    # OAuth App Details
+    provider_name: Mapped[str] = mapped_column(
+        String(50),
+        unique=True,
+        nullable=False,
+        index=True,
+        comment="OAuth provider name (github, google_calendar, slack, etc.)"
+    )
+
+    client_id: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+        comment="OAuth client ID"
+    )
+
+    client_secret: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+        comment="OAuth client secret (should be encrypted)"
+    )
+
+    authorize_url: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+        comment="OAuth authorization endpoint URL"
+    )
+
+    token_url: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+        comment="OAuth token endpoint URL"
+    )
+
+    scopes: Mapped[dict] = mapped_column(
+        JSONB,
+        default=dict,
+        nullable=False,
+        comment="OAuth scopes required by PronaFlow"
+    )
+
+    is_enabled: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        nullable=False,
+        index=True,
+        comment="Whether OAuth app is enabled for use"
+    )
+
+    # Relationships
+    connections: Mapped[List["OAuthConnection"]] = relationship(back_populates="oauth_app", cascade="all, delete-orphan")
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_oauth_apps_provider_name', 'provider_name'),
+        Index('ix_oauth_apps_is_enabled', 'is_enabled'),
+    )
+
+
+class OAuthConnection(Base, TimestampMixin):
+    """
+    OAuthConnection Model - User OAuth connections to external services.
+    Stores user's OAuth tokens and connection details.
+    Ref: Module 12 - Feature 3 - AC 2
+    """
+    __tablename__ = "oauth_connections"
+
+    # Primary Key
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        comment="Global unique UUID for OAuth connection"
+    )
+
+    # Foreign Keys
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('users.id', ondelete='CASCADE'),
+        nullable=False,
+        index=True,
+        comment="User who owns the connection"
+    )
+
+    oauth_app_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('oauth_apps.id', ondelete='RESTRICT'),
+        nullable=False,
+        comment="OAuth app being connected"
+    )
+
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('workspaces.id', ondelete='CASCADE'),
+        nullable=False,
+        index=True,
+        comment="Workspace context"
+    )
+
+    # OAuth Tokens
+    access_token: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+        comment="OAuth access token (should be encrypted)"
+    )
+
+    refresh_token: Mapped[Optional[str]] = mapped_column(
+        String(500),
+        nullable=True,
+        comment="OAuth refresh token (should be encrypted)"
+    )
+
+    token_expires_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        comment="Token expiration timestamp"
+    )
+
+    # Connection Status
+    is_active: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        nullable=False,
+        index=True,
+        comment="Whether connection is active"
+    )
+
+    last_verified_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        comment="Last time token was verified as valid"
+    )
+
+    external_user_id: Mapped[Optional[str]] = mapped_column(
+        String(255),
+        nullable=True,
+        comment="External service user ID"
+    )
+
+    # Relationships
+    user: Mapped["User"] = relationship(foreign_keys=[user_id])
+    oauth_app: Mapped["OAuthApp"] = relationship(back_populates="connections", foreign_keys=[oauth_app_id])
+    workspace: Mapped["Workspace"] = relationship(foreign_keys=[workspace_id])
+    bindings: Mapped[List["IntegrationBinding"]] = relationship(back_populates="oauth_connection")
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_oauth_connections_user_id', 'user_id'),
+        Index('ix_oauth_connections_workspace_id', 'workspace_id'),
+        Index('ix_oauth_connections_is_active', 'is_active'),
+    )
+
+
+class Plugin(Base, TimestampMixin):
+    """
+    Plugin Model - Plugin marketplace entries.
+    Defines available plugins that can be installed in workspaces.
+    Ref: Module 12 - Feature 5 - Plugin Marketplace
+    """
+    __tablename__ = "plugins"
+
+    # Primary Key
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        comment="Global unique UUID for plugin"
+    )
+
+    # Plugin Metadata
+    name: Mapped[str] = mapped_column(
+        String(100),
+        unique=True,
+        nullable=False,
+        index=True,
+        comment="Plugin name"
+    )
+
+    version: Mapped[str] = mapped_column(
+        String(20),
+        nullable=False,
+        comment="Current plugin version (semantic versioning)"
+    )
+
+    description: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
+        comment="Plugin description"
+    )
+
+    author: Mapped[Optional[str]] = mapped_column(
+        String(100),
+        nullable=True,
+        comment="Plugin author/developer"
+    )
+
+    # Plugin Details
+    manifest: Mapped[dict] = mapped_column(
+        JSONB,
+        default=dict,
+        nullable=False,
+        comment="Plugin manifest (metadata, hooks, permissions)"
+    )
+
+    repository_url: Mapped[Optional[str]] = mapped_column(
+        String(500),
+        nullable=True,
+        comment="Git repository URL"
+    )
+
+    documentation_url: Mapped[Optional[str]] = mapped_column(
+        String(500),
+        nullable=True,
+        comment="Documentation URL"
+    )
+
+    icon_url: Mapped[Optional[str]] = mapped_column(
+        String(500),
+        nullable=True,
+        comment="Plugin icon URL"
+    )
+
+    # Marketplace Status
+    is_verified: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+        comment="Whether plugin is verified by PronaFlow team"
+    )
+
+    is_enabled: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        nullable=False,
+        index=True,
+        comment="Whether plugin is available in marketplace"
+    )
+
+    # Relationships
+    installations: Mapped[List["PluginInstallation"]] = relationship(back_populates="plugin", cascade="all, delete-orphan")
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_plugins_name', 'name'),
+        Index('ix_plugins_is_enabled', 'is_enabled'),
+    )
+
+
+class PluginInstallation(Base, TimestampMixin):
+    """
+    PluginInstallation Model - Plugin installations per workspace.
+    Tracks which plugins are installed in which workspaces.
+    Ref: Module 12 - Feature 5 - AC 2
+    """
+    __tablename__ = "plugin_installations"
+
+    # Primary Key
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        comment="Global unique UUID for plugin installation"
+    )
+
+    # Foreign Keys
+    plugin_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('plugins.id', ondelete='CASCADE'),
+        nullable=False,
+        comment="Plugin being installed"
+    )
+
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('workspaces.id', ondelete='CASCADE'),
+        nullable=False,
+        index=True,
+        comment="Workspace where plugin is installed"
+    )
+
+    installed_by: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('users.id', ondelete='RESTRICT'),
+        nullable=False,
+        comment="User who installed the plugin"
+    )
+
+    # Installation Status
+    is_active: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        nullable=False,
+        index=True,
+        comment="Whether plugin is active"
+    )
+
+    configuration: Mapped[dict] = mapped_column(
+        JSONB,
+        default=dict,
+        nullable=False,
+        comment="Plugin-specific configuration"
+    )
+
+    # Plugin State
+    last_error: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
+        comment="Last error message if plugin failed"
+    )
+
+    # Relationships
+    plugin: Mapped["Plugin"] = relationship(back_populates="installations", foreign_keys=[plugin_id])
+    workspace: Mapped["Workspace"] = relationship(foreign_keys=[workspace_id])
+    installer: Mapped["User"] = relationship(foreign_keys=[installed_by])
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_plugin_installations_workspace_id', 'workspace_id'),
+        Index('ix_plugin_installations_is_active', 'is_active'),
+    )
+
+
+class ConsentGrant(Base, TimestampMixin):
+    """
+    ConsentGrant Model - User consent records for privacy compliance.
+    Tracks user consent for data usage, integrations, and third-party services.
+    Ref: Module 12 - Feature 6 - Governance & Compliance
+    """
+    __tablename__ = "consent_grants"
+
+    # Primary Key
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        comment="Global unique UUID for consent grant"
+    )
+
+    # Foreign Keys
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('users.id', ondelete='CASCADE'),
+        nullable=False,
+        index=True,
+        comment="User who granted consent"
+    )
+
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey('workspaces.id', ondelete='CASCADE'),
+        nullable=False,
+        index=True,
+        comment="Workspace context"
+    )
+
+    # Consent Details
+    consent_type: Mapped[str] = mapped_column(
+        SQLEnum('DATA_USAGE', 'THIRD_PARTY', 'ANALYTICS', 'MARKETING', name='consent_type'),
+        nullable=False,
+        comment="Type of consent (data_usage, third_party_integration, analytics, marketing)"
+    )
+
+    resource_type: Mapped[Optional[str]] = mapped_column(
+        String(100),
+        nullable=True,
+        comment="Specific resource (e.g., 'slack_integration', 'google_analytics')"
+    )
+
+    resource_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        nullable=True,
+        comment="ID of the specific resource if applicable"
+    )
+
+    description: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
+        comment="Human-readable description of what's being consented to"
+    )
+
+    # Consent Status
+    is_granted: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+        index=True,
+        comment="Whether user granted consent"
+    )
+
+    granted_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        comment="When consent was granted"
+    )
+
+    revoked_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+        comment="When consent was revoked"
+    )
+
+    # Compliance
+    version: Mapped[int] = mapped_column(
+        Integer,
+        default=1,
+        nullable=False,
+        comment="Consent policy version (for tracking changes)"
+    )
+
+    # Relationships
+    user: Mapped["User"] = relationship(foreign_keys=[user_id])
+    workspace: Mapped["Workspace"] = relationship(foreign_keys=[workspace_id])
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_consent_grants_user_id', 'user_id'),
+        Index('ix_consent_grants_workspace_id', 'workspace_id'),
+        Index('ix_consent_grants_consent_type', 'consent_type'),
+        Index('ix_consent_grants_is_granted', 'is_granted'),
     )

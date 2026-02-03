@@ -1,73 +1,115 @@
-# React + TypeScript + Vite
+# PronaFlow Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hệ thống quản lý dự án và quy trình làm việc được xây dựng với React, TypeScript và Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework:** React 18.3.1
+- **Language:** TypeScript 5.5.3
+- **Build Tool:** Vite 5.4.1
+- **Styling:** TailwindCSS 3.4.10
+- **State Management:** Redux Toolkit, Zustand
+- **Routing:** React Router DOM 7.13.0
+- **Form Handling:** React Hook Form + Zod
+- **UI Components:** Radix UI
+- **Data Fetching:** TanStack React Query
+- **i18n:** i18next
+- **Animation:** Framer Motion
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js (phiên bản 18 trở lên)
+- npm hoặc yarn
+
+### Installation
+
+```bash
+# Clone repository
+git clone <repository-url>
+
+# Di chuyển vào thư mục frontend
+cd frontend
+
+# Cài đặt dependencies
+npm install
+
+# Chạy development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## Project Structure
+
+```
+frontend/
+├── docs/                    # Tài liệu dự án
+│   ├── deployment/         # Tài liệu triển khai
+│   ├── implementation/     # Tài liệu implementation
+│   ├── modules/           # Tài liệu modules
+│   ├── reports/           # Báo cáo dự án
+│   ├── frontend/          # Tài liệu kỹ thuật frontend
+│   └── backend/           # Tài liệu kỹ thuật backend
+├── public/                 # Static assets
+│   ├── assets/
+│   ├── branding/
+│   ├── defaults/
+│   ├── icons/
+│   └── previews/
+├── src/                    # Source code
+│   ├── components/        # React components
+│   ├── features/          # Feature modules
+│   ├── layouts/           # Layout components
+│   ├── routes/            # Routing configuration
+│   ├── store/             # Redux store
+│   ├── services/          # API services
+│   ├── hooks/             # Custom hooks
+│   ├── utils/             # Utility functions
+│   ├── types/             # TypeScript types
+│   ├── config/            # App configuration
+│   ├── styles/            # Global styles
+│   └── themes/            # Theme configuration
+├── index.html
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+├── tailwind.config.js
+└── README.md
+```
+
+## Available Scripts
+
+- `npm run dev` - Chạy development server
+- `npm run build` - Build production
+- `npm run preview` - Preview production build
+- `npm run lint` - Chạy ESLint
+
+## Documentation
+
+Tài liệu chi tiết về dự án được tổ chức trong thư mục `docs/`:
+
+- **Deployment:** Tài liệu về quá trình triển khai
+- **Implementation:** Hướng dẫn implementation các modules
+- **Modules:** Chi tiết về từng module trong hệ thống
+- **Reports:** Báo cáo tiến độ và tổng kết
+- **Frontend/Backend:** Tài liệu kỹ thuật chi tiết
+
+## Contributing
+
+1. Tạo branch mới từ `main`
+2. Commit changes với clear message
+3. Push lên repository
+4. Tạo Pull Request
+
+## License
+
+Private - PronaFlow Project
+
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```

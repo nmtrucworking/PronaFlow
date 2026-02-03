@@ -40,10 +40,16 @@ import {
   Calendar,
   Eye,
   Slack,
-  Building // Added missing import
+  Building, // Added missing import
+  LayoutGrid,
+  Keyboard
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+
+// Import Module 9 Components
+import AccessibilityPanel from '@/features/personalization/components/AccessibilityPanel';
+import DashboardCustomizer from '@/features/personalization/components/DashboardCustomizer';
 
 // --- UTILS ---
 function cn(...inputs: ClassValue[]) {
@@ -301,12 +307,12 @@ const ProfileSettings = () => {
             </InputGroup>
             <InputGroup label="Phòng ban" id="department">
               <div className="relative group">
-                <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors pointer-events-none" />
-                <select name="department" value={formData.department} onChange={handleChange} className="w-full pl-9 pr-8 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer">
+                <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors pointer-events-none z-10" />
+                <select name="department" value={formData.department} onChange={handleChange} className="w-full pl-9 pr-8 py-2.5 bg-gradient-to-r from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 dark:focus:border-indigo-500 transition-all appearance-none cursor-pointer shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600">
                   <option value="" disabled>Chọn phòng ban</option>
                   {DEPARTMENTS.map(dept => <option key={dept.id} value={dept.id}>{dept.name}</option>)}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 pointer-events-none transition-colors" />
               </div>
             </InputGroup>
           </div>
@@ -324,7 +330,7 @@ const ProfileSettings = () => {
                   <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Thành phố" className="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all" />
                 </div>
                 <div className="relative w-1/3 min-w-[120px]">
-                  <select name="country" value={formData.country} onChange={handleChange} className="w-full pl-3 pr-8 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer">
+                  <select name="country" value={formData.country} onChange={handleChange} className="w-full pl-3 pr-8 py-2.5 bg-gradient-to-r from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 dark:focus:border-indigo-500 transition-all appearance-none cursor-pointer shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600">
                     {COUNTRIES.map(c => <option key={c.code} value={c.code}>{c.flag} {c.code}</option>)}
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -493,10 +499,10 @@ const PreferenceSettings = () => {
                   key={item.id}
                   onClick={() => setTheme(item.id as any)}
                   className={cn(
-                    "flex flex-col items-center p-3 rounded-xl border-2 transition-all active:scale-95",
+                    "flex flex-col items-center p-3 rounded-xl border-2 transition-all active:scale-95 relative group",
                     isActive 
-                      ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20" 
-                      : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900"
+                      ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 shadow-md shadow-indigo-500/20" 
+                      : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900 hover:shadow-sm"
                   )}
                 >
                   <div className={cn(
@@ -510,6 +516,11 @@ const PreferenceSettings = () => {
                   <span className={cn("text-xs font-medium", isActive ? "text-indigo-700 dark:text-indigo-300" : "text-slate-600 dark:text-slate-400")}>
                     {item.label}
                   </span>
+                  {isActive && (
+                    <div className="absolute top-2 right-2 flex items-center justify-center w-5 h-5 bg-indigo-600 rounded-full text-white">
+                      <Check className="w-3 h-3" />
+                    </div>
+                  )}
                 </button>
               )
             })}
@@ -531,19 +542,32 @@ const PreferenceSettings = () => {
               </span>
             }
           >
-            <div className="relative">
-              <select 
-                value={colorMode}
-                onChange={(e) => setColorMode(e.target.value)}
-                className="w-full pl-3 pr-8 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer"
-              >
-                <option value="default">Mặc định</option>
-                <option value="protanopia">Mù màu đỏ (Protanopia)</option>
-                <option value="deuteranopia">Mù màu lục (Deuteranopia)</option>
-                <option value="tritanopia">Mù màu lam (Tritanopia)</option>
-                <option value="high_contrast">Độ tương phản cao</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <div className="space-y-2">
+              <div className="relative">
+                <select 
+                  value={colorMode}
+                  onChange={(e) => setColorMode(e.target.value)}
+                  className="w-full pl-3 pr-8 py-2.5 bg-gradient-to-r from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 dark:focus:border-indigo-500 cursor-pointer shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all"
+                >
+                  <option value="default">Mặc định</option>
+                  <option value="protanopia">Mù màu đỏ (Protanopia)</option>
+                  <option value="deuteranopia">Mù màu lục (Deuteranopia)</option>
+                  <option value="tritanopia">Mù màu lam (Tritanopia)</option>
+                  <option value="high_contrast">Độ tương phản cao</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              </div>
+              {colorMode !== 'default' && (
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800/50 rounded-md text-[11px] font-medium text-indigo-700 dark:text-indigo-400">
+                  <Check className="w-3 h-3" />
+                  Đã bật: {
+                    colorMode === 'protanopia' ? 'Mù màu đỏ (Protanopia)' :
+                    colorMode === 'deuteranopia' ? 'Mù màu lục (Deuteranopia)' :
+                    colorMode === 'tritanopia' ? 'Mù màu lam (Tritanopia)' :
+                    'Độ tương phản cao'
+                  }
+                </div>
+              )}
             </div>
           </InputGroup>
 
@@ -566,6 +590,86 @@ const PreferenceSettings = () => {
               <span className="text-lg text-slate-900 dark:text-white font-bold">A</span>
             </div>
             <p className="text-[11px] text-slate-500">Điều chỉnh kích thước văn bản để dễ đọc hơn trên các thiết bị màn hình nhỏ.</p>
+          </div>
+        </div>
+
+        {/* Language & Localization */}
+        <div className="space-y-5 pt-4 border-t border-slate-100 dark:border-slate-800">
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-white pb-2 flex items-center">
+            <Globe className="w-4 h-4 mr-2" /> Ngôn ngữ & Định dạng
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InputGroup 
+              label="Ngôn ngữ hiển thị" 
+              id="language"
+              helpText="Chọn ngôn ngữ giao diện ứng dụng"
+            >
+              <div className="relative">
+                <select 
+                  className="w-full pl-3 pr-8 py-2.5 bg-gradient-to-r from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 dark:focus:border-indigo-500 cursor-pointer shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all"
+                >
+                  <option value="vi-VN">🇻🇳 Tiếng Việt</option>
+                  <option value="en-US">🇺🇸 English (US)</option>
+                  <option value="ja-JP">🇯🇵 日本語</option>
+                  <option value="ko-KR">🇰🇷 한국어</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              </div>
+            </InputGroup>
+
+            <InputGroup 
+              label="Múi giờ" 
+              id="timezone"
+              helpText="Thời gian hiển thị theo múi giờ của bạn"
+            >
+              <div className="relative">
+                <select 
+                  className="w-full pl-3 pr-8 py-2.5 bg-gradient-to-r from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 dark:focus:border-indigo-500 cursor-pointer shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all"
+                >
+                  <option value="Asia/Ho_Chi_Minh">(GMT+7) Ho Chi Minh</option>
+                  <option value="Asia/Bangkok">(GMT+7) Bangkok</option>
+                  <option value="Asia/Tokyo">(GMT+9) Tokyo</option>
+                  <option value="Asia/Seoul">(GMT+9) Seoul</option>
+                  <option value="America/New_York">(GMT-5) New York</option>
+                  <option value="Europe/London">(GMT+0) London</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              </div>
+            </InputGroup>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InputGroup 
+              label="Định dạng ngày" 
+              id="date_format"
+            >
+              <div className="relative">
+                <select 
+                  className="w-full pl-3 pr-8 py-2.5 bg-gradient-to-r from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 dark:focus:border-indigo-500 cursor-pointer shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all"
+                >
+                  <option value="DD/MM/YYYY">DD/MM/YYYY (03/02/2026)</option>
+                  <option value="MM/DD/YYYY">MM/DD/YYYY (02/03/2026)</option>
+                  <option value="YYYY-MM-DD">YYYY-MM-DD (2026-02-03)</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              </div>
+            </InputGroup>
+
+            <InputGroup 
+              label="Định dạng thời gian" 
+              id="time_format"
+            >
+              <div className="relative">
+                <select 
+                  className="w-full pl-3 pr-8 py-2.5 bg-gradient-to-r from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 dark:focus:border-indigo-500 cursor-pointer shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all"
+                >
+                  <option value="24h">24 giờ (14:30)</option>
+                  <option value="12h">12 giờ (2:30 PM)</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              </div>
+            </InputGroup>
           </div>
         </div>
 
@@ -1076,6 +1180,9 @@ export default function GeneralSettingsPage() {
     { id: 'security', label: 'Bảo mật & Đăng nhập', icon: Lock, category: 'Tài khoản' },
     { id: 'preferences', label: 'Giao diện & Ứng dụng', icon: Palette, category: 'Tài khoản' },
     { id: 'notifications', label: 'Thông báo', icon: Bell, category: 'Tài khoản' },
+    { id: 'accessibility', label: 'Khả năng tiếp cận', icon: Eye, category: 'Cá nhân hóa' },
+    { id: 'dashboard', label: 'Tùy chỉnh Dashboard', icon: LayoutGrid, category: 'Cá nhân hóa' },
+    { id: 'shortcuts', label: 'Phím tắt', icon: Keyboard, category: 'Cá nhân hóa' },
   ];
 
   return (
@@ -1158,20 +1265,44 @@ export default function GeneralSettingsPage() {
                     </Tabs.Trigger>
                   )
                 })}
+
+                {/* Group: Cá nhân hóa */}
+                <div className="hidden md:block px-3 py-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mt-4">
+                  Cá nhân hóa
+                </div>
+                {navItems.filter(i => i.category === 'Cá nhân hóa').map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Tabs.Trigger 
+                      key={item.id}
+                      value={item.id}
+                      className={cn(
+                        "flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all w-full text-left whitespace-nowrap md:whitespace-normal shrink-0",
+                        activeTab === item.id 
+                          ? "bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm border border-slate-200 dark:border-slate-800 md:border-l-4 md:border-l-indigo-600 md:rounded-l-none" 
+                          : "text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"
+                      )}
+                    >
+                      <Icon className={cn("w-4 h-4 mr-3", activeTab === item.id ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400")} />
+                      {item.label}
+                    </Tabs.Trigger>
+                  )
+                })}
               </div>
 
               {/* Sidebar Footer Links */}
-              <div className="hidden md:block mt-auto pt-6 px-3 border-t border-slate-100 dark:border-slate-800 pb-2">
-                <a href="#" className="flex items-center text-xs text-slate-500 hover:text-indigo-600 transition-colors mb-2">
-                  <HelpCircle className="w-3.5 h-3.5 mr-2" />
+              <div className="hidden md:block mt-auto pt-6 px-3 border-t border-slate-100 dark:border-slate-800 pb-2 space-y-2">
+                <a href="#help" className="flex items-center text-xs text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium group">
+                  <HelpCircle className="w-3.5 h-3.5 mr-2 group-hover:scale-110 transition-transform" />
                   Trung tâm trợ giúp
+                  <ExternalLink className="w-2.5 h-2.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
-                <div className="flex gap-3 text-[10px] text-slate-400 mt-3">
-                  <a href="#" className="hover:text-slate-600">Privacy</a>
+                <div className="flex gap-2 text-[10px] text-slate-400 pt-1">
+                  <a href="#privacy" className="hover:text-slate-600 dark:hover:text-slate-300 transition-colors font-medium">Bảo mật</a>
                   <span>•</span>
-                  <a href="#" className="hover:text-slate-600">Terms</a>
+                  <a href="#terms" className="hover:text-slate-600 dark:hover:text-slate-300 transition-colors font-medium">Điều khoản</a>
                   <span>•</span>
-                  <span>v1.2.0</span>
+                  <span className="text-slate-500 font-medium">v1.2.0</span>
                 </div>
               </div>
             </Tabs.List>
@@ -1192,6 +1323,32 @@ export default function GeneralSettingsPage() {
 
               <Tabs.Content value="notifications" className="outline-none">
                 <NotificationSettings />
+              </Tabs.Content>
+
+              <Tabs.Content value="accessibility" className="outline-none">
+                <AccessibilityPanel userId="current-user" />
+              </Tabs.Content>
+
+              <Tabs.Content value="dashboard" className="outline-none">
+                <DashboardCustomizer userId="current-user" />
+              </Tabs.Content>
+
+              <Tabs.Content value="shortcuts" className="outline-none">
+                <div className="space-y-6">
+                  <SectionHeader 
+                    title="Phím tắt"
+                    description="Xem và tùy chỉnh các phím tắt bàn phím"
+                  />
+                  <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-xl p-6 text-center">
+                    <Keyboard className="w-12 h-12 text-blue-600 dark:text-blue-400 mx-auto mb-3" />
+                    <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">
+                      Nhấn <kbd className="px-3 py-1 bg-white dark:bg-slate-800 rounded border border-blue-300 dark:border-blue-600 font-mono">?</kbd> để xem tất cả phím tắt
+                    </h3>
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
+                      Hoặc nhấn <kbd className="px-2 py-1 bg-white dark:bg-slate-800 rounded border border-blue-300 dark:border-blue-600 font-mono text-xs">Cmd/Ctrl + K</kbd> để mở bảng lệnh
+                    </p>
+                  </div>
+                </div>
               </Tabs.Content>
             </div>
           </Tabs.Root>

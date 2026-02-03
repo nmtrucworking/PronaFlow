@@ -13,11 +13,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.declarative_base import Base
 from app.db.mixins import TimestampMixin, SoftDeleteMixin
-from app.db.enums import ProjectStatus, ProjectGovernanceMode, ProjectVisibility
+from app.db.enums import ProjectStatus, ProjectGovernanceMode, ProjectVisibility, ProjectPriority
 
 if TYPE_CHECKING:
     from app.db.models.users import User
     from app.db.models.workspaces import Workspace
+    from app.db.models.collaboration import Note
 
 
 # ======= Association Tables =======
@@ -98,6 +99,13 @@ class Project(Base, TimestampMixin, SoftDeleteMixin):
         comment="Project visibility (PUBLIC / PRIVATE)"
     )
 
+    priority: Mapped[ProjectPriority] = mapped_column(
+        SQLEnum(ProjectPriority),
+        default=ProjectPriority.MEDIUM,
+        nullable=False,
+        comment="Project priority (CRITICAL / HIGH / MEDIUM / LOW)"
+    )
+
     # Dates
     start_date: Mapped[Optional[date]] = mapped_column(
         Date,
@@ -122,6 +130,7 @@ class Project(Base, TimestampMixin, SoftDeleteMixin):
     workspace: Mapped["Workspace"] = relationship(foreign_keys=[workspace_id])
     owner: Mapped["User"] = relationship(foreign_keys=[owner_id])
     members: Mapped[List["User"]] = relationship(secondary=project_members_association)
+    notes: Mapped[List["Note"]] = relationship(back_populates="project", cascade="all, delete-orphan")
 
     # Indexes
     __table_args__ = (
