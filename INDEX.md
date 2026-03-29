@@ -6,6 +6,7 @@ Complete index and guide to all project files and directories.
 
 - **[Getting Started](#getting-started)** - Setup and quick start
 - **[Documentation](#documentation)** - All documentation files
+- **[Markdown Organization](#markdown-organization-2026-03-29)** - New documentation hubs
 - **[Root Files](#root-files)** - Configuration and setup files
 - **[Applications](#applications)** - Main application directories
 - **[Services](#services)** - Microservices and external services
@@ -41,6 +42,20 @@ See: [DEPLOYMENT.md](DEPLOYMENT.md)
 ---
 
 ## 📚 Documentation
+
+## Markdown Organization (2026-03-29)
+
+Primary markdown hubs after reorganization:
+
+- `docs/root/guides/` - Root-level guides moved from repository root
+- `docs/root/reports/` - Root-level completion and status reports
+- `docs/root/deployment/frontend/` - Frontend deployment package docs
+- `docs/storage/` - Storage architecture and operational documentation
+- `apps/frontend/docs/root/` - Frontend app root docs and diagnostics
+- `apps/frontend/docs/features/` - Frontend feature-level technical documents
+- `apps/electron/docs/` - Electron integration and quick-start docs
+
+Legacy root/app markdown files now contain short redirect stubs to avoid broken links.
 
 ### Main Guides
 | File | Purpose |
