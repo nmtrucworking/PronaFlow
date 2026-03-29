@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "PronaFlow Root"
+    },
+    {
+      "path": "apps/backend",
+      "name": "PronaFlow Backend"
+    },
+    {
+      "path": "apps/frontend",
+      "name": "PronaFlow Frontend"
+    },
+    {
+      "path": "apps/electron",
+      "name": "PronaFlow Electron"
+    }
+  ],
+  "settings": {
+    "powershell.cwd": "PronaFlow Root"
+  }
+}

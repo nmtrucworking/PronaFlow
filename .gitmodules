@@ -1,0 +1,9 @@
+[submodule "apps/backend"]
+	path = apps/backend
+	url = https://github.com/nmtrucworking/pronaflow-backend.git
+[submodule "apps/frontend"]
+	path = apps/frontend
+	url = https://github.com/nmtrucworking/pronaflow-frontend.git
+[submodule "apps/electron"]
+	path = apps/electron
+	url = https://github.com/nmtrucworking/pronaflow-electron.git
