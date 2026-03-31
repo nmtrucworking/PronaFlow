@@ -2,10 +2,14 @@
 ## Data Archiving and Compliance - Frontend Status Analysis
 
 **Report Date:** March 31, 2026  
+**Last Updated:** April 1, 2026  
 **Audited Component:** PronaFlow Frontend  
 **FM8 Module Version:** 1.0 (Draft, Dec 31, 2025)  
 **Audit Scope:** apps/frontend (React/TypeScript)  
-**Status:** ⚠️ **40% Scaffolded | 0% Integrated** 
+**Status:** ✅ **Implemented and Integrated (Phase 1-6 Complete)** 
+
+> Note: This document was originally created as a gap-analysis audit on March 31, 2026.
+> As of April 1, 2026, the implementation plan in this report has been executed in the frontend codebase.
 
 ---
 
@@ -13,11 +17,36 @@
 
 | Metric | Status | Details |
 |--------|--------|---------|
-| **Overall Implementation** | 🔴 Incomplete | Service layer complete (360+ lines), UI scaffolded, zero API integration |
-| **AC Coverage** | ⚠️ 30% | Task list archive working; project archive UI ready but not wired |
-| **Blocker Status** | 🔴 Critical | Type contracts missing (is_archived field), action handlers empty |
+| **Overall Implementation** | ✅ Completed | Service and UI integration implemented across archive, trash, and export flows |
+| **AC Coverage** | ✅ Substantially Covered | AC 8.1, 8.2, 8.3 paths implemented in frontend with live API wiring |
+| **Blocker Status** | ✅ Resolved | Type contracts, action handlers, and query threading completed |
 | **Over-Implementation** | 🟡 Moderate | Retention policy CRUD, audit log export, Excel format (out of scope) |
-| **Recommendation** | 🟡 Proceed with Caution | Complete type contracts first, then wire service calls to UI |
+| **Recommendation** | ✅ Move to Stabilization | Keep regression tests and staging validation for final release hardening |
+
+---
+
+## Implementation Update (April 1, 2026)
+
+### Completed Work Snapshot
+
+| Phase | Scope | Result |
+|------|-------|--------|
+| **Phase 1** | Type contracts (`project.ts`, `archive.ts`) | ✅ Done |
+| **Phase 2** | `include_archived` query threading (`projectService`, hooks, AllProjectPage) | ✅ Done |
+| **Phase 3** | Trash API integration (query/mutations, restore/delete/empty) | ✅ Done |
+| **Phase 4** | Archive API integration + project actions wiring | ✅ Done |
+| **Phase 5** | Read-only enforcement for archived project contexts | ✅ Done |
+| **Phase 6** | Data export tab + async status polling + download flow | ✅ Done |
+
+### Verification Snapshot
+
+- TypeScript error checks on modified frontend files: ✅ clean
+- Frontend test run (`npm run test`): ✅ passing
+
+### Current Residual Items (Non-Blocking)
+
+- UI wording polish in export panel can be refined further for consistency.
+- Read-only enforcement in one large legacy component can be further granularized for long-term maintainability.
 
 ---
 
