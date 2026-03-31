@@ -65,6 +65,10 @@ Unify duplicated technical docs into one canonical location while preserving exi
 
 - Normalization manifest created: [PHASE4_NORMALIZATION_MANIFEST.md](PHASE4_NORMALIZATION_MANIFEST.md)
 - `.md.md` cleanup completed in backend docs (2 files normalized, 0 remaining).
+- Frontend technical-docs entrypoint normalized: `apps/frontend/docs/technical-docs/INDEX.md`.
+- Backend technical-docs entrypoint normalized: `apps/backend/docs/technical-docs/INDEX.md`.
+- Root indexes updated to include canonical hub and frontend/backend compatibility paths.
+- Backend root technical files moved to `apps/backend/docs/technical-docs/` with redirect stubs preserved at old paths.
 - Deferred for path-safe rollout:
   - backend namespace normalization: `02-Architeture` -> `02-Architecture`
   - `.obsidian` relocation/deprecation policy

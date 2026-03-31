@@ -50,8 +50,11 @@ Primary markdown hubs after reorganization:
 - `docs/root/guides/` - Root-level guides moved from repository root
 - `docs/root/reports/` - Root-level completion and status reports
 - `docs/root/deployment/frontend/` - Frontend deployment package docs
+- `docs/technical-docs/` - Canonical shared technical documentation hub
 - `docs/storage/` - Storage architecture and operational documentation
 - `apps/frontend/docs/root/` - Frontend app root docs and diagnostics
+- `apps/frontend/docs/technical-docs/` - Frontend technical-docs compatibility entrypoint
+- `apps/backend/docs/technical-docs/` - Backend technical-docs compatibility entrypoint
 - `apps/frontend/docs/features/` - Frontend feature-level technical documents
 - `apps/electron/docs/` - Electron integration and quick-start docs
 
@@ -76,6 +79,7 @@ Legacy root/app markdown files now contain short redirect stubs to avoid broken 
 
 ### Technical Documentation
 Located in `docs/`:
+- `docs/technical-docs/` - Canonical shared docs for frontend/backend/electron
 - `docs/architecture/` - System design and architecture
 - `docs/backend/` - Backend-specific documentation
 - `docs/frontend/` - Frontend-specific documentation
