@@ -1,0 +1,38 @@
+01-Requirements/Functional-Modules/PronaFlow_Admin_Roles.xlsx
+01-Requirements/Functional-Modules/PronaFlow_Project_Roles.xlsx
+01-Requirements/Functional-Modules/Quotas Adjustment.xlsx
+01-Requirements/Sõ ð? t? ch?c Modules.canvas
+07-References/.env.example
+07-References/api-response-codes.json
+07-References/auth-privider.json
+07-References/data-dictionary.csv
+07-References/data-retention-rules.csv
+07-References/default-project-templates.json
+07-References/default-user-settings.json
+07-References/dependency-types.json
+07-References/email-signatures.html
+07-References/feature-store-registry.yaml
+07-References/glossary.json
+07-References/iconography-map.md
+07-References/keyboard-shortcuts.json
+07-References/metric-definitions.md
+07-References/notification-templates-library.json
+07-References/permission-scopes.yaml
+07-References/project-categories.json
+07-References/project-health.json
+07-References/project-priorities.json
+07-References/project-roles.json
+07-References/project-statuses.json
+07-References/project-visibility.json
+07-References/security-checklist.md
+07-References/subscription-quotas.yaml
+07-References/system-error-codes.md
+07-References/task-priorities.json
+07-References/test-case-standard.xlsx
+07-References/user_status.json
+assets/images/Logic SLA.drawio.png
+Check list - Docs & Templates.md
+Contents.base
+HEADER DOCUMENT - H? th?ng Tài li?u K? thu?t PronaFlow.md
+L? tr?nh xây d?ng Tài li?u K? thu?t D? án PronaFlow.md
+README.md

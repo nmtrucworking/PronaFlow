@@ -1,0 +1,10 @@
+﻿00-General/Overview.md
+00-General/Technology-Stack/Backend-Core-Service.md
+00-General/Technology-Stack/Backend-Inference-Service.md
+00-General/Technology-Stack/Desktop-Application-Wrapper.md
+00-General/Technology-Stack/Frontend-Core.md
+00-General/Technology-Stack/Technology-Stack.md
+01-Requirements/System Functional Modules.md
+04-AI-Specifications/AI-Workflows.md
+04-AI-Specifications/Model-Card.md
+05-Deployment-Operations/Setup-Guide.md
