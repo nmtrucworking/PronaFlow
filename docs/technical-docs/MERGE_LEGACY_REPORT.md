@@ -1,0 +1,367 @@
+﻿# Legacy Merge Report
+- Timestamp: 2026-03-31 19:41:04
+- Source: docs\docs - PronaFlow React&FastAPI
+- Destination: docs\technical-docs
+- Excluded directories: .obsidian
+- New files copied: 348
+- Same files skipped: 71
+- Conflicts preserved as .legacy*: 6
+
+## Copied Files
+- .obsidian\app.json
+- .obsidian\appearance.json
+- .obsidian\backlink.json
+- .obsidian\core-plugins.json
+- .obsidian\webviewer.json
+- .obsidian\workspace.json
+- .obsidian\workspaces.json
+- 00-General\Glossary.md.md
+- 01-Requirements\Non-Functional.md.md
+- 02-Architeture\_BaseEntityTemplate.json
+- 02-Architeture\API-Design.md
+- 02-Architeture\Application Structure.md
+- 02-Architeture\create-entity-jsonFile.ipynb
+- 02-Architeture\Database-Schema.md
+- 02-Architeture\Decisions\ADR-001-Choose-FastAPI.md
+- 02-Architeture\Decisions\ADR-002-Database-PostgreSQL.md
+- 02-Architeture\Decisions\ADR-003-AI-Model-Selection.md
+- 02-Architeture\Entities\AccessReview.json
+- 02-Architeture\Entities\AccessReview.md
+- 02-Architeture\Entities\AdminAuditLog.json
+- 02-Architeture\Entities\AdminAuditLog.md
+- 02-Architeture\Entities\AdminPermission.json
+- 02-Architeture\Entities\AdminPermission.md
+- 02-Architeture\Entities\AdminRole.json
+- 02-Architeture\Entities\AdminRole.md
+- 02-Architeture\Entities\AdminRolePermission.json
+- 02-Architeture\Entities\AdminRolePermission.md
+- 02-Architeture\Entities\AdminUser.json
+- 02-Architeture\Entities\AdminUser.md
+- 02-Architeture\Entities\AdminUserRole.json
+- 02-Architeture\Entities\AdminUserRole.md
+- 02-Architeture\Entities\ApiScope.json
+- 02-Architeture\Entities\ApiScope.md
+- 02-Architeture\Entities\ApiToken.json
+- 02-Architeture\Entities\ApiToken.md
+- 02-Architeture\Entities\ApiTokenScope.json
+- 02-Architeture\Entities\ApiTokenScope.md
+- 02-Architeture\Entities\ApiUsageLog.json
+- 02-Architeture\Entities\ApiUsageLog.md
+- 02-Architeture\Entities\ApprovalAction.json
+- 02-Architeture\Entities\ApprovalAction.md
+- 02-Architeture\Entities\ApprovalRequest.json
+- 02-Architeture\Entities\ApprovalRequest.md
+- 02-Architeture\Entities\ArchivedProject.json
+- 02-Architeture\Entities\ArchivedProject.md
+- 02-Architeture\Entities\ArchiveJob.json
+- 02-Architeture\Entities\ArchiveJob.md
+- 02-Architeture\Entities\ArchivePolicy.json
+- 02-Architeture\Entities\ArchivePolicy.md
+- 02-Architeture\Entities\Article.json
+- 02-Architeture\Entities\Article.md
+- 02-Architeture\Entities\ArticleFeedback.json
+- 02-Architeture\Entities\ArticleFeedback.md
+- 02-Architeture\Entities\ArticleTag.json
+- 02-Architeture\Entities\ArticleTag.md
+- 02-Architeture\Entities\ArticleTranslation.json
+- 02-Architeture\Entities\ArticleTranslation.md
+- 02-Architeture\Entities\ArticleVersion.json
+- 02-Architeture\Entities\ArticleVersion.md
+- 02-Architeture\Entities\ArticleVisibility.json
+- 02-Architeture\Entities\ArticleVisibility.md
+- 02-Architeture\Entities\AuditLog.json
+- 02-Architeture\Entities\AuditLog.md
+- 02-Architeture\Entities\AuthProvider.json
+- 02-Architeture\Entities\AuthProvider.md
+- 02-Architeture\Entities\Backlink.json
+- 02-Architeture\Entities\Backlink.md
+- 02-Architeture\Entities\BillingTransaction.json
+- 02-Architeture\Entities\BillingTransaction.md
+- 02-Architeture\Entities\Category.json
+- 02-Architeture\Entities\Category.md
+- 02-Architeture\Entities\ChangeRequest.json
+- 02-Architeture\Entities\ChangeRequest.md
+- 02-Architeture\Entities\ChecklistItem.json
+- 02-Architeture\Entities\ChecklistItem.md
+- 02-Architeture\Entities\Client.json
+- 02-Architeture\Entities\Client.md
+- 02-Architeture\Entities\Comment.json
+- 02-Architeture\Entities\Comment.md
+- 02-Architeture\Entities\ConsentGrant.json
+- 02-Architeture\Entities\ConsentGrant.md
+- 02-Architeture\Entities\DashboardLayouts.json
+- 02-Architeture\Entities\DashboardLayouts.md
+- 02-Architeture\Entities\DataDiff.json
+- 02-Architeture\Entities\DataDiff.md
+- 02-Architeture\Entities\DataExportFile.json
+- 02-Architeture\Entities\DataExportFile.md
+- 02-Architeture\Entities\DataExportRequest.json
+- 02-Architeture\Entities\DataExportRequest.md
+- 02-Architeture\Entities\DataTier.json
+- 02-Architeture\Entities\DataTier.md
+- 02-Architeture\Entities\DeliveryAttempt.json
+- 02-Architeture\Entities\DeliveryAttempt.md
+- 02-Architeture\Entities\DeliveryChannel.json
+- 02-Architeture\Entities\DeliveryChannel.md
+- 02-Architeture\Entities\DomainEvent.json
+- 02-Architeture\Entities\DomainEvent.md
+- 02-Architeture\Entities\EventConsumer.json
+- 02-Architeture\Entities\EventConsumer.md
+- 02-Architeture\Entities\Explanation.json
+- 02-Architeture\Entities\Explanation.md
+- 02-Architeture\Entities\FailedSearch.json
+- 02-Architeture\Entities\FailedSearch.md
+- 02-Architeture\Entities\FeatureBeacon.json
+- 02-Architeture\Entities\FeatureBeacon.md
+- 02-Architeture\Entities\FeatureFlag.json
+- 02-Architeture\Entities\FeatureFlag.md
+- 02-Architeture\Entities\FeatureSnapshot.json
+- 02-Architeture\Entities\FeatureSnapshot.md
+- 02-Architeture\Entities\File.json
+- 02-Architeture\Entities\File.md
+- 02-Architeture\Entities\files.txt
+- 02-Architeture\Entities\FileVersion.json
+- 02-Architeture\Entities\FileVersion.md
+- 02-Architeture\Entities\FlowStep.json
+- 02-Architeture\Entities\FlowStep.md
+- 02-Architeture\Entities\FreelancerInvoice.json
+- 02-Architeture\Entities\FreelancerInvoice.md
+- 02-Architeture\Entities\InferenceRequest.json
+- 02-Architeture\Entities\InferenceRequest.md
+- 02-Architeture\Entities\InferenceResult.json
+- 02-Architeture\Entities\InferenceResult.md
+- 02-Architeture\Entities\IntegrationBinding.json
+- 02-Architeture\Entities\IntegrationBinding.md
+- 02-Architeture\Entities\Invoice.json
+- 02-Architeture\Entities\Invoice.md
+- 02-Architeture\Entities\InvoiceLineItem.json
+- 02-Architeture\Entities\InvoiceLineItem.md
+- 02-Architeture\Entities\KeyboardShortcut.json
+- 02-Architeture\Entities\KeyboardShortcut.md
+- 02-Architeture\Entities\KPI.json
+- 02-Architeture\Entities\KPI.md
+- 02-Architeture\Entities\Mention.json
+- 02-Architeture\Entities\Mention.md
+- 02-Architeture\Entities\MetricSnapshot.json
+- 02-Architeture\Entities\MetricSnapshot.md
+- 02-Architeture\Entities\MFABackupCode.json
+- 02-Architeture\Entities\MFABackupCode.md
+- 02-Architeture\Entities\MFAConfig.json
+- 02-Architeture\Entities\MFAConfig.md
+- 02-Architeture\Entities\MLModel.json
+- 02-Architeture\Entities\MLModel.md
+- 02-Architeture\Entities\ModelMetric.json
+- 02-Architeture\Entities\ModelMetric.md
+- 02-Architeture\Entities\ModelVersion.json
+- 02-Architeture\Entities\ModelVersion.md
+- 02-Architeture\Entities\Note.json
+- 02-Architeture\Entities\Note.md
+- 02-Architeture\Entities\NoteTagMap.json
+- 02-Architeture\Entities\NoteTagMap.md
+- 02-Architeture\Entities\NoteTemplate.json
+- 02-Architeture\Entities\NoteTemplate.md
+- 02-Architeture\Entities\NoteVersion.json
+- 02-Architeture\Entities\NoteVersion.md
+- 02-Architeture\Entities\Notification.json
+- 02-Architeture\Entities\Notification.md
+- 02-Architeture\Entities\NotificationDigest.json
+- 02-Architeture\Entities\NotificationDigest.md
+- 02-Architeture\Entities\NotificationInteraction.json
+- 02-Architeture\Entities\NotificationInteraction.md
+- 02-Architeture\Entities\NotificationItem.json
+- 02-Architeture\Entities\NotificationItem.md
+- 02-Architeture\Entities\NotificationPreference.json
+- 02-Architeture\Entities\NotificationPreference.md
+- 02-Architeture\Entities\NotificationTemplate.json
+- 02-Architeture\Entities\NotificationTemplate.md
+- 02-Architeture\Entities\OAuthApp.json
+- 02-Architeture\Entities\OAuthApp.md
+- 02-Architeture\Entities\OAuthConnection.json
+- 02-Architeture\Entities\OAuthConnection.md
+- 02-Architeture\Entities\OnboardingChecklist.json
+- 02-Architeture\Entities\OnboardingChecklist.md
+- 02-Architeture\Entities\OnboardingFlow.json
+- 02-Architeture\Entities\OnboardingFlow.md
+- 02-Architeture\Entities\OnboardingReward.json
+- 02-Architeture\Entities\OnboardingReward.md
+- 02-Architeture\Entities\OnboardingSurvey.json
+- 02-Architeture\Entities\OnboardingSurvey.md
+- 02-Architeture\Entities\PasswordResetToken.json
+- 02-Architeture\Entities\PasswordResetToken.md
+- 02-Architeture\Entities\Permissions.json
+- 02-Architeture\Entities\Permissions.md
+- 02-Architeture\Entities\PersonaProfile.json
+- 02-Architeture\Entities\PersonaProfile.md
+- 02-Architeture\Entities\Plan.json
+- 02-Architeture\Entities\Plan.md
+- 02-Architeture\Entities\Plugin.json
+- 02-Architeture\Entities\Plugin.md
+- 02-Architeture\Entities\PluginInstallation.json
+- 02-Architeture\Entities\PluginInstallation.md
+- 02-Architeture\Entities\PluginTagMap.json
+- 02-Architeture\Entities\PluginTagMap.md
+- 02-Architeture\Entities\ProductTour.json
+- 02-Architeture\Entities\ProductTour.md
+- 02-Architeture\Entities\Project.json
+- 02-Architeture\Entities\Project.md
+- 02-Architeture\Entities\ProjectArchive.json
+- 02-Architeture\Entities\ProjectArchive.md
+- 02-Architeture\Entities\ProjectBaseline.json
+- 02-Architeture\Entities\ProjectBaseline.md
+- 02-Architeture\Entities\ProjectChangeRequest.json
+- 02-Architeture\Entities\ProjectChangeRequest.md
+- 02-Architeture\Entities\ProjectLifecycleState.json
+- 02-Architeture\Entities\ProjectLifecycleState.md
+- 02-Architeture\Entities\ProjectMember.json
+- 02-Architeture\Entities\ProjectMember.md
+- 02-Architeture\Entities\ProjectTagMap.json
+- 02-Architeture\Entities\ProjectTagMap.md
+- 02-Architeture\Entities\ProjectTemplate.json
+- 02-Architeture\Entities\ProjectTemplate.md
+- 02-Architeture\Entities\PublicNoteLink.json
+- 02-Architeture\Entities\PublicNoteLink.md
+- 02-Architeture\Entities\ReportDefinition.json
+- 02-Architeture\Entities\ReportDefinition.md
+- 02-Architeture\Entities\ReportExecution.json
+- 02-Architeture\Entities\ReportExecution.md
+- 02-Architeture\Entities\ReportPermission.json
+- 02-Architeture\Entities\ReportPermission.md
+- 02-Architeture\Entities\ResourceUtilization.json
+- 02-Architeture\Entities\ResourceUtilization.md
+- 02-Architeture\Entities\RetentionPolicy.json
+- 02-Architeture\Entities\RetentionPolicy.md
+- 02-Architeture\Entities\RiskSignal.json
+- 02-Architeture\Entities\RiskSignal.md
+- 02-Architeture\Entities\RolePermission.json
+- 02-Architeture\Entities\RolePermission.md
+- 02-Architeture\Entities\Roles.json
+- 02-Architeture\Entities\Roles.md
+- 02-Architeture\Entities\RouteMapping.json
+- 02-Architeture\Entities\RouteMapping.md
+- 02-Architeture\Entities\SearchIndex.json
+- 02-Architeture\Entities\SearchIndex.md
+- 02-Architeture\Entities\SecurityIncident.json
+- 02-Architeture\Entities\SecurityIncident.md
+- 02-Architeture\Entities\Session.json
+- 02-Architeture\Entities\Session.md
+- 02-Architeture\Entities\SprintMetric.json
+- 02-Architeture\Entities\SprintMetric.md
+- 02-Architeture\Entities\Subscription.json
+- 02-Architeture\Entities\Subscription.md
+- 02-Architeture\Entities\SubscriptionUsage.json
+- 02-Architeture\Entities\SubscriptionUsage.md
+- 02-Architeture\Entities\Subtask.json
+- 02-Architeture\Entities\Subtask.md
+- 02-Architeture\Entities\SurveyQuestion.json
+- 02-Architeture\Entities\SurveyQuestion.md
+- 02-Architeture\Entities\SurveyResponse.json
+- 02-Architeture\Entities\SurveyResponse.md
+- 02-Architeture\Entities\SystemConfig.json
+- 02-Architeture\Entities\SystemConfig.md
+- 02-Architeture\Entities\Tag.json
+- 02-Architeture\Entities\Tag.md
+- 02-Architeture\Entities\Task.json
+- 02-Architeture\Entities\Task.md
+- 02-Architeture\Entities\TaskAssignee.json
+- 02-Architeture\Entities\TaskAssignee.md
+- 02-Architeture\Entities\TaskCustomField.json
+- 02-Architeture\Entities\TaskCustomField.md
+- 02-Architeture\Entities\TaskCustomFieldValue.json
+- 02-Architeture\Entities\TaskCustomFieldValue.md
+- 02-Architeture\Entities\TaskDependency.json
+- 02-Architeture\Entities\TaskDependency.md
+- 02-Architeture\Entities\TaskList.json
+- 02-Architeture\Entities\TaskList.md
+- 02-Architeture\Entities\TaskRecurringRule.json
+- 02-Architeture\Entities\TaskRecurringRule.md
+- 02-Architeture\Entities\TaskTagMap.json
+- 02-Architeture\Entities\TaskTagMap.md
+- 02-Architeture\Entities\TaskTemplate.json
+- 02-Architeture\Entities\TaskTemplate.md
+- 02-Architeture\Entities\TaskWatcher.json
+- 02-Architeture\Entities\TaskWatcher.md
+- 02-Architeture\Entities\TimeEntry.json
+- 02-Architeture\Entities\TimeEntry.md
+- 02-Architeture\Entities\Timesheet.json
+- 02-Architeture\Entities\Timesheet.md
+- 02-Architeture\Entities\TimesheetApproval.json
+- 02-Architeture\Entities\TimesheetApproval.md
+- 02-Architeture\Entities\TimesheetEntry.json
+- 02-Architeture\Entities\TimesheetEntry.md
+- 02-Architeture\Entities\TourStep.json
+- 02-Architeture\Entities\TourStep.md
+- 02-Architeture\Entities\TrashItem.json
+- 02-Architeture\Entities\TrashItem.md
+- 02-Architeture\Entities\UIViewPreference.json
+- 02-Architeture\Entities\UIViewPreference.md
+- 02-Architeture\Entities\UserAuth.json
+- 02-Architeture\Entities\UserAuth.md
+- 02-Architeture\Entities\UserBeaconState.json
+- 02-Architeture\Entities\UserBeaconState.md
+- 02-Architeture\Entities\UserChecklistProgress.json
+- 02-Architeture\Entities\UserChecklistProgress.md
+- 02-Architeture\Entities\UserFeedback.json
+- 02-Architeture\Entities\UserFeedback.md
+- 02-Architeture\Entities\UserOnboardingStatus.json
+- 02-Architeture\Entities\UserOnboardingStatus.md
+- 02-Architeture\Entities\UserPresence.json
+- 02-Architeture\Entities\UserPresence.md
+- 02-Architeture\Entities\UserRole.json
+- 02-Architeture\Entities\UserRole.md
+- 02-Architeture\Entities\Users.json
+- 02-Architeture\Entities\Users.md
+- 02-Architeture\Entities\UserSettings.json
+- 02-Architeture\Entities\UserSettings.md
+- 02-Architeture\Entities\UserWidget.json
+- 02-Architeture\Entities\UserWidget.md
+- 02-Architeture\Entities\WebhookDelivery.json
+- 02-Architeture\Entities\WebhookDelivery.md
+- 02-Architeture\Entities\WebhookEndpoint.json
+- 02-Architeture\Entities\WebhookEndpoint.md
+- 02-Architeture\Entities\WebhookEvent.json
+- 02-Architeture\Entities\WebhookEvent.md
+- 02-Architeture\Entities\Widget.json
+- 02-Architeture\Entities\Widget.md
+- 02-Architeture\Entities\Workspace.json
+- 02-Architeture\Entities\Workspace.md
+- 02-Architeture\Entities\WorkspaceAccessLog.json
+- 02-Architeture\Entities\WorkspaceAccessLog.md
+- 02-Architeture\Entities\WorkspaceInvitation.json
+- 02-Architeture\Entities\WorkspaceInvitation.md
+- 02-Architeture\Entities\WorkspaceMember.json
+- 02-Architeture\Entities\WorkspaceMember.md
+- 02-Architeture\Entities\WorkspaceSetting.json
+- 02-Architeture\Entities\WorkspaceSetting.md
+- 02-Architeture\Entities\WorkspaceSubscription.json
+- 02-Architeture\Entities\WorkspaceSubscription.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 1 - Identity and Access Management.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 10 - Intelligent Decision Support System.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 11 - Advanced Analytics & Reporting.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 12 - Integration Ecosystem.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 13 - Subscription & Billing Management.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 14 - System Administration.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 15 - Helper Center & Knowledge Base.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 16 - User Onboarding & Adoption.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 2 - Multi-tenancy Workpspace Governance.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 3 - Project Lifecycle Management.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 4 - Task Execution & Orchestration.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 5 - Temporal Planning and Scheduling.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 6 - Unitied Collaboration Hub.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 7 - Event-Driven Notification System.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 8 - Data Archiving & Compliance.md
+- 02-Architeture\Entity Relationship Diagram - Details\Functional Module 9 - User Experience Personalization.md
+- 02-Architeture\entityName.txt
+- 02-Architeture\Entity-Relationship-Diagram.md
+- 02-Architeture\ERD.mmd
+- 02-Architeture\exportFiles.ipynb
+- 02-Architeture\files.txt
+- 02-Architeture\System Architecture Design.canvas
+
+## Conflict Files
+- 01-Requirements\Functional-Modules\1 - Identity and Access Management.md => 1 - Identity and Access Management.legacy.md
+- 01-Requirements\Sơ đồ tổ chức Modules.canvas => Sơ đồ tổ chức Modules.legacy.canvas
+- 01-Requirements\System Functional Modules.md => System Functional Modules.legacy.md
+- Check list - Docs & Templates.md => Check list - Docs & Templates.legacy.md
+- Contents.base => Contents.legacy.base
+- HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md => HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.legacy.md
+
