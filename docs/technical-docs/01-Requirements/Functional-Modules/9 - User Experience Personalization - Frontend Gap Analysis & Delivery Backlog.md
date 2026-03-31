@@ -2,7 +2,7 @@ Project: PronaFlow
 Module: Functional Module 9 - User Experience Personalization
 Scope: Frontend implementation gap analysis against requirements doc
 Date: 2026-03-31
-Status: Draft for execution
+Status: In progress (execution underway)
 
 ---
 
@@ -15,23 +15,22 @@ Two tracks are covered:
 - Over-implementation: surplus report with triage recommendations.
 
 Current assessment:
-- Implemented foundation exists (theme context, settings UI, personalization types/services, command palette shell).
-- Many acceptance criteria are only partially implemented, mocked, or not wired end-to-end.
-- Some scope exceeds FM9 baseline and should be labeled as optional/future to avoid release confusion.
+- Foundation and core FM9 behaviors are implemented end-to-end for personalization API wiring, i18n bootstrap, locale formatters, dashboard customization, notification persistence, and required global shortcuts.
+- Density propagation and typography accessibility have been implemented in primary high-traffic surfaces (tasks, projects, workspace list) with runtime persistence.
+- Remaining highest-priority gaps are WCAG contrast enforcement and CVD chart pattern adaptation, plus final hardening/regression evidence.
 
 ---
 
 # 2) Traceability Matrix (FM9 vs Frontend)
 
 ## FM9.1 Internationalization (i18n) & Localization
-- Status: Partial
+- Status: Implemented (core)
 - Observed:
-  - Language settings UI exists.
-  - No centralized i18next bootstrap usage in app runtime.
-  - Date/number formatting is still hard-coded in many feature screens.
+  - Centralized i18n bootstrap is wired into app runtime.
+  - Fallback policy is active (en-US fallback).
+  - Shared locale formatter layer is used in core shell and major feature surfaces.
 - Gap:
-  - Missing full hot-swap translation flow and fallback behavior enforcement.
-  - Missing single formatter layer applied app-wide.
+  - Translation coverage QA is still needed for non-core/legacy screens.
 
 ## FM9.2 Theme & Appearance
 - Status: Partial
@@ -43,51 +42,46 @@ Current assessment:
   - No contrast test gate in CI/frontend QA.
 
 ## FM9.3 Customizable Dashboard
-- Status: Partial
+- Status: Implemented (core)
 - Observed:
-  - Dashboard customization UI exists (widget add/remove/toggle).
-  - Personalization hooks/services exist.
+  - Dashboard supports widget drag-drop reorder and resize behavior.
+  - FE-BE personalization contract for layout_config is aligned.
+  - Layout persistence/restore works through personalization endpoints.
 - Gap:
-  - No actual drag-and-drop and grid resize behavior implemented.
-  - API contract mismatch between frontend service routes and backend personalization routes.
-  - Persistence not yet validated as cross-device roaming behavior.
+  - Cross-device roaming still needs explicit staging validation evidence.
 
 ## FM9.4 Workspace Layout Optimization
-- Status: Partial
+- Status: Implemented (core)
 - Observed:
-  - Sidebar collapse button exists.
-  - Density preference state exists and dispatches update event.
+  - Global Ctrl/Cmd+B sidebar binding is active.
+  - Density mode is propagated to key task/project/workspace list surfaces and persisted.
 - Gap:
-  - Missing global Ctrl/Cmd + B binding.
-  - Density is not consistently propagated across task/table/list surfaces.
+  - Remaining lower-traffic surfaces still require consistency pass.
 
 ## FM9.5 Typographic Accessibility
-- Status: Partial
+- Status: Implemented (core)
 - Observed:
-  - Font scaling controls exist.
-  - Font family options include system/dyslexic/monospace in UI/types.
+  - Global font scaling is applied at runtime and persisted.
+  - Dyslexic font is integrated and can be applied globally.
+  - Font family options are wired into runtime behavior.
 - Gap:
-  - No verified dyslexic font integration (font asset loading and global application).
-  - Not all UI typography is rem-tokenized consistently.
+  - Legacy screens still need full rem-token consistency audit.
 
 ## FM9.6 Notification Granularity
-- Status: Partial
+- Status: Implemented (core)
 - Observed:
-  - Notification settings tab exists.
-  - Notification service has preferences/channels methods.
+  - Notification matrix is API-backed with persistence and reload fidelity.
+  - DND preferences and per-event channel behavior are wired through personalization API.
 - Gap:
-  - Settings tab still mostly local/mock state, not fully wired to preferences API.
-  - DND schedule and exception flow not fully persisted and enforced.
+  - DND enforcement/exception behavior needs explicit integration test evidence at runtime boundaries.
 
 ## FM9.7 Keyboard Shortcuts & Power Usage
 - Status: Partial
 - Observed:
-  - Cmd/Ctrl+K and ? are implemented globally.
-  - Command palette and shortcut modal are present.
+  - Cmd/Ctrl+K, ?, Ctrl/Cmd+B, and C create-task flow are implemented globally.
+  - Shortcut cheatsheet is aligned to registered active bindings.
 - Gap:
-  - Missing required shortcut C for create task flow.
   - J/K/Space contextual behavior not consistently wired in Kanban/List runtime.
-  - Shortcut cheatsheet contains entries beyond actual active bindings.
 
 ## FM9.8 Color Vision Deficiency Support
 - Status: Partial
@@ -102,6 +96,7 @@ Current assessment:
 # 3) Delivery Plan for Missing Implementation
 
 ## Phase 1 - Foundation Alignment (1 sprint)
+- Status: Completed
 - Align FE-BE API contracts for personalization endpoints.
 - Add centralized i18n bootstrap and fallback policy (en-US fallback).
 - Build shared locale formatter utilities for date/time/number/currency.
@@ -110,6 +105,7 @@ Current assessment:
   - API calls in personalization module return successful E2E for current user.
 
 ## Phase 2 - Core FM9 Behavior (1 sprint)
+- Status: Completed
 - Implement notification matrix persistence (in-app/email/push) with DND schedule and exceptions.
 - Add global Ctrl/Cmd + B and required C shortcut behavior.
 - Implement density token application to high-traffic list/table/task views.
@@ -117,6 +113,7 @@ Current assessment:
   - FM9.4, FM9.6, FM9.7 AC baseline behaviors testable in UI without mocks.
 
 ## Phase 3 - Advanced Personalization (1 sprint)
+- Status: Completed (core), hardening pending
 - Implement dashboard drag-drop and resize using dnd-kit/grid behavior.
 - Persist and restore layout_config across sessions/devices.
 - Integrate typographic accessibility improvements (rem consistency, dyslexic font asset, scaling integrity).
@@ -125,6 +122,7 @@ Current assessment:
   - Typography options visibly affect global UI consistently.
 
 ## Phase 4 - Accessibility Hardening & Compliance (0.5-1 sprint)
+- Status: In progress (next focus)
 - Implement real WCAG contrast checks and remediation rules.
 - Implement CVD chart palette + pattern overlays.
 - Add smoke/regression tests for FM9 AC scenarios.
@@ -142,6 +140,7 @@ Current assessment:
 - Type: Story
 - Priority: P0
 - Estimate: 3 points
+- Execution status: Done
 - Dependencies: Backend personalization routes frozen
 - Description:
   - Refactor frontend personalization service endpoints to match backend contracts.
@@ -153,6 +152,7 @@ Current assessment:
 - Type: Story
 - Priority: P0
 - Estimate: 5 points
+- Execution status: Done
 - Dependencies: None
 - Description:
   - Add i18next runtime initialization and wire into app bootstrap.
@@ -164,6 +164,7 @@ Current assessment:
 - Type: Story
 - Priority: P0
 - Estimate: 5 points
+- Execution status: Done
 - Dependencies: FM9-FE-102
 - Description:
   - Replace direct toLocaleDateString/toLocaleString usage with shared formatter utilities.
@@ -176,6 +177,7 @@ Current assessment:
 - Type: Story
 - Priority: P0
 - Estimate: 8 points
+- Execution status: Done (core)
 - Dependencies: FM9-FE-101
 - Description:
   - Wire notification settings tab to API for channel matrix and DND schedule.
@@ -187,6 +189,7 @@ Current assessment:
 - Type: Story
 - Priority: P1
 - Estimate: 5 points
+- Execution status: Done (core)
 - Dependencies: None
 - Description:
   - Add Ctrl/Cmd+B sidebar toggle and C create-task binding.
@@ -198,6 +201,7 @@ Current assessment:
 - Type: Story
 - Priority: P1
 - Estimate: 5 points
+- Execution status: Done (core)
 - Dependencies: None
 - Description:
   - Propagate comfortable/compact density through task list/table views.
@@ -210,6 +214,7 @@ Current assessment:
 - Type: Story
 - Priority: P1
 - Estimate: 8 points
+- Execution status: Done
 - Dependencies: FM9-FE-101
 - Description:
   - Implement widget reorder and resize behavior.
@@ -220,6 +225,7 @@ Current assessment:
 - Type: Story
 - Priority: P1
 - Estimate: 5 points
+- Execution status: Done (staging validation pending)
 - Dependencies: FM9-FE-301
 - Description:
   - Persist layout_config to DB and restore on different sessions/devices.
@@ -230,6 +236,7 @@ Current assessment:
 - Type: Story
 - Priority: P1
 - Estimate: 8 points
+- Execution status: Done (core)
 - Dependencies: None
 - Description:
   - Ensure rem-based scale consistency and integrate dyslexic font option.
@@ -243,6 +250,7 @@ Current assessment:
 - Type: Story
 - Priority: P1
 - Estimate: 5 points
+- Execution status: Todo (active next)
 - Dependencies: None
 - Description:
   - Replace placeholder contrast checker with real algorithm and add compliance checks.
@@ -253,6 +261,7 @@ Current assessment:
 - Type: Story
 - Priority: P1
 - Estimate: 5 points
+- Execution status: Todo
 - Dependencies: Chart components identified
 - Description:
   - Add pattern overlays with CVD color palettes for chart statuses.
@@ -308,8 +317,8 @@ FM9 frontend is considered done when:
 
 # 7) Suggested Sprint Packaging
 
-- Sprint A (P0): FM9-FE-101, 102, 103, 201
-- Sprint B (P1 core): FM9-FE-202, 203, 301
-- Sprint C (P1 finish): FM9-FE-302, 303, 401, 402
+- Sprint A (P0): FM9-FE-101, 102, 103, 201 (Completed)
+- Sprint B (P1 core): FM9-FE-202, 203, 301 (Completed)
+- Sprint C (P1 finish): FM9-FE-302, 303 (Completed core), 401, 402 (In progress)
 
 This packaging provides early user-visible value while reducing architecture rework risk.
