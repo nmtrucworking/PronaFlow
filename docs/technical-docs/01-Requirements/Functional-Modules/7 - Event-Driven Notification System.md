@@ -1,56 +1,56 @@
-﻿**Project**: PronaFlow
+Project**: PronaFlow
 **Version**: 1.0
 **State**: Draft
 _Last updated: Dec 31, 2025_
 
 ---
 # 1. Business Overview
-Trong má»™t há»‡ thá»‘ng cá»™ng tĂ¡c thá»i gian thá»±c nhÆ° PronaFlow, viá»‡c thĂ´ng bĂ¡o ká»‹p thá»i lĂ  yáº¿u tá»‘ sá»‘ng cĂ²n. Tuy nhiĂªn, ranh giá»›i giá»¯a "ThĂ´ng tin há»¯u Ă­ch" vĂ  "Spam" ráº¥t mong manh. Má»™t há»‡ thá»‘ng tá»“i sáº½ gá»­i email cho má»—i láº§n sá»­a lá»—i chĂ­nh táº£, dáº«n Ä‘áº¿n hiá»‡n tÆ°á»£ng **Má»‡t má»i vĂ¬ thĂ´ng bĂ¡o (Notification Fatigue)**.
-PhĂ¢n há»‡ sá»‘ 7 Ä‘Æ°á»£c xĂ¢y dá»±ng dá»±a trĂªn kiáº¿n trĂºc **Event-Driven Architecture (EDA)**. Thay vĂ¬ cĂ¡c Module gá»i nhau trá»±c tiáº¿p (Synchronous), chĂºng sáº½ phĂ¡t ra cĂ¡c sá»± kiá»‡n (Events) vĂ o má»™t Message Broker trung gian (Redis/RabbitMQ). Notification Service Ä‘Ă³ng vai trĂ² lĂ  "Consumer", láº¯ng nghe, lá»c, gá»™p vĂ  phĂ¢n phá»‘i thĂ´ng bĂ¡o Ä‘áº¿n ngÆ°á»i dĂ¹ng qua kĂªnh phĂ¹ há»£p nháº¥t.
-**Má»¥c tiĂªu thiáº¿t káº¿:** "ÄĂºng ngÆ°á»i - ÄĂºng lĂºc - ÄĂºng kĂªnh" (Right Person, Right Time, Right Channel).
+Trong một hệ thống cộng tác thời gian thực như PronaFlow, việc thông báo kịp thời là yếu tố sống còn. Tuy nhiên, ranh giới giữa "Thông tin hữu ích" và "Spam" rất mong manh. Một hệ thống tồi sẽ gửi email cho mỗi lần sửa lỗi chính tả, dẫn đến hiện tượng **Mệt mỏi vì thông báo (Notification Fatigue)**.
+Phân hệ số 7 được xây dựng dựa trên kiến trúc **Event-Driven Architecture (EDA)**. Thay vì các Module gọi nhau trực tiếp (Synchronous), chúng sẽ phát ra các sự kiện (Events) vào một Message Broker trung gian (Redis/RabbitMQ). Notification Service đóng vai trò là "Consumer", lắng nghe, lọc, gộp và phân phối thông báo đến người dùng qua kênh phù hợp nhất.
+**Mục tiêu thiết kế:** "Đúng người - Đúng lúc - Đúng kênh" (Right Person, Right Time, Right Channel).
 # 2. User Stories & Acceptance Criteria
-## 2.1. Feature: Intelligent Aggregation (Gá»™p thĂ´ng bĂ¡o thĂ´ng minh)
+## 2.1. Feature: Intelligent Aggregation (Gộp thông báo thông minh)
 ### User Story 7.1
-LĂ  má»™t NgÆ°á»i dĂ¹ng báº­n rá»™n, TĂ´i muá»‘n nháº­n Ä‘Æ°á»£c má»™t thĂ´ng bĂ¡o tĂ³m táº¯t thay vĂ¬ hĂ ng loáº¡t thĂ´ng bĂ¡o rá»i ráº¡c khi ai Ä‘Ă³ thá»±c hiá»‡n nhiá»u thao tĂ¡c nhá» liĂªn tiáº¿p, Äá»ƒ há»™p thÆ° cá»§a tĂ´i khĂ´ng bá»‹ quĂ¡ táº£i (Inbox Zero).
+Là một Người dùng bận rộn, Tôi muốn nhận được một thông báo tóm tắt thay vì hàng loạt thông báo rời rạc khi ai đó thực hiện nhiều thao tác nhỏ liên tiếp, Để hộp thư của tôi không bị quá tải (Inbox Zero).
 ### Acceptance Criteria (#AC)
-#### AC 1 - Debounce Logic (Thuáº­t toĂ¡n chá»‘ng rung)
-- **Scenario:** User A sá»­a Title, sau Ä‘Ă³ sá»­a Description, rá»“i Ä‘á»•i Due Date cá»§a cĂ¹ng má»™t Task trong vĂ²ng 1 phĂºt.
-- **System Behavior:** Há»‡ thá»‘ng khĂ´ng gá»­i 3 thĂ´ng bĂ¡o. NĂ³ chá» má»™t khoáº£ng thá»i gian Ä‘á»‡m (Buffer Time, vĂ­ dá»¥: 2 phĂºt). Sau khi khĂ´ng cĂ³ hĂ nh Ä‘á»™ng má»›i, nĂ³ gá»­i 1 thĂ´ng bĂ¡o duy nháº¥t: _"User A Ä‘Ă£ cáº­p nháº­t 3 thuá»™c tĂ­nh cá»§a Task X"_.
-#### AC 2 - Batching (Gom nhĂ³m)
-- **Display:** Trong menu thĂ´ng bĂ¡o In-app, cĂ¡c thĂ´ng bĂ¡o cĂ¹ng loáº¡i pháº£i Ä‘Æ°á»£c nhĂ³m láº¡i.
-    - _Bad:_ `[DĂ²ng 1: A like comment]`, `[DĂ²ng 2: B like comment]`, `[DĂ²ng 3: C like comment]`.
-    - _Good:_ "A, B vĂ  C Ä‘Ă£ thĂ­ch bĂ¬nh luáº­n cá»§a báº¡n."
-## 2.2. Feature: Real-time Delivery & Fallback (Chuyá»ƒn phĂ¡t thá»i gian thá»±c & Dá»± phĂ²ng)
+#### AC 1 - Debounce Logic (Thuật toán chống rung)
+- **Scenario:** User A sửa Title, sau đó sửa Description, rồi đổi Due Date của cùng một Task trong vòng 1 phút.
+- **System Behavior:** Hệ thống không gửi 3 thông báo. Nó chờ một khoảng thời gian đệm (Buffer Time, ví dụ: 2 phút). Sau khi không có hành động mới, nó gửi 1 thông báo duy nhất: _"User A đã cập nhật 3 thuộc tính của Task X"_.
+#### AC 2 - Batching (Gom nhóm)
+- **Display:** Trong menu thông báo In-app, các thông báo cùng loại phải được nhóm lại.
+    - _Bad:_ `[Dòng 1: A like comment]`, `[Dòng 2: B like comment]`, `[Dòng 3: C like comment]`.
+    - _Good:_ "A, B và C đã thích bình luận của bạn."
+## 2.2. Feature: Real-time Delivery & Fallback (Chuyển phát thời gian thực & Dự phòng)
 ### User Story 7.2
-LĂ  má»™t NgÆ°á»i quáº£n lĂ½, TĂ´i muá»‘n biáº¿t ngay láº­p tá»©c khi má»™t dá»± Ă¡n chuyá»ƒn sang tráº¡ng thĂ¡i "Rá»§i ro", nhÆ°ng náº¿u tĂ´i khĂ´ng online, hĂ£y gá»­i email cho tĂ´i.
+Là một Người quản lý, Tôi muốn biết ngay lập tức khi một dự án chuyển sang trạng thái "Rủi ro", nhưng nếu tôi không online, hãy gửi email cho tôi.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Presence Awareness Routing (Äá»‹nh tuyáº¿n theo hiá»‡n diá»‡n)
+#### AC 1 - Presence Awareness Routing (Định tuyến theo hiện diện)
 - **Logic:**
-    - IF `User.is_online == true`: Gá»­i qua **WebSocket** (Toast Notification gĂ³c mĂ n hĂ¬nh). KhĂ´ng gá»­i Email.
-    - IF `User.is_online == false`: Gá»­i qua **Email** hoáº·c **Mobile Push**.
-- **Benefit:** TrĂ¡nh lĂ m phiá»n ngÆ°á»i dĂ¹ng báº±ng email khi há» Ä‘ang ngá»“i ngay trÆ°á»›c mĂ n hĂ¬nh á»©ng dá»¥ng.
-#### AC 2 - Ephemeral vs. Persistent (Táº¡m thá»i vs. VÄ©nh viá»…n)
-- CĂ¡c thĂ´ng bĂ¡o dáº¡ng "Toast" (User A Ä‘ang nháº­p liá»‡u...) lĂ  táº¡m thá»i (Ephemeral), khĂ´ng lÆ°u vĂ o Database.
-- CĂ¡c thĂ´ng bĂ¡o nghiá»‡p vá»¥ (User A gĂ¡n task cho báº¡n) lĂ  vÄ©nh viá»…n (Persistent), pháº£i lÆ°u vĂ o Database Ä‘á»ƒ xem láº¡i trong History.
-## 2.3. Feature: Unsubscribe Strategy (Chiáº¿n lÆ°á»£c Há»§y Ä‘Äƒng kĂ½)
+    - IF `User.is_online == true`: Gửi qua **WebSocket** (Toast Notification góc màn hình). Không gửi Email.
+    - IF `User.is_online == false`: Gửi qua **Email** hoặc **Mobile Push**.
+- **Benefit:** Tránh làm phiền người dùng bằng email khi họ đang ngồi ngay trước màn hình ứng dụng.
+#### AC 2 - Ephemeral vs. Persistent (Tạm thời vs. Vĩnh viễn)
+- Các thông báo dạng "Toast" (User A đang nhập liệu...) là tạm thời (Ephemeral), không lưu vào Database.
+- Các thông báo nghiệp vụ (User A gán task cho bạn) là vĩnh viễn (Persistent), phải lưu vào Database để xem lại trong History.
+## 2.3. Feature: Unsubscribe Strategy (Chiến lược Hủy đăng ký)
 ### User Story 7.3
-LĂ  má»™t NgÆ°á»i dĂ¹ng, TĂ´i muá»‘n dá»… dĂ ng táº¯t thĂ´ng bĂ¡o tá»« má»™t Task cá»¥ thá»ƒ mĂ  tĂ´i khĂ´ng cĂ²n quan tĂ¢m, ngay cáº£ khi tĂ´i váº«n lĂ  thĂ nh viĂªn dá»± Ă¡n.
+Là một Người dùng, Tôi muốn dễ dàng tắt thông báo từ một Task cụ thể mà tôi không còn quan tâm, ngay cả khi tôi vẫn là thành viên dự án.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Granular Subscription
-- Má»—i Task/Project cĂ³ má»™t nĂºt "Watch/Unwatch" (hĂ¬nh con máº¯t).
-- Há»‡ thá»‘ng tĂ´n trá»ng quyá»n nĂ y cao hÆ¡n quyá»n thĂ nh viĂªn. Náº¿u User chá»n "Unwatch", há» sáº½ khĂ´ng nháº­n thĂ´ng bĂ¡o trá»« khi Ä‘Æ°á»£c @mention trá»±c tiáº¿p.
+- Mỗi Task/Project có một nút "Watch/Unwatch" (hình con mắt).
+- Hệ thống tôn trọng quyền này cao hơn quyền thành viên. Nếu User chọn "Unwatch", họ sẽ không nhận thông báo trừ khi được @mention trực tiếp.
 
-## 2.4. Feature: Notification Templating Engine (CĂ´ng cá»¥ Quáº£n lĂ½ Máº«u)
+## 2.4. Feature: Notification Templating Engine (Công cụ Quản lý Mẫu)
 
 ### User Story 7.4
 
-LĂ  má»™t System Admin, TĂ´i muá»‘n Ä‘á»‹nh nghÄ©a ná»™i dung thĂ´ng bĂ¡o thĂ´ng qua cĂ¡c máº«u (Templates) há»— trá»£ Ä‘a ngĂ´n ngá»¯ vĂ  biáº¿n Ä‘á»™ng, Äá»ƒ dá»… dĂ ng thay Ä‘á»•i ná»™i dung marketing hoáº·c cáº£nh bĂ¡o há»‡ thá»‘ng mĂ  khĂ´ng cáº§n sá»­a code (Hard-code) vĂ  deploy láº¡i server.
+Là một System Admin, Tôi muốn định nghĩa nội dung thông báo thông qua các mẫu (Templates) hỗ trợ đa ngôn ngữ và biến động, Để dễ dàng thay đổi nội dung marketing hoặc cảnh báo hệ thống mà không cần sửa code (Hard-code) và deploy lại server.
 
 ### Acceptance Criteria (#AC)
 
-#### AC 1 - Variable Injection (TiĂªm biáº¿n)
+#### AC 1 - Variable Injection (Tiêm biến)
 
-- **Mechanism:** Sá»­ dá»¥ng cĂº phĂ¡p Mustache hoáº·c Jinja2.
+- **Mechanism:** Sử dụng cú pháp Mustache hoặc Jinja2.
     
     - _Template:_ `Hello {{user_name}}, task {{task_title}} is due in {{hours}} hours.`
         
@@ -59,73 +59,73 @@ LĂ  má»™t System Admin, TĂ´i muá»‘n Ä‘á»‹nh nghÄ©a ná»™
     - _Output:_ "Hello Truc, task Fix Bug UI is due in 2 hours."
         
 
-#### AC 2 - Localization Support (Há»— trá»£ Äa ngá»¯)
+#### AC 2 - Localization Support (Hỗ trợ Đa ngữ)
 
-- Há»‡ thá»‘ng tá»± Ä‘á»™ng chá»n Template phĂ¹ há»£p dá»±a trĂªn cĂ i Ä‘áº·t ngĂ´n ngá»¯ (`user_lang`) cá»§a ngÆ°á»i nháº­n (Receiver).
+- Hệ thống tự động chọn Template phù hợp dựa trên cài đặt ngôn ngữ (`user_lang`) của người nhận (Receiver).
     
-- Náº¿u khĂ´ng tĂ¬m tháº¥y máº«u tiáº¿ng Viá»‡t, tá»± Ä‘á»™ng fallback vá» tiáº¿ng Anh.
+- Nếu không tìm thấy mẫu tiếng Việt, tự động fallback về tiếng Anh.
     
 
-## 2.5. Feature: Interaction Tracking (Theo dĂµi TÆ°Æ¡ng tĂ¡c)
+## 2.5. Feature: Interaction Tracking (Theo dõi Tương tác)
 
 ### User Story 7.5
 
-LĂ  má»™t Product Manager, TĂ´i muá»‘n biáº¿t tá»· lá»‡ má»Ÿ (Open Rate) vĂ  tá»· lá»‡ click (CTR) cá»§a cĂ¡c thĂ´ng bĂ¡o, Äá»ƒ Ä‘Ă¡nh giĂ¡ hiá»‡u quáº£ cá»§a há»‡ thá»‘ng vĂ  tinh chá»‰nh chiáº¿n lÆ°á»£c gá»­i tin.
+Là một Product Manager, Tôi muốn biết tỷ lệ mở (Open Rate) và tỷ lệ click (CTR) của các thông báo, Để đánh giá hiệu quả của hệ thống và tinh chỉnh chiến lược gửi tin.
 
 ### Acceptance Criteria (#AC)
 
-#### AC 1 - Read Receipts (BĂ¡o Ä‘Ă£ xem)
+#### AC 1 - Read Receipts (Báo đã xem)
 
-- **Logic:** Khi ngÆ°á»i dĂ¹ng má»Ÿ danh sĂ¡ch thĂ´ng bĂ¡o hoáº·c click vĂ o thĂ´ng bĂ¡o Toast.
+- **Logic:** Khi người dùng mở danh sách thông báo hoặc click vào thông báo Toast.
     
-- **Action:** Gá»­i sá»± kiá»‡n `mark_as_read` lĂªn server. Biá»ƒu tÆ°á»£ng "cháº¥m Ä‘á»" (Unread Badge) pháº£i biáº¿n máº¥t tá»©c thĂ¬ trĂªn táº¥t cáº£ cĂ¡c thiáº¿t bá»‹ khĂ¡c cá»§a ngÆ°á»i dĂ¹ng Ä‘Ă³ (Cross-device Sync).
+- **Action:** Gửi sự kiện `mark_as_read` lên server. Biểu tượng "chấm đỏ" (Unread Badge) phải biến mất tức thì trên tất cả các thiết bị khác của người dùng đó (Cross-device Sync).
     
 
 #### AC 2 - Actionable Notifications
 
-- Cho phĂ©p Ä‘Ă­nh kĂ¨m hĂ nh Ä‘á»™ng nhanh (Quick Actions) ngay trong thĂ´ng bĂ¡o Push/Email (vĂ­ dá»¥: nĂºt "Approve", "Reply").
+- Cho phép đính kèm hành động nhanh (Quick Actions) ngay trong thông báo Push/Email (ví dụ: nút "Approve", "Reply").
     
-- Ghi nháº­n log khi ngÆ°á»i dĂ¹ng tÆ°Æ¡ng tĂ¡c qua cĂ¡c nĂºt nĂ y.
+- Ghi nhận log khi người dùng tương tác qua các nút này.
 # 3. Business Rules & Technical Constraints
-## 3.1. CÆ¡ cháº¿ Thá»­ láº¡i (Retry Mechanism & Exponential Backoff)
-Do phá»¥ thuá»™c vĂ o cĂ¡c dá»‹ch vá»¥ bĂªn thá»© 3 (SMTP Server cho Email, Firebase cho Push), viá»‡c gá»­i tháº¥t báº¡i lĂ  Ä‘iá»u khĂ´ng trĂ¡nh khá»i.
-- **Rule:** Náº¿u gá»­i Email tháº¥t báº¡i, há»‡ thá»‘ng pháº£i tá»± Ä‘á»™ng thá»­ láº¡i tá»‘i Ä‘a 3 láº§n.
-- **Backoff:** Thá»i gian chá» giá»¯a cĂ¡c láº§n thá»­ tÄƒng theo cáº¥p sá»‘ nhĂ¢n: 1s -> 5s -> 25s. Náº¿u sau 3 láº§n váº«n lá»—i -> Ghi log lá»—i vĂ  Ä‘Ă¡nh dáº¥u thĂ´ng bĂ¡o lĂ  "Failed".
-## 3.2. TĂ­nh cháº¥t Idempotency (Báº¥t biáº¿n)
-- **Váº¥n Ä‘á»:** Trong kiáº¿n trĂºc phĂ¢n tĂ¡n, má»™t sá»± kiá»‡n cĂ³ thá»ƒ bá»‹ gá»­i trĂ¹ng láº·p (Duplicate Events).
-- **Giáº£i phĂ¡p:** Notification Service pháº£i kiá»ƒm tra `Event_ID`. Náº¿u `Event_ID` nĂ y Ä‘Ă£ Ä‘Æ°á»£c xá»­ lĂ½, há»‡ thá»‘ng pháº£i bá» qua Ä‘á»ƒ Ä‘áº£m báº£o ngÆ°á»i dĂ¹ng khĂ´ng bao giá» nháº­n 2 email giá»‘ng há»‡t nhau.
-## 3.3. Báº£o máº­t ná»™i dung (Security)
+## 3.1. Cơ chế Thử lại (Retry Mechanism & Exponential Backoff)
+Do phụ thuộc vào các dịch vụ bên thứ 3 (SMTP Server cho Email, Firebase cho Push), việc gửi thất bại là điều không tránh khỏi.
+- **Rule:** Nếu gửi Email thất bại, hệ thống phải tự động thử lại tối đa 3 lần.
+- **Backoff:** Thời gian chờ giữa các lần thử tăng theo cấp số nhân: 1s -> 5s -> 25s. Nếu sau 3 lần vẫn lỗi -> Ghi log lỗi và đánh dấu thông báo là "Failed".
+## 3.2. Tính chất Idempotency (Bất biến)
+- **Vấn đề:** Trong kiến trúc phân tán, một sự kiện có thể bị gửi trùng lặp (Duplicate Events).
+- **Giải pháp:** Notification Service phải kiểm tra `Event_ID`. Nếu `Event_ID` này đã được xử lý, hệ thống phải bỏ qua để đảm bảo người dùng không bao giờ nhận 2 email giống hệt nhau.
+## 3.3. Bảo mật nội dung (Security)
 
-- **Email Body:** KhĂ´ng bao giá» chá»©a thĂ´ng tin nháº¡y cáº£m (Máº­t kháº©u, Dá»¯ liá»‡u tĂ i chĂ­nh) trong ná»™i dung Email. Chá»‰ gá»­i Ä‘Æ°á»ng dáº«n an toĂ n (Secure Link) trá» vá» á»©ng dá»¥ng PronaFlow.
-## 3.4. Quy táº¯c HĂ ng Ä‘á»£i Æ¯u tiĂªn (Priority Queues & QoS)
+- **Email Body:** Không bao giờ chứa thông tin nhạy cảm (Mật khẩu, Dữ liệu tài chính) trong nội dung Email. Chỉ gửi đường dẫn an toàn (Secure Link) trỏ về ứng dụng PronaFlow.
+## 3.4. Quy tắc Hàng đợi Ưu tiên (Priority Queues & QoS)
 
-KhĂ´ng pháº£i táº¥t cáº£ thĂ´ng bĂ¡o Ä‘á»u bĂ¬nh Ä‘áº³ng. Há»‡ thá»‘ng phĂ¢n chia 3 lĂ n Ä‘Æ°á»ng xá»­ lĂ½ (Processing Lanes):
-1. **High Priority (Critical):** Cáº£nh bĂ¡o báº£o máº­t, Lá»—i há»‡ thá»‘ng, SLA Breach.
-    - _QoS:_ Gá»­i ngay láº­p tá»©c (< 1s). Bá» qua logic Debounce.
+Không phải tất cả thông báo đều bình đẳng. Hệ thống phân chia 3 làn đường xử lý (Processing Lanes):
+1. **High Priority (Critical):** Cảnh báo bảo mật, Lỗi hệ thống, SLA Breach.
+    - _QoS:_ Gửi ngay lập tức (< 1s). Bỏ qua logic Debounce.
 2. **Medium Priority (Transactional):** Mention, Task Assignment.
-    - _QoS:_ Gá»­i trong vĂ²ng 5-10s. Ăp dá»¥ng Debounce.
-3. **Low Priority (Promotional/Bulk):** Báº£n tin tuáº§n (Weekly Digest), Lá»i nháº¯c chung.
-    - _QoS:_ Xá»­ lĂ½ khi tĂ i nguyĂªn ráº£nh rá»—i (Background Jobs).
-## 3.5. Quy táº¯c TTL (Time-To-Live)
-- Äá»‘i vá»›i cĂ¡c thĂ´ng bĂ¡o cĂ³ tĂ­nh thá»i Ä‘iá»ƒm (vĂ­ dá»¥: "Cuá»™c há»p báº¯t Ä‘áº§u trong 5 phĂºt"), náº¿u vĂ¬ lĂ½ do ká»¹ thuáº­t mĂ  sau 30 phĂºt má»›i gá»­i Ä‘Æ°á»£c, há»‡ thá»‘ng pháº£i **Há»§y bá» (Discard)** thĂ´ng bĂ¡o Ä‘Ă³.
-- _LĂ½ do:_ Viá»‡c nháº­n thĂ´ng bĂ¡o há»p khi cuá»™c há»p Ä‘Ă£ káº¿t thĂºc gĂ¢y tráº£i nghiá»‡m tiĂªu cá»±c (Negative UX).
-# 4. Theoretical Basis (CÆ¡ sá»Ÿ LĂ½ luáº­n)
-## 4.1. MĂ´ hĂ¬nh Observer (Observer Pattern - GoF)
-ÄĂ¢y lĂ  Design Pattern ná»n táº£ng cho module nĂ y.
-- **Subject:** LĂ  cĂ¡c thá»±c thá»ƒ nghiá»‡p vá»¥ (Task, Project).
-- **Observer:** LĂ  cĂ¡c User Ä‘ang theo dĂµi (Watchers).
-- **Lá»£i Ă­ch:** Giáº£m sá»± phá»¥ thuá»™c cháº·t cháº½ (Decoupling). Module "Quáº£n lĂ½ Task" khĂ´ng cáº§n biáº¿t ai Ä‘ang theo dĂµi nĂ³, nĂ³ chá»‰ cáº§n báº¯n sá»± kiá»‡n "Task Updated". Module Notification sáº½ lo pháº§n cĂ²n láº¡i.
-## 4.2. LĂ½ thuyáº¿t TĂ­n hiá»‡u (Signal Detection Theory)
-LĂ½ thuyáº¿t nĂ y phĂ¢n biá»‡t giá»¯a "TĂ­n hiá»‡u" (ThĂ´ng tin quan trá»ng) vĂ  "Nhiá»…u" (ThĂ´ng tin vĂ´ giĂ¡ trá»‹).
-- **Ăp dá»¥ng:** CĂ¡c tĂ­nh nÄƒng _Debounce_ vĂ  _Aggregation_ (AC 7.1) Ä‘Æ°á»£c thiáº¿t káº¿ Ä‘á»ƒ tÄƒng **Tá»· lá»‡ TĂ­n hiá»‡u trĂªn Nhiá»…u (Signal-to-Noise Ratio)**. Má»™t há»‡ thá»‘ng cĂ³ tá»· lá»‡ nĂ y cao sáº½ gia tÄƒng lĂ²ng tin cá»§a ngÆ°á»i dĂ¹ng; ngÆ°á»£c láº¡i, há» sáº½ phá»›t lá» hoáº·c táº¯t toĂ n bá»™ thĂ´ng bĂ¡o (Desensitization).
-## 4.3. MĂ´ hĂ¬nh HĂ nh vi Fogg (Fogg Behavior Model)
+    - _QoS:_ Gửi trong vòng 5-10s. Áp dụng Debounce.
+3. **Low Priority (Promotional/Bulk):** Bản tin tuần (Weekly Digest), Lời nhắc chung.
+    - _QoS:_ Xử lý khi tài nguyên rảnh rỗi (Background Jobs).
+## 3.5. Quy tắc TTL (Time-To-Live)
+- Đối với các thông báo có tính thời điểm (ví dụ: "Cuộc họp bắt đầu trong 5 phút"), nếu vì lý do kỹ thuật mà sau 30 phút mới gửi được, hệ thống phải **Hủy bỏ (Discard)** thông báo đó.
+- _Lý do:_ Việc nhận thông báo họp khi cuộc họp đã kết thúc gây trải nghiệm tiêu cực (Negative UX).
+# 4. Theoretical Basis (Cơ sở Lý luận)
+## 4.1. Mô hình Observer (Observer Pattern - GoF)
+Đây là Design Pattern nền tảng cho module này.
+- **Subject:** Là các thực thể nghiệp vụ (Task, Project).
+- **Observer:** Là các User đang theo dõi (Watchers).
+- **Lợi ích:** Giảm sự phụ thuộc chặt chẽ (Decoupling). Module "Quản lý Task" không cần biết ai đang theo dõi nó, nó chỉ cần bắn sự kiện "Task Updated". Module Notification sẽ lo phần còn lại.
+## 4.2. Lý thuyết Tín hiệu (Signal Detection Theory)
+Lý thuyết này phân biệt giữa "Tín hiệu" (Thông tin quan trọng) và "Nhiễu" (Thông tin vô giá trị).
+- **Áp dụng:** Các tính năng _Debounce_ và _Aggregation_ (AC 7.1) được thiết kế để tăng **Tỷ lệ Tín hiệu trên Nhiễu (Signal-to-Noise Ratio)**. Một hệ thống có tỷ lệ này cao sẽ gia tăng lòng tin của người dùng; ngược lại, họ sẽ phớt lờ hoặc tắt toàn bộ thông báo (Desensitization).
+## 4.3. Mô hình Hành vi Fogg (Fogg Behavior Model)
 $$B = MAP$$
 (Behavior = Motivation + Ability + Prompt).
-- **Prompt (Lá»i nháº¯c):** ThĂ´ng bĂ¡o chĂ­nh lĂ  Prompt.
-- **Ăp dá»¥ng:** Äá»ƒ thĂ´ng bĂ¡o dáº«n Ä‘áº¿n hĂ nh Ä‘á»™ng (vĂ­ dá»¥: VĂ o review code), nĂ³ pháº£i xuáº¥t hiá»‡n khi ngÆ°á»i dĂ¹ng cĂ³ Ä‘á»§ Äá»™ng lá»±c vĂ  Kháº£ nÄƒng. Viá»‡c _Routing theo hiá»‡n diá»‡n_ (AC 7.2) Ä‘áº£m báº£o Prompt xuáº¥t hiá»‡n á»Ÿ nÆ¡i ngÆ°á»i dĂ¹ng dá»… tiáº¿p cáº­n nháº¥t (Ability cao nháº¥t), lĂ m tÄƒng xĂ¡c suáº¥t chuyá»ƒn Ä‘á»•i hĂ nh vi.
-## 4.4. Äá»‹nh luáº­t Hick vá» Pháº£n há»“i (Hick's Law in Feedback)
-Máº·c dĂ¹ Äá»‹nh luáº­t Hick thÆ°á»ng nĂ³i vá» viá»‡c ra quyáº¿t Ä‘á»‹nh, trong ngá»¯ cáº£nh thĂ´ng bĂ¡o, nĂ³ liĂªn quan Ä‘áº¿n **Äá»™ phá»©c táº¡p cá»§a hĂ nh Ä‘á»™ng**.
-- **Ăp dá»¥ng:** TĂ­nh nÄƒng _Actionable Notifications_ (AC 7.5) giĂºp giáº£m thiá»ƒu sá»‘ bÆ°á»›c thao tĂ¡c. Thay vĂ¬ pháº£i [Click thĂ´ng bĂ¡o -> Chá» má»Ÿ App -> TĂ¬m nĂºt Approve], ngÆ°á»i dĂ¹ng cĂ³ thá»ƒ Approve ngay tá»« mĂ n hĂ¬nh khĂ³a. Äiá»u nĂ y giáº£m "ma sĂ¡t" (Friction), tÄƒng tá»‘c Ä‘á»™ pháº£n há»“i chung cá»§a quy trĂ¬nh cá»™ng tĂ¡c.
-## 4.5. MĂ´ hĂ¬nh CAP (CAP Theorem) trong Thiáº¿t káº¿ PhĂ¢n tĂ¡n
-Äá»‘i vá»›i Notification System, chĂºng ta Æ°u tiĂªn **Availability (TĂ­nh sáºµn sĂ ng)** vĂ  **Partition Tolerance (Kháº£ nÄƒng chá»‹u lá»—i phĂ¢n vĂ¹ng)** hÆ¡n lĂ  Consistency (TĂ­nh nháº¥t quĂ¡n tá»©c thĂ¬).
-- **Giáº£i thĂ­ch:** Cháº¥p nháº­n viá»‡c tráº¡ng thĂ¡i "ÄĂ£ Ä‘á»c" cĂ³ thá»ƒ khĂ´ng Ä‘á»“ng bá»™ tá»©c thĂ¬ giá»¯a Mobile vĂ  Desktop trong vĂ i giĂ¢y (Eventual Consistency), miá»…n lĂ  thĂ´ng bĂ¡o luĂ´n Ä‘Æ°á»£c gá»­i Ä‘i thĂ nh cĂ´ng.
+- **Prompt (Lời nhắc):** Thông báo chính là Prompt.
+- **Áp dụng:** Để thông báo dẫn đến hành động (ví dụ: Vào review code), nó phải xuất hiện khi người dùng có đủ Động lực và Khả năng. Việc _Routing theo hiện diện_ (AC 7.2) đảm bảo Prompt xuất hiện ở nơi người dùng dễ tiếp cận nhất (Ability cao nhất), làm tăng xác suất chuyển đổi hành vi.
+## 4.4. Định luật Hick về Phản hồi (Hick's Law in Feedback)
+Mặc dù Định luật Hick thường nói về việc ra quyết định, trong ngữ cảnh thông báo, nó liên quan đến **Độ phức tạp của hành động**.
+- **Áp dụng:** Tính năng _Actionable Notifications_ (AC 7.5) giúp giảm thiểu số bước thao tác. Thay vì phải [Click thông báo -> Chờ mở App -> Tìm nút Approve], người dùng có thể Approve ngay từ màn hình khóa. Điều này giảm "ma sát" (Friction), tăng tốc độ phản hồi chung của quy trình cộng tác.
+## 4.5. Mô hình CAP (CAP Theorem) trong Thiết kế Phân tán
+Đối với Notification System, chúng ta ưu tiên **Availability (Tính sẵn sàng)** và **Partition Tolerance (Khả năng chịu lỗi phân vùng)** hơn là Consistency (Tính nhất quán tức thì).
+- **Giải thích:** Chấp nhận việc trạng thái "Đã đọc" có thể không đồng bộ tức thì giữa Mobile và Desktop trong vài giây (Eventual Consistency), miễn là thông báo luôn được gửi đi thành công.

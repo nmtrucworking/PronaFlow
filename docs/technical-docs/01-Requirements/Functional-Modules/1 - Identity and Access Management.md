@@ -1,121 +1,120 @@
-﻿**Project**: PronaFlow 
+**Project**: PronaFlow 
 **Version**: 1.1 
 **State**: Draft 
 _**Last updated:** Jan 04, 2026_
 
 ---
 # 1. Business Overview
-PhĂ¢n há»‡ **Identity and Access Management (IAM)** Ä‘Ă³ng vai trĂ² lĂ  táº§ng kiá»ƒm soĂ¡t an ninh cá»‘t lĂµi cá»§a há»‡ thá»‘ng PronaFlow. Má»¥c tiĂªu cá»§a phĂ¢n há»‡ nĂ y lĂ  thiáº¿t láº­p vĂ  duy trĂ¬ khuĂ´n khá»• báº£o máº­t dá»±a trĂªn mĂ´ hĂ¬nh **AAA** (Authentication - Authorization - Accounting/Auditing). Trong kiáº¿n trĂºc pháº§n má»m SaaS (Software-as-a-Service), IAM Ä‘áº£m nhiá»‡m chá»©c nÄƒng Ä‘á»‹nh danh ngÆ°á»i dĂ¹ng, xĂ¡c thá»±c quyá»n truy cáº­p vĂ  Ä‘áº£m báº£o tĂ­nh toĂ n váº¹n cá»§a phiĂªn lĂ m viá»‡c Ä‘á»‘i vá»›i tĂ i nguyĂªn dá»¯ liá»‡u cá»§a tá»«ng Tenant (KhĂ¡ch hĂ ng/Tá»• chá»©c).
+Phân hệ **Identity and Access Management (IAM)** đóng vai trò là tầng kiểm soát an ninh cốt lõi của hệ thống PronaFlow. Mục tiêu của phân hệ này là thiết lập và duy trì khuôn khổ bảo mật dựa trên mô hình **AAA** (Authentication - Authorization - Accounting/Auditing). Trong kiến trúc phần mềm SaaS (Software-as-a-Service), IAM đảm nhiệm chức năng định danh người dùng, xác thực quyền truy cập và đảm bảo tính toàn vẹn của phiên làm việc đối với tài nguyên dữ liệu của từng Tenant (Khách hàng/Tổ chức).
 # 2. User Stories & Acceptance Criteria
-## 2.1. Feature: Identity Lifecycle Management (Quáº£n lĂ½ VĂ²ng Ä‘á»i Äá»‹nh danh)
+## 2.1. Feature: Identity Lifecycle Management (Quản lý Vòng đời Định danh)
 ### User Story 1.1
-LĂ  má»™t NgÆ°á»i dĂ¹ng má»›i, TĂ´i muá»‘n Ä‘Äƒng kĂ½ tĂ i khoáº£n vĂ  xĂ¡c thá»±c Ä‘á»‹a chá»‰ email, Äá»ƒ Ä‘áº£m báº£o danh tĂ­nh cá»§a tĂ´i lĂ  duy nháº¥t vĂ  an toĂ n trÆ°á»›c khi tham gia vĂ o cĂ¡c Workspace.
+Là một Người dùng mới, Tôi muốn đăng ký tài khoản và xác thực địa chỉ email, Để đảm bảo danh tính của tôi là duy nhất và an toàn trước khi tham gia vào các Workspace.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Input Validation (Kiá»ƒm tra dá»¯ liá»‡u Ä‘áº§u vĂ o)
-- **Constraint:** Há»‡ thá»‘ng pháº£i kiá»ƒm tra Ä‘á»‹nh dáº¡ng dá»¯ liá»‡u trÆ°á»›c khi xá»­ lĂ½:
- - `Email`: Pháº£i Ä‘Ăºng Ä‘á»‹nh dáº¡ng email tiĂªu chuáº©n.
- - `Username`: Chá»‰ chá»©a chá»¯ cĂ¡i, sá»‘, gáº¡ch dÆ°á»›i; khĂ´ng chá»©a khoáº£ng tráº¯ng; Ä‘á»™ dĂ i 3-30 kĂ½ tá»±.
- - `Password`: Pháº£i Ä‘áº¡t Ä‘á»™ máº¡nh an toĂ n (Tá»‘i thiá»ƒu 12 kĂ½ tá»±, bao gá»“m chá»¯ hoa, thÆ°á»ng, sá»‘ vĂ  kĂ½ tá»± Ä‘áº·c biá»‡t).
-#### AC 2 - Email Verification (XĂ¡c thá»±c Email)
-- **Flow:** Sau khi ngÆ°á»i dĂ¹ng Ä‘Äƒng kĂ½, tĂ i khoáº£n Ä‘Æ°á»£c táº¡o á»Ÿ tráº¡ng thĂ¡i `PENDING` (Chá» kĂ­ch hoáº¡t).
-- **System Behavior:** Há»‡ thá»‘ng gá»­i má»™t email chá»©a liĂªn káº¿t kĂ­ch hoáº¡t (cĂ³ hiá»‡u lá»±c trong 24 giá»).
-- **Result:** Khi ngÆ°á»i dĂ¹ng truy cáº­p liĂªn káº¿t, tráº¡ng thĂ¡i tĂ i khoáº£n chuyá»ƒn sang `ACTIVE`. Náº¿u liĂªn káº¿t háº¿t háº¡n, ngÆ°á»i dĂ¹ng pháº£i yĂªu cáº§u gá»­i láº¡i email kĂ­ch hoáº¡t.
+#### AC 1 - Input Validation (Kiểm tra dữ liệu đầu vào)
+- **Constraint:** Hệ thống phải kiểm tra định dạng dữ liệu trước khi xử lý:
+ - `Email`: Phải đúng định dạng email tiêu chuẩn.
+ - `Username`: Chỉ chứa chữ cái, số, gạch dưới; không chứa khoảng trắng; độ dài 3-30 ký tự.
+ - `Password`: Phải đạt độ mạnh an toàn (Tối thiểu 12 ký tự, bao gồm chữ hoa, thường, số và ký tự đặc biệt).
+#### AC 2 - Email Verification (Xác thực Email)
+- **Flow:** Sau khi người dùng đăng ký, tài khoản được tạo ở trạng thái `PENDING` (Chờ kích hoạt).
+- **System Behavior:** Hệ thống gửi một email chứa liên kết kích hoạt (có hiệu lực trong 24 giờ).
+- **Result:** Khi người dùng truy cập liên kết, trạng thái tài khoản chuyển sang `ACTIVE`. Nếu liên kết hết hạn, người dùng phải yêu cầu gửi lại email kích hoạt.
 ### User Story 1.2
-- LĂ  má»™t NgÆ°á»i dĂ¹ng, 
-- TĂ´i muá»‘n Ä‘Äƒng nháº­p an toĂ n vĂ o há»‡ thá»‘ng vĂ  duy trĂ¬ phiĂªn lĂ m viá»‡c trong má»™t khoáº£ng thá»i gian há»£p lĂ½, 
-- Äá»ƒ khĂ´ng pháº£i nháº­p láº¡i máº­t kháº©u liĂªn tá»¥c gĂ¢y giĂ¡n Ä‘oáº¡n cĂ´ng viá»‡c.
+- Là một Người dùng, 
+- Tôi muốn đăng nhập an toàn vào hệ thống và duy trì phiên làm việc trong một khoảng thời gian hợp lý, 
+- Để không phải nhập lại mật khẩu liên tục gây gián đoạn công việc.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Authentication Mechanism (CÆ¡ cháº¿ xĂ¡c thá»±c)
-- **Input:** NgÆ°á»i dĂ¹ng cung cáº¥p thĂ´ng tin Ä‘Äƒng nháº­p (Email/Username vĂ  Password).
-- **Output:** Náº¿u thĂ´ng tin chĂ­nh xĂ¡c, há»‡ thá»‘ng cáº¥p quyá»n truy cáº­p phiĂªn lĂ m viá»‡c.
-#### AC 2 - Brute-force Protection (Chá»‘ng táº¥n cĂ´ng dĂ² máº­t kháº©u)
-- **Rule:** Há»‡ thá»‘ng giá»›i háº¡n sá»‘ láº§n Ä‘Äƒng nháº­p sai liĂªn tiáº¿p.
-- **Logic:** Náº¿u nháº­p sai máº­t kháº©u 5 láº§n trong vĂ²ng 10 phĂºt, tĂ i khoáº£n sáº½ bá»‹ táº¡m khĂ³a chá»©c nÄƒng Ä‘Äƒng nháº­p trong 15 phĂºt. Má»™t thĂ´ng bĂ¡o cáº£nh bĂ¡o báº£o máº­t sáº½ Ä‘Æ°á»£c gá»­i Ä‘áº¿n email cá»§a chá»§ tĂ i khoáº£n.
-## 2.2. Feature: Access Control & Authorization (Kiá»ƒm soĂ¡t Truy cáº­p & PhĂ¢n quyá»n)
+#### AC 1 - Authentication Mechanism (Cơ chế xác thực)
+- **Input:** Người dùng cung cấp thông tin đăng nhập (Email/Username và Password).
+- **Output:** Nếu thông tin chính xác, hệ thống cấp quyền truy cập phiên làm việc.
+#### AC 2 - Brute-force Protection (Chống tấn công dò mật khẩu)
+- **Rule:** Hệ thống giới hạn số lần đăng nhập sai liên tiếp.
+- **Logic:** Nếu nhập sai mật khẩu 5 lần trong vòng 10 phút, tài khoản sẽ bị tạm khóa chức năng đăng nhập trong 15 phút. Một thông báo cảnh báo bảo mật sẽ được gửi đến email của chủ tài khoản.
+## 2.2. Feature: Access Control & Authorization (Kiểm soát Truy cập & Phân quyền)
 ### User Story 1.3
-LĂ  má»™t Quáº£n trá»‹ viĂªn Workspace, TĂ´i muá»‘n phĂ¢n quyá»n cá»¥ thá»ƒ cho tá»«ng thĂ nh viĂªn theo vai trĂ², Äá»ƒ Ä‘áº£m báº£o má»—i ngÆ°á»i chá»‰ truy cáº­p Ä‘Æ°á»£c nhá»¯ng dá»¯ liá»‡u cáº§n thiáº¿t cho cĂ´ng viá»‡c (NguyĂªn táº¯c Ä‘áº·c quyá»n tá»‘i thiá»ƒu).
+Là một Quản trị viên Workspace, Tôi muốn phân quyền cụ thể cho từng thành viên theo vai trò, Để đảm bảo mỗi người chỉ truy cập được những dữ liệu cần thiết cho công việc (Nguyên tắc đặc quyền tối thiểu).
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Hierarchical Roles (Vai trĂ² phĂ¢n cáº¥p)
-- Há»‡ thá»‘ng há»— trá»£ cĂ¡c vai trĂ² tiĂªu chuáº©n sau:
- - **Workspace Owner:** ToĂ n quyá»n quáº£n lĂ½ tá»• chá»©c, thanh toĂ¡n vĂ  dá»¯ liá»‡u.
- - **Workspace Admin:** Quáº£n lĂ½ thĂ nh viĂªn vĂ  dá»± Ă¡n, khĂ´ng cĂ³ quyá»n truy cáº­p thĂ´ng tin thanh toĂ¡n.
- - **Member:** CĂ³ quyá»n xem vĂ  chá»‰nh sá»­a trĂªn cĂ¡c dá»± Ă¡n Ä‘Æ°á»£c gĂ¡n.
- - **Guest:** Chá»‰ cĂ³ quyá»n xem (Read-only) trĂªn cĂ¡c tĂ i nguyĂªn Ä‘Æ°á»£c chia sáº» cá»¥ thá»ƒ.
-#### AC 2 - Permission Enforcement (Thá»±c thi quyá»n háº¡n)
-- **Logic:** Khi ngÆ°á»i dĂ¹ng thá»±c hiá»‡n má»™t hĂ nh Ä‘á»™ng (VĂ­ dá»¥: XĂ³a dá»± Ă¡n), há»‡ thá»‘ng pháº£i kiá»ƒm tra vai trĂ² cá»§a ngÆ°á»i dĂ¹ng Ä‘Ă³.
-- **Result:** Náº¿u vai trĂ² khĂ´ng Ä‘á»§ tháº©m quyá»n, há»‡ thá»‘ng tá»« chá»‘i yĂªu cáº§u vĂ  hiá»ƒn thá»‹ thĂ´ng bĂ¡o "Báº¡n khĂ´ng cĂ³ quyá»n thá»±c hiá»‡n hĂ nh Ä‘á»™ng nĂ y".
-## 2.3. Feature: Password Recovery (KhĂ´i phá»¥c Máº­t kháº©u)
+#### AC 1 - Hierarchical Roles (Vai trò phân cấp)
+- Hệ thống hỗ trợ các vai trò tiêu chuẩn sau:
+ - **Workspace Owner:** Toàn quyền quản lý tổ chức, thanh toán và dữ liệu.
+ - **Workspace Admin:** Quản lý thành viên và dự án, không có quyền truy cập thông tin thanh toán.
+ - **Member:** Có quyền xem và chỉnh sửa trên các dự án được gán.
+ - **Guest:** Chỉ có quyền xem (Read-only) trên các tài nguyên được chia sẻ cụ thể.
+#### AC 2 - Permission Enforcement (Thực thi quyền hạn)
+- **Logic:** Khi người dùng thực hiện một hành động (Ví dụ: Xóa dự án), hệ thống phải kiểm tra vai trò của người dùng đó.
+- **Result:** Nếu vai trò không đủ thẩm quyền, hệ thống từ chối yêu cầu và hiển thị thông báo "Bạn không có quyền thực hiện hành động này".
+## 2.3. Feature: Password Recovery (Khôi phục Mật khẩu)
 ### User Story 1.4
-LĂ  má»™t NgÆ°á»i dĂ¹ng quĂªn máº­t kháº©u, TĂ´i muá»‘n thiáº¿t láº­p láº¡i máº­t kháº©u má»›i thĂ´ng qua email xĂ¡c nháº­n, Äá»ƒ láº¥y láº¡i quyá»n truy cáº­p tĂ i khoáº£n má»™t cĂ¡ch an toĂ n.
+Là một Người dùng quên mật khẩu, Tôi muốn thiết lập lại mật khẩu mới thông qua email xác nhận, Để lấy lại quyền truy cập tài khoản một cách an toàn.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Secure Reset Process
-- **Security:** Há»‡ thá»‘ng khĂ´ng gá»­i láº¡i máº­t kháº©u cÅ© qua email.
-- **Mechanism:** Há»‡ thá»‘ng gá»­i má»™t liĂªn káº¿t Ä‘áº·t láº¡i máº­t kháº©u duy nháº¥t qua email. LiĂªn káº¿t nĂ y chá»‰ cĂ³ hiá»‡u lá»±c sá»­ dá»¥ng má»™t láº§n vĂ  háº¿t háº¡n sau 15 phĂºt.
-#### AC 2 - Session Termination (Cháº¥m dá»©t phiĂªn)
-- **Logic:** Ngay khi máº­t kháº©u Ä‘Æ°á»£c thay Ä‘á»•i thĂ nh cĂ´ng, há»‡ thá»‘ng pháº£i tá»± Ä‘á»™ng Ä‘Äƒng xuáº¥t tĂ i khoáº£n nĂ y trĂªn táº¥t cáº£ cĂ¡c thiáº¿t bá»‹ khĂ¡c Ä‘ang hoáº¡t Ä‘á»™ng Ä‘á»ƒ Ä‘áº£m báº£o an toĂ n.
-## 2.4. Feature: Multi-Factor Authentication (XĂ¡c thá»±c Äa yáº¿u tá»‘ - MFA)
+- **Security:** Hệ thống không gửi lại mật khẩu cũ qua email.
+- **Mechanism:** Hệ thống gửi một liên kết đặt lại mật khẩu duy nhất qua email. Liên kết này chỉ có hiệu lực sử dụng một lần và hết hạn sau 15 phút.
+#### AC 2 - Session Termination (Chấm dứt phiên)
+- **Logic:** Ngay khi mật khẩu được thay đổi thành công, hệ thống phải tự động đăng xuất tài khoản này trên tất cả các thiết bị khác đang hoạt động để đảm bảo an toàn.
+## 2.4. Feature: Multi-Factor Authentication (Xác thực Đa yếu tố - MFA)
 ### User Story 1.5
-LĂ  má»™t NgÆ°á»i dĂ¹ng Ä‘á» cao tĂ­nh báº£o máº­t, TĂ´i muá»‘n kĂ­ch hoáº¡t xĂ¡c thá»±c 2 lá»›p (2FA) báº±ng á»©ng dá»¥ng Ä‘iá»‡n thoáº¡i, Äá»ƒ báº£o vá»‡ tĂ i khoáº£n ngay cáº£ khi máº­t kháº©u bá»‹ lá»™.
+Là một Người dùng đề cao tính bảo mật, Tôi muốn kích hoạt xác thực 2 lớp (2FA) bằng ứng dụng điện thoại, Để bảo vệ tài khoản ngay cả khi mật khẩu bị lộ.
 ### Acceptance Criteria (#AC)
-#### AC 1 - Activation Flow (Quy trĂ¬nh kĂ­ch hoáº¡t)
-- **Standard:** Há»— trá»£ cĂ¡c á»©ng dá»¥ng táº¡o mĂ£ OTP tiĂªu chuáº©n (nhÆ° Google Authenticator, Microsoft Authenticator).
-- **Verification:** NgÆ°á»i dĂ¹ng pháº£i nháº­p Ä‘Ăºng mĂ£ 6 sá»‘ tá»« á»©ng dá»¥ng Ä‘á»ƒ hoĂ n táº¥t viá»‡c kĂ­ch hoáº¡t.
-#### AC 2 - Login Requirement (YĂªu cáº§u Ä‘Äƒng nháº­p)
-- **Logic:** Khi tĂ i khoáº£n Ä‘Ă£ báº­t 2FA, quy trĂ¬nh Ä‘Äƒng nháº­p yĂªu cáº§u 2 bÆ°á»›c:
- 1. Nháº­p Máº­t kháº©u chĂ­nh xĂ¡c.
- 2. Nháº­p mĂ£ OTP tá»« thiáº¿t bá»‹ tin cáº­y.
-#### AC 3 - Backup Recovery (PhÆ°Æ¡ng Ă¡n dá»± phĂ²ng)
-- Há»‡ thá»‘ng cung cáº¥p bá»™ 10 mĂ£ dá»± phĂ²ng (Backup Codes) khi kĂ­ch hoáº¡t 2FA. NgÆ°á»i dĂ¹ng cĂ³ thá»ƒ sá»­ dá»¥ng mĂ£ nĂ y Ä‘á»ƒ Ä‘Äƒng nháº­p khi máº¥t Ä‘iá»‡n thoáº¡i.
-## 2.5. Feature: Session Management (Quáº£n lĂ½ PhiĂªn lĂ m viá»‡c)
+#### AC 1 - Activation Flow (Quy trình kích hoạt)
+- **Standard:** Hỗ trợ các ứng dụng tạo mã OTP tiêu chuẩn (như Google Authenticator, Microsoft Authenticator).
+- **Verification:** Người dùng phải nhập đúng mã 6 số từ ứng dụng để hoàn tất việc kích hoạt.
+#### AC 2 - Login Requirement (Yêu cầu đăng nhập)
+- **Logic:** Khi tài khoản đã bật 2FA, quy trình đăng nhập yêu cầu 2 bước:
+ 1. Nhập Mật khẩu chính xác.
+ 2. Nhập mã OTP từ thiết bị tin cậy.
+#### AC 3 - Backup Recovery (Phương án dự phòng)
+- Hệ thống cung cấp bộ 10 mã dự phòng (Backup Codes) khi kích hoạt 2FA. Người dùng có thể sử dụng mã này để đăng nhập khi mất điện thoại.
+## 2.5. Feature: Session Management (Quản lý Phiên làm việc)
 ### User Story 1.6
-LĂ  má»™t NgÆ°á»i dĂ¹ng, TĂ´i muá»‘n xem danh sĂ¡ch cĂ¡c thiáº¿t bá»‹ Ä‘ang Ä‘Äƒng nháº­p tĂ i khoáº£n cá»§a mĂ¬nh vĂ  cĂ³ quyá»n Ä‘Äƒng xuáº¥t chĂºng tá»« xa, Äá»ƒ kiá»ƒm soĂ¡t rá»§i ro truy cáº­p trĂ¡i phĂ©p.
+Là một Người dùng, Tôi muốn xem danh sách các thiết bị đang đăng nhập tài khoản của mình và có quyền đăng xuất chúng từ xa, Để kiểm soát rủi ro truy cập trái phép.
 ### Acceptance Criteria (#AC)
-#### AC 1 - Session Information Visibility (Hiá»ƒn thá»‹ thĂ´ng tin phiĂªn)
-- **Display:** Há»‡ thá»‘ng liá»‡t kĂª danh sĂ¡ch cĂ¡c phiĂªn Ä‘ang hoáº¡t Ä‘á»™ng vá»›i cĂ¡c thĂ´ng tin Ä‘á»‹nh danh dá»… hiá»ƒu cho ngÆ°á»i dĂ¹ng:
- - **TĂªn thiáº¿t bá»‹ & TrĂ¬nh duyá»‡t:** (VĂ­ dá»¥: Chrome trĂªn Windows 10, Safari trĂªn iPhone 14).
- - **Vá»‹ trĂ­ Ä‘á»‹a lĂ½ Æ°á»›c tĂ­nh:** (VĂ­ dá»¥: ThĂ nh phá»‘ Há»“ ChĂ­ Minh, Viá»‡t Nam).
- - **Thá»i gian hoáº¡t Ä‘á»™ng gáº§n nháº¥t:** (VĂ­ dá»¥: Vá»«a truy cáº­p, Hoáº¡t Ä‘á»™ng 2 giá» trÆ°á»›c).
- - **Tráº¡ng thĂ¡i:** ÄĂ¡nh dáº¥u rĂµ "PhiĂªn hiá»‡n táº¡i" (Current Session).
-#### AC 2 - Concurrent Session Limit (Giá»›i háº¡n phiĂªn Ä‘á»“ng thá»i)
-- **Business Rule:** Má»—i tĂ i khoáº£n ngÆ°á»i dĂ¹ng chá»‰ Ä‘Æ°á»£c phĂ©p duy trĂ¬ Ä‘Äƒng nháº­p tá»‘i Ä‘a trĂªn 5 thiáº¿t bá»‹ Ä‘á»“ng thá»i.
-- **Rotation Logic:** Khi ngÆ°á»i dĂ¹ng Ä‘Äƒng nháº­p trĂªn thiáº¿t bá»‹ thá»© 6, há»‡ thá»‘ng tá»± Ä‘á»™ng Ä‘Äƒng xuáº¥t phiĂªn lĂ m viá»‡c cÅ© nháº¥t (cĂ³ thá»i gian hoáº¡t Ä‘á»™ng xa nháº¥t) Ä‘á»ƒ nhÆ°á»ng chá»— cho phiĂªn má»›i.
-#### AC 3 - Remote Revocation (Thu há»“i quyá»n truy cáº­p tá»« xa)
-- **Action:** NgÆ°á»i dĂ¹ng nháº¥n nĂºt "ÄÄƒng xuáº¥t" (Log out) trĂªn má»™t thiáº¿t bá»‹ cá»¥ thá»ƒ trong danh sĂ¡ch.
+#### AC 1 - Session Information Visibility (Hiển thị thông tin phiên)
+- **Display:** Hệ thống liệt kê danh sách các phiên đang hoạt động với các thông tin định danh dễ hiểu cho người dùng:
+ - **Tên thiết bị & Trình duyệt:** (Ví dụ: Chrome trên Windows 10, Safari trên iPhone 14).
+ - **Vị trí địa lý ước tính:** (Ví dụ: Thành phố Hồ Chí Minh, Việt Nam).
+ - **Thời gian hoạt động gần nhất:** (Ví dụ: Vừa truy cập, Hoạt động 2 giờ trước).
+ - **Trạng thái:** Đánh dấu rõ "Phiên hiện tại" (Current Session).
+#### AC 2 - Concurrent Session Limit (Giới hạn phiên đồng thời)
+- **Business Rule:** Mỗi tài khoản người dùng chỉ được phép duy trì đăng nhập tối đa trên 5 thiết bị đồng thời.
+- **Rotation Logic:** Khi người dùng đăng nhập trên thiết bị thứ 6, hệ thống tự động đăng xuất phiên làm việc cũ nhất (có thời gian hoạt động xa nhất) để nhường chỗ cho phiên mới.
+#### AC 3 - Remote Revocation (Thu hồi quyền truy cập từ xa)
+- **Action:** Người dùng nhấn nút "Đăng xuất" (Log out) trên một thiết bị cụ thể trong danh sách.
 - **Result:**
- - PhiĂªn lĂ m viá»‡c trĂªn thiáº¿t bá»‹ Ä‘Ă³ bá»‹ cháº¥m dá»©t hiá»‡u lá»±c ngay láº­p tá»©c.
- - Táº¡i láº§n thao tĂ¡c tiáº¿p theo trĂªn thiáº¿t bá»‹ bá»‹ Ä‘Äƒng xuáº¥t, ngÆ°á»i dĂ¹ng sáº½ bá»‹ Ä‘Æ°a trá»Ÿ vá» mĂ n hĂ¬nh Ä‘Äƒng nháº­p.
-#### AC 4 - Impossible Travel Alert (Cáº£nh bĂ¡o Di chuyá»ƒn Báº¥t thÆ°á»ng)
-- **Detection Logic:** Há»‡ thá»‘ng phĂ¡t hiá»‡n hai láº§n Ä‘Äƒng nháº­p liĂªn tiáº¿p xáº£y ra á»Ÿ hai vá»‹ trĂ­ Ä‘á»‹a lĂ½ cĂ¡ch xa nhau trong khoáº£ng thá»i gian ngáº¯n khĂ´ng kháº£ thi vá» máº·t váº­t lĂ½ (VĂ­ dá»¥: ÄÄƒng nháº­p táº¡i HĂ  Ná»™i, 5 phĂºt sau Ä‘Äƒng nháº­p táº¡i London).
+ - Phiên làm việc trên thiết bị đó bị chấm dứt hiệu lực ngay lập tức.
+ - Tại lần thao tác tiếp theo trên thiết bị bị đăng xuất, người dùng sẽ bị đưa trở về màn hình đăng nhập.
+#### AC 4 - Impossible Travel Alert (Cảnh báo Di chuyển Bất thường)
+- **Detection Logic:** Hệ thống phát hiện hai lần đăng nhập liên tiếp xảy ra ở hai vị trí địa lý cách xa nhau trong khoảng thời gian ngắn không khả thi về mặt vật lý (Ví dụ: Đăng nhập tại Hà Nội, 5 phút sau đăng nhập tại London).
 - **System Action:**
- - Gá»­i email cáº£nh bĂ¡o báº£o máº­t kháº©n cáº¥p cho ngÆ°á»i dĂ¹ng.
- - YĂªu cáº§u xĂ¡c thá»±c láº¡i (Re-authentication) Ä‘á»‘i vá»›i phiĂªn Ä‘Äƒng nháº­p Ä‘Ă¡ng ngá».
-## 2.6. Feature: Social Authentication (Äá»‹nh danh Máº¡ng xĂ£ há»™i)
+ - Gửi email cảnh báo bảo mật khẩn cấp cho người dùng.
+ - Yêu cầu xác thực lại (Re-authentication) đối với phiên đăng nhập đáng ngờ.
+## 2.6. Feature: Social Authentication (Định danh Mạng xã hội)
 ### User Story 1.7
-LĂ  má»™t NgÆ°á»i dĂ¹ng má»›i, TĂ´i muá»‘n Ä‘Äƒng nháº­p nhanh báº±ng tĂ i khoáº£n Google hoáº·c GitHub, Äá»ƒ tiáº¿t kiá»‡m thá»i gian vĂ  giáº£m bá»›t viá»‡c pháº£i ghi nhá»› nhiá»u máº­t kháº©u.
+Là một Người dùng mới, Tôi muốn đăng nhập nhanh bằng tài khoản Google hoặc GitHub, Để tiết kiệm thời gian và giảm bớt việc phải ghi nhớ nhiều mật khẩu.
 ### Acceptance Criteria (#AC)
-#### AC 1 - Authorization Flow (Luá»“ng á»§y quyá»n)
-- **Protocol:** Sá»­ dá»¥ng giao thá»©c á»§y quyá»n tiĂªu chuáº©n (OAuth 2.0).
-- **Permission:** Há»‡ thá»‘ng chá»‰ yĂªu cáº§u quyá»n truy cáº­p thĂ´ng tin cÆ¡ báº£n (TĂªn, Email, Avatar) tá»« nhĂ  cung cáº¥p dá»‹ch vá»¥, khĂ´ng yĂªu cáº§u cĂ¡c quyá»n truy cáº­p dá»¯ liá»‡u riĂªng tÆ° khĂ¡c.
-#### AC 2 - Account Linking & Provisioning (LiĂªn káº¿t & Khá»Ÿi táº¡o)
-- **Case 1 (TĂ i khoáº£n Ä‘Ă£ tá»“n táº¡i):** Náº¿u email tá»« Google/GitHub trĂ¹ng vá»›i email Ä‘Ă£ cĂ³ trong há»‡ thá»‘ng, tá»± Ä‘á»™ng liĂªn káº¿t vĂ  Ä‘Äƒng nháº­p.
-- **Case 2 (TĂ i khoáº£n má»›i):** Náº¿u email chÆ°a tá»“n táº¡i, há»‡ thá»‘ng tá»± Ä‘á»™ng khá»Ÿi táº¡o tĂ i khoáº£n má»›i vá»›i tráº¡ng thĂ¡i "ÄĂ£ xĂ¡c thá»±c email" vĂ  bá» qua bÆ°á»›c xĂ¡c minh email thá»§ cĂ´ng.
+#### AC 1 - Authorization Flow (Luồng ủy quyền)
+- **Protocol:** Sử dụng giao thức ủy quyền tiêu chuẩn (OAuth 2.0).
+- **Permission:** Hệ thống chỉ yêu cầu quyền truy cập thông tin cơ bản (Tên, Email, Avatar) từ nhà cung cấp dịch vụ, không yêu cầu các quyền truy cập dữ liệu riêng tư khác.
+#### AC 2 - Account Linking & Provisioning (Liên kết & Khởi tạo)
+- **Case 1 (Tài khoản đã tồn tại):** Nếu email từ Google/GitHub trùng với email đã có trong hệ thống, tự động liên kết và đăng nhập.
+- **Case 2 (Tài khoản mới):** Nếu email chưa tồn tại, hệ thống tự động khởi tạo tài khoản mới với trạng thái "Đã xác thực email" và bỏ qua bước xác minh email thủ công.
 # 3. Business Rules & Compliance
-## 3.1. Quy táº¯c Báº£o máº­t Dá»¯ liá»‡u XĂ¡c thá»±c
-- **Password Storage:** Máº­t kháº©u pháº£i Ä‘Æ°á»£c mĂ£ hĂ³a má»™t chiá»u (Hashing) trÆ°á»›c khi lÆ°u trá»¯ vĂ o cÆ¡ sá»Ÿ dá»¯ liá»‡u. Tuyá»‡t Ä‘á»‘i khĂ´ng lÆ°u trá»¯ máº­t kháº©u dÆ°á»›i dáº¡ng vÄƒn báº£n cĂ³ thá»ƒ Ä‘á»c Ä‘Æ°á»£c.
-- **Sensitive Data:** CĂ¡c mĂ£ xĂ¡c thá»±c (OTP, Reset Token) khĂ´ng Ä‘Æ°á»£c hiá»ƒn thá»‹ trong log há»‡ thá»‘ng hoáº·c pháº£n há»“i API.
-## 3.2. Quy táº¯c Äá»‹nh danh (Identity Rules)
-- **Uniqueness:** Äá»‹a chá»‰ Email vĂ  Username pháº£i lĂ  duy nháº¥t trĂªn toĂ n há»‡ thá»‘ng.
-- **Email Verification Requirement:** NgÆ°á»i dĂ¹ng chÆ°a xĂ¡c thá»±c email sáº½ bá»‹ háº¡n cháº¿ quyá»n truy cáº­p (chá»‰ xem Ä‘Æ°á»£c Dashboard cĂ¡ nhĂ¢n, khĂ´ng thá»ƒ táº¡o Dá»± Ă¡n hoáº·c tham gia Workspace).
-## 3.3. Quy táº¯c PhiĂªn lĂ m viá»‡c (Session Rules)
-- **Session Timeout:** PhiĂªn lĂ m viá»‡c sáº½ tá»± Ä‘á»™ng háº¿t háº¡n náº¿u ngÆ°á»i dĂ¹ng khĂ´ng cĂ³ báº¥t ká»³ thao tĂ¡c nĂ o (Inactive) trong vĂ²ng 7 ngĂ y (Ä‘á»‘i vá»›i tĂ¹y chá»n "Ghi nhá»› Ä‘Äƒng nháº­p").
-- **Audit Trail:** Má»i hĂ nh Ä‘á»™ng liĂªn quan Ä‘áº¿n Ä‘á»‹nh danh (ÄÄƒng nháº­p, Äá»•i máº­t kháº©u, Báº­t/Táº¯t 2FA) Ä‘á»u pháº£i Ä‘Æ°á»£c ghi láº¡i vĂ o Nháº­t kĂ½ há»‡ thá»‘ng (System Logs) phá»¥c vá»¥ má»¥c Ä‘Ă­ch kiá»ƒm toĂ¡n sau nĂ y.
-# 4. Theoretical Basis (CÆ¡ sá»Ÿ LĂ½ luáº­n)
-## 4.1. NguyĂªn táº¯c Äáº·c quyá»n Tá»‘i thiá»ƒu (Principle of Least Privilege - PoLP)
-PhĂ¢n há»‡ IAM cá»§a PronaFlow Ä‘Æ°á»£c xĂ¢y dá»±ng dá»±a trĂªn nguyĂªn táº¯c PoLP. Äiá»u nĂ y Ä‘áº£m báº£o ráº±ng má»—i thá»±c thá»ƒ (ngÆ°á»i dĂ¹ng hoáº·c dá»‹ch vá»¥) chá»‰ Ä‘Æ°á»£c cáº¥p quyá»n truy cáº­p vĂ o nhá»¯ng thĂ´ng tin vĂ  tĂ i nguyĂªn thá»±c sá»± cáº§n thiáº¿t cho má»¥c Ä‘Ă­ch há»£p phĂ¡p cá»§a há». Viá»‡c nĂ y giáº£m thiá»ƒu tá»‘i Ä‘a bá» máº·t táº¥n cĂ´ng (Attack Surface) vĂ  rá»§i ro rĂ² rá»‰ dá»¯ liá»‡u ná»™i bá»™.
-## 4.2. XĂ¡c thá»±c Äa yáº¿u tá»‘ (Multi-Factor Authentication - MFA)
-CÆ¡ sá»Ÿ báº£o máº­t cá»§a MFA dá»±a trĂªn viá»‡c káº¿t há»£p cĂ¡c yáº¿u tá»‘ xĂ¡c thá»±c khĂ¡c nhau:
-- **Knowledge:** CĂ¡i báº¡n biáº¿t (Máº­t kháº©u).
-- **Possession:** CĂ¡i báº¡n cĂ³ (Äiá»‡n thoáº¡i/MĂ£ OTP). Viá»‡c yĂªu cáº§u cáº£ hai yáº¿u tá»‘ giĂºp tÄƒng cÆ°á»ng báº£o máº­t theo cáº¥p sá»‘ nhĂ¢n, vĂ¬ káº» táº¥n cĂ´ng khĂ³ cĂ³ thá»ƒ thá»a mĂ£n cĂ¹ng lĂºc cáº£ hai Ä‘iá»u kiá»‡n nĂ y.
-## 4.3. Kiá»ƒm soĂ¡t Truy cáº­p Dá»±a trĂªn Vai trĂ² (RBAC - Role-Based Access Control)
-MĂ´ hĂ¬nh RBAC Ä‘Æ°á»£c lá»±a chá»n thay vĂ¬ phĂ¢n quyá»n tĂ¹y Ă½ (DAC) hoáº·c phĂ¢n quyá»n báº¯t buá»™c (MAC) vĂ¬ tĂ­nh linh hoáº¡t vĂ  kháº£ nÄƒng quáº£n trá»‹ phĂ¹ há»£p vá»›i mĂ´ hĂ¬nh doanh nghiá»‡p. RBAC giĂºp chuáº©n hĂ³a cĂ¡c quy trĂ¬nh cáº¥p quyá»n, giáº£m sai sĂ³t do con ngÆ°á»i khi quáº£n lĂ½ quyá»n háº¡n cá»§a sá»‘ lÆ°á»£ng lá»›n ngÆ°á»i dĂ¹ng.
-
+## 3.1. Quy tắc Bảo mật Dữ liệu Xác thực
+- **Password Storage:** Mật khẩu phải được mã hóa một chiều (Hashing) trước khi lưu trữ vào cơ sở dữ liệu. Tuyệt đối không lưu trữ mật khẩu dưới dạng văn bản có thể đọc được.
+- **Sensitive Data:** Các mã xác thực (OTP, Reset Token) không được hiển thị trong log hệ thống hoặc phản hồi API.
+## 3.2. Quy tắc Định danh (Identity Rules)
+- **Uniqueness:** Địa chỉ Email và Username phải là duy nhất trên toàn hệ thống.
+- **Email Verification Requirement:** Người dùng chưa xác thực email sẽ bị hạn chế quyền truy cập (chỉ xem được Dashboard cá nhân, không thể tạo Dự án hoặc tham gia Workspace).
+## 3.3. Quy tắc Phiên làm việc (Session Rules)
+- **Session Timeout:** Phiên làm việc sẽ tự động hết hạn nếu người dùng không có bất kỳ thao tác nào (Inactive) trong vòng 7 ngày (đối với tùy chọn "Ghi nhớ đăng nhập").
+- **Audit Trail:** Mọi hành động liên quan đến định danh (Đăng nhập, Đổi mật khẩu, Bật/Tắt 2FA) đều phải được ghi lại vào Nhật ký hệ thống (System Logs) phục vụ mục đích kiểm toán sau này.
+# 4. Theoretical Basis (Cơ sở Lý luận)
+## 4.1. Nguyên tắc Đặc quyền Tối thiểu (Principle of Least Privilege - PoLP)
+Phân hệ IAM của PronaFlow được xây dựng dựa trên nguyên tắc PoLP. Điều này đảm bảo rằng mỗi thực thể (người dùng hoặc dịch vụ) chỉ được cấp quyền truy cập vào những thông tin và tài nguyên thực sự cần thiết cho mục đích hợp pháp của họ. Việc này giảm thiểu tối đa bề mặt tấn công (Attack Surface) và rủi ro rò rỉ dữ liệu nội bộ.
+## 4.2. Xác thực Đa yếu tố (Multi-Factor Authentication - MFA)
+Cơ sở bảo mật của MFA dựa trên việc kết hợp các yếu tố xác thực khác nhau:
+- **Knowledge:** Cái bạn biết (Mật khẩu).
+- **Possession:** Cái bạn có (Điện thoại/Mã OTP). Việc yêu cầu cả hai yếu tố giúp tăng cường bảo mật theo cấp số nhân, vì kẻ tấn công khó có thể thỏa mãn cùng lúc cả hai điều kiện này.
+## 4.3. Kiểm soát Truy cập Dựa trên Vai trò (RBAC - Role-Based Access Control)
+Mô hình RBAC được lựa chọn thay vì phân quyền tùy ý (DAC) hoặc phân quyền bắt buộc (MAC) vì tính linh hoạt và khả năng quản trị phù hợp với mô hình doanh nghiệp. RBAC giúp chuẩn hóa các quy trình cấp quyền, giảm sai sót do con người khi quản lý quyền hạn của số lượng lớn người dùng.

@@ -1,137 +1,137 @@
-﻿**Project**: PronaFlow
+**Project**: PronaFlow
 **Version**: 1.1
 **State**: Draft
 ***Last updated:** Mar 31, 2026*
 
 ---
 # 1. Business Overview
-Khi PronaFlow má»Ÿ rá»™ng tá»« nhĂ³m nhá» sang mĂ´ hĂ¬nh Enterprise Ä‘a tenant, nhu cáº§u quáº£n trá»‹ há»‡ thá»‘ng khĂ´ng cĂ²n dá»«ng á»Ÿ "cáº¥u hĂ¬nh ká»¹ thuáº­t" mĂ  trá»Ÿ thĂ nh má»™t nÄƒng lá»±c váº­n hĂ nh cá»‘t lĂµi. PhĂ¢n há»‡ **System Administration** Ä‘áº£m nhiá»‡m 3 má»¥c tiĂªu trá»ng yáº¿u:
-1. **Reliability:** Duy trĂ¬ tĂ­nh sáºµn sĂ ng cao, giáº£m MTTR khi cĂ³ sá»± cá»‘.
-2. **Security & Governance:** Quáº£n trá»‹ quyá»n, chĂ­nh sĂ¡ch vĂ  báº±ng chá»©ng kiá»ƒm toĂ¡n xuyĂªn suá»‘t vĂ²ng Ä‘á»i dá»¯ liá»‡u.
-3. **Operational Scalability:** Chuáº©n hĂ³a quy trĂ¬nh váº­n hĂ nh Ä‘á»ƒ há»‡ thá»‘ng tÄƒng trÆ°á»Ÿng mĂ  khĂ´ng tÄƒng rá»§i ro tÆ°Æ¡ng á»©ng.
+Khi PronaFlow mở rộng từ nhóm nhỏ sang mô hình Enterprise đa tenant, nhu cầu quản trị hệ thống không còn dừng ở "cấu hình kỹ thuật" mà trở thành một năng lực vận hành cốt lõi. Phân hệ **System Administration** đảm nhiệm 3 mục tiêu trọng yếu:
+1. **Reliability:** Duy trì tính sẵn sàng cao, giảm MTTR khi có sự cố.
+2. **Security & Governance:** Quản trị quyền, chính sách và bằng chứng kiểm toán xuyên suốt vòng đời dữ liệu.
+3. **Operational Scalability:** Chuẩn hóa quy trình vận hành để hệ thống tăng trưởng mà không tăng rủi ro tương ứng.
 
-Module 14 Ä‘Ă³ng vai trĂ² "control plane" cho cĂ¡c module khĂ¡c: IAM (Module 1), Data Archiving (Module 8), AI Workflows (Module 10), Subscription/Billing (Module 13), vĂ  Help Center (Module 15).
+Module 14 đóng vai trò "control plane" cho các module khác: IAM (Module 1), Data Archiving (Module 8), AI Workflows (Module 10), Subscription/Billing (Module 13), và Help Center (Module 15).
 
 # 2. User Stories & Acceptance Criteria
 ## 2.1. Feature: Policy-based Administration
 ### User Story 14.1
-LĂ  má»™t **Platform Admin**, tĂ´i muá»‘n quáº£n trá»‹ há»‡ thá»‘ng theo chĂ­nh sĂ¡ch (policy) thay vĂ¬ thao tĂ¡c thá»§ cĂ´ng rá»i ráº¡c, Ä‘á»ƒ giáº£m lá»—i con ngÆ°á»i vĂ  Ä‘áº£m báº£o nháº¥t quĂ¡n giá»¯a cĂ¡c tenant.
+Là một **Platform Admin**, tôi muốn quản trị hệ thống theo chính sách (policy) thay vì thao tác thủ công rời rạc, để giảm lỗi con người và đảm bảo nhất quán giữa các tenant.
 
 ### Acceptance Criteria (#AC)
 #### AC 1 - Policy Templates
-- Há»‡ thá»‘ng há»— trá»£ template chĂ­nh sĂ¡ch cho cĂ¡c nhĂ³m: Access Control, Data Retention, Session Security, API Rate Limit.
-- Má»—i policy cĂ³ version (`v1`, `v2`), tráº¡ng thĂ¡i (`Draft`, `Approved`, `Enforced`) vĂ  lá»‹ch sá»­ phĂª duyá»‡t.
+- Hệ thống hỗ trợ template chính sách cho các nhóm: Access Control, Data Retention, Session Security, API Rate Limit.
+- Mỗi policy có version (`v1`, `v2`), trạng thái (`Draft`, `Approved`, `Enforced`) và lịch sử phê duyệt.
 
 #### AC 2 - Scoped Enforcement
-- Policy cĂ³ thá»ƒ Ă¡p dá»¥ng theo pháº¡m vi: Global, Region, Workspace Tier (Free/Pro/Enterprise).
-- Náº¿u policy xung Ä‘á»™t, thá»© tá»± Æ°u tiĂªn: `Global Mandatory > Compliance Override > Workspace Custom`.
+- Policy có thể áp dụng theo phạm vi: Global, Region, Workspace Tier (Free/Pro/Enterprise).
+- Nếu policy xung đột, thứ tự ưu tiên: `Global Mandatory > Compliance Override > Workspace Custom`.
 
 #### AC 3 - Safe Rollout
-- Há»— trá»£ "dry-run" Ä‘á»ƒ Ä‘Ă¡nh giĂ¡ tĂ¡c Ä‘á»™ng trÆ°á»›c khi enforce.
-- CĂ³ cÆ¡ cháº¿ rollback má»™t láº§n báº¥m khi tá»· lá»‡ lá»—i tÄƒng vÆ°á»£t ngÆ°á»¡ng cáº£nh bĂ¡o.
+- Hỗ trợ "dry-run" để đánh giá tác động trước khi enforce.
+- Có cơ chế rollback một lần bấm khi tỷ lệ lỗi tăng vượt ngưỡng cảnh báo.
 
 ## 2.2. Feature: Incident Command Console
 ### User Story 14.2
-LĂ  má»™t **SRE Admin**, tĂ´i muá»‘n cĂ³ má»™t giao diá»‡n Ä‘iá»u phá»‘i sá»± cá»‘ táº­p trung, Ä‘á»ƒ theo dĂµi tráº¡ng thĂ¡i dá»‹ch vá»¥, runbook vĂ  timeline xá»­ lĂ½ theo thá»i gian thá»±c.
+Là một **SRE Admin**, tôi muốn có một giao diện điều phối sự cố tập trung, để theo dõi trạng thái dịch vụ, runbook và timeline xử lý theo thời gian thực.
 
 ### Acceptance Criteria (#AC)
 #### AC 1 - Severity-driven Workflow
-- Incident Ä‘Æ°á»£c phĂ¢n má»©c `SEV-1` Ä‘áº¿n `SEV-4` vá»›i SLA pháº£n há»“i tÆ°Æ¡ng á»©ng.
-- Tá»± Ä‘á»™ng gĂ¡n Incident Commander khi SEV-1/SEV-2 Ä‘Æ°á»£c táº¡o.
+- Incident được phân mức `SEV-1` đến `SEV-4` với SLA phản hồi tương ứng.
+- Tự động gán Incident Commander khi SEV-1/SEV-2 được tạo.
 
 #### AC 2 - Unified Timeline
-- Má»i hĂ nh Ä‘á»™ng (acknowledge, mitigation, rollback, postmortem) Ä‘Æ°á»£c ghi vĂ o timeline báº¥t biáº¿n.
-- Timeline pháº£i truy xuáº¥t Ä‘Æ°á»£c theo Incident ID vĂ  xuáº¥t Ä‘Æ°á»£c bĂ¡o cĂ¡o Ä‘iá»u tra.
+- Mọi hành động (acknowledge, mitigation, rollback, postmortem) được ghi vào timeline bất biến.
+- Timeline phải truy xuất được theo Incident ID và xuất được báo cáo điều tra.
 
 #### AC 3 - Runbook Integration
-- Má»—i loáº¡i sá»± cá»‘ (DB latency, queue backlog, auth outage) liĂªn káº¿t runbook chuáº©n.
-- Cho phĂ©p Ä‘Ă¡nh dáº¥u bÆ°á»›c runbook Ä‘Ă£ hoĂ n thĂ nh Ä‘á»ƒ Ä‘á»“ng bá»™ giá»¯a cĂ¡c ca trá»±c.
+- Mỗi loại sự cố (DB latency, queue backlog, auth outage) liên kết runbook chuẩn.
+- Cho phép đánh dấu bước runbook đã hoàn thành để đồng bộ giữa các ca trực.
 
 ## 2.3. Feature: Administrative Audit & Delegation
 ### User Story 14.3
-LĂ  má»™t **Audit Admin**, tĂ´i muá»‘n theo dĂµi toĂ n bá»™ thao tĂ¡c Ä‘áº·c quyá»n vĂ  cÆ¡ cháº¿ á»§y quyá»n táº¡m thá»i, Ä‘á»ƒ Ä‘áº£m báº£o truy váº¿t Ä‘áº§y Ä‘á»§ vĂ  ngÄƒn láº¡m quyá»n.
+Là một **Audit Admin**, tôi muốn theo dõi toàn bộ thao tác đặc quyền và cơ chế ủy quyền tạm thời, để đảm bảo truy vết đầy đủ và ngăn lạm quyền.
 
 ### Acceptance Criteria (#AC)
 #### AC 1 - Immutable Admin Log
-- Má»i hĂ nh Ä‘á»™ng admin pháº£i ghi log vá»›i cáº¥u trĂºc: `who`, `when`, `where`, `what`, `before`, `after`, `reason`.
-- Log khĂ´ng cho phĂ©p chá»‰nh sá»­a/xĂ³a á»Ÿ táº§ng á»©ng dá»¥ng.
+- Mọi hành động admin phải ghi log với cấu trúc: `who`, `when`, `where`, `what`, `before`, `after`, `reason`.
+- Log không cho phép chỉnh sửa/xóa ở tầng ứng dụng.
 
 #### AC 2 - Just-in-time Privilege
-- Quyá»n nháº¡y cáº£m (xem PII, rotate key, force account unlock) chá»‰ Ä‘Æ°á»£c cáº¥p táº¡m thá»i theo thá»i lÆ°á»£ng.
-- Báº¯t buá»™c nháº­p lĂ½ do nghiá»‡p vá»¥ vĂ  ticket tham chiáº¿u trÆ°á»›c khi nháº­n quyá»n.
+- Quyền nhạy cảm (xem PII, rotate key, force account unlock) chỉ được cấp tạm thời theo thời lượng.
+- Bắt buộc nhập lý do nghiệp vụ và ticket tham chiếu trước khi nhận quyền.
 
 #### AC 3 - Four-eyes Control
-- CĂ¡c thao tĂ¡c cáº¥p cao (xĂ³a tenant, Ä‘á»•i retention global, xuáº¥t dá»¯ liá»‡u hĂ ng loáº¡t) yĂªu cáº§u hai ngÆ°á»i phĂª duyá»‡t.
-- Há»‡ thá»‘ng tá»« chá»‘i thá»±c thi náº¿u cĂ¹ng má»™t ngÆ°á»i táº¡o vĂ  duyá»‡t.
+- Các thao tác cấp cao (xóa tenant, đổi retention global, xuất dữ liệu hàng loạt) yêu cầu hai người phê duyệt.
+- Hệ thống từ chối thực thi nếu cùng một người tạo và duyệt.
 
 ## 2.4. Feature: SLA Timer Supervision for Operations
 ### User Story 14.4
-LĂ  má»™t **Support/Operations Admin**, tĂ´i muá»‘n bá»™ Ä‘áº¿m SLA tá»± Ä‘á»™ng táº¡m dá»«ng/tiáº¿p tá»¥c theo ca lĂ m viá»‡c vĂ  tráº¡ng thĂ¡i task, Ä‘á»ƒ Ä‘o thá»i gian xá»­ lĂ½ thá»±c táº¿ chĂ­nh xĂ¡c.
+Là một **Support/Operations Admin**, tôi muốn bộ đếm SLA tự động tạm dừng/tiếp tục theo ca làm việc và trạng thái task, để đo thời gian xử lý thực tế chính xác.
 
 ### Acceptance Criteria (#AC)
 #### AC 1 - Working-hours-aware Timer
-- Khi ticket Ä‘Æ°á»£c táº¡o, há»‡ thá»‘ng láº¥y SLA theo priority.
-- Náº¿u ngoĂ i giá» lĂ m viá»‡c, timer chá» tá»›i ca káº¿ tiáº¿p rá»“i má»›i cháº¡y.
+- Khi ticket được tạo, hệ thống lấy SLA theo priority.
+- Nếu ngoài giờ làm việc, timer chờ tới ca kế tiếp rồi mới chạy.
 
 #### AC 2 - Pause/Resume Logic
-- Timer táº¡m dá»«ng khi ticket á»Ÿ tráº¡ng thĂ¡i chá» khĂ¡ch hĂ ng/chá» phá»¥ thuá»™c.
-- Timer tiáº¿p tá»¥c khi ticket quay láº¡i tráº¡ng thĂ¡i xá»­ lĂ½.
+- Timer tạm dừng khi ticket ở trạng thái chờ khách hàng/chờ phụ thuộc.
+- Timer tiếp tục khi ticket quay lại trạng thái xử lý.
 
 #### AC 3 - Breach & Closure
-- Khi thá»i gian cĂ²n láº¡i <= 0, há»‡ thá»‘ng kĂ­ch hoáº¡t sá»± kiá»‡n SLA breach vĂ  cáº£nh bĂ¡o Ä‘a kĂªnh.
-- Khi task hoĂ n táº¥t, dá»«ng timer vĂ  lÆ°u "Actual Resolution Time" phá»¥c vá»¥ bĂ¡o cĂ¡o nÄƒng suáº¥t.
+- Khi thời gian còn lại <= 0, hệ thống kích hoạt sự kiện SLA breach và cảnh báo đa kênh.
+- Khi task hoàn tất, dừng timer và lưu "Actual Resolution Time" phục vụ báo cáo năng suất.
 
 # 3. Business Rules & Technical Constraints
-## 3.1. PhĂ¢n loáº¡i Quáº£n trá»‹ Há»‡ thá»‘ng ChuyĂªn biá»‡t (Specialized Admin Roles)
-Äá»ƒ Ä‘Ă¡p á»©ng tiĂªu chuáº©n Enterprise, PronaFlow phĂ¢n rĂ£ Ä‘á»™i ngÅ© váº­n hĂ nh thĂ nh 18 vai trĂ² admin chuyĂªn trĂ¡ch nháº±m kiá»ƒm soĂ¡t rá»§i ro vĂ  tÄƒng tĂ­nh minh báº¡ch.
+## 3.1. Phân loại Quản trị Hệ thống Chuyên biệt (Specialized Admin Roles)
+Để đáp ứng tiêu chuẩn Enterprise, PronaFlow phân rã đội ngũ vận hành thành 18 vai trò admin chuyên trách nhằm kiểm soát rủi ro và tăng tính minh bạch.
 
-- **NhĂ³m Váº­n hĂ nh Ká»¹ thuáº­t:**
-    - **Super Admin:** Quyá»n háº¡n cao nháº¥t, chá»‰ sá»­ dá»¥ng cho cĂ¡c tĂ¬nh huá»‘ng kháº©n cáº¥p hoáº·c khĂ´i phá»¥c há»‡ thá»‘ng.
-    - **System/SRE Admin:** Chá»‹u trĂ¡ch nhiá»‡m vá» hiá»‡u nÄƒng vĂ  sá»©c khá»e há»‡ thá»‘ng, khĂ´ng truy cáº­p dá»¯ liá»‡u ngÆ°á»i dĂ¹ng.
-    - **Release/Change Admin:** Kiá»ƒm soĂ¡t quy trĂ¬nh phĂ¡t hĂ nh vĂ  thay Ä‘á»•i mĂ£ nguá»“n.
-    - **Database Admin (DBA):** Quáº£n trá»‹ schema, migration, backup/restore vĂ  tá»‘i Æ°u truy váº¥n.
-    - **Infra/Cloud Admin:** Quáº£n lĂ½ tĂ i nguyĂªn háº¡ táº§ng, máº¡ng, secrets vĂ  chĂ­nh sĂ¡ch triá»ƒn khai Ä‘a mĂ´i trÆ°á»ng.
+- **Nhóm Vận hành Kỹ thuật:**
+    - **Super Admin:** Quyền hạn cao nhất, chỉ sử dụng cho các tình huống khẩn cấp hoặc khôi phục hệ thống.
+    - **System/SRE Admin:** Chịu trách nhiệm về hiệu năng và sức khỏe hệ thống, không truy cập dữ liệu người dùng.
+    - **Release/Change Admin:** Kiểm soát quy trình phát hành và thay đổi mã nguồn.
+    - **Database Admin (DBA):** Quản trị schema, migration, backup/restore và tối ưu truy vấn.
+    - **Infra/Cloud Admin:** Quản lý tài nguyên hạ tầng, mạng, secrets và chính sách triển khai đa môi trường.
 
-- **NhĂ³m An ninh & TuĂ¢n thá»§:**
-    - **Security/Trust Admin:** Xá»­ lĂ½ gian láº­n, láº¡m dá»¥ng vĂ  rá»§i ro báº£o máº­t.
-    - **IAM Admin:** Quáº£n lĂ½ danh tĂ­nh, phĂ¢n quyá»n vĂ  cáº¥u hĂ¬nh MFA.
-    - **Compliance/Legal Admin:** Äáº£m báº£o há»‡ thá»‘ng tuĂ¢n thá»§ cĂ¡c quy Ä‘á»‹nh phĂ¡p lĂ½.
-    - **Privacy/DPO:** Báº£o vá»‡ quyá»n riĂªng tÆ° dá»¯ liá»‡u theo thiáº¿t káº¿ (Privacy-by-design).
-    - **Key Management Admin:** Quáº£n lĂ½ vĂ²ng Ä‘á»i khĂ³a mĂ£ hĂ³a, chá»©ng thÆ° sá»‘ vĂ  chĂ­nh sĂ¡ch rotation.
+- **Nhóm An ninh & Tuân thủ:**
+    - **Security/Trust Admin:** Xử lý gian lận, lạm dụng và rủi ro bảo mật.
+    - **IAM Admin:** Quản lý danh tính, phân quyền và cấu hình MFA.
+    - **Compliance/Legal Admin:** Đảm bảo hệ thống tuân thủ các quy định pháp lý.
+    - **Privacy/DPO:** Bảo vệ quyền riêng tư dữ liệu theo thiết kế (Privacy-by-design).
+    - **Key Management Admin:** Quản lý vòng đời khóa mã hóa, chứng thư số và chính sách rotation.
 
-- **NhĂ³m Nghiá»‡p vá»¥ & Dá»‹ch vá»¥:**
-    - **Finance Admin:** Quáº£n lĂ½ doanh thu, gĂ³i dá»‹ch vá»¥ vĂ  cĂ¡c giao dá»‹ch tĂ i chĂ­nh.
-    - **AI/Automation Admin:** Quáº£n lĂ½ hĂ nh vi cá»§a cĂ¡c mĂ´ hĂ¬nh AI vĂ  luá»“ng tá»± Ä‘á»™ng hĂ³a.
-    - **Data/Analytics Admin:** Äáº£m báº£o cháº¥t lÆ°á»£ng dá»¯ liá»‡u phá»¥c vá»¥ phĂ¢n tĂ­ch mĂ  khĂ´ng tiáº¿p cáº­n dá»¯ liá»‡u cĂ¡ nhĂ¢n thĂ´.
-    - **Support Admin:** Tiáº¿p nháº­n vĂ  xá»­ lĂ½ yĂªu cáº§u há»— trá»£ (ticket) tá»« ngÆ°á»i dĂ¹ng.
-    - **Content/Knowledge Admin:** Quáº£n lĂ½ tĂ i liá»‡u hÆ°á»›ng dáº«n vĂ  tri thá»©c ná»™i bá»™ liĂªn káº¿t Module 15.
+- **Nhóm Nghiệp vụ & Dịch vụ:**
+    - **Finance Admin:** Quản lý doanh thu, gói dịch vụ và các giao dịch tài chính.
+    - **AI/Automation Admin:** Quản lý hành vi của các mô hình AI và luồng tự động hóa.
+    - **Data/Analytics Admin:** Đảm bảo chất lượng dữ liệu phục vụ phân tích mà không tiếp cận dữ liệu cá nhân thô.
+    - **Support Admin:** Tiếp nhận và xử lý yêu cầu hỗ trợ (ticket) từ người dùng.
+    - **Content/Knowledge Admin:** Quản lý tài liệu hướng dẫn và tri thức nội bộ liên kết Module 15.
 
-- **NhĂ³m Kiá»ƒm toĂ¡n & Äiá»u phá»‘i:**
-    - **Audit-only Admin:** Vai trĂ² chá»‰ Ä‘á»c, cĂ³ quyá»n xem toĂ n bá»™ log há»‡ thá»‘ng Ä‘á»ƒ phá»¥c vá»¥ Ä‘iá»u tra mĂ  khĂ´ng thá»ƒ thá»±c hiá»‡n thao tĂ¡c ghi.
-    - **Incident Commander Admin:** Äiá»u phá»‘i xá»­ lĂ½ sá»± cá»‘ liĂªn phĂ²ng ban, chá»‹u trĂ¡ch nhiá»‡m timeline vĂ  quyáº¿t Ä‘á»‹nh rollback.
-    - **Risk & Continuity Admin:** Quáº£n lĂ½ káº¿ hoáº¡ch BCP/DR, diá»…n táº­p Ä‘á»‹nh ká»³ vĂ  Ä‘Ă¡nh giĂ¡ rá»§i ro váº­n hĂ nh.
+- **Nhóm Kiểm toán & Điều phối:**
+    - **Audit-only Admin:** Vai trò chỉ đọc, có quyền xem toàn bộ log hệ thống để phục vụ điều tra mà không thể thực hiện thao tác ghi.
+    - **Incident Commander Admin:** Điều phối xử lý sự cố liên phòng ban, chịu trách nhiệm timeline và quyết định rollback.
+    - **Risk & Continuity Admin:** Quản lý kế hoạch BCP/DR, diễn tập định kỳ và đánh giá rủi ro vận hành.
 
-## 3.2. Quy táº¯c TĂ¡ch biá»‡t Nhiá»‡m vá»¥ (Separation of Duties)
-- KhĂ´ng má»™t vai trĂ² Ä‘Æ¡n láº» nĂ o Ä‘Æ°á»£c phĂ©p vá»«a cáº¥u hĂ¬nh chĂ­nh sĂ¡ch, vá»«a tá»± phĂª duyá»‡t, vá»«a thá»±c thi hĂ nh Ä‘á»™ng nháº¡y cáº£m.
-- Quyá»n truy cáº­p dá»¯ liá»‡u cĂ¡ nhĂ¢n thĂ´ bá»‹ giá»›i háº¡n theo nguyĂªn táº¯c "least privilege" vĂ  "need-to-know".
+## 3.2. Quy tắc Tách biệt Nhiệm vụ (Separation of Duties)
+- Không một vai trò đơn lẻ nào được phép vừa cấu hình chính sách, vừa tự phê duyệt, vừa thực thi hành động nhạy cảm.
+- Quyền truy cập dữ liệu cá nhân thô bị giới hạn theo nguyên tắc "least privilege" và "need-to-know".
 
-## 3.3. Quy táº¯c Truy váº¿t Báº¯t buá»™c (Mandatory Traceability)
-- 100% hĂ nh Ä‘á»™ng admin pháº£i cĂ³ correlation ID Ä‘á»ƒ Ä‘á»‘i soĂ¡t giá»¯a application log, audit log vĂ  háº¡ táº§ng.
-- Log quáº£n trá»‹ pháº£i Ä‘Æ°á»£c lÆ°u tá»‘i thiá»ƒu theo chĂ­nh sĂ¡ch retention cá»§a tier Enterprise hoáº·c theo yĂªu cáº§u phĂ¡p lĂ½ tá»«ng khu vá»±c.
+## 3.3. Quy tắc Truy vết Bắt buộc (Mandatory Traceability)
+- 100% hành động admin phải có correlation ID để đối soát giữa application log, audit log và hạ tầng.
+- Log quản trị phải được lưu tối thiểu theo chính sách retention của tier Enterprise hoặc theo yêu cầu pháp lý từng khu vực.
 
-## 3.4. RĂ ng buá»™c Váº­n hĂ nh Äa mĂ´i trÆ°á»ng
-- Má»i thay Ä‘á»•i cáº¥u hĂ¬nh production pháº£i Ä‘i qua pipeline chuáº©n, cáº¥m "hotfix thá»§ cĂ´ng" trá»±c tiáº¿p trĂªn mĂ¡y chá»§.
-- Cáº¥u hĂ¬nh quan trá»ng pháº£i há»— trá»£ drift detection Ä‘á»ƒ phĂ¡t hiá»‡n sai lá»‡ch giá»¯a thá»±c táº¿ vĂ  cáº¥u hĂ¬nh khai bĂ¡o.
+## 3.4. Ràng buộc Vận hành Đa môi trường
+- Mọi thay đổi cấu hình production phải đi qua pipeline chuẩn, cấm "hotfix thủ công" trực tiếp trên máy chủ.
+- Cấu hình quan trọng phải hỗ trợ drift detection để phát hiện sai lệch giữa thực tế và cấu hình khai báo.
 
-# 4. Theoretical Basis (CÆ¡ sá»Ÿ LĂ½ luáº­n)
+# 4. Theoretical Basis (Cơ sở Lý luận)
 ## 4.1. Zero Trust Administration
-Má»i yĂªu cáº§u quáº£n trá»‹ Ä‘Æ°á»£c coi lĂ  chÆ°a tin cáº­y máº·c Ä‘á»‹nh vĂ  pháº£i xĂ¡c minh liĂªn tá»¥c qua danh tĂ­nh, ngá»¯ cáº£nh thiáº¿t bá»‹, thá»i Ä‘iá»ƒm vĂ  má»¥c Ä‘Ă­ch truy cáº­p.
+Mọi yêu cầu quản trị được coi là chưa tin cậy mặc định và phải xác minh liên tục qua danh tính, ngữ cảnh thiết bị, thời điểm và mục đích truy cập.
 
 ## 4.2. Site Reliability Engineering (SRE)
-Module Ă¡p dá»¥ng cĂ¡c nguyĂªn lĂ½ SRE nhÆ° SLI/SLO/Error Budget Ä‘á»ƒ cĂ¢n báº±ng giá»¯a tá»‘c Ä‘á»™ phĂ¡t hĂ nh vĂ  Ä‘á»™ á»•n Ä‘á»‹nh há»‡ thá»‘ng.
+Module áp dụng các nguyên lý SRE như SLI/SLO/Error Budget để cân bằng giữa tốc độ phát hành và độ ổn định hệ thống.
 
 ## 4.3. NIST RBAC + ABAC Hybrid
-PronaFlow káº¿t há»£p RBAC (phĂ¢n quyá»n theo vai trĂ²) vĂ  ABAC (phĂ¢n quyá»n theo thuá»™c tĂ­nh ngá»¯ cáº£nh) Ä‘á»ƒ kiá»ƒm soĂ¡t truy cáº­p linh hoáº¡t hÆ¡n trong mĂ´i trÆ°á»ng enterprise.
+PronaFlow kết hợp RBAC (phân quyền theo vai trò) và ABAC (phân quyền theo thuộc tính ngữ cảnh) để kiểm soát truy cập linh hoạt hơn trong môi trường enterprise.
 
 ## 4.4. Operational Resilience Framework
-Thiáº¿t káº¿ quáº£n trá»‹ dá»±a trĂªn vĂ²ng láº·p: Prevent -> Detect -> Respond -> Recover -> Learn, Ä‘áº£m báº£o sau má»—i sá»± cá»‘ Ä‘á»u cĂ³ cáº£i tiáº¿n chĂ­nh sĂ¡ch vĂ  runbook.
+Thiết kế quản trị dựa trên vòng lặp: Prevent -> Detect -> Respond -> Recover -> Learn, đảm bảo sau mỗi sự cố đều có cải tiến chính sách và runbook.

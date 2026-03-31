@@ -1,208 +1,208 @@
-﻿**Project**: PronaFlow
+**Project**: PronaFlow
 **Version**: 1.0
 **State**: Draft
 *Last updated: Jan 04, 2026*
 
 ---
 # 1. Business Overview
-Trong há»‡ thá»‘ng PronaFlow, Task (CĂ´ng viá»‡c) lĂ  Ä‘Æ¡n vá»‹ nguyĂªn tá»­ (Atomic Unit) cá»§a giĂ¡ trá»‹. Má»i hoáº¡t Ä‘á»™ng quáº£n trá»‹, cá»™ng tĂ¡c vĂ  Ä‘o lÆ°á»ng Ä‘á»u xoay quanh thá»±c thá»ƒ nĂ y. Module nĂ y chá»‹u trĂ¡ch nhiá»‡m vá»:
-1. Work Breakdown Structure ( #WBS): PhĂ¢n rĂ£ dá»± Ă¡n thĂ nh cĂ¡c phĂ¢n quáº£n lĂ½ Ä‘Æ°á»£c: `Task Lists` -> `Tasks` -> `Subtasks`
-	1.  Task Lists (Danh sĂ¡ch cĂ´ng viá»‡c): ÄĂ³ng vai trĂ² lĂ  cĂ¡c "Container" dĂ¹ng Ä‘á»ƒ gom nhĂ³m cĂ¡c cĂ´ng viá»‡c. TĂ¹y theo phÆ°Æ¡ng phĂ¡p quáº£n lĂ½ (Waterfall hay Agile), Task List cĂ³ thá»ƒ Ä‘áº¡i diá»‡n cho cĂ¡c Giai Ä‘oáº¡n (Phrase), Print, hoáº·c cĂ¡c NhĂ³m chá»©c nÄƒng tĂ¹y theo cáº¥u hĂ¬nh mĂ  ngÆ°á»i dĂ¹ng triá»ƒn khai trong dá»± Ă¡n cá»§a há».
-	2. Tasks (CĂ´ng viá»‡c): ÄÆ¡n vá»‹ thá»±c thi chĂ­nh, chá»©a Ä‘áº§y Ä‘á»§ thĂ´ng tin vá» tiáº¿n Ä‘á»™, thá»i gian, vĂ  ngÆ°á»i thá»±c hiá»‡n. Task báº¯t buá»™c náº±m trong má»™t Task List.
-	3. Subtasks (CĂ´ng viá»‡c con): CĂ¡c Ä‘áº§u má»¥c kiá»ƒm tra (Checklist) nhá» náº±m trong Task, giĂºp chia nhá» khá»‘i lÆ°á»£ng cĂ´ng viá»‡c phá»©c táº¡p.
-2. Execution: Cung cáº¥p Ä‘áº§y Ä‘á»§ cĂ´ng cá»¥ Ä‘á»ƒ thá»±c thi cĂ´ng viá»‡c (GĂ¡n ngÆ°á»i, Ä‘áº·t háº¡n, dĂ¡n nhĂ£n).
-3. Orchestrain (Äiá»u phá»‘i): Quáº£n lĂ½ dá»± phá»¥ thuá»™c vĂ  láº·p láº¡i Ä‘á»ƒ Ä‘áº£m báº£o dĂ²ng cháº£y cĂ´ng viá»‡c khĂ´ng bá»‹ giĂ¡n Ä‘oáº¡n.
+Trong hệ thống PronaFlow, Task (Công việc) là đơn vị nguyên tử (Atomic Unit) của giá trị. Mọi hoạt động quản trị, cộng tác và đo lường đều xoay quanh thực thể này. Module này chịu trách nhiệm về:
+1. Work Breakdown Structure ( #WBS): Phân rã dự án thành các phân quản lý được: `Task Lists` -> `Tasks` -> `Subtasks`
+	1.  Task Lists (Danh sách công việc): Đóng vai trò là các "Container" dùng để gom nhóm các công việc. Tùy theo phương pháp quản lý (Waterfall hay Agile), Task List có thể đại diện cho các Giai đoạn (Phrase), Print, hoặc các Nhóm chức năng tùy theo cấu hình mà người dùng triển khai trong dự án của họ.
+	2. Tasks (Công việc): Đơn vị thực thi chính, chứa đầy đủ thông tin về tiến độ, thời gian, và người thực hiện. Task bắt buộc nằm trong một Task List.
+	3. Subtasks (Công việc con): Các đầu mục kiểm tra (Checklist) nhỏ nằm trong Task, giúp chia nhỏ khối lượng công việc phức tạp.
+2. Execution: Cung cấp đầy đủ công cụ để thực thi công việc (Gán người, đặt hạn, dán nhãn).
+3. Orchestrain (Điều phối): Quản lý dự phụ thuộc và lặp lại để đảm bảo dòng chảy công việc không bị gián đoạn.
 # 2. User Stories & Acceptance Criteria
 ## 2.1. Feature: Task List Management
 ### User Story 4.1.
-LĂ  má»™t Quáº£n lĂ½ dá»± Ă¡n, TĂ´i muá»‘n táº¡o, sáº¯p xáº¿p vĂ  quáº£n lĂ½ cĂ¡c Task List trong dá»± Ă¡n. Äá»ƒ phĂ¢n chia dá»± Ă¡n thĂ nh cĂ¡c giai Ä‘oáº¡n rĂµ rĂ ng hoáº·c cĂ¡c nhĂ³m viá»‡c logic.
+Là một Quản lý dự án, Tôi muốn tạo, sắp xếp và quản lý các Task List trong dự án. Để phân chia dự án thành các giai đoạn rõ ràng hoặc các nhóm việc logic.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Container Management
 - **Action:** CRUD Task List.
-- **Constraint:** KhĂ´ng thá»ƒ xĂ³a má»™t List náº¿u nĂ³ Ä‘ang chá»©a Task (Pháº£i di chuyá»ƒn Task Ä‘i nÆ¡i khĂ¡c hoáº·c Archive cáº£ List).
+- **Constraint:** Không thể xóa một List nếu nó đang chứa Task (Phải di chuyển Task đi nơi khác hoặc Archive cả List).
 #### AC 2 - Drag & Drop Ordering
-- **Action:** KĂ©o tháº£ List A sang vá»‹ trĂ­ cá»§a List B.
-- **System:** Cáº­p nháº­t trÆ°á»ng `position` trong DB. Äáº£m báº£o tráº£i nghiá»‡m mÆ°á»£t mĂ , khĂ´ng bá»‹ giáº­t (Optimistic UI update).
+- **Action:** Kéo thả List A sang vị trí của List B.
+- **System:** Cập nhật trường `position` trong DB. Đảm bảo trải nghiệm mượt mà, không bị giật (Optimistic UI update).
 ## 2.2. Feature: Task Execution
 ### User Story 4.2.
-LĂ  má»™t ThĂ nh viĂªn dá»± Ă¡n, TĂ´i muá»‘n táº¡o má»™t Task má»›i náº±m trong má»™t Task List cá»¥ thá»ƒ, Äá»ƒ xĂ¡c Ä‘á»‹nh rĂµ cĂ´ng viá»‡c cáº§n lĂ m, thá»i háº¡n vĂ  má»©c Ä‘á»™ Æ°u tiĂªn.
+Là một Thành viên dự án, Tôi muốn tạo một Task mới nằm trong một Task List cụ thể, Để xác định rõ công việc cần làm, thời hạn và mức độ ưu tiên.
 ### Acceptance Critera ( #AC)
 #### AC 1 - Parent Constraint:
-- Rule: Má»™t Task khĂ´ng thá»ƒ tá»“n táº¡i Ä‘á»™c láº­p. Khi táº¡o Task, há»‡ thá»‘ng buá»™c pháº£i gĂ¡n `task_list_id`
+- Rule: Một Task không thể tồn tại độc lập. Khi tạo Task, hệ thống buộc phải gán `task_list_id`
 #### AC 2 - Metadata Management:
-- Há»— trá»£ cáº­p nháº­t cĂ¡c trÆ°á»ng thĂ´ng tin quan trá»ng:
-	- `Title` (Báº¯t buá»™c).
-	- `Assigness` (Cho phĂ©p gĂ¡n nhiá»u ngÆ°á»i, nhÆ°ng pháº£i chá»‰ Ä‘á»‹nh 1 ngÆ°á»i chá»‹u trĂ¡ch nhiá»‡m chĂ­nh - Primary Owner).
-	- `Priority`: Má»©c Ä‘á»™ Æ°u tiĂªn (Chá»n tá»« Danh má»¥c: `Low`, `Medium`, `High`, `Urgent`)
-	- `Status`: Tráº¡ng thĂ¡i xá»­ lĂ½ cá»§a Task (`Not-Started`, `In-Progress`, `Done`).
-	- `Date Range`: `Start Date` vĂ  `End Date` ($End Date >= Start Date$), cĂ³ thá»ƒ cĂ³ giá» cá»¥ thá»ƒ (e.g. 17:00 31/12).
-	- `Estimated Hours`: Æ¯á»›c lÆ°á»£ng thá»i gian lĂ m viá»‡c (sá»‘ giá») (Input cho [[10 - Intelligent Decision Support System|Module 10]] vĂ  [[11 - Advanced Analytics and Reporting|Module 11]])
-	- `Is Milestone`: ÄĂ¡nh dáº¥u Ä‘Ă¢y lĂ  cá»™t má»‘c quan trá»ng cá»§a dá»± Ă¡n.
-- Trigger: Khi táº¡o xong, há»‡ thá»‘ng gá»­i thĂ´ng bĂ¡o cho ngÆ°á»i Ä‘Æ°á»£c gĂ¡n ([[7 - Event-Driven Notification System|Module 7]])
+- Hỗ trợ cập nhật các trường thông tin quan trọng:
+	- `Title` (Bắt buộc).
+	- `Assigness` (Cho phép gán nhiều người, nhưng phải chỉ định 1 người chịu trách nhiệm chính - Primary Owner).
+	- `Priority`: Mức độ ưu tiên (Chọn từ Danh mục: `Low`, `Medium`, `High`, `Urgent`)
+	- `Status`: Trạng thái xử lý của Task (`Not-Started`, `In-Progress`, `Done`).
+	- `Date Range`: `Start Date` và `End Date` ($End Date >= Start Date$), có thể có giờ cụ thể (e.g. 17:00 31/12).
+	- `Estimated Hours`: Ước lượng thời gian làm việc (số giờ) (Input cho [[10 - Intelligent Decision Support System|Module 10]] và [[11 - Advanced Analytics and Reporting|Module 11]])
+	- `Is Milestone`: Đánh dấu đây là cột mốc quan trọng của dự án.
+- Trigger: Khi tạo xong, hệ thống gửi thông báo cho người được gán ([[7 - Even-Driven Notification System|Module 7]])
 #### AC 3 - Tags & Labels System
-- Action: User cĂ³ thá»ƒ táº¡o má»›i hoáº·c chá»n tag cĂ³ sáºµn.
-- Visual: Má»—i tag cĂ³ má»™t mĂ u sáº¯c riĂªng biá»‡t Ä‘á»ƒ nháº­n diá»‡n trĂªn Board.
-- Scope: Tag Ä‘Æ°á»£c quáº£n lĂ½ á»Ÿ cáº¥p Ä‘á»™ Workspace Ä‘á»ƒ tĂ¡i sá»­ dá»¥ng giá»¯a cĂ¡c dá»± Ă¡n.
-- Xem chi tiáº¿t táº¡i: [[]]
+- Action: User có thể tạo mới hoặc chọn tag có sẵn.
+- Visual: Mỗi tag có một màu sắc riêng biệt để nhận diện trên Board.
+- Scope: Tag được quản lý ở cấp độ Workspace để tái sử dụng giữa các dự án.
+- Xem chi tiết tại: [[]]
 #### AC 44 - Time Tracking Integration
-- **UI:** Hiá»ƒn thá»‹ nĂºt "Start Timer" ngay trĂªn Task Detail.
-- **Logic:** Khi báº¥m Start -> Gá»i API sang **Module 11** Ä‘á»ƒ báº¯t Ä‘áº§u tĂ­nh giá». Khi báº¥m Stop -> LÆ°u Log.
+- **UI:** Hiển thị nút "Start Timer" ngay trên Task Detail.
+- **Logic:** Khi bấm Start -> Gọi API sang **Module 11** để bắt đầu tính giờ. Khi bấm Stop -> Lưu Log.
 ## 2.3. Feature: Subtasks.
 ### User Story 4.3.
-- LĂ  má»™t NgÆ°á»i thá»±c hiá»‡n (Assignee), 
-- TĂ´i muá»‘n chia nhá» Task thĂ nh danh sĂ¡ch kiá»ƒm tra (Checklist),
-- Äá»ƒ kiá»ƒm soĂ¡t cĂ¡c bÆ°á»›c thá»±c hiá»‡n chi tiáº¿t mĂ  khĂ´ng cáº§n táº¡o thĂªm Task lá»›n.
+- Là một Người thực hiện (Assignee), 
+- Tôi muốn chia nhỏ Task thành danh sách kiểm tra (Checklist),
+- Để kiểm soát các bước thực hiện chi tiết mà không cần tạo thêm Task lớn.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Checklist Behavior
-- **Input:** Nháº­p text vĂ  Enter Ä‘á»ƒ thĂªm dĂ²ng má»›i nhanh.
-- **State:** Má»—i subtask cĂ³ checkbox (Done/Not Done).
-- **Progress Bar:** Task cha hiá»ƒn thá»‹ thanh tiáº¿n Ä‘á»™ dá»±a trĂªn % Subtask hoĂ n thĂ nh (VĂ­ dá»¥: 3/4 Subtasks = 75%).
+- **Input:** Nhập text và Enter để thêm dòng mới nhanh.
+- **State:** Mỗi subtask có checkbox (Done/Not Done).
+- **Progress Bar:** Task cha hiển thị thanh tiến độ dựa trên % Subtask hoàn thành (Ví dụ: 3/4 Subtasks = 75%).
 #### AC 2 - Assignable Subtasks
-- Cho phĂ©p gĂ¡n ngÆ°á»i thá»±c hiá»‡n riĂªng cho tá»«ng Subtask (náº¿u cáº§n thiáº¿t). Náº¿u khĂ´ng gĂ¡n, máº·c Ä‘á»‹nh thuá»™c vá» ngÆ°á»i lĂ m Task cha.
-- Scope: Äá»‘i vá»›i gĂ¡n Subtask chá»‰ cho phĂ©p gĂ¡n cho nhá»¯ng ngÆ°á»i Ä‘Æ°á»£c gĂ¡n trong Task cha.
+- Cho phép gán người thực hiện riêng cho từng Subtask (nếu cần thiết). Nếu không gán, mặc định thuộc về người làm Task cha.
+- Scope: Đối với gán Subtask chỉ cho phép gán cho những người được gán trong Task cha.
 #### AC 3 - Ordering:
-- CĂ¡c Subtask cĂ³ thá»ƒ Ä‘Æ°á»£c sáº¯p xáº¿p láº¡i thá»© tá»± (`position`) Ä‘á»ƒ thá»ƒ hiá»‡n quy trĂ¬nh thá»±c hiá»‡n cĂ¡c bÆ°á»›c.
+- Các Subtask có thể được sắp xếp lại thứ tự (`position`) để thể hiện quy trình thực hiện các bước.
 ## 2.4. Feature: Task Dependencies (Predecessor & Successor).
 ### User Story 4.4.
-- LĂ  má»™t Quáº£n lĂ½ dá»± Ă¡n, 
-- TĂ´i muá»‘n thiáº¿t láº­p cĂ¡c má»‘i quan há»‡ giá»¯a Task A vĂ   Task B, 
-- Äá»ƒ Ä‘áº£m báº£o quy trĂ¬nh thá»±c hiá»‡n Ä‘Ăºng trĂ¬nh tá»±.
+- Là một Quản lý dự án, 
+- Tôi muốn thiết lập các mối quan hệ giữa Task A và  Task B, 
+- Để đảm bảo quy trình thực hiện đúng trình tự.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Dependency Definition
-- **Data Model:** Äá»‹nh nghÄ©a quan há»‡ `Predecessor` (Task A - Viá»‡c trÆ°á»›c) vĂ  `Successor` (Task B - Viá»‡c sau).
-- **Default Type:** Há»— trá»£ chuáº©n **Finish-to-Start (FS)**.
-    - *Logic:* Task B khĂ´ng thá»ƒ chuyá»ƒn sang `In-Progress` náº¿u Task A chÆ°a `Done`.
+- **Data Model:** Định nghĩa quan hệ `Predecessor` (Task A - Việc trước) và `Successor` (Task B - Việc sau).
+- **Default Type:** Hỗ trợ chuẩn **Finish-to-Start (FS)**.
+    - *Logic:* Task B không thể chuyển sang `In-Progress` nếu Task A chưa `Done`.
 #### AC 2 - Cycle Detection Validation
-- **Logic:** Khi User cá»‘ gáº¯ng ná»‘i A -> B, há»‡ thá»‘ng kiá»ƒm tra Ä‘á»“ thá»‹. Náº¿u phĂ¡t hiá»‡n B Ä‘ang giĂ¡n tiáº¿p cháº·n A (A -> ... -> B), ngÄƒn cháº·n hĂ nh Ä‘á»™ng vĂ  bĂ¡o lá»—i `TASK_001: Circular dependency detected`.
-## 2.5. Feature: Recurring Tasks (CĂ´ng viá»‡c láº·p láº¡i)
+- **Logic:** Khi User cố gắng nối A -> B, hệ thống kiểm tra đồ thị. Nếu phát hiện B đang gián tiếp chặn A (A -> ... -> B), ngăn chặn hành động và báo lỗi `TASK_001: Circular dependency detected`.
+## 2.5. Feature: Recurring Tasks (Công việc lặp lại)
 ### User Story 4.5
-LĂ  má»™t Team Lead, TĂ´i muá»‘n thiáº¿t láº­p Task "Gá»­i bĂ¡o cĂ¡o tuáº§n" tá»± Ä‘á»™ng láº·p láº¡i vĂ o thá»© 6 hĂ ng tuáº§n, Äá»ƒ khĂ´ng pháº£i táº¡o thá»§ cĂ´ng.
+Là một Team Lead, Tôi muốn thiết lập Task "Gửi báo cáo tuần" tự động lặp lại vào thứ 6 hàng tuần, Để không phải tạo thủ công.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Recurrence Pattern
-- Há»— trá»£ cĂ¡c máº«u: 
+- Hỗ trợ các mẫu: 
 	- Daily, 
-	- Weekly (chá»n ngĂ y trong tuáº§n), 
+	- Weekly (chọn ngày trong tuần), 
 	- Monthly, 
 	- Custom.
-#### AC 2 - Generation Strategy (Chiáº¿n lÆ°á»£c sinh Task)
-- **Lazy Generation:** Há»‡ thá»‘ng khĂ´ng sinh ra hĂ ng nghĂ¬n task tÆ°Æ¡ng lai ngay láº­p tá»©c.
-- **Logic:** Chá»‰ sinh ra Task tiáº¿p theo (Next Instance) khi Task hiá»‡n táº¡i Ä‘Æ°á»£c Ä‘Ă¡nh dáº¥u lĂ  **Done** hoáº·c Ä‘áº¿n ngĂ y kĂ­ch hoáº¡t.
-- **Prefix:** Tá»± Ä‘á»™ng thĂªm suffix vĂ o tĂªn task (e.g., "Report [2025-01-01]", "Report [2025-01-08]").
-## 2.6. Feature: Milestones (Cá»™t má»‘c Dá»± Ă¡n)
+#### AC 2 - Generation Strategy (Chiến lược sinh Task)
+- **Lazy Generation:** Hệ thống không sinh ra hàng nghìn task tương lai ngay lập tức.
+- **Logic:** Chỉ sinh ra Task tiếp theo (Next Instance) khi Task hiện tại được đánh dấu là **Done** hoặc đến ngày kích hoạt.
+- **Prefix:** Tự động thêm suffix vào tên task (e.g., "Report [2025-01-01]", "Report [2025-01-08]").
+## 2.6. Feature: Milestones (Cột mốc Dự án)
 ### User Story 4.6
-LĂ  má»™t Project Manager, TĂ´i muá»‘n Ä‘Ă¡nh dáº¥u cĂ¡c Task quan trá»ng lĂ  "Cá»™t má»‘c", Äá»ƒ dá»… dĂ ng theo dĂµi cĂ¡c Ä‘iá»ƒm chá»‘t (Checkpoints) quan trá»ng cá»§a dá»± Ă¡n trĂªn timeline.
+Là một Project Manager, Tôi muốn đánh dấu các Task quan trọng là "Cột mốc", Để dễ dàng theo dõi các điểm chốt (Checkpoints) quan trọng của dự án trên timeline.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Milestone Definition
 - **Input:** Toggle `Is Milestone = True`.
-- **Constraint:** Milestone cĂ³ `Duration = 0` (Start Date = End Date). KhĂ´ng cho phĂ©p nháº­p Estimated Hours.
+- **Constraint:** Milestone có `Duration = 0` (Start Date = End Date). Không cho phép nhập Estimated Hours.
 #### AC 2 - Visual Distinction
-- Hiá»ƒn thá»‹ dÆ°á»›i dáº¡ng hĂ¬nh thoi (Diamond shape) trĂªn biá»ƒu Ä‘á»“ Gantt vĂ  cĂ³ icon ná»•i báº­t trong danh sĂ¡ch Task Ä‘á»ƒ phĂ¢n biá»‡t vá»›i Task thÆ°á»ng.
+- Hiển thị dưới dạng hình thoi (Diamond shape) trên biểu đồ Gantt và có icon nổi bật trong danh sách Task để phân biệt với Task thường.
 
-## 2.7. Feature: Bulk Actions (Thao tĂ¡c hĂ ng loáº¡t)
+## 2.7. Feature: Bulk Actions (Thao tác hàng loạt)
 ### User Story 4.7
-LĂ  má»™t NgÆ°á»i dĂ¹ng, TĂ´i muá»‘n chá»n vĂ  chá»‰nh sá»­a nhiá»u Task cĂ¹ng má»™t lĂºc, Äá»ƒ tiáº¿t kiá»‡m thá»i gian khi cáº§n thay Ä‘á»•i tráº¡ng thĂ¡i hoáº·c ngÆ°á»i thá»±c hiá»‡n cho cáº£ nhĂ³m viá»‡c.
+Là một Người dùng, Tôi muốn chọn và chỉnh sửa nhiều Task cùng một lúc, Để tiết kiệm thời gian khi cần thay đổi trạng thái hoặc người thực hiện cho cả nhóm việc.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Multi-select Interaction
-- **Interaction:** Giá»¯ phĂ­m `Shift` hoáº·c `Ctrl/Cmd` Ä‘á»ƒ chá»n nhiá»u Task, hoáº·c tick vĂ o checkbox Ä‘áº§u dĂ²ng.
-- **Floating Toolbar:** Khi cĂ³ >1 task Ä‘Æ°á»£c chá»n, hiá»ƒn thá»‹ thanh cĂ´ng cá»¥ ná»•i phĂ­a dÆ°á»›i mĂ n hĂ¬nh: "X Tasks selected".
+- **Interaction:** Giữ phím `Shift` hoặc `Ctrl/Cmd` để chọn nhiều Task, hoặc tick vào checkbox đầu dòng.
+- **Floating Toolbar:** Khi có >1 task được chọn, hiển thị thanh công cụ nổi phía dưới màn hình: "X Tasks selected".
 #### AC 2 - Batch Operations
-- Há»— trá»£ cĂ¡c hĂ nh Ä‘á»™ng:
-    - `Move to...`: Di chuyá»ƒn sang List khĂ¡c hoáº·c Dá»± Ă¡n khĂ¡c.
-    - `Set Status/Priority/Assignee`: Cáº­p nháº­t Ä‘á»“ng loáº¡t giĂ¡ trá»‹ má»›i.
-    - `Delete`: XĂ³a nhiá»u task (YĂªu cáº§u confirm).
-## 2.8. Feature: Custom Fields (TrÆ°á»ng tĂ¹y chá»‰nh)
+- Hỗ trợ các hành động:
+    - `Move to...`: Di chuyển sang List khác hoặc Dự án khác.
+    - `Set Status/Priority/Assignee`: Cập nhật đồng loạt giá trị mới.
+    - `Delete`: Xóa nhiều task (Yêu cầu confirm).
+## 2.8. Feature: Custom Fields (Trường tùy chỉnh)
 ### User Story 4.8
-LĂ  má»™t **Pro User**, TĂ´i muá»‘n Ä‘á»‹nh nghÄ©a thĂªm cĂ¡c trÆ°á»ng dá»¯ liá»‡u Ä‘áº·c thĂ¹ (nhÆ° "Ticket ID", "KhĂ¡ch hĂ ng"), Äá»ƒ quáº£n lĂ½ thĂ´ng tin sĂ¡t vá»›i nghiá»‡p vá»¥ thá»±c táº¿ cá»§a cĂ´ng ty.
+Là một **Pro User**, Tôi muốn định nghĩa thêm các trường dữ liệu đặc thù (như "Ticket ID", "Khách hàng"), Để quản lý thông tin sát với nghiệp vụ thực tế của công ty.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Field Definition (Project Level)
-- PM cĂ³ thá»ƒ táº¡o Custom Field trong Project Settings.
+- PM có thể tạo Custom Field trong Project Settings.
 - **Data Types:** Text, Number, Dropdown (Single/Multi select), Date, Checkbox, URL.
 #### AC 2 - Tier Enforcement (RBAC)
-- TĂ­nh nÄƒng nĂ y chá»‰ kháº£ dá»¥ng cho Workspace sá»­ dá»¥ng gĂ³i **Pro** hoáº·c **Enterprise** (Check quota tá»« Module 13). GĂ³i Free bá»‹ khĂ³a chá»©c nÄƒng nĂ y.
+- Tính năng này chỉ khả dụng cho Workspace sử dụng gói **Pro** hoặc **Enterprise** (Check quota từ Module 13). Gói Free bị khóa chức năng này.
 #### AC 3 - Task Input
-- CĂ¡c trÆ°á»ng tĂ¹y chá»‰nh sáº½ hiá»ƒn thá»‹ á»Ÿ khu vá»±c riĂªng trong Task Detail. Dá»¯ liá»‡u nháº­p vĂ o pháº£i Ä‘Æ°á»£c Validate theo kiá»ƒu dá»¯ liá»‡u Ä‘Ă£ Ä‘á»‹nh nghÄ©a.
+- Các trường tùy chỉnh sẽ hiển thị ở khu vực riêng trong Task Detail. Dữ liệu nhập vào phải được Validate theo kiểu dữ liệu đã định nghĩa.
 ## 2.9. Feature: Task Templates
 ### User Story 4.9
-LĂ  má»™t Team Lead, TĂ´i muá»‘n lÆ°u cáº¥u trĂºc cá»§a má»™t Task máº«u (gá»“m mĂ´ táº£, checklist, tag) vĂ  tĂ¡i sá»­ dá»¥ng nĂ³, Äá»ƒ chuáº©n hĂ³a quy trĂ¬nh giao viá»‡c cho nhĂ¢n viĂªn.
+Là một Team Lead, Tôi muốn lưu cấu trúc của một Task mẫu (gồm mô tả, checklist, tag) và tái sử dụng nó, Để chuẩn hóa quy trình giao việc cho nhân viên.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Save as Template
-- Tá»« má»™t Task Ä‘ang cĂ³, chá»n "Save as Template". Há»‡ thá»‘ng lÆ°u láº¡i: Description, Subtasks, Tags, Priority (khĂ´ng lÆ°u Assignee vĂ  Due Date).
+- Từ một Task đang có, chọn "Save as Template". Hệ thống lưu lại: Description, Subtasks, Tags, Priority (không lưu Assignee và Due Date).
 #### AC 2 - Instantiate from Template
-- Khi táº¡o Task má»›i, hiá»ƒn thá»‹ dropdown: "Apply Template".
-- Khi chá»n, dá»¯ liá»‡u tá»« Template sáº½ Ä‘á»• vĂ o form táº¡o Task.
-## 2.10. Feature: Watchers/Followers (NgÆ°á»i theo dĂµi)
+- Khi tạo Task mới, hiển thị dropdown: "Apply Template".
+- Khi chọn, dữ liệu từ Template sẽ đổ vào form tạo Task.
+## 2.10. Feature: Watchers/Followers (Người theo dõi)
 ### User Story 4.10
-LĂ  má»™t Stakeholder, TĂ´i muá»‘n theo dĂµi má»™t Task mĂ  tĂ´i khĂ´ng trá»±c tiáº¿p thá»±c hiá»‡n, Äá»ƒ nháº­n Ä‘Æ°á»£c thĂ´ng bĂ¡o má»—i khi cĂ³ cáº­p nháº­t má»›i vá» tiáº¿n Ä‘á»™ hoáº·c tháº£o luáº­n.
+Là một Stakeholder, Tôi muốn theo dõi một Task mà tôi không trực tiếp thực hiện, Để nhận được thông báo mỗi khi có cập nhật mới về tiến độ hoặc thảo luận.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Watch Logic
-- **Manual:** NĂºt toggle hĂ¬nh con máº¯t (Eye Icon). Báº¥m Ä‘á»ƒ Follow/Unfollow.
-- **Auto-watch:** NgÆ°á»i táº¡o Task (Creator) vĂ  NgÆ°á»i comment (Commenter) tá»± Ä‘á»™ng Ä‘Æ°á»£c thĂªm vĂ o danh sĂ¡ch Watchers (trá»« khi há» táº¯t thá»§ cĂ´ng).
+- **Manual:** Nút toggle hình con mắt (Eye Icon). Bấm để Follow/Unfollow.
+- **Auto-watch:** Người tạo Task (Creator) và Người comment (Commenter) tự động được thêm vào danh sách Watchers (trừ khi họ tắt thủ công).
 #### AC 2 - Notification Trigger
-- Danh sĂ¡ch Watchers sáº½ Ä‘Æ°á»£c [[7 - Event-Driven Notification System|Module 7]] sá»­ dá»¥ng Ä‘á»ƒ gá»­i thĂ´ng bĂ¡o khi cĂ³ sá»± kiá»‡n thay Ä‘á»•i (`task.updated`, `comment.created`).
+- Danh sách Watchers sẽ được [[7 - Even-Driven Notification System|Module 7]] sử dụng để gửi thông báo khi có sự kiện thay đổi (`task.updated`, `comment.created`).
 
-## 2.11. Feature: Execution Constraints under Locked Plan (RĂ ng buá»™c Thá»±c thi khi Káº¿ hoáº¡ch bá»‹ KhĂ³a)
+## 2.11. Feature: Execution Constraints under Locked Plan (Ràng buộc Thực thi khi Kế hoạch bị Khóa)
 ### User Story 4.11
-LĂ  má»™t ThĂ nh viĂªn dá»± Ă¡n, TĂ´i muá»‘n biáº¿t nhá»¯ng thĂ´ng tin nĂ o mĂ¬nh Ä‘Æ°á»£c phĂ©p chá»‰nh sá»­a khi dá»± Ă¡n Ä‘Ă£ chá»‘t káº¿ hoáº¡ch (Baseline), Äá»ƒ tĂ´i cáº­p nháº­t tiáº¿n Ä‘á»™ mĂ  khĂ´ng vĂ´ tĂ¬nh phĂ¡ vá»¡ cam káº¿t vá»›i khĂ¡ch hĂ ng.
+Là một Thành viên dự án, Tôi muốn biết những thông tin nào mình được phép chỉnh sửa khi dự án đã chốt kế hoạch (Baseline), Để tôi cập nhật tiến độ mà không vô tình phá vỡ cam kết với khách hàng.
 ### Acceptance Criteria (#AC)
 
-#### AC 1 - Allowed Actions (HĂ nh Ä‘á»™ng Ä‘Æ°á»£c phĂ©p)
+#### AC 1 - Allowed Actions (Hành động được phép)
 
-- DĂ¹ Plan Ä‘ang á»Ÿ tráº¡ng thĂ¡i **Locked**, User váº«n Ä‘Æ°á»£c quyá»n:
-    - Thay Ä‘á»•i `Status` (VĂ­ dá»¥: In-Progress -> Done).
-    - Cáº­p nháº­t `% Complete`.
-    - ThĂªm `Comment`, `Attachment`.
+- Dù Plan đang ở trạng thái **Locked**, User vẫn được quyền:
+    - Thay đổi `Status` (Ví dụ: In-Progress -> Done).
+    - Cập nhật `% Complete`.
+    - Thêm `Comment`, `Attachment`.
     - Log `Time` (Time Tracking).
-    - ÄĂ¡nh dáº¥u `Subtask` lĂ  hoĂ n thĂ nh.
-    - **LĂ½ do:** ÄĂ¢y lĂ  cĂ¡c hĂ nh Ä‘á»™ng thuá»™c vá» **Thá»±c thi (Execution)**, khĂ´ng lĂ m thay Ä‘á»•i cáº¥u trĂºc káº¿ hoáº¡ch.
-#### AC 2 - Restricted Actions (HĂ nh Ä‘á»™ng bá»‹ háº¡n cháº¿)
-- Khi Plan = **Locked**, há»‡ thá»‘ng vĂ´ hiá»‡u hĂ³a (Disable/Gray-out) cĂ¡c trÆ°á»ng sau trĂªn Form chi tiáº¿t Task:
-    - `Start Date` / `End Date` (NgĂ y káº¿ hoáº¡ch).
+    - Đánh dấu `Subtask` là hoàn thành.
+    - **Lý do:** Đây là các hành động thuộc về **Thực thi (Execution)**, không làm thay đổi cấu trúc kế hoạch.
+#### AC 2 - Restricted Actions (Hành động bị hạn chế)
+- Khi Plan = **Locked**, hệ thống vô hiệu hóa (Disable/Gray-out) các trường sau trên Form chi tiết Task:
+    - `Start Date` / `End Date` (Ngày kế hoạch).
     - `Duration`.
-    - `Dependency` (KhĂ´ng Ä‘Æ°á»£c ná»‘i thĂªm hoáº·c cáº¯t bá» dĂ¢y).
-- **Exception:** Chá»‰ **Project Manager** má»›i cĂ³ quyá»n má»Ÿ khĂ³a táº¡m thá»i (Override) hoáº·c pháº£i Ä‘i qua quy trĂ¬nh Change Request (Module 5).
-#### AC 3 - Scope Creep Prevention (NgÄƒn cháº·n phĂ¬nh to pháº¡m vi)
-- **Constraint:** KhĂ´ng cho phĂ©p táº¡o má»›i **Task cha (Parent Task)** trá»±c tiáº¿p vĂ o danh sĂ¡ch khi Plan Ä‘ang Lock.
-- **Allowed:** Váº«n cho phĂ©p táº¡o thĂªm **Subtask** (vĂ¬ Subtask Ä‘Æ°á»£c xem lĂ  chi tiáº¿t hĂ³a cĂ¡ch lĂ m, miá»…n lĂ  khĂ´ng lĂ m thay Ä‘á»•i ngĂ y káº¿t thĂºc cá»§a Task cha).
+    - `Dependency` (Không được nối thêm hoặc cắt bỏ dây).
+- **Exception:** Chỉ **Project Manager** mới có quyền mở khóa tạm thời (Override) hoặc phải đi qua quy trình Change Request (Module 5).
+#### AC 3 - Scope Creep Prevention (Ngăn chặn phình to phạm vi)
+- **Constraint:** Không cho phép tạo mới **Task cha (Parent Task)** trực tiếp vào danh sách khi Plan đang Lock.
+- **Allowed:** Vẫn cho phép tạo thêm **Subtask** (vì Subtask được xem là chi tiết hóa cách làm, miễn là không làm thay đổi ngày kết thúc của Task cha).
 # 3. Business Rules
-## 3.1. Quy táº¯c Káº¿ thá»«a (Inheritance):
-- Task con khĂ´ng tá»± Ä‘á»™ng káº¿ thá»«a Assignee tá»« Task cha (Ä‘á»ƒ linh hoáº¡t), nhÆ°ng nĂªn káº¿ thá»«a quyá»n truy cáº­p (Permissions).
-## 3.2. Quy táº¯c RĂ ng buá»™c Custom Fields:
-- Tá»‘i Ä‘a 50 Custom Fields cho má»—i dá»± Ă¡n (Ä‘á»ƒ báº£o Ä‘áº£m hiá»‡u nÄƒng render UI).
-- Custom Field khi xĂ³a sáº½ máº¥t vÄ©nh viá»…n dá»¯ liá»‡u Ä‘Ă£ nháº­p trong cĂ¡c Task, cáº§n cáº£nh bĂ¡o ká»¹.
-## 3.3. Quy táº¯c Dependency Cháº·t cháº½ (Strict Dependency):
-- Náº¿u cáº¥u hĂ¬nh Project lĂ  `Strict Mode`: Há»‡ thá»‘ng **khĂ³a** (Disable) nĂºt "Start" hoáº·c "Complete" cá»§a Task Successor náº¿u Task Predecessor chÆ°a xong.
-- Náº¿u `Loose Mode` (Máº·c Ä‘á»‹nh): Chá»‰ hiá»ƒn thá»‹ cáº£nh bĂ¡o (Warning Toast) nhÆ°ng váº«n cho phĂ©p lĂ m.
-## 3.4. Quy táº¯c "Actual vs Planned" (Thá»±c táº¿ vs Káº¿ hoáº¡ch)
-- PhĂ¢n há»‡ 4 cáº§n phĂ¢n biá»‡t rĂµ hai bá»™ dá»¯ liá»‡u ngĂ y thĂ¡ng:
-    1. **Planned Dates (Baseline):** NgĂ y cam káº¿t (Do Module 5 quáº£n lĂ½, bá»‹ Read-only khi Lock).
-    2. **Actual Dates:** NgĂ y thá»±c táº¿ (Do Module 4 ghi nháº­n).
-        - _Actual Start:_ Tá»± Ä‘á»™ng Ä‘iá»n `NOW()` khi Task chuyá»ƒn sang `In-Progress`.
-        - _Actual End:_ Tá»± Ä‘á»™ng Ä‘iá»n `NOW()` khi Task chuyá»ƒn sang `Done`.
-- **Logic:** Viá»‡c nhĂ¢n viĂªn lĂ m xong sá»›m hay muá»™n (Actual khĂ¡c Planned) lĂ  chuyá»‡n bĂ¬nh thÆ°á»ng, há»‡ thá»‘ng ghi nháº­n sá»± chĂªnh lá»‡ch nĂ y Ä‘á»ƒ tĂ­nh KPI, chá»© khĂ´ng cháº·n nháº­p liá»‡u.
-## 3.5. Quy táº¯c "Auto-Push" khi trá»… háº¡n
-- **Váº¥n Ä‘á»:** Task A cĂ³ Deadline hĂ´m qua (Planned End = Yesterday), nhÆ°ng hĂ´m nay váº«n chÆ°a xong (`Status != Done`).
-- **Xá»­ lĂ½:**
-    - Náº¿u Plan **Unlocked**: Há»‡ thá»‘ng cĂ³ thá»ƒ tá»± Ä‘á»™ng Ä‘áº©y Planned End sang hĂ´m nay (Auto-reschedule).
-    - Náº¿u Plan **Locked**: Giá»¯ nguyĂªn Planned End lĂ  ngĂ y hĂ´m qua (Ä‘á»ƒ ghi nháº­n lĂ  Trá»… háº¡n - Overdue). Há»‡ thá»‘ng hiá»ƒn thá»‹ nhĂ£n **"Overdue by X days"** mĂ u Ä‘á».
-# 4. Theoretical Basis (CÆ¡ sá»Ÿ LĂ½ luáº­n)
+## 3.1. Quy tắc Kế thừa (Inheritance):
+- Task con không tự động kế thừa Assignee từ Task cha (để linh hoạt), nhưng nên kế thừa quyền truy cập (Permissions).
+## 3.2. Quy tắc Ràng buộc Custom Fields:
+- Tối đa 50 Custom Fields cho mỗi dự án (để bảo đảm hiệu năng render UI).
+- Custom Field khi xóa sẽ mất vĩnh viễn dữ liệu đã nhập trong các Task, cần cảnh báo kỹ.
+## 3.3. Quy tắc Dependency Chặt chẽ (Strict Dependency):
+- Nếu cấu hình Project là `Strict Mode`: Hệ thống **khóa** (Disable) nút "Start" hoặc "Complete" của Task Successor nếu Task Predecessor chưa xong.
+- Nếu `Loose Mode` (Mặc định): Chỉ hiển thị cảnh báo (Warning Toast) nhưng vẫn cho phép làm.
+## 3.4. Quy tắc "Actual vs Planned" (Thực tế vs Kế hoạch)
+- Phân hệ 4 cần phân biệt rõ hai bộ dữ liệu ngày tháng:
+    1. **Planned Dates (Baseline):** Ngày cam kết (Do Module 5 quản lý, bị Read-only khi Lock).
+    2. **Actual Dates:** Ngày thực tế (Do Module 4 ghi nhận).
+        - _Actual Start:_ Tự động điền `NOW()` khi Task chuyển sang `In-Progress`.
+        - _Actual End:_ Tự động điền `NOW()` khi Task chuyển sang `Done`.
+- **Logic:** Việc nhân viên làm xong sớm hay muộn (Actual khác Planned) là chuyện bình thường, hệ thống ghi nhận sự chênh lệch này để tính KPI, chứ không chặn nhập liệu.
+## 3.5. Quy tắc "Auto-Push" khi trễ hạn
+- **Vấn đề:** Task A có Deadline hôm qua (Planned End = Yesterday), nhưng hôm nay vẫn chưa xong (`Status != Done`).
+- **Xử lý:**
+    - Nếu Plan **Unlocked**: Hệ thống có thể tự động đẩy Planned End sang hôm nay (Auto-reschedule).
+    - Nếu Plan **Locked**: Giữ nguyên Planned End là ngày hôm qua (để ghi nhận là Trễ hạn - Overdue). Hệ thống hiển thị nhãn **"Overdue by X days"** màu đỏ.
+# 4. Theoretical Basis (Cơ sở Lý luận)
 ## 4.1. Work Breakdown Structure (WBS)
-Module nĂ y tuĂ¢n thá»§ nguyĂªn táº¯c phĂ¢n rĂ£ cĂ´ng viá»‡c WBS:
+Module này tuân thủ nguyên tắc phân rã công việc WBS:
 - **Level 1:** Project.
 - **Level 2:** Task Lists (Phases/Epics).
 - **Level 3:** Tasks (Work Packages).
-- **Level 4:** Subtasks (Activities). GiĂºp quáº£n lĂ½ sá»± phá»©c táº¡p báº±ng cĂ¡ch chia nhá» váº¥n Ä‘á» ("Divide and Conquer").
-## 4.2. Äá»‹nh luáº­t Brooks (Brooks's Law)
+- **Level 4:** Subtasks (Activities). Giúp quản lý sự phức tạp bằng cách chia nhỏ vấn đề ("Divide and Conquer").
+## 4.2. Định luật Brooks (Brooks's Law)
 
-> "ThĂªm nhĂ¢n lá»±c vĂ o má»™t dá»± Ă¡n pháº§n má»m Ä‘ang cháº­m tiáº¿n Ä‘á»™ sáº½ chá»‰ lĂ m nĂ³ cháº­m thĂªm."
+> "Thêm nhân lực vào một dự án phần mềm đang chậm tiến độ sẽ chỉ làm nó chậm thêm."
 
-Ăp dá»¥ng vĂ o tĂ­nh nÄƒng **Activity Log & Dependencies**: Viá»‡c giao tiáº¿p khĂ´ng rĂµ rĂ ng (Implicit Communication) lĂ  nguyĂªn nhĂ¢n gĂ¢y cháº­m trá»…. Há»‡ thá»‘ng lĂ m rĂµ cĂ¡c phá»¥ thuá»™c vĂ  lá»‹ch sá»­ thay Ä‘á»•i Ä‘á»ƒ giáº£m chi phĂ­ giao tiáº¿p (Communication Overhead), giĂºp viá»‡c thĂªm ngÆ°á»i má»›i (náº¿u cáº§n) dá»… dĂ ng hÆ¡n nhá» lá»‹ch sá»­ minh báº¡ch.
+Áp dụng vào tính năng **Activity Log & Dependencies**: Việc giao tiếp không rõ ràng (Implicit Communication) là nguyên nhân gây chậm trễ. Hệ thống làm rõ các phụ thuộc và lịch sử thay đổi để giảm chi phí giao tiếp (Communication Overhead), giúp việc thêm người mới (nếu cần) dễ dàng hơn nhờ lịch sử minh bạch.
 ## 4.3. Getting Things Done (GTD Methodology)
-Há»— trá»£ tÆ° duy GTD thĂ´ng qua cĂ¡c tráº¡ng thĂ¡i Task:
-- **In-Basket:** Task má»›i táº¡o (chÆ°a phĂ¢n loáº¡i).
-- **Next Action:** Task cĂ³ ngĂ y vĂ  ngÆ°á»i lĂ m cá»¥ thá»ƒ.
-- **Waiting For:** Task bá»‹ cháº·n (Blocked by dependency).
-- **Someday/Maybe:** Task á»Ÿ tráº¡ng thĂ¡i "Hold".
-## 4.4. SÆ¡ Ä‘á»“ Luá»“ng xá»­ lĂ½ Dependency:
+Hỗ trợ tư duy GTD thông qua các trạng thái Task:
+- **In-Basket:** Task mới tạo (chưa phân loại).
+- **Next Action:** Task có ngày và người làm cụ thể.
+- **Waiting For:** Task bị chặn (Blocked by dependency).
+- **Someday/Maybe:** Task ở trạng thái "Hold".
+## 4.4. Sơ đồ Luồng xử lý Dependency:
 ```mermaid
 graph TD
     Start([User Connects Task A to Task B]) --> CheckLoop{Check Cycle: A->...->B->A?}
@@ -214,15 +214,14 @@ graph TD
 ```
 
 ## 4.5. Dependency Types Matrix
-| **MĂ£ (Code)** | **TĂªn loáº¡i (Type)**  | **KĂ½ hiá»‡u**                   | **MĂ´ táº£ Quy chuáº©n (Logic)**                                                              | **VĂ­ dá»¥ Thá»±c táº¿ (Business Case)**                                                   | **Má»©c Ä‘á»™ Há»— trá»£ trong PronaFlow**          |
+| **Mã (Code)** | **Tên loại (Type)**  | **Ký hiệu**                   | **Mô tả Quy chuẩn (Logic)**                                                              | **Ví dụ Thực tế (Business Case)**                                                   | **Mức độ Hỗ trợ trong PronaFlow**          |
 | ------------- | -------------------- | ----------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------ |
-| **FS**        | **Finish-to-Start**  | $A \rightarrow B$             | **Task B** khĂ´ng thá»ƒ báº¯t Ä‘áº§u cho Ä‘áº¿n khi **Task A** káº¿t thĂºc.<br>($Start_B \geq End_A$)  | Pháº£i _Ä‘á»• mĂ³ng_ (A) xong thĂ¬ má»›i Ä‘Æ°á»£c _xĂ¢y tÆ°á»ng_ (B).                               | **Máº·c Ä‘á»‹nh (Default)**<br>âœ… Há»— trá»£ Ä‘áº§y Ä‘á»§. |
-| **SS**        | **Start-to-Start**   | $Start_A \rightarrow Start_B$ | **Task B** khĂ´ng thá»ƒ báº¯t Ä‘áº§u cho Ä‘áº¿n khi **Task A** báº¯t Ä‘áº§u.<br>($Start_B \geq Start_A$) | Khi báº¯t Ä‘áº§u _viáº¿t code_ (A) thĂ¬ cĂ³ thá»ƒ báº¯t Ä‘áº§u _viáº¿t test case_ (B) song song.      | â ï¸ **Optional**<br>(CĂ¢n nháº¯c cho Phase 2). |
-| **FF**        | **Finish-to-Finish** | $End_A \rightarrow End_B$     | **Task B** khĂ´ng thá»ƒ káº¿t thĂºc cho Ä‘áº¿n khi **Task A** káº¿t thĂºc.<br>($End_B \geq End_A$)   | Viá»‡c _nghiá»‡m thu_ (B) chá»‰ xong khi viá»‡c _sá»­a lá»—i_ (A) Ä‘Ă£ xong hoĂ n toĂ n.            | â ï¸ **Optional**<br>(CĂ¢n nháº¯c cho Phase 2). |
-| **SF**        | **Start-to-Finish**  | $Start_A \rightarrow End_B$   | **Task B** khĂ´ng thá»ƒ káº¿t thĂºc cho Ä‘áº¿n khi **Task A** báº¯t Ä‘áº§u.<br>($End_B \geq Start_A$)  | Ca trá»±c cá»§a _báº£o vá»‡ cÅ©_ (B) chá»‰ káº¿t thĂºc khi _báº£o vá»‡ má»›i_ (A) Ä‘Ă£ Ä‘áº¿n vĂ  báº¯t Ä‘áº§u ca. | âŒ **KhĂ´ng há»— trá»£**<br>(Ăt dĂ¹ng, gĂ¢y rá»‘i).  |
-## 4.6. Iron Triangle Constraints (RĂ ng buá»™c Tam giĂ¡c sáº¯t)
-Trong quáº£n lĂ½ dá»± Ă¡n, thay Ä‘á»•i má»™t cáº¡nh sáº½ áº£nh hÆ°á»Ÿng cĂ¡c cáº¡nh cĂ²n láº¡i. PhĂ¢n há»‡ 4 thá»±c thi cĂ¡c rĂ ng buá»™c nĂ y:
-- **Scope (Pháº¡m vi):** ÄÆ°á»£c cá»‘ Ä‘á»‹nh bá»Ÿi danh sĂ¡ch Task. Khi Lock Plan -> Cá»‘ Ä‘á»‹nh Scope.
-- **Time (Thá»i gian):** ÄÆ°á»£c cá»‘ Ä‘á»‹nh bá»Ÿi Start/End Date.
-- **Cost (Chi phĂ­):** ÄÆ°á»£c cá»‘ Ä‘á»‹nh bá»Ÿi Resource Assignee. -> Viá»‡c ngÄƒn cháº·n thĂªm Task má»›i hoáº·c Ä‘á»•i ngÆ°á»i khi Plan Locked chĂ­nh lĂ  báº£o vá»‡ sá»± toĂ n váº¹n cá»§a Tam giĂ¡c sáº¯t dá»± Ă¡n.
-
+| **FS**        | **Finish-to-Start**  | $A \rightarrow B$             | **Task B** không thể bắt đầu cho đến khi **Task A** kết thúc.<br>($Start_B \geq End_A$)  | Phải _đổ móng_ (A) xong thì mới được _xây tường_ (B).                               | **Mặc định (Default)**<br>✅ Hỗ trợ đầy đủ. |
+| **SS**        | **Start-to-Start**   | $Start_A \rightarrow Start_B$ | **Task B** không thể bắt đầu cho đến khi **Task A** bắt đầu.<br>($Start_B \geq Start_A$) | Khi bắt đầu _viết code_ (A) thì có thể bắt đầu _viết test case_ (B) song song.      | ⚠️ **Optional**<br>(Cân nhắc cho Phase 2). |
+| **FF**        | **Finish-to-Finish** | $End_A \rightarrow End_B$     | **Task B** không thể kết thúc cho đến khi **Task A** kết thúc.<br>($End_B \geq End_A$)   | Việc _nghiệm thu_ (B) chỉ xong khi việc _sửa lỗi_ (A) đã xong hoàn toàn.            | ⚠️ **Optional**<br>(Cân nhắc cho Phase 2). |
+| **SF**        | **Start-to-Finish**  | $Start_A \rightarrow End_B$   | **Task B** không thể kết thúc cho đến khi **Task A** bắt đầu.<br>($End_B \geq Start_A$)  | Ca trực của _bảo vệ cũ_ (B) chỉ kết thúc khi _bảo vệ mới_ (A) đã đến và bắt đầu ca. | ❌ **Không hỗ trợ**<br>(Ít dùng, gây rối).  |
+## 4.6. Iron Triangle Constraints (Ràng buộc Tam giác sắt)
+Trong quản lý dự án, thay đổi một cạnh sẽ ảnh hưởng các cạnh còn lại. Phân hệ 4 thực thi các ràng buộc này:
+- **Scope (Phạm vi):** Được cố định bởi danh sách Task. Khi Lock Plan -> Cố định Scope.
+- **Time (Thời gian):** Được cố định bởi Start/End Date.
+- **Cost (Chi phí):** Được cố định bởi Resource Assignee. -> Việc ngăn chặn thêm Task mới hoặc đổi người khi Plan Locked chính là bảo vệ sự toàn vẹn của Tam giác sắt dự án.

@@ -1,166 +1,166 @@
-﻿**Project**: PronaFlow
+**Project**: PronaFlow
 **Version**: 1.0
 **State**: Draft
 _Last updated: Dec 31, 2025_
 
 ---
 # 1. Business Overview
-Trong cĂ¡c mĂ´ hĂ¬nh quáº£n lĂ½ truyá»n thá»‘ng, thĂ´ng tin thÆ°á»ng bá»‹ phĂ¢n máº£nh (Fragmented) ráº£i rĂ¡c kháº¯p nÆ¡i: Email dĂ¹ng Ä‘á»ƒ trao Ä‘á»•i chĂ­nh thá»©c, Zalo/Slack dĂ¹ng Ä‘á»ƒ chat nhanh, vĂ  Google Drive dĂ¹ng Ä‘á»ƒ lÆ°u file. Äiá»u nĂ y dáº«n Ä‘áº¿n hiá»‡n tÆ°á»£ng "Äáº£o thĂ´ng tin" (Information Silos) vĂ  gia tÄƒng chi phĂ­ chuyá»ƒn Ä‘á»•i ngá»¯ cáº£nh (Context Switching Cost).
-PhĂ¢n há»‡ **Unified Collaboration Hub** cá»§a PronaFlow Ä‘Æ°á»£c thiáº¿t káº¿ Ä‘á»ƒ trá»Ÿ thĂ nh "Nguá»“n sá»± tháº­t duy nháº¥t" (Single Source of Truth) cho má»i hoáº¡t Ä‘á»™ng cá»™ng tĂ¡c. Triáº¿t lĂ½ thiáº¿t káº¿ lĂ  **Contextual Communication** (Giao tiáº¿p gáº¯n liá»n ngá»¯ cáº£nh): Má»i cuá»™c tháº£o luáº­n, tĂ i liá»‡u pháº£i Ä‘Æ°á»£c neo (anchor) trá»±c tiáº¿p vĂ o Ä‘á»‘i tÆ°á»£ng cĂ´ng viá»‡c (Task/Project) liĂªn quan, thay vĂ¬ trĂ´i ná»•i trong cĂ¡c kĂªnh chat chung chung.
+Trong các mô hình quản lý truyền thống, thông tin thường bị phân mảnh (Fragmented) rải rác khắp nơi: Email dùng để trao đổi chính thức, Zalo/Slack dùng để chat nhanh, và Google Drive dùng để lưu file. Điều này dẫn đến hiện tượng "Đảo thông tin" (Information Silos) và gia tăng chi phí chuyển đổi ngữ cảnh (Context Switching Cost).
+Phân hệ **Unified Collaboration Hub** của PronaFlow được thiết kế để trở thành "Nguồn sự thật duy nhất" (Single Source of Truth) cho mọi hoạt động cộng tác. Triết lý thiết kế là **Contextual Communication** (Giao tiếp gắn liền ngữ cảnh): Mọi cuộc thảo luận, tài liệu phải được neo (anchor) trực tiếp vào đối tượng công việc (Task/Project) liên quan, thay vì trôi nổi trong các kênh chat chung chung.
 # 2. User Stories & Acceptance Criteria
-## 2.1. Feature: Contextual Threaded Discussions (Tháº£o luáº­n theo luá»“ng)
+## 2.1. Feature: Contextual Threaded Discussions (Thảo luận theo luồng)
 ### User Story 6.1
-LĂ  má»™t ThĂ nh viĂªn dá»± Ă¡n, TĂ´i muá»‘n trao Ä‘á»•i, pháº£n há»“i vá» má»™t Task cá»¥ thá»ƒ ngay trong giao diá»‡n cá»§a Task Ä‘Ă³, Äá»ƒ toĂ n bá»™ lá»‹ch sá»­ tranh luáº­n vĂ  ra quyáº¿t Ä‘á»‹nh Ä‘Æ°á»£c lÆ°u trá»¯ táº­p trung, dá»… dĂ ng tra cá»©u láº¡i sau nĂ y.
+Là một Thành viên dự án, Tôi muốn trao đổi, phản hồi về một Task cụ thể ngay trong giao diện của Task đó, Để toàn bộ lịch sử tranh luận và ra quyết định được lưu trữ tập trung, dễ dàng tra cứu lại sau này.
 ### Acceptance Criteria ( #AC)
 
-#### AC 1 - Rich Text Editor (TrĂ¬nh soáº¡n tháº£o vÄƒn báº£n)
-- Há»— trá»£ Ä‘á»‹nh dáº¡ng vÄƒn báº£n cÆ¡ báº£n (Bold, Italic, List, Code Block) Ä‘á»ƒ trĂ¬nh bĂ y Ă½ tÆ°á»Ÿng rĂµ rĂ ng.
-- Há»— trá»£ dĂ¡n áº£nh trá»±c tiáº¿p tá»« Clipboard (Ctrl+V) Ä‘á»ƒ chia sáº» nhanh áº£nh chá»¥p mĂ n hĂ¬nh lá»—i (Bug screenshot).
+#### AC 1 - Rich Text Editor (Trình soạn thảo văn bản)
+- Hỗ trợ định dạng văn bản cơ bản (Bold, Italic, List, Code Block) để trình bày ý tưởng rõ ràng.
+- Hỗ trợ dán ảnh trực tiếp từ Clipboard (Ctrl+V) để chia sẻ nhanh ảnh chụp màn hình lỗi (Bug screenshot).
 #### AC 2 - Smart Mentions (@Tagging)
-- **Interaction:** Khi ngÆ°á»i dĂ¹ng gĂµ kĂ½ tá»± `@`, há»‡ thá»‘ng hiá»ƒn thá»‹ danh sĂ¡ch Dropdown gá»£i Ă½ cĂ¡c thĂ nh viĂªn **trong cĂ¹ng dá»± Ă¡n**.
-- **Filtering:** Thuáº­t toĂ¡n sáº¯p xáº¿p Æ°u tiĂªn hiá»ƒn thá»‹: NgÆ°á»i Ä‘ang Ä‘Æ°á»£c giao Task (Assignee) > NgÆ°á»i bĂ¡o cĂ¡o (Reporter) > CĂ¡c thĂ nh viĂªn tÆ°Æ¡ng tĂ¡c gáº§n Ä‘Ă¢y.
-- **Trigger:** Viá»‡c mention sáº½ kĂ­ch hoáº¡t má»™t sá»± kiá»‡n sang Module 7 (Notification System) Ä‘á»ƒ gá»­i thĂ´ng bĂ¡o tá»©c thĂ¬ cho ngÆ°á»i Ä‘Æ°á»£c nháº¯c.
-#### AC 3 - Threaded Replies (Pháº£n há»“i phĂ¢n cáº¥p)
-- Cho phĂ©p tráº£ lá»i (Reply) má»™t comment cá»¥ thá»ƒ, táº¡o thĂ nh má»™t nhĂ¡nh tháº£o luáº­n con (Nested Thread). Äiá»u nĂ y giĂºp giá»¯ cho luá»“ng tháº£o luáº­n chĂ­nh khĂ´ng bá»‹ loĂ£ng bá»Ÿi cĂ¡c tranh luáº­n chi tiáº¿t bĂªn lá».
-## 2.2. Feature: Digital Asset Management - DAM (Quáº£n lĂ½ TĂ i sáº£n sá»‘)
+- **Interaction:** Khi người dùng gõ ký tự `@`, hệ thống hiển thị danh sách Dropdown gợi ý các thành viên **trong cùng dự án**.
+- **Filtering:** Thuật toán sắp xếp ưu tiên hiển thị: Người đang được giao Task (Assignee) > Người báo cáo (Reporter) > Các thành viên tương tác gần đây.
+- **Trigger:** Việc mention sẽ kích hoạt một sự kiện sang Module 7 (Notification System) để gửi thông báo tức thì cho người được nhắc.
+#### AC 3 - Threaded Replies (Phản hồi phân cấp)
+- Cho phép trả lời (Reply) một comment cụ thể, tạo thành một nhánh thảo luận con (Nested Thread). Điều này giúp giữ cho luồng thảo luận chính không bị loãng bởi các tranh luận chi tiết bên lề.
+## 2.2. Feature: Digital Asset Management - DAM (Quản lý Tài sản số)
 ### User Story 6.2
-LĂ  má»™t Designer, TĂ´i muá»‘n táº£i lĂªn cĂ¡c phiĂªn báº£n thiáº¿t káº¿ (v1, v2) Ä‘Ă­nh kĂ¨m vĂ o Task vĂ  xem trÆ°á»›c chĂºng mĂ  khĂ´ng cáº§n táº£i vá», Äá»ƒ cĂ¡c bĂªn liĂªn quan cĂ³ thá»ƒ gĂ³p Ă½ trá»±c quan.
+Là một Designer, Tôi muốn tải lên các phiên bản thiết kế (v1, v2) đính kèm vào Task và xem trước chúng mà không cần tải về, Để các bên liên quan có thể góp ý trực quan.
 ### Acceptance Criteria (#AC)
 
-#### AC 1 - Version Control (Kiá»ƒm soĂ¡t phiĂªn báº£n)
-- **Behavior:** Khi ngÆ°á»i dĂ¹ng táº£i lĂªn má»™t file cĂ³ tĂªn trĂ¹ng vá»›i file Ä‘Ă£ tá»“n táº¡i trong Task.
-- **System Logic:** Há»‡ thá»‘ng khĂ´ng ghi Ä‘Ă¨ (Overwrite). Thay vĂ o Ä‘Ă³, nĂ³ táº¡o má»™t báº£n ghi phiĂªn báº£n má»›i (Versioning). User cĂ³ thá»ƒ xem láº¡i lá»‹ch sá»­ `v1`, `v2` vĂ  khĂ´i phá»¥c náº¿u cáº§n.
-#### AC 2 - Universal Viewer (TrĂ¬nh xem trÆ°á»›c Ä‘a nÄƒng)
-- TĂ­ch há»£p trĂ¬nh xem trÆ°á»›c (Previewer) há»— trá»£ cĂ¡c Ä‘á»‹nh dáº¡ng vÄƒn phĂ²ng phá»• biáº¿n: PDF, DOCX, XLSX vĂ  cĂ¡c Ä‘á»‹nh dáº¡ng áº£nh/video.
-- **Security:** File chá»‰ Ä‘Æ°á»£c render trong Sandbox cá»§a trĂ¬nh duyá»‡t, ngÄƒn cháº·n thá»±c thi mĂ£ Ä‘á»™c.
-## 2.3. Feature: Real-time Presence (Hiá»‡n diá»‡n thá»i gian thá»±c)
+#### AC 1 - Version Control (Kiểm soát phiên bản)
+- **Behavior:** Khi người dùng tải lên một file có tên trùng với file đã tồn tại trong Task.
+- **System Logic:** Hệ thống không ghi đè (Overwrite). Thay vào đó, nó tạo một bản ghi phiên bản mới (Versioning). User có thể xem lại lịch sử `v1`, `v2` và khôi phục nếu cần.
+#### AC 2 - Universal Viewer (Trình xem trước đa năng)
+- Tích hợp trình xem trước (Previewer) hỗ trợ các định dạng văn phòng phổ biến: PDF, DOCX, XLSX và các định dạng ảnh/video.
+- **Security:** File chỉ được render trong Sandbox của trình duyệt, ngăn chặn thực thi mã độc.
+## 2.3. Feature: Real-time Presence (Hiện diện thời gian thực)
 ### User Story 6.3
-LĂ  má»™t Quáº£n lĂ½, TĂ´i muá»‘n biáº¿t ai Ä‘ang xem hoáº·c soáº¡n tháº£o ná»™i dung trĂªn cĂ¹ng má»™t Task vá»›i tĂ´i, Äá»ƒ trĂ¡nh xung Ä‘á»™t dá»¯ liá»‡u hoáº·c trĂ¹ng láº·p cĂ´ng viá»‡c.
+Là một Quản lý, Tôi muốn biết ai đang xem hoặc soạn thảo nội dung trên cùng một Task với tôi, Để tránh xung đột dữ liệu hoặc trùng lặp công việc.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Visual Indicators
-- Hiá»ƒn thá»‹ Avatar cá»§a nhá»¯ng ngÆ°á»i dĂ¹ng Ä‘ang má»Ÿ Task Ä‘Ă³ á»Ÿ gĂ³c trĂªn mĂ n hĂ¬nh (tÆ°Æ¡ng tá»± Google Docs).
-- Hiá»ƒn thá»‹ tráº¡ng thĂ¡i "User A is typing..." dÆ°á»›i khung comment khi cĂ³ ngÆ°á»i Ä‘ang soáº¡n tháº£o.
-## 2.4. Feature: Formal Approval Workflow (Quy trĂ¬nh PhĂª duyá»‡t ChĂ­nh thá»©c)
+- Hiển thị Avatar của những người dùng đang mở Task đó ở góc trên màn hình (tương tự Google Docs).
+- Hiển thị trạng thái "User A is typing..." dưới khung comment khi có người đang soạn thảo.
+## 2.4. Feature: Formal Approval Workflow (Quy trình Phê duyệt Chính thức)
 
 ### User Story 6.4
-LĂ  má»™t Stakeholder (CĂ¡c bĂªn liĂªn quan), TĂ´i muá»‘n thá»±c hiá»‡n hĂ nh Ä‘á»™ng "PhĂª duyá»‡t" (Approve) hoáº·c "Tá»« chá»‘i" (Reject) Ä‘á»‘i vá»›i má»™t tĂ i liá»‡u Ä‘Ă­nh kĂ¨m hoáº·c káº¿t quáº£ cĂ´ng viá»‡c, Äá»ƒ há»‡ thá»‘ng ghi nháº­n tĂ­nh phĂ¡p lĂ½ cá»§a quyáº¿t Ä‘á»‹nh thay vĂ¬ chá»‰ comment "OK" báº±ng lá»i.
+Là một Stakeholder (Các bên liên quan), Tôi muốn thực hiện hành động "Phê duyệt" (Approve) hoặc "Từ chối" (Reject) đối với một tài liệu đính kèm hoặc kết quả công việc, Để hệ thống ghi nhận tính pháp lý của quyết định thay vì chỉ comment "OK" bằng lời.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Decision State Machine (MĂ¡y tráº¡ng thĂ¡i Quyáº¿t Ä‘á»‹nh)
-- **Object:** Ăp dá»¥ng cho File Ä‘Ă­nh kĂ¨m (Attachments) hoáº·c Task.
+#### AC 1 - Decision State Machine (Máy trạng thái Quyết định)
+- **Object:** Áp dụng cho File đính kèm (Attachments) hoặc Task.
 - **Transitions:**
-    1. `Pending Review`: Tráº¡ng thĂ¡i máº·c Ä‘á»‹nh khi yĂªu cáº§u phĂª duyá»‡t.
-    2. `Approved`: Khi ngÆ°á»i cĂ³ tháº©m quyá»n xĂ¡c nháº­n. Há»‡ thá»‘ng khĂ³a (Lock) file/task láº¡i, ngÄƒn chá»‰nh sá»­a thĂªm Ä‘á»ƒ Ä‘áº£m báº£o tĂ­nh toĂ n váº¹n.
-    3. `Changes Requested`: YĂªu cáº§u sá»­a Ä‘á»•i. Task tá»± Ä‘á»™ng chuyá»ƒn tráº¡ng thĂ¡i vá» `In-Progress`.
-#### AC 2 - Digital Signature Audit (Kiá»ƒm toĂ¡n Chá»¯ kĂ½ sá»‘)
-- **Requirement:** Má»—i hĂ nh Ä‘á»™ng phĂª duyá»‡t pháº£i Ä‘Æ°á»£c ghi láº¡i vá»›i `Timestamp`, `User ID`, vĂ  `Checksum` cá»§a phiĂªn báº£n tĂ i liá»‡u táº¡i thá»i Ä‘iá»ƒm phĂª duyá»‡t.
-- **Impact:** Äáº£m báº£o tĂ­nh chá»‘ng chá»‘i bá» (Non-repudiation). Náº¿u file bá»‹ thay Ä‘á»•i sau khi phĂª duyá»‡t, tráº¡ng thĂ¡i Approved pháº£i tá»± Ä‘á»™ng bá»‹ há»§y bá» (Invalidated).
-## 2.5. Feature: Collaborative Search (TĂ¬m kiáº¿m Cá»™ng tĂ¡c)
+    1. `Pending Review`: Trạng thái mặc định khi yêu cầu phê duyệt.
+    2. `Approved`: Khi người có thẩm quyền xác nhận. Hệ thống khóa (Lock) file/task lại, ngăn chỉnh sửa thêm để đảm bảo tính toàn vẹn.
+    3. `Changes Requested`: Yêu cầu sửa đổi. Task tự động chuyển trạng thái về `In-Progress`.
+#### AC 2 - Digital Signature Audit (Kiểm toán Chữ ký số)
+- **Requirement:** Mỗi hành động phê duyệt phải được ghi lại với `Timestamp`, `User ID`, và `Checksum` của phiên bản tài liệu tại thời điểm phê duyệt.
+- **Impact:** Đảm bảo tính chống chối bỏ (Non-repudiation). Nếu file bị thay đổi sau khi phê duyệt, trạng thái Approved phải tự động bị hủy bỏ (Invalidated).
+## 2.5. Feature: Collaborative Search (Tìm kiếm Cộng tác)
 ### User Story 6.5
-LĂ  má»™t ThĂ nh viĂªn má»›i gia nháº­p dá»± Ă¡n, TĂ´i muá»‘n tĂ¬m kiáº¿m cĂ¡c tá»« khĂ³a trong toĂ n bá»™ lá»‹ch sá»­ tháº£o luáº­n vĂ  tĂ i liá»‡u, Äá»ƒ nhanh chĂ³ng náº¯m báº¯t bá»‘i cáº£nh (Context onboarding) mĂ  khĂ´ng cáº§n lĂ m phiá»n Ä‘á»“ng nghiá»‡p cÅ©.
+Là một Thành viên mới gia nhập dự án, Tôi muốn tìm kiếm các từ khóa trong toàn bộ lịch sử thảo luận và tài liệu, Để nhanh chóng nắm bắt bối cảnh (Context onboarding) mà không cần làm phiền đồng nghiệp cũ.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Full-Text Search Scope
-- **Scope:** TĂ¬m kiáº¿m quĂ©t qua cáº£ 3 táº§ng dá»¯ liá»‡u:
-    1. Ná»™i dung Task (Title, Description).
-    2. Ná»™i dung Tháº£o luáº­n (Comments, Replies).
-    3. Ná»™i dung File vÄƒn báº£n (Parse ná»™i dung bĂªn trong PDF, DOCX - _TĂ­nh nÄƒng nĂ¢ng cao_).
+- **Scope:** Tìm kiếm quét qua cả 3 tầng dữ liệu:
+    1. Nội dung Task (Title, Description).
+    2. Nội dung Thảo luận (Comments, Replies).
+    3. Nội dung File văn bản (Parse nội dung bên trong PDF, DOCX - _Tính năng nâng cao_).
 #### AC 2 - Contextual Result Highlighting
-- **Display:** Káº¿t quáº£ tráº£ vá» pháº£i hiá»ƒn thá»‹ Ä‘oáº¡n vÄƒn báº£n chá»©a tá»« khĂ³a (Snippet) vĂ  link trá»±c tiáº¿p Ä‘áº¿n vá»‹ trĂ­ cá»§a comment Ä‘Ă³ trong luá»“ng tháº£o luáº­n (Deep Linking).
+- **Display:** Kết quả trả về phải hiển thị đoạn văn bản chứa từ khóa (Snippet) và link trực tiếp đến vị trí của comment đó trong luồng thảo luận (Deep Linking).
 
 ## 2.6. Feature: Project Notes (Wiki)
 ### User Story 6.6.
-- LĂ  má»™t **Project Manager**
-- TĂ´i muá»‘n táº¡o cĂ¡c trang chi chĂº (Note) rich-text bĂªn trong dá»± Ă¡n vĂ  tá»• chá»©c chĂºng theo cáº¥u trĂºc cĂ¢y (Hierachy).
-- Äá»ƒ lÆ°u trá»¯ cĂ¡c ná»™i dung cáº§n thiáº¿t nhÆ° quy Ä‘á»‹nh, biĂªn báº£n há»p vĂ  tĂ i liá»‡u Ä‘áº·c táº£ ngay táº¡i nÆ¡i lĂ m viá»‡c mĂ  khĂ´ng cáº§n dĂ¹ng GG Docs rá»i ráº¡c.
+- Là một **Project Manager**
+- Tôi muốn tạo các trang chi chú (Note) rich-text bên trong dự án và tổ chức chúng theo cấu trúc cây (Hierachy).
+- Để lưu trữ các nội dung cần thiết như quy định, biên bản họp và tài liệu đặc tả ngay tại nơi làm việc mà không cần dùng GG Docs rời rạc.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - - **Rich Text Editor:** 
-- Há»— trá»£ soáº¡n tháº£o vÄƒn báº£n Ä‘á»‹nh dáº¡ng (Bold, Italic, Heading, Checkbox) vĂ  nhĂºng áº£nh (tÆ°Æ¡ng tá»± nhÆ° mĂ´ táº£ trong Module 15).
+- Hỗ trợ soạn thảo văn bản định dạng (Bold, Italic, Heading, Checkbox) và nhúng ảnh (tương tự như mô tả trong Module 15).
 #### **AC 2 - Hierarchy:** 
-- Cho phĂ©p táº¡o ghi chĂº con (Nested Notes) khĂ´ng giá»›i háº¡n cáº¥p Ä‘á»™ (Parent Note -> Child Note).
+- Cho phép tạo ghi chú con (Nested Notes) không giới hạn cấp độ (Parent Note -> Child Note).
 #### **AC 3 - Linkage:** 
-- Cho phĂ©p `@mention` Task hoáº·c Project khĂ¡c ngay trong ná»™i dung ghi chĂº Ä‘á»ƒ táº¡o liĂªn káº¿t ngá»¯ cáº£nh.
+- Cho phép `@mention` Task hoặc Project khác ngay trong nội dung ghi chú để tạo liên kết ngữ cảnh.
 ## 2.7. Feature: Personal Notes
 ### User Story 6.7.
-- LĂ  má»™t ThĂ nh viĂªn dá»± Ă¡n.
-- TĂ´i muá»‘n cĂ³ má»™t khu vá»±c ghi chĂº cĂ¡ nhĂ¢n riĂªng tÆ° (Private Notes) truy cáº­p nhanh tá»« Sidebar,
-- Äá»ƒ ghi láº¡i cĂ¡c Ă½ tÆ°á»Ÿng táº¡m thá»i hoáº·c Todo list trong ngay trÆ°á»›c khi chuyá»ƒn Ä‘á»•i chĂºng thĂ nh Task chĂ­nh thá»©c.
+- Là một Thành viên dự án.
+- Tôi muốn có một khu vực ghi chú cá nhân riêng tư (Private Notes) truy cập nhanh từ Sidebar,
+- Để ghi lại các ý tưởng tạm thời hoặc Todo list trong ngay trước khi chuyển đổi chúng thành Task chính thức.
 ### Acceptance Criteria ( #AC)
 #### **AC 1 - Privacy:** 
-- Dá»¯ liá»‡u nĂ y chá»‰ hiá»ƒn thá»‹ vá»›i chĂ­nh ngÆ°á»i dĂ¹ng Ä‘Ă³ (Private by default).
+- Dữ liệu này chỉ hiển thị với chính người dùng đó (Private by default).
 #### **AC 2 - Convert to Task:** 
-- Cung cáº¥p nĂºt "Convert to Task" Ä‘á»ƒ chuyá»ƒn Ä‘á»•i nhanh má»™t dĂ²ng ghi chĂº thĂ nh Task vĂ  chá»n Project Ä‘Ă­ch.
+- Cung cấp nút "Convert to Task" để chuyển đổi nhanh một dòng ghi chú thành Task và chọn Project đích.
 ## 2.8. Feature: Note Templates
 ### User Story 6.8: 
-- **LĂ  má»™t** Project Manager,
-- **TĂ´i muá»‘n** táº¡o vĂ  quáº£n lĂ½ cĂ¡c máº«u ghi chĂº (Templates) nhÆ° "BiĂªn báº£n cuá»™c há»p", "BĂ¡o cĂ¡o lá»—i", "Äáº·c táº£ tĂ­nh nÄƒng",
-- **Äá»ƒ** cáº£ team tuĂ¢n thá»§ má»™t chuáº©n trĂ¬nh bĂ y chung vĂ  tiáº¿t kiá»‡m thá»i gian soáº¡n tháº£o.
+- **Là một** Project Manager,
+- **Tôi muốn** tạo và quản lý các mẫu ghi chú (Templates) như "Biên bản cuộc họp", "Báo cáo lỗi", "Đặc tả tính năng",
+- **Để** cả team tuân thủ một chuẩn trình bày chung và tiết kiệm thời gian soạn thảo.
 ### **Acceptance Criteria (#AC):**
-- **AC 1 - Template Library:** Há»‡ thá»‘ng cung cáº¥p sáºµn thÆ° viá»‡n máº«u (System Templates) vĂ  cho phĂ©p ngÆ°á»i dĂ¹ng lÆ°u má»™t ghi chĂº báº¥t ká»³ thĂ nh máº«u riĂªng (Custom Templates).
-- **AC 2 - Quick Apply:** Khi táº¡o Note má»›i, hiá»ƒn thá»‹ popup: "Start with a template?". Khi chá»n, ná»™i dung máº«u sáº½ Ä‘Æ°á»£c Ä‘iá»n vĂ o trĂ¬nh soáº¡n tháº£o.
-- **AC 3 - Variable Placeholders:** Há»— trá»£ cĂ¡c biáº¿n giá»¯ chá»— nhÆ° `{{Current_Date}}`, `{{User_Name}}` Ä‘á»ƒ tá»± Ä‘á»™ng Ä‘iá»n dá»¯ liá»‡u khi Ă¡p dá»¥ng máº«u.
+- **AC 1 - Template Library:** Hệ thống cung cấp sẵn thư viện mẫu (System Templates) và cho phép người dùng lưu một ghi chú bất kỳ thành mẫu riêng (Custom Templates).
+- **AC 2 - Quick Apply:** Khi tạo Note mới, hiển thị popup: "Start with a template?". Khi chọn, nội dung mẫu sẽ được điền vào trình soạn thảo.
+- **AC 3 - Variable Placeholders:** Hỗ trợ các biến giữ chỗ như `{{Current_Date}}`, `{{User_Name}}` để tự động điền dữ liệu khi áp dụng mẫu.
 ## 2.9. Feature: Public Publishing
 ### User Story 6.8: 
-- **LĂ  má»™t** Chá»§ sá»Ÿ há»¯u dá»± Ă¡n, 
-- **TĂ´i muá»‘n** xuáº¥t báº£n má»™t trang ghi chĂº thĂ nh trang web cĂ´ng khai (Public Link),
-- **Äá»ƒ** chia sáº» thĂ´ng tin vá»›i khĂ¡ch hĂ ng bĂªn ngoĂ i mĂ  khĂ´ng cáº§n má»i há» vĂ o Workspace (tiáº¿t kiá»‡m license user).
+- **Là một** Chủ sở hữu dự án, 
+- **Tôi muốn** xuất bản một trang ghi chú thành trang web công khai (Public Link),
+- **Để** chia sẻ thông tin với khách hàng bên ngoài mà không cần mời họ vào Workspace (tiết kiệm license user).
 ### **Acceptance Criteria (#AC):**
 #### **AC 1 - Generate Public Link:** 
-- Táº¡o má»™t URL ngáº«u nhiĂªn (hoáº·c tĂ¹y chá»‰nh slug) Ä‘á»ƒ truy cáº­p ghi chĂº á»Ÿ cháº¿ Ä‘á»™ Read-only.
+- Tạo một URL ngẫu nhiên (hoặc tùy chỉnh slug) để truy cập ghi chú ở chế độ Read-only.
 #### **AC 2 - Access Control:** 
-- TĂ¹y chá»n Ä‘áº·t máº­t kháº©u (Password Protection) hoáº·c thá»i háº¡n háº¿t háº¡n (Expiration Date) cho link Ä‘Ă³.
+- Tùy chọn đặt mật khẩu (Password Protection) hoặc thời hạn hết hạn (Expiration Date) cho link đó.
 #### **AC 3 - Live Update:** 
-- Khi ná»™i dung gá»‘c trong PronaFlow thay Ä‘á»•i, ná»™i dung trĂªn link public cÅ©ng tá»± Ä‘á»™ng cáº­p nháº­t theo (hoáº·c tĂ¹y chá»n pháº£i nháº¥n "Republish").
+- Khi nội dung gốc trong PronaFlow thay đổi, nội dung trên link public cũng tự động cập nhật theo (hoặc tùy chọn phải nhấn "Republish").
 ## 2.10. Feature: Document Versioning.
 ### User Story 6.10
-- **LĂ  má»™t** Admin,
-- **TĂ´i muá»‘n** xem láº¡i lá»‹ch sá»­ thay Ä‘á»•i cá»§a tĂ i liá»‡u vĂ  biáº¿t ai Ä‘Ă£ sá»­a cĂ¡i gĂ¬ vĂ o lĂºc nĂ o,
-- **Äá»ƒ** khĂ´i phá»¥c láº¡i phiĂªn báº£n cÅ© náº¿u cĂ³ sai sĂ³t hoáº·c tranh cháº¥p ná»™i dung.
+- **Là một** Admin,
+- **Tôi muốn** xem lại lịch sử thay đổi của tài liệu và biết ai đã sửa cái gì vào lúc nào,
+- **Để** khôi phục lại phiên bản cũ nếu có sai sót hoặc tranh chấp nội dung.
 ### **Acceptance Criteria (#AC):**
 #### **AC 1 - Auto-Snapshot:** 
-- Há»‡ thá»‘ng tá»± Ä‘á»™ng lÆ°u phiĂªn báº£n (Snapshot) má»—i khi ngÆ°á»i dĂ¹ng nháº¥n Save hoáº·c sau má»—i 10 phĂºt soáº¡n tháº£o liĂªn tá»¥c.
+- Hệ thống tự động lưu phiên bản (Snapshot) mỗi khi người dùng nhấn Save hoặc sau mỗi 10 phút soạn thảo liên tục.
 #### **AC 2 - Diff View:** 
-- Cháº¿ Ä‘á»™ so sĂ¡nh (Compare) lĂ m ná»•i báº­t (Highlight) pháº§n vÄƒn báº£n Ä‘Ă£ thĂªm (xanh) hoáº·c Ä‘Ă£ xĂ³a (Ä‘á») giá»¯a 2 phiĂªn báº£n.
+- Chế độ so sánh (Compare) làm nổi bật (Highlight) phần văn bản đã thêm (xanh) hoặc đã xóa (đỏ) giữa 2 phiên bản.
 #### **AC 3 - Restore:** 
-- NĂºt "KhĂ´i phá»¥c phiĂªn báº£n nĂ y" sáº½ Ä‘Æ°a ná»™i dung hiá»‡n táº¡i vá» tráº¡ng thĂ¡i cÅ©.
+- Nút "Khôi phục phiên bản này" sẽ đưa nội dung hiện tại về trạng thái cũ.
 ## 2.11. Feature: Smart Backlinks
 ### **User Story 6.11.** 
-- **LĂ  má»™t** Business Analyst,
-- **TĂ´i muá»‘n** nhĂ¬n tháº¥y danh sĂ¡ch cĂ¡c trang hoáº·c Task Ä‘ang nháº¯c Ä‘áº¿n trang hiá»‡n táº¡i (Linked Mentions),
-- **Äá»ƒ** Ä‘Ă¡nh giĂ¡ tĂ¡c Ä‘á»™ng (Impact Analysis) trÆ°á»›c khi tĂ´i sá»­a Ä‘á»•i ná»™i dung trang nĂ y.
+- **Là một** Business Analyst,
+- **Tôi muốn** nhìn thấy danh sách các trang hoặc Task đang nhắc đến trang hiện tại (Linked Mentions),
+- **Để** đánh giá tác động (Impact Analysis) trước khi tôi sửa đổi nội dung trang này.
 ### **Acceptance Criteria (#AC):**
 #### **AC 1 - Reference Detection:** 
-- Há»‡ thá»‘ng tá»± Ä‘á»™ng quĂ©t vĂ  hiá»ƒn thá»‹ danh sĂ¡ch "References" á»Ÿ cuá»‘i trang Note.
+- Hệ thống tự động quét và hiển thị danh sách "References" ở cuối trang Note.
 #### **AC 2 - Unlinked Mentions:** 
-- Gá»£i Ă½ cĂ¡c tá»« khĂ³a trong bĂ i khá»›p vá»›i tĂªn cĂ¡c Note khĂ¡c nhÆ°ng chÆ°a Ä‘Æ°á»£c táº¡o link, cho phĂ©p táº¡o link nhanh chá»‰ vá»›i 1 click.
+- Gợi ý các từ khóa trong bài khớp với tên các Note khác nhưng chưa được tạo link, cho phép tạo link nhanh chỉ với 1 click.
 # 3. Business Rules & Constraints
-## 3.1. Quy táº¯c Báº£o máº­t & Quyá»n riĂªng tÆ° (Security & Privacy)
-1. **Inherited Permissions (Quyá»n thá»«a káº¿):** Quyá»n truy cáº­p vĂ o Comment/File Ä‘Æ°á»£c thá»«a káº¿ trá»±c tiáº¿p tá»« quyá»n truy cáº­p Task.
-    - Náº¿u User máº¥t quyá»n truy cáº­p Project, há» cÅ©ng máº¥t quyá»n xem toĂ n bá»™ lá»‹ch sá»­ tháº£o luáº­n bĂªn trong.
-2. **Immutability Audit (Kiá»ƒm toĂ¡n tĂ­nh báº¥t biáº¿n):**
-    - NgÆ°á»i dĂ¹ng Ä‘Æ°á»£c phĂ©p chá»‰nh sá»­a (Edit) hoáº·c xĂ³a (Delete) comment cá»§a chĂ­nh mĂ¬nh.
-    - **Tuy nhiĂªn:** Há»‡ thá»‘ng pháº£i lÆ°u láº¡i lá»‹ch sá»­ chá»‰nh sá»­a (`edited_at`, `original_content`) trong Database Ä‘á»ƒ phá»¥c vá»¥ Audit Log. KhĂ´ng cho phĂ©p xĂ³a vÄ©nh viá»…n dáº¥u váº¿t Ä‘á»ƒ Ä‘áº£m báº£o tĂ­nh minh báº¡ch trong mĂ´i trÆ°á»ng doanh nghiá»‡p.
-## 3.2. RĂ ng buá»™c vá» File (File Constraints)
-1. **Storage Quota:** Giá»›i háº¡n dung lÆ°á»£ng táº£i lĂªn dá»±a trĂªn gĂ³i dá»‹ch vá»¥ cá»§a Workspace (vĂ­ dá»¥: 100MB/file cho Free Plan, 1GB/file cho Enterprise).
-2. **Allowed Extensions:** Cháº·n tuyá»‡t Ä‘á»‘i cĂ¡c file thá»±c thi (`.exe`, `.sh`, `.bat`, `.js`) á»Ÿ táº§ng Backend Ä‘á»ƒ phĂ²ng chá»‘ng Malware.
-## 3.3. RĂ ng buá»™c vá» Hiá»‡u nÄƒng Thá»i gian thá»±c (Real-time Performance Constraints)
-Äá»ƒ Ä‘áº£m báº£o tráº£i nghiá»‡m "Cá»™ng tĂ¡c tá»©c thĂ¬" (Instant Collaboration), há»‡ thá»‘ng pháº£i tuĂ¢n thá»§ cĂ¡c chá»‰ sá»‘ ká»¹ thuáº­t (SLIs) sau:
-1. **Message Delivery Latency:** Thá»i gian tá»« khi User A nháº¥n Enter Ä‘áº¿n khi User B nhĂ¬n tháº¥y tin nháº¯n pháº£i **< 200ms** (NgÆ°á»¡ng nháº­n thá»©c Ä‘á»™ trá»… cá»§a con ngÆ°á»i - _Human Perception Threshold_).
-2. **Concurrency:** Há»‡ thá»‘ng pháº£i chá»‹u táº£i Ä‘Æ°á»£c tá»‘i thiá»ƒu 50 ngÆ°á»i cĂ¹ng thao tĂ¡c (soáº¡n tháº£o, comment) trĂªn má»™t Task táº¡i cĂ¹ng má»™t thá»i Ä‘iá»ƒm mĂ  khĂ´ng gĂ¢y ra xung Ä‘á»™t dá»¯ liá»‡u (Data Race).
-## 3.4. Quy táº¯c LÆ°u trá»¯ Láº¡nh (Cold Storage Rule)
-- CĂ¡c file Ä‘Ă­nh kĂ¨m cá»§a dá»± Ă¡n Ä‘Ă£ Ä‘Ă³ng (Closed Project) quĂ¡ 1 nÄƒm sáº½ Ä‘Æ°á»£c tá»± Ä‘á»™ng di chuyá»ƒn tá»« á»• cá»©ng SSD (Hot Storage) sang S3 Glacier (Cold Storage) Ä‘á»ƒ tá»‘i Æ°u chi phĂ­ háº¡ táº§ng.
-- Viá»‡c truy xuáº¥t láº¡i cĂ¡c file nĂ y sáº½ cĂ³ Ä‘á»™ trá»… (khoáº£ng 3-5 giĂ¢y Ä‘á»ƒ restore) thay vĂ¬ tá»©c thĂ¬.
-# 4. Theoretical Basis (CÆ¡ sá»Ÿ LĂ½ luáº­n)
-## 4.1. LĂ½ thuyáº¿t vá» Äá»™ giĂ u cá»§a Truyá»n thĂ´ng (Media Richness Theory)
-LĂ½ thuyáº¿t nĂ y (Daft & Lengel, 1986) cho ráº±ng hiá»‡u quáº£ giao tiáº¿p phá»¥ thuá»™c vĂ o kháº£ nÄƒng cá»§a kĂªnh truyá»n táº£i trong viá»‡c xá»­ lĂ½ thĂ´ng tin phá»©c táº¡p.
-- **á»¨ng dá»¥ng trong PronaFlow:**
-    - Sá»­ dá»¥ng **Text Comment** cho cĂ¡c trao Ä‘á»•i thĂ´ng tin xĂ¡c thá»±c, rĂµ rĂ ng (Low ambiguity).
-    - Sá»­ dá»¥ng **Rich Media (Image/Video)** Ä‘Ă­nh kĂ¨m cho cĂ¡c váº¥n Ä‘á» phá»©c táº¡p cáº§n trá»±c quan hĂ³a (High ambiguity).
-    - Sá»­ dá»¥ng **Emoji/Reaction** Ä‘á»ƒ truyá»n táº£i cáº£m xĂºc vĂ  xĂ¡c nháº­n nhanh (Ack) mĂ  khĂ´ng táº¡o ra nhiá»…u thĂ´ng bĂ¡o (Noise reduction).
-## 4.2. Giáº£m thiá»ƒu Chi phĂ­ Chuyá»ƒn Ä‘á»•i Ngá»¯ cáº£nh (Context Switching Cost)
-NghiĂªn cá»©u cá»§a _Gerald Weinberg_ chá»‰ ra ráº±ng má»—i khi chuyá»ƒn Ä‘á»•i giá»¯a cĂ¡c tĂ¡c vá»¥ hoáº·c á»©ng dá»¥ng, hiá»‡u suáº¥t nĂ£o bá»™ giáº£m khoáº£ng 20-80%.
-- **Giáº£i phĂ¡p:** Báº±ng viá»‡c tĂ­ch há»£p "Unified Collaboration Hub" ngay trong mĂ n hĂ¬nh chi tiáº¿t Task, PronaFlow loáº¡i bá» nhu cáº§u pháº£i `Alt+Tab` sang á»©ng dá»¥ng chat khĂ¡c Ä‘á»ƒ há»i "CĂ¡i nĂ y lĂ m tháº¿ nĂ o?". Má»i thá»© cáº§n thiáº¿t Ä‘á»ƒ hoĂ n thĂ nh cĂ´ng viá»‡c Ä‘á»u náº±m trong táº§m máº¯t (At hand), giĂºp duy trĂ¬ tráº¡ng thĂ¡i dĂ²ng cháº£y (Flow State) cá»§a nhĂ¢n viĂªn.
-## 4.3. Há»‡ thá»‘ng Bá»™ nhá»› Giao dá»‹ch (Transactive Memory System - TMS)
-LĂ½ thuyáº¿t TMS (Wegner, 1987) cho ráº±ng má»™t nhĂ³m lĂ m viá»‡c hiá»‡u quáº£ khĂ´ng pháº£i vĂ¬ táº¥t cáº£ má»i ngÆ°á»i Ä‘á»u biáº¿t má»i thá»©, mĂ  vĂ¬ há» biáº¿t "ai biáº¿t cĂ¡i gĂ¬".
-- **Ăp dá»¥ng:** TĂ­nh nÄƒng **Smart Mentions** (AC 6.1) vĂ  **Collaborative Search** (AC 6.5) Ä‘Ă³ng vai trĂ² lĂ  "bá»™ nhá»› ngoĂ i" (External Storage) cá»§a nhĂ³m. NĂ³ giĂºp giáº£m táº£i nháº­n thá»©c cho tá»«ng cĂ¡ nhĂ¢n, vĂ¬ há» khĂ´ng cáº§n nhá»› chi tiáº¿t sá»± viá»‡c, chá»‰ cáº§n biáº¿t cĂ¡ch tra cá»©u nĂ³ trong PronaFlow.
-## 4.4. LĂ½ thuyáº¿t Phá»‘i há»£p (Coordination Theory - Malone & Crowston)
-LĂ½ thuyáº¿t nĂ y Ä‘á»‹nh nghÄ©a phá»‘i há»£p lĂ  "quáº£n lĂ½ cĂ¡c sá»± phá»¥ thuá»™c".
-- **Ăp dá»¥ng:** TĂ­nh nÄƒng **Formal Approval Workflow** (AC 6.4) giáº£i quyáº¿t loáº¡i phá»¥ thuá»™c "NhĂ  sáº£n xuáº¥t/NgÆ°á»i tiĂªu dĂ¹ng" (Producer/Consumer dependency). Designer (Producer) cáº§n sá»± phĂª duyá»‡t cá»§a Client (Consumer) Ä‘á»ƒ tiáº¿n hĂ nh bÆ°á»›c tiáº¿p theo. Viá»‡c há»‡ thá»‘ng hĂ³a quy trĂ¬nh nĂ y giĂºp giáº£m thiá»ƒu Ä‘á»™ trá»… trong luá»“ng cĂ´ng viá»‡c (Workflow Latency).
+## 3.1. Quy tắc Bảo mật & Quyền riêng tư (Security & Privacy)
+1. **Inherited Permissions (Quyền thừa kế):** Quyền truy cập vào Comment/File được thừa kế trực tiếp từ quyền truy cập Task.
+    - Nếu User mất quyền truy cập Project, họ cũng mất quyền xem toàn bộ lịch sử thảo luận bên trong.
+2. **Immutability Audit (Kiểm toán tính bất biến):**
+    - Người dùng được phép chỉnh sửa (Edit) hoặc xóa (Delete) comment của chính mình.
+    - **Tuy nhiên:** Hệ thống phải lưu lại lịch sử chỉnh sửa (`edited_at`, `original_content`) trong Database để phục vụ Audit Log. Không cho phép xóa vĩnh viễn dấu vết để đảm bảo tính minh bạch trong môi trường doanh nghiệp.
+## 3.2. Ràng buộc về File (File Constraints)
+1. **Storage Quota:** Giới hạn dung lượng tải lên dựa trên gói dịch vụ của Workspace (ví dụ: 100MB/file cho Free Plan, 1GB/file cho Enterprise).
+2. **Allowed Extensions:** Chặn tuyệt đối các file thực thi (`.exe`, `.sh`, `.bat`, `.js`) ở tầng Backend để phòng chống Malware.
+## 3.3. Ràng buộc về Hiệu năng Thời gian thực (Real-time Performance Constraints)
+Để đảm bảo trải nghiệm "Cộng tác tức thì" (Instant Collaboration), hệ thống phải tuân thủ các chỉ số kỹ thuật (SLIs) sau:
+1. **Message Delivery Latency:** Thời gian từ khi User A nhấn Enter đến khi User B nhìn thấy tin nhắn phải **< 200ms** (Ngưỡng nhận thức độ trễ của con người - _Human Perception Threshold_).
+2. **Concurrency:** Hệ thống phải chịu tải được tối thiểu 50 người cùng thao tác (soạn thảo, comment) trên một Task tại cùng một thời điểm mà không gây ra xung đột dữ liệu (Data Race).
+## 3.4. Quy tắc Lưu trữ Lạnh (Cold Storage Rule)
+- Các file đính kèm của dự án đã đóng (Closed Project) quá 1 năm sẽ được tự động di chuyển từ ổ cứng SSD (Hot Storage) sang S3 Glacier (Cold Storage) để tối ưu chi phí hạ tầng.
+- Việc truy xuất lại các file này sẽ có độ trễ (khoảng 3-5 giây để restore) thay vì tức thì.
+# 4. Theoretical Basis (Cơ sở Lý luận)
+## 4.1. Lý thuyết về Độ giàu của Truyền thông (Media Richness Theory)
+Lý thuyết này (Daft & Lengel, 1986) cho rằng hiệu quả giao tiếp phụ thuộc vào khả năng của kênh truyền tải trong việc xử lý thông tin phức tạp.
+- **Ứng dụng trong PronaFlow:**
+    - Sử dụng **Text Comment** cho các trao đổi thông tin xác thực, rõ ràng (Low ambiguity).
+    - Sử dụng **Rich Media (Image/Video)** đính kèm cho các vấn đề phức tạp cần trực quan hóa (High ambiguity).
+    - Sử dụng **Emoji/Reaction** để truyền tải cảm xúc và xác nhận nhanh (Ack) mà không tạo ra nhiễu thông báo (Noise reduction).
+## 4.2. Giảm thiểu Chi phí Chuyển đổi Ngữ cảnh (Context Switching Cost)
+Nghiên cứu của _Gerald Weinberg_ chỉ ra rằng mỗi khi chuyển đổi giữa các tác vụ hoặc ứng dụng, hiệu suất não bộ giảm khoảng 20-80%.
+- **Giải pháp:** Bằng việc tích hợp "Unified Collaboration Hub" ngay trong màn hình chi tiết Task, PronaFlow loại bỏ nhu cầu phải `Alt+Tab` sang ứng dụng chat khác để hỏi "Cái này làm thế nào?". Mọi thứ cần thiết để hoàn thành công việc đều nằm trong tầm mắt (At hand), giúp duy trì trạng thái dòng chảy (Flow State) của nhân viên.
+## 4.3. Hệ thống Bộ nhớ Giao dịch (Transactive Memory System - TMS)
+Lý thuyết TMS (Wegner, 1987) cho rằng một nhóm làm việc hiệu quả không phải vì tất cả mọi người đều biết mọi thứ, mà vì họ biết "ai biết cái gì".
+- **Áp dụng:** Tính năng **Smart Mentions** (AC 6.1) và **Collaborative Search** (AC 6.5) đóng vai trò là "bộ nhớ ngoài" (External Storage) của nhóm. Nó giúp giảm tải nhận thức cho từng cá nhân, vì họ không cần nhớ chi tiết sự việc, chỉ cần biết cách tra cứu nó trong PronaFlow.
+## 4.4. Lý thuyết Phối hợp (Coordination Theory - Malone & Crowston)
+Lý thuyết này định nghĩa phối hợp là "quản lý các sự phụ thuộc".
+- **Áp dụng:** Tính năng **Formal Approval Workflow** (AC 6.4) giải quyết loại phụ thuộc "Nhà sản xuất/Người tiêu dùng" (Producer/Consumer dependency). Designer (Producer) cần sự phê duyệt của Client (Consumer) để tiến hành bước tiếp theo. Việc hệ thống hóa quy trình này giúp giảm thiểu độ trễ trong luồng công việc (Workflow Latency).

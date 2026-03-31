@@ -1,502 +1,502 @@
-﻿**Project**: PronaFlow 
+**Project**: PronaFlow 
 **Version**: 1.1 
 **State**: Ready for Review 
 _**Last updated:** Jan 04, 2026_
 
 ---
 # 1. Business Overview
-**Project (Dá»± Ă¡n)** lĂ  thá»±c thá»ƒ trung tĂ¢m nÆ¡i diá»…n ra sá»± cá»™ng tĂ¡c. Trong PronaFlow, má»™t dá»± Ă¡n khĂ´ng chá»‰ lĂ  táº­p há»£p cĂ¡c cĂ´ng viá»‡c (Tasks) mĂ  lĂ  má»™t quy trĂ¬nh khĂ©p kĂ­n cĂ³ VĂ²ng Ä‘á»i (Lifecycle) rĂµ rĂ ng, tá»« lĂºc khá»Ÿi táº¡o, thá»±c thi Ä‘áº¿n khi Ä‘Ă³ng láº¡i.
-Module nĂ y chá»‹u trĂ¡ch nhiá»‡m:
-1. **Quáº£n trá»‹ Meta-data:** TĂªn, mĂ´ táº£, thá»i gian, ngĂ¢n sĂ¡ch (náº¿u cĂ³).
-2. **Quáº£n trá»‹ ThĂ nh viĂªn Dá»± Ă¡n:** Ai Ä‘Æ°á»£c quyá»n truy cáº­p vĂ  vai trĂ² cá»§a há» lĂ  gĂ¬.
-3. **Kiá»ƒm soĂ¡t VĂ²ng Ä‘á»i:** Äiá»u phá»‘i tráº¡ng thĂ¡i dá»± Ă¡n thĂ´ng qua MĂ¡y tráº¡ng thĂ¡i (State Machine).
+**Project (Dự án)** là thực thể trung tâm nơi diễn ra sự cộng tác. Trong PronaFlow, một dự án không chỉ là tập hợp các công việc (Tasks) mà là một quy trình khép kín có Vòng đời (Lifecycle) rõ ràng, từ lúc khởi tạo, thực thi đến khi đóng lại.
+Module này chịu trách nhiệm:
+1. **Quản trị Meta-data:** Tên, mô tả, thời gian, ngân sách (nếu có).
+2. **Quản trị Thành viên Dự án:** Ai được quyền truy cập và vai trò của họ là gì.
+3. **Kiểm soát Vòng đời:** Điều phối trạng thái dự án thông qua Máy trạng thái (State Machine).
 # 2. User Stories & Acceptance Criteria
-## 2.1. Feature: Quáº£n lĂ½ ThĂ´ng tin Dá»± Ă¡n (CRUD Project)
+## 2.1. Feature: Quản lý Thông tin Dự án (CRUD Project)
 ### User Story 2.1
-LĂ  má»™t ThĂ nh viĂªn Workspace, TĂ´i muá»‘n táº¡o má»™t dá»± Ă¡n má»›i, Äá»ƒ báº¯t Ä‘áº§u tá»• chá»©c cĂ´ng viá»‡c cho má»™t má»¥c tiĂªu cá»¥ thá»ƒ.
+Là một Thành viên Workspace, Tôi muốn tạo một dự án mới, Để bắt đầu tổ chức công việc cho một mục tiêu cụ thể.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Create Project Validation
-- **Input:** `Title` (Required, Max 150 chars), `Description` (Optional), `Key` (Tá»± Ä‘á»™ng sinh: PROJ-1, PROJ-2), `Start Date`, `End Date`.
+- **Input:** `Title` (Required, Max 150 chars), `Description` (Optional), `Key` (Tự động sinh: PROJ-1, PROJ-2), `Start Date`, `End Date`.
 - **Logic:**
-	 - `Title` khĂ´ng Ä‘Æ°á»£c chá»‰ chá»©a khoáº£ng tráº¯ng.
-	 - Náº¿u nháº­p `End Date`, há»‡ thá»‘ng báº¯t buá»™c `End Date >= Start Date`.
-- **Default State:** Dá»± Ă¡n táº¡o xong cĂ³ tráº¡ng thĂ¡i máº·c Ä‘á»‹nh lĂ  **Not-Started**.
-- **Owner Assignment:** NgÆ°á»i táº¡o dá»± Ă¡n tá»± Ä‘á»™ng trá»Ÿ thĂ nh **Project Manager** (Quyá»n cao nháº¥t trong dá»± Ă¡n).
+	 - `Title` không được chỉ chứa khoảng trắng.
+	 - Nếu nhập `End Date`, hệ thống bắt buộc `End Date >= Start Date`.
+- **Default State:** Dự án tạo xong có trạng thái mặc định là **Not-Started**.
+- **Owner Assignment:** Người tạo dự án tự động trở thành **Project Manager** (Quyền cao nhất trong dự án).
 #### AC 2 - Update Metadata
-- Chá»‰ **Project Manager** hoáº·c **Workspace Admin** má»›i cĂ³ quyá»n chá»‰nh sá»­a tĂªn, mĂ´ táº£.
-- Há»‡ thá»‘ng ghi log láº¡i ngÆ°á»i sá»­a vĂ  thá»i gian sá»­a (`updated_at`, `updated_by`).
-#### AC 3 - Project Cloning (NhĂ¢n báº£n dá»± Ă¡n) - _New_
-- **Action:** Cho phĂ©p chá»n "Duplicate Project".
-- **Option:** NgÆ°á»i dĂ¹ng cĂ³ thá»ƒ chá»n:
-	 - [x] Copy cáº¥u trĂºc (Task Lists, Settings).
-	 - [ ] Copy Tasks (ThÆ°á»ng lĂ  khĂ´ng chá»n Ä‘á»ƒ trĂ¡nh rĂ¡c).
+- Chỉ **Project Manager** hoặc **Workspace Admin** mới có quyền chỉnh sửa tên, mô tả.
+- Hệ thống ghi log lại người sửa và thời gian sửa (`updated_at`, `updated_by`).
+#### AC 3 - Project Cloning (Nhân bản dự án) - _New_
+- **Action:** Cho phép chọn "Duplicate Project".
+- **Option:** Người dùng có thể chọn:
+	 - [x] Copy cấu trúc (Task Lists, Settings).
+	 - [ ] Copy Tasks (Thường là không chọn để tránh rác).
 	 - [ ] Copy Members.
-- **Result:** Táº¡o ra dá»± Ă¡n má»›i cĂ³ tĂªn "Copy of [Old Name]".
-## 2.2. Feature: Quáº£n lĂ½ Tráº¡ng thĂ¡i Dá»± Ă¡n (Lifecycle Management)
+- **Result:** Tạo ra dự án mới có tên "Copy of [Old Name]".
+## 2.2. Feature: Quản lý Trạng thái Dự án (Lifecycle Management)
 ### User Story 2.2
-LĂ  má»™t Project Manager, TĂ´i muá»‘n thay Ä‘á»•i tráº¡ng thĂ¡i cá»§a dá»± Ă¡n theo quy trĂ¬nh chuáº©n, Äá»ƒ bĂ¡o cĂ¡o chĂ­nh xĂ¡c giai Ä‘oáº¡n thá»±c hiá»‡n trĂªn Dashboard.
+Là một Project Manager, Tôi muốn thay đổi trạng thái của dự án theo quy trình chuẩn, Để báo cáo chính xác giai đoạn thực hiện trên Dashboard.
 ### Acceptance Criteria (#AC)
 #### AC 1 - 5 Global Statuses
-Há»‡ thá»‘ng quy Ä‘á»‹nh cá»©ng (Hard-coded) 5 tráº¡ng thĂ¡i:
+Hệ thống quy định cứng (Hard-coded) 5 trạng thái:
 
-| **ID** | **Status Code** | **Display Name (VN)** | **Color Hex** | **Ă nghÄ©a Nghiá»‡p vá»¥**                            |
+| **ID** | **Status Code** | **Display Name (VN)** | **Color Hex** | **Ý nghĩa Nghiệp vụ**                            |
 | ------ | --------------- | --------------------- | ------------- | ------------------------------------------------ |
-| 0      | `HOLD`          | Táº¡m dá»«ng              | `#64748B`     | Dá»± Ă¡n bá»‹ Ä‘Ă³ng bÄƒng, khĂ´ng cho phĂ©p táº¡o Task má»›i. |
-| 1      | `NOT_STARTED`   | ChÆ°a báº¯t Ä‘áº§u          | `#94A3B8`     | Giai Ä‘oáº¡n láº­p káº¿ hoáº¡ch (Default).                |
-| 2      | `IN_PROGRESS`   | Äang thá»±c hiá»‡n        | `#3B82F6`     | Giai Ä‘oáº¡n thá»±c thi chĂ­nh. Active.                |
-| 3      | `IN_REVIEW`     | Äang Ä‘Ă¡nh giĂ¡         | `#F59E0B`     | Giai Ä‘oáº¡n nghiá»‡m thu, UAT.                       |
-| 4      | `DONE`          | HoĂ n thĂ nh            | `#10B981`     | Dá»± Ă¡n káº¿t thĂºc thĂ nh cĂ´ng. Read-only.            |
-| **5**  | **`CANCELLED`** | **ÄĂ£ há»§y**            | **`#EF4444`** | **Dá»± Ă¡n bá»‹ cháº¥m dá»©t trÆ°á»›c háº¡n. Read-only.**      |
+| 0      | `HOLD`          | Tạm dừng              | `#64748B`     | Dự án bị đóng băng, không cho phép tạo Task mới. |
+| 1      | `NOT_STARTED`   | Chưa bắt đầu          | `#94A3B8`     | Giai đoạn lập kế hoạch (Default).                |
+| 2      | `IN_PROGRESS`   | Đang thực hiện        | `#3B82F6`     | Giai đoạn thực thi chính. Active.                |
+| 3      | `IN_REVIEW`     | Đang đánh giá         | `#F59E0B`     | Giai đoạn nghiệm thu, UAT.                       |
+| 4      | `DONE`          | Hoàn thành            | `#10B981`     | Dự án kết thúc thành công. Read-only.            |
+| **5**  | **`CANCELLED`** | **Đã hủy**            | **`#EF4444`** | **Dự án bị chấm dứt trước hạn. Read-only.**      |
 #### AC 2 - State Transition Logic
-- **Trigger:** Thay Ä‘á»•i dropdown tráº¡ng thĂ¡i hoáº·c KĂ©o tháº£ tháº» dá»± Ă¡n á»Ÿ mĂ n hĂ¬nh "All Projects".
+- **Trigger:** Thay đổi dropdown trạng thái hoặc Kéo thả thẻ dự án ở màn hình "All Projects".
 - **Impact:**
-	 - Khi chuyá»ƒn sang **Done** hoáº·c **Hold**: Há»‡ thá»‘ng hiá»ƒn thá»‹ Confirm Modal: "Viá»‡c nĂ y cĂ³ thá»ƒ háº¡n cháº¿ quyá»n chá»‰nh sá»­a cá»§a thĂ nh viĂªn. Tiáº¿p tá»¥c?".
-#### AC 3 - Cancellation Logic (Logic Há»§y dá»± Ă¡n)
-- **Action:** Khi ngÆ°á»i dĂ¹ng chá»n tráº¡ng thĂ¡i **CANCELLED**.
-- **Mandatory Input:** Há»‡ thá»‘ng hiá»ƒn thá»‹ Modal yĂªu cáº§u nháº­p **"Cancellation Reason"** (LĂ½ do há»§y).
-    - _Dropdown:_ Thay Ä‘á»•i chiáº¿n lÆ°á»£c, Háº¿t ngĂ¢n sĂ¡ch, Rá»§i ro ká»¹ thuáº­t, KhĂ¡c.
-    - _Text:_ Ghi chĂº chi tiáº¿t.
-- **DoD Bypass:** KhĂ¡c vá»›i tráº¡ng thĂ¡i `DONE` (pháº£i Ä‘i qua cá»•ng kiá»ƒm tra "Definition of Done" - Feature 2.8), tráº¡ng thĂ¡i `CANCELLED` **bá» qua** má»i kiá»ƒm tra vá» Task chÆ°a hoĂ n thĂ nh. Há»‡ thá»‘ng sáº½ tá»± Ä‘á»™ng Ä‘Ă³ng bÄƒng táº¥t cáº£ cĂ¡c Task cĂ²n dang dá»Ÿ.
-- **Audit:** LÆ°u lĂ½ do há»§y vĂ o lá»‹ch sá»­ dá»± Ă¡n Ä‘á»ƒ phá»¥c vá»¥ phĂ¢n tĂ­ch "Tá»· lá»‡ tháº¥t báº¡i" (Failure Rate) sau nĂ y.
-## 2.3. Feature: Quáº£n lĂ½ ThĂ nh viĂªn Dá»± Ă¡n (Project Members) - _New_
+	 - Khi chuyển sang **Done** hoặc **Hold**: Hệ thống hiển thị Confirm Modal: "Việc này có thể hạn chế quyền chỉnh sửa của thành viên. Tiếp tục?".
+#### AC 3 - Cancellation Logic (Logic Hủy dự án)
+- **Action:** Khi người dùng chọn trạng thái **CANCELLED**.
+- **Mandatory Input:** Hệ thống hiển thị Modal yêu cầu nhập **"Cancellation Reason"** (Lý do hủy).
+    - _Dropdown:_ Thay đổi chiến lược, Hết ngân sách, Rủi ro kỹ thuật, Khác.
+    - _Text:_ Ghi chú chi tiết.
+- **DoD Bypass:** Khác với trạng thái `DONE` (phải đi qua cổng kiểm tra "Definition of Done" - Feature 2.8), trạng thái `CANCELLED` **bỏ qua** mọi kiểm tra về Task chưa hoàn thành. Hệ thống sẽ tự động đóng băng tất cả các Task còn dang dở.
+- **Audit:** Lưu lý do hủy vào lịch sử dự án để phục vụ phân tích "Tỷ lệ thất bại" (Failure Rate) sau này.
+## 2.3. Feature: Quản lý Thành viên Dự án (Project Members) - _New_
 ### User Story 2.4
-LĂ  má»™t Project Manager, TĂ´i muá»‘n thĂªm thĂ nh viĂªn vĂ o dá»± Ă¡n vĂ  phĂ¢n vai trĂ² cá»¥ thá»ƒ, Äá»ƒ kiá»ƒm soĂ¡t ai cĂ³ thá»ƒ xem hoáº·c chá»‰nh sá»­a dá»¯ liá»‡u.
+Là một Project Manager, Tôi muốn thêm thành viên vào dự án và phân vai trò cụ thể, Để kiểm soát ai có thể xem hoặc chỉnh sửa dữ liệu.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Add Member
-- **Condition:** Chá»‰ thĂªm Ä‘Æ°á»£c nhá»¯ng ngÆ°á»i ÄĂƒ lĂ  thĂ nh viĂªn cá»§a Workspace (káº¿t quáº£ tá»« Module 2).
-- **Notification:** Gá»­i thĂ´ng bĂ¡o cho ngÆ°á»i Ä‘Æ°á»£c thĂªm: "Báº¡n Ä‘Ă£ Ä‘Æ°á»£c thĂªm vĂ o dá»± Ă¡n X".
-#### AC 2 - Project Roles (Vai trĂ² cá»¥c bá»™)
-KhĂ¡c vá»›i vai trĂ² trong Workspace, vai trĂ² trong dá»± Ă¡n quy Ä‘á»‹nh quyá»n háº¡n cá»¥ thá»ƒ hÆ¡n. Há»‡ thá»‘ng Ä‘á»‹nh nghÄ©a 4 vai trĂ² cá»‘t lĂµi Ä‘á»ƒ Ä‘Ă¡p á»©ng cáº£ nhu cáº§u quáº£n lĂ½ linh hoáº¡t láº«n kiá»ƒm soĂ¡t cháº·t cháº½:
-1. **Project Manager** ( #PM - Quáº£n trá»‹ dá»± Ă¡n)
-	- **Äá»‹nh nghÄ©a**: NgÆ°á»i chá»‹u trĂ¡ch nhiá»‡m cao nháº¥t vá» sá»± thĂ nh báº¡i cá»§a dá»± Ă¡n. LĂ  ngÆ°á»i táº¡o ra dá»± Ă¡n.
-	- **Äáº·c quyá»n**: ToĂ n quyá»n cáº¥u hĂ¬nh dá»± Ă¡n, phĂª duyá»‡t káº¿ hoáº¡ch (Baseline), quáº£n lĂ½ thĂ nh viĂªn vĂ  quyáº¿t Ä‘á»‹nh cĂ¡c thay Ä‘á»•i pháº¡m vi (Scope).
-2. **Planner** (NgÆ°á»i hoáº¡ch Ä‘á»‹nh): (Vai trĂ² Ä‘áº·c thĂ¹ cho Module 5) [[5 - Temporal Planning and Scheduling]]
-	- **Äá»‹nh nghÄ©a**: NgÆ°á»i há»— trá»£ #PM trong viá»‡c xĂ¢y dá»±ng lá»‹ch trĂ¬nh. ThÆ°á»ng lĂ  Team Leader hoáº·c Scheduler chuyĂªn nghiá»‡p.
-	- **Äáº·c quyá»n**: CĂ³ quyá»n chá»‰nh sá»­a biá»ƒu Ä‘á»“ Gantt, thiáº¿t láº­p cĂ¡c má»‘i quan há»‡ phá»¥ thuá»™c (Dependencies), Ä‘á» xuáº¥t Baseline má»›i. Tuy nhiĂªn, há» _**khĂ´ng**_ cĂ³ quyá»n xĂ³a dá»± Ă¡n hoáº·c thay Ä‘á»•i cĂ¡c thiáº¿t láº­p quáº£nn trá»‹ (Billing, Governannce Mode).
-3. **Member** (ThĂ nh viĂªn thá»±c thi):
-	- **Äá»‹nh nghÄ©a**: CĂ¡c nhĂ¢n sá»± trá»±c tiáº¿p lĂ m viá»‡c (Dev, Designer, Tester, ...)
-	- **Äáº·c quyá»n**: Táº­p trung vĂ o thá»±c thi (Execution). CĂ³ quyá»n cáº­p nháº­t tráº¡ng thĂ¡i Task, log thá»i gian (Timesheet), comment, upload file. **Háº¡n cháº¿:** KhĂ´ng Ä‘Æ°á»£c tá»± Ă½ thay Ä‘á»•i ngĂ y báº¯t Ä‘áº§u/káº¿t thĂºc cá»§a Task náº¿u dá»± Ă¡n Ä‘ang bá»‹ khĂ³a káº¿ hoáº¡ch (Locked Plan).
-4. **Viewer** (NgÆ°á»i quan sĂ¡t / Stakeholder):
-	- **Äá»‹nh nghÄ©a**: KhĂ¡ch hĂ ng hoáº·c quáº£n lĂ½ cáº¥p cao muá»‘n theo dĂµi tiáº¿n Ä‘á»™.
-	- **Äáº·c quyá»n**: Chá»‰ xem (Read-only) bĂ¡o cĂ¡o, tiáº¿n Ä‘á»™ vĂ  tĂ i liá»‡u. KhĂ´ng Ä‘Æ°á»£c tÆ°Æ¡ng tĂ¡c ghi (Writer).
-> Ma tráº­n phĂ¢n quyá»n chi tiáº¿t: [[#3. Business Rules#3.21. Ma tráº­n PhĂ¢n quyá»n Chi tiáº¿t (Permission Matrix) |Permission Matrix: Project Permission Rules]]
-## 2.4. Feature: Thiáº¿t láº­p Quyá»n RiĂªng tÆ° (Privacy Settings)
+- **Condition:** Chỉ thêm được những người đã là thành viên của Workspace (kết quả từ Module 2).
+- **Notification:** Gửi thông báo cho người được thêm: "Bạn đã được thêm vào dự án X".
+#### AC 2 - Project Roles (Vai trò cục bộ)
+Khác với vai trò trong Workspace, vai trò trong dự án quy định quyền hạn cụ thể hơn. Hệ thống định nghĩa 4 vai trò cốt lõi để đáp ứng cả nhu cầu quản lý linh hoạt lẫn kiểm soát chặt chẽ:
+1. **Project Manager** ( #PM - Quản trị dự án)
+	- **Định nghĩa**: Người chịu trách nhiệm cao nhất về sự thành bại của dự án. Là người tạo ra dự án.
+	- **Đặc quyền**: Toàn quyền cấu hình dự án, phê duyệt kế hoạch (Baseline), quản lý thành viên và quyết định các thay đổi phạm vi (Scope).
+2. **Planner** (Người hoạch định): (Vai trò đặc thù cho Module 5) [[5 - Temporal Planning and Scheduling]]
+	- **Định nghĩa**: Người hỗ trợ #PM trong việc xây dựng lịch trình. Thường là Team Leader hoặc Scheduler chuyên nghiệp.
+	- **Đặc quyền**: Có quyền chỉnh sửa biểu đồ Gantt, thiết lập các mối quan hệ phụ thuộc (Dependencies), đề xuất Baseline mới. Tuy nhiên, họ _**không**_ có quyền xóa dự án hoặc thay đổi các thiết lập quảnn trị (Billing, Governannce Mode).
+3. **Member** (Thành viên thực thi):
+	- **Định nghĩa**: Các nhân sự trực tiếp làm việc (Dev, Designer, Tester, ...)
+	- **Đặc quyền**: Tập trung vào thực thi (Execution). Có quyền cập nhật trạng thái Task, log thời gian (Timesheet), comment, upload file. **Hạn chế:** Không được tự ý thay đổi ngày bắt đầu/kết thúc của Task nếu dự án đang bị khóa kế hoạch (Locked Plan).
+4. **Viewer** (Người quan sát / Stakeholder):
+	- **Định nghĩa**: Khách hàng hoặc quản lý cấp cao muốn theo dõi tiến độ.
+	- **Đặc quyền**: Chỉ xem (Read-only) báo cáo, tiến độ và tài liệu. Không được tương tác ghi (Writer).
+> Ma trận phân quyền chi tiết: [[#3. Business Rules#3.21. Ma trận Phân quyền Chi tiết (Permission Matrix) |Permission Matrix: Project Permission Rules]]
+## 2.4. Feature: Thiết lập Quyền Riêng tư (Privacy Settings)
 ### User Story 2.3
-LĂ  má»™t Chá»§ dá»± Ă¡n, TĂ´i muá»‘n thiáº¿t láº­p dá»± Ă¡n lĂ  RiĂªng tÆ° (Private), Äá»ƒ báº£o máº­t thĂ´ng tin nháº¡y cáº£m khá»i cĂ¡c thĂ nh viĂªn khĂ¡c trong cĂ¹ng Workspace.
+Là một Chủ dự án, Tôi muốn thiết lập dự án là Riêng tư (Private), Để bảo mật thông tin nhạy cảm khỏi các thành viên khác trong cùng Workspace.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Visibility Logic
-- **Public:** Táº¥t cáº£ thĂ nh viĂªn Workspace Ä‘á»u tháº¥y dá»± Ă¡n nĂ y trĂªn báº£ng chung vĂ  cĂ³ thá»ƒ tá»± tham gia (Join).
+- **Public:** Tất cả thành viên Workspace đều thấy dự án này trên bảng chung và có thể tự tham gia (Join).
 - **Private:**
-	 - Dá»± Ă¡n bá»‹ áº©n hoĂ n toĂ n vá»›i ngÆ°á»i khĂ´ng pháº£i thĂ nh viĂªn.
-	 - Chá»‰ nhá»¯ng ngÆ°á»i Ä‘Æ°á»£c má»i (Invited) má»›i truy cáº­p Ä‘Æ°á»£c.
+	 - Dự án bị ẩn hoàn toàn với người không phải thành viên.
+	 - Chỉ những người được mời (Invited) mới truy cập được.
 ## 2.5. Feature: Soft Delete & Restore
 ### Acceptance Criteria (#AC)
 #### AC 1 - Soft Delete
-- **Action:** PM chá»n "Move to Trash".
-- **System:** Update `is_deleted = 1`. Dá»± Ă¡n biáº¿n máº¥t khá»i cĂ¡c danh sĂ¡ch Active.
-- **Reference:** CĂ¡c Task thuá»™c dá»± Ă¡n nĂ y cÅ©ng bá»‹ áº©n theo (Query Filter), nhÆ°ng khĂ´ng bá»‹ update trong DB ngay láº­p tá»©c (Lazy Update).
+- **Action:** PM chọn "Move to Trash".
+- **System:** Update `is_deleted = 1`. Dự án biến mất khỏi các danh sách Active.
+- **Reference:** Các Task thuộc dự án này cũng bị ẩn theo (Query Filter), nhưng không bị update trong DB ngay lập tức (Lazy Update).
 #### AC 2 - Hard Delete Constraint
-- Dá»± Ă¡n trong thĂ¹ng rĂ¡c quĂ¡ 30 ngĂ y sáº½ bá»‹ xĂ³a vÄ©nh viá»…n bá»Ÿi Cronjob (Theo quy Ä‘á»‹nh táº¡i Module 8).
-## 2.6. Feature: Project Templates (Máº«u Dá»± Ă¡n)
+- Dự án trong thùng rác quá 30 ngày sẽ bị xóa vĩnh viễn bởi Cronjob (Theo quy định tại Module 8).
+## 2.6. Feature: Project Templates (Mẫu Dự án)
 ### User Story 3.6
-LĂ  má»™t PMO (Project Management Officer), TĂ´i muá»‘n táº¡o cĂ¡c máº«u dá»± Ă¡n chuáº©n (vĂ­ dá»¥: "Quy trĂ¬nh Pháº§n má»m", "Chiáº¿n dá»‹ch Marketing") bao gá»“m sáºµn danh sĂ¡ch cĂ´ng viá»‡c máº«u vĂ  cáº¥u hĂ¬nh, Äá»ƒ cĂ¡c PM khĂ´ng pháº£i thiáº¿t láº­p láº¡i tá»« Ä‘áº§u vĂ  Ä‘áº£m báº£o tuĂ¢n thá»§ quy trĂ¬nh cĂ´ng ty.
+Là một PMO (Project Management Officer), Tôi muốn tạo các mẫu dự án chuẩn (ví dụ: "Quy trình Phần mềm", "Chiến dịch Marketing") bao gồm sẵn danh sách công việc mẫu và cấu hình, Để các PM không phải thiết lập lại từ đầu và đảm bảo tuân thủ quy trình công ty.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Template Scope
-- Khi lÆ°u má»™t Dá»± Ă¡n thĂ nh Template, há»‡ thá»‘ng lÆ°u láº¡i:
-    - Cáº¥u trĂºc **Task Lists** (Phases).
-    - CĂ¡c **Tasks/Subtasks** máº«u (bao gá»“m MĂ´ táº£, Checklist, Tags).
-    - Cáº¥u hĂ¬nh **Project Settings** (Workflow, Custom Fields).
-    - _KhĂ´ng lÆ°u:_ ThĂ nh viĂªn cá»¥ thá»ƒ vĂ  NgĂ y thĂ¡ng cá»¥ thá»ƒ (Dates).
+- Khi lưu một Dự án thành Template, hệ thống lưu lại:
+    - Cấu trúc **Task Lists** (Phases).
+    - Các **Tasks/Subtasks** mẫu (bao gồm Mô tả, Checklist, Tags).
+    - Cấu hình **Project Settings** (Workflow, Custom Fields).
+    - _Không lưu:_ Thành viên cụ thể và Ngày tháng cụ thể (Dates).
 #### AC 2 - Project Initialization from Template
-- **Action:** Khi táº¡o dá»± Ă¡n má»›i, User chá»n "Use a Template".
-- **Logic:** Há»‡ thá»‘ng clone toĂ n bá»™ cáº¥u trĂºc tá»« Template sang Dá»± Ă¡n má»›i.
-- **Date Remapping:** Há»‡ thá»‘ng há»i "NgĂ y báº¯t Ä‘áº§u dá»± Ă¡n má»›i?", sau Ä‘Ă³ tá»± Ä‘á»™ng tá»‹nh tiáº¿n (Shift) ngĂ y cá»§a cĂ¡c Task máº«u dá»±a trĂªn khoáº£ng cĂ¡ch tÆ°Æ¡ng Ä‘á»‘i (Relative Duration) so vá»›i ngĂ y báº¯t Ä‘áº§u.
-## 2.7. Feature: Project Categories & Portfolios (PhĂ¢n loáº¡i & Danh má»¥c)
+- **Action:** Khi tạo dự án mới, User chọn "Use a Template".
+- **Logic:** Hệ thống clone toàn bộ cấu trúc từ Template sang Dự án mới.
+- **Date Remapping:** Hệ thống hỏi "Ngày bắt đầu dự án mới?", sau đó tự động tịnh tiến (Shift) ngày của các Task mẫu dựa trên khoảng cách tương đối (Relative Duration) so với ngày bắt đầu.
+## 2.7. Feature: Project Categories & Portfolios (Phân loại & Danh mục)
 
 ### User Story 3.7
-LĂ  má»™t GiĂ¡m Ä‘á»‘c Khá»‘i, TĂ´i muá»‘n gom nhĂ³m cĂ¡c dá»± Ă¡n liĂªn quan thĂ nh má»™t "ChÆ°Æ¡ng trĂ¬nh" (Program) hoáº·c "Danh má»¥c" (Portfolio), Äá»ƒ theo dĂµi sá»©c khá»e tá»•ng thá»ƒ cá»§a cáº£ nhĂ³m dá»± Ă¡n thay vĂ¬ xem láº» táº».
+Là một Giám đốc Khối, Tôi muốn gom nhóm các dự án liên quan thành một "Chương trình" (Program) hoặc "Danh mục" (Portfolio), Để theo dõi sức khỏe tổng thể của cả nhóm dự án thay vì xem lẻ tẻ.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Categorization
-- Cho phĂ©p gáº¯n **Category** (VĂ­ dá»¥: "Internal", "Client A", "R&D") cho dá»± Ă¡n.
-- Cho phĂ©p gáº¯n **Portfolio Tag** (VĂ­ dá»¥: "Chiáº¿n lÆ°á»£c 2025").
-- CĂ¡c nhĂ£n nĂ y dĂ¹ng Ä‘á»ƒ lá»c (Filter) vĂ  gom nhĂ³m (Group By) trĂªn Dashboard tá»•ng há»£p (Module 11).
-#### AC 2 - Hierarchy Support (Há»— trá»£ Module 5)
-- Viá»‡c phĂ¢n loáº¡i nĂ y lĂ  cÆ¡ sá»Ÿ dá»¯ liá»‡u Ä‘á»ƒ PhĂ¢n há»‡ 5 thá»±c hiá»‡n tĂ­nh nÄƒng **"Cross-Project Dependencies"** (Chá»‰ cho phĂ©p ná»‘i dependency giá»¯a cĂ¡c dá»± Ă¡n trong cĂ¹ng Portfolio náº¿u cáº¥u hĂ¬nh háº¡n cháº¿).
-## 2.8. Feature: Status Transition Gates (Cá»•ng kiá»ƒm soĂ¡t tráº¡ng thĂ¡i)
+- Cho phép gắn **Category** (Ví dụ: "Internal", "Client A", "R&D") cho dự án.
+- Cho phép gắn **Portfolio Tag** (Ví dụ: "Chiến lược 2025").
+- Các nhãn này dùng để lọc (Filter) và gom nhóm (Group By) trên Dashboard tổng hợp (Module 11).
+#### AC 2 - Hierarchy Support (Hỗ trợ Module 5)
+- Việc phân loại này là cơ sở dữ liệu để Phân hệ 5 thực hiện tính năng **"Cross-Project Dependencies"** (Chỉ cho phép nối dependency giữa các dự án trong cùng Portfolio nếu cấu hình hạn chế).
+## 2.8. Feature: Status Transition Gates (Cổng kiểm soát trạng thái)
 ### User Story 3.8
-LĂ  má»™t Quáº£n trá»‹ viĂªn, TĂ´i muá»‘n thiáº¿t láº­p cĂ¡c Ä‘iá»u kiá»‡n báº¯t buá»™c trÆ°á»›c khi dá»± Ă¡n Ä‘Æ°á»£c phĂ©p chuyá»ƒn tráº¡ng thĂ¡i, Äá»ƒ ngÄƒn cháº·n sai sĂ³t quy trĂ¬nh (vĂ­ dá»¥: ÄĂ³ng dá»± Ă¡n khi váº«n cĂ²n viá»‡c Ä‘ang lĂ m).
+Là một Quản trị viên, Tôi muốn thiết lập các điều kiện bắt buộc trước khi dự án được phép chuyển trạng thái, Để ngăn chặn sai sót quy trình (ví dụ: Đóng dự án khi vẫn còn việc đang làm).
 ### Acceptance Criteria ( #AC)
 #### AC 1 - "Definition of Done" Gate
-- **Condition:** Khi User chuyá»ƒn tráº¡ng thĂ¡i Project sang **DONE**.
-- **Check:** Há»‡ thá»‘ng kiá»ƒm tra xem cĂ²n Task nĂ o cĂ³ tráº¡ng thĂ¡i `!= DONE` khĂ´ng.
+- **Condition:** Khi User chuyển trạng thái Project sang **DONE**.
+- **Check:** Hệ thống kiểm tra xem còn Task nào có trạng thái `!= DONE` không.
 - **Action:**
-    - Náº¿u cĂ²n: Hiá»ƒn thá»‹ Modal liá»‡t kĂª cĂ¡c Task chÆ°a xong vĂ  yĂªu cáº§u xĂ¡c nháº­n: _"Há»§y bá» (Cancel) cĂ¡c task nĂ y"_ hay _"Di chuyá»ƒn (Move) sang dá»± Ă¡n khĂ¡c"_.
+    - Nếu còn: Hiển thị Modal liệt kê các Task chưa xong và yêu cầu xác nhận: _"Hủy bỏ (Cancel) các task này"_ hay _"Di chuyển (Move) sang dự án khác"_.
 #### AC 2 - "Planning Approval" Gate (Integration with Module 5)
-- **Condition:** Khi chuyá»ƒn sang **IN_PROGRESS**.
-- **Check:** Kiá»ƒm tra xem Dá»± Ă¡n Ä‘Ă£ cĂ³ **Baseline** nĂ o Ä‘Æ°á»£c phĂª duyá»‡t chÆ°a (náº¿u báº­t cháº¿ Ä‘á»™ Strict Governance).
-## 2.9. Feature: Project Objectives & Success Criteria (Má»¥c tiĂªu & TiĂªu chĂ­ ThĂ nh cĂ´ng)
+- **Condition:** Khi chuyển sang **IN_PROGRESS**.
+- **Check:** Kiểm tra xem Dự án đã có **Baseline** nào được phê duyệt chưa (nếu bật chế độ Strict Governance).
+## 2.9. Feature: Project Objectives & Success Criteria (Mục tiêu & Tiêu chí Thành công)
 ### User Story 3.9
-LĂ  má»™t Stakeholder, TĂ´i muá»‘n Ä‘á»‹nh nghÄ©a rĂµ rĂ ng má»¥c tiĂªu vĂ  cĂ¡c tiĂªu chĂ­ Ä‘Ă¡nh giĂ¡ thĂ nh cĂ´ng ngay tá»« Ä‘áº§u, Äá»ƒ Ä‘áº£m báº£o dá»± Ă¡n khĂ´ng chá»‰ hoĂ n thĂ nh vá» máº·t ká»¹ thuáº­t ("Done") mĂ  cĂ²n Ä‘áº¡t Ä‘Æ°á»£c giĂ¡ trá»‹ kinh doanh mong Ä‘á»£i ("Success").
+Là một Stakeholder, Tôi muốn định nghĩa rõ ràng mục tiêu và các tiêu chí đánh giá thành công ngay từ đầu, Để đảm bảo dự án không chỉ hoàn thành về mặt kỹ thuật ("Done") mà còn đạt được giá trị kinh doanh mong đợi ("Success").
 ### Acceptance Criteria (#AC)
 #### AC 1 - Definition Input
-- Trong tab "Overview", cho phĂ©p PM khai bĂ¡o:
- - **Objectives:** Má»¥c tiĂªu Ä‘á»‹nh tĂ­nh (Text/Rich Text). VĂ­ dá»¥: "NĂ¢ng cao tráº£i nghiá»‡m ngÆ°á»i dĂ¹ng".
- - **Success Criteria (KPIs):** Danh sĂ¡ch cĂ¡c tiĂªu chĂ­ Ä‘á»‹nh lÆ°á»£ng (Checklist). VĂ­ dá»¥: "TÄƒng conversion rate lĂªn 5%", "Giáº£m thá»i gian load trang < 2s".
+- Trong tab "Overview", cho phép PM khai báo:
+ - **Objectives:** Mục tiêu định tính (Text/Rich Text). Ví dụ: "Nâng cao trải nghiệm người dùng".
+ - **Success Criteria (KPIs):** Danh sách các tiêu chí định lượng (Checklist). Ví dụ: "Tăng conversion rate lên 5%", "Giảm thời gian load trang < 2s".
 #### AC 2 - Evaluation at Closure
-- **Trigger:** Khi chuyá»ƒn tráº¡ng thĂ¡i dá»± Ă¡n sang **DONE**.
-- **Action:** Há»‡ thá»‘ng hiá»ƒn thá»‹ báº£ng Ä‘Ă¡nh giĂ¡ (Scorecard) yĂªu cáº§u PM tá»± cháº¥m Ä‘iá»ƒm tá»«ng tiĂªu chĂ­:
- - _Met (Äáº¡t)_ / _Partially Met (Äáº¡t má»™t pháº§n)_ / _Missed (KhĂ´ng Ä‘áº¡t)_.
-- **Audit:** Káº¿t quáº£ Ä‘Ă¡nh giĂ¡ nĂ y Ä‘Æ°á»£c lÆ°u vÄ©nh viá»…n vĂ o há»“ sÆ¡ dá»± Ă¡n Ä‘á»ƒ phá»¥c vá»¥ bĂ¡o cĂ¡o tá»•ng káº¿t.
-## 2.10. Feature: Project Health Indicators (Chá»‰ bĂ¡o Sá»©c khá»e Dá»± Ă¡n)
+- **Trigger:** Khi chuyển trạng thái dự án sang **DONE**.
+- **Action:** Hệ thống hiển thị bảng đánh giá (Scorecard) yêu cầu PM tự chấm điểm từng tiêu chí:
+ - _Met (Đạt)_ / _Partially Met (Đạt một phần)_ / _Missed (Không đạt)_.
+- **Audit:** Kết quả đánh giá này được lưu vĩnh viễn vào hồ sơ dự án để phục vụ báo cáo tổng kết.
+## 2.10. Feature: Project Health Indicators (Chỉ báo Sức khỏe Dự án)
 ### User Story 3.10
-LĂ  má»™t Portfolio Manager, TĂ´i muá»‘n nhĂ¬n tháº¥y tráº¡ng thĂ¡i sá»©c khá»e cá»§a dá»± Ă¡n qua há»‡ thá»‘ng Ä‘Ă¨n giao thĂ´ng (Xanh/VĂ ng/Äá»), Äá»ƒ ká»‹p thá»i can thiá»‡p vĂ o cĂ¡c dá»± Ă¡n Ä‘ang gáº·p rá»§i ro mĂ  khĂ´ng cáº§n Ä‘á»c bĂ¡o cĂ¡o chi tiáº¿t.
+Là một Portfolio Manager, Tôi muốn nhìn thấy trạng thái sức khỏe của dự án qua hệ thống đèn giao thông (Xanh/Vàng/Đỏ), Để kịp thời can thiệp vào các dự án đang gặp rủi ro mà không cần đọc báo cáo chi tiết.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Auto-Calculated Health
-- Há»‡ thá»‘ng tá»± Ä‘á»™ng tĂ­nh toĂ¡n 3 chá»‰ sá»‘ thĂ nh pháº§n:
- 1. **Schedule Health:** Dá»±a trĂªn sá»‘ lÆ°á»£ng Task quĂ¡ háº¡n hoáº·c chá»‰ sá»‘ SPI (tá»« Module 11).
- 2. **Resource Health:** Dá»±a trĂªn sá»‘ giá» lĂ m viá»‡c quĂ¡ táº£i (Overload) cá»§a thĂ nh viĂªn.
- 3. **Budget Health:** Dá»±a trĂªn chi phĂ­ thá»±c táº¿ so vá»›i ngĂ¢n sĂ¡ch (náº¿u cĂ³).
+- Hệ thống tự động tính toán 3 chỉ số thành phần:
+ 1. **Schedule Health:** Dựa trên số lượng Task quá hạn hoặc chỉ số SPI (từ Module 11).
+ 2. **Resource Health:** Dựa trên số giờ làm việc quá tải (Overload) của thành viên.
+ 3. **Budget Health:** Dựa trên chi phí thực tế so với ngân sách (nếu có).
 #### AC 2 - Overall Traffic Light
-- Tá»•ng há»£p thĂ nh tráº¡ng thĂ¡i chung:
- - đŸŸ¢ **Green (On Track):** Má»i chá»‰ sá»‘ Ä‘á»u á»•n.
- - đŸŸ¡ **Amber (At Risk):** CĂ³ 1 chá»‰ sá»‘ cáº£nh bĂ¡o (vĂ­ dá»¥: Trá»… < 10%).
- - đŸ”´ **Red (Off Track):** CĂ³ chá»‰ sá»‘ nguy hiá»ƒm (vĂ­ dá»¥: Trá»… > 10% hoáº·c Over budget).
+- Tổng hợp thành trạng thái chung:
+ - 🟢 **Green (On Track):** Mọi chỉ số đều ổn.
+ - 🟡 **Amber (At Risk):** Có 1 chỉ số cảnh báo (ví dụ: Trễ < 10%).
+ - 🔴 **Red (Off Track):** Có chỉ số nguy hiểm (ví dụ: Trễ > 10% hoặc Over budget).
 #### AC 3 - Manual Override with Context
-- PM cĂ³ quyá»n ghi Ä‘Ă¨ tráº¡ng thĂ¡i (vĂ­ dá»¥: Há»‡ thá»‘ng bĂ¡o Äá» nhÆ°ng PM biáº¿t lĂ  kiá»ƒm soĂ¡t Ä‘Æ°á»£c -> Chá»‰nh vá» VĂ ng).
-- **Constraint:** Báº¯t buá»™c nháº­p "LĂ½ do/Giáº£i trĂ¬nh" khi ghi Ä‘Ă¨ thá»§ cĂ´ng.
-## 2.11. Feature: Project Change Request - PCR (YĂªu cáº§u Thay Ä‘á»•i Dá»± Ă¡n)
+- PM có quyền ghi đè trạng thái (ví dụ: Hệ thống báo Đỏ nhưng PM biết là kiểm soát được -> Chỉnh về Vàng).
+- **Constraint:** Bắt buộc nhập "Lý do/Giải trình" khi ghi đè thủ công.
+## 2.11. Feature: Project Change Request - PCR (Yêu cầu Thay đổi Dự án)
 ### User Story 3.11
-LĂ  má»™t PM, TĂ´i muá»‘n táº¡o yĂªu cáº§u thay Ä‘á»•i khi cĂ³ phĂ¡t sinh vá» pháº¡m vi hoáº·c thá»i gian, Äá»ƒ há»£p thá»©c hĂ³a cĂ¡c thay Ä‘á»•i so vá»›i káº¿ hoáº¡ch ban Ä‘áº§u (Baseline) thay vĂ¬ sá»­a Ä‘á»•i tĂ¹y tiá»‡n.
+Là một PM, Tôi muốn tạo yêu cầu thay đổi khi có phát sinh về phạm vi hoặc thời gian, Để hợp thức hóa các thay đổi so với kế hoạch ban đầu (Baseline) thay vì sửa đổi tùy tiện.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - PCR Creation
-- **Action:** Táº¡o má»›i Change Request (CR).
-- **Type:** Chá»n loáº¡i thay Ä‘á»•i: _Scope_ (Pháº¡m vi), _Schedule_ (Lá»‹ch trĂ¬nh), _Cost_ (Chi phĂ­), hoáº·c _Resource_.
-- **Impact Link:** TĂ­ch há»£p vá»›i **Module 5 (CIA Panel)** Ä‘á»ƒ Ä‘Ă­nh kĂ¨m káº¿t quáº£ phĂ¢n tĂ­ch tĂ¡c Ä‘á»™ng (VĂ­ dá»¥: "Dá»i deadline 5 ngĂ y sáº½ lĂ m tÄƒng chi phĂ­ 10%").
+- **Action:** Tạo mới Change Request (CR).
+- **Type:** Chọn loại thay đổi: _Scope_ (Phạm vi), _Schedule_ (Lịch trình), _Cost_ (Chi phí), hoặc _Resource_.
+- **Impact Link:** Tích hợp với **Module 5 (CIA Panel)** để đính kèm kết quả phân tích tác động (Ví dụ: "Dời deadline 5 ngày sẽ làm tăng chi phí 10%").
 #### AC 2 - Approval Workflow
 - **Flow:** `Draft` -> `Submitted` -> `Approved` / `Rejected`.
-- **Approver:** Chá»‰ nhá»¯ng ngÆ°á»i cĂ³ vai trĂ² **Steering Committee** hoáº·c **Workspace Admin** má»›i cĂ³ quyá»n duyá»‡t CR.
+- **Approver:** Chỉ những người có vai trò **Steering Committee** hoặc **Workspace Admin** mới có quyền duyệt CR.
 #### AC 3 - Post-Approval Action
-- Khi CR Ä‘Æ°á»£c **Approved**:
- - Há»‡ thá»‘ng tá»± Ä‘á»™ng má»Ÿ khĂ³a (Unlock) cĂ¡c rĂ ng buá»™c trong Module 5 Ä‘á»ƒ PM cáº­p nháº­t láº¡i káº¿ hoáº¡ch.
- - Há»‡ thá»‘ng yĂªu cáº§u lÆ°u má»™t **Baseline má»›i** ngay sau khi cáº­p nháº­t xong.
-## 2.12. Feature: Project Closure & Lessons Learned (ÄĂ³ng Dá»± Ă¡n & BĂ i há»c kinh nghiá»‡m)
+- Khi CR được **Approved**:
+ - Hệ thống tự động mở khóa (Unlock) các ràng buộc trong Module 5 để PM cập nhật lại kế hoạch.
+ - Hệ thống yêu cầu lưu một **Baseline mới** ngay sau khi cập nhật xong.
+## 2.12. Feature: Project Closure & Lessons Learned (Đóng Dự án & Bài học kinh nghiệm)
 ### User Story 3.12
-LĂ  má»™t PMO, TĂ´i muá»‘n thu tháº­p cĂ¡c bĂ i há»c kinh nghiá»‡m vĂ  rá»§i ro chĂ­nh khi Ä‘Ă³ng dá»± Ă¡n, Äá»ƒ lĂ m giĂ u kho tri thá»©c (Knowledge Base) vĂ  trĂ¡nh láº·p láº¡i sai láº§m trong cĂ¡c dá»± Ă¡n sau.
+Là một PMO, Tôi muốn thu thập các bài học kinh nghiệm và rủi ro chính khi đóng dự án, Để làm giàu kho tri thức (Knowledge Base) và tránh lặp lại sai lầm trong các dự án sau.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Closure Wizard
-- Khi chuyá»ƒn tráº¡ng thĂ¡i sang **DONE**, hiá»ƒn thá»‹ Wizard "Project Closure":
- 1. BÆ°á»›c 1: ÄĂ¡nh giĂ¡ Má»¥c tiĂªu (Feature 2.9).
- 2. BÆ°á»›c 2: Giáº£i phĂ³ng nguá»“n lá»±c (Release Resources).
- 3. BÆ°á»›c 3: Nháº­p **Lessons Learned** (CĂ¡i gĂ¬ lĂ m tá»‘t? CĂ¡i gĂ¬ cáº§n cáº£i thiá»‡n?).
- 4. BÆ°á»›c 4: XĂ¡c nháº­n LÆ°u trá»¯ (Archive).
+- Khi chuyển trạng thái sang **DONE**, hiển thị Wizard "Project Closure":
+ 1. Bước 1: Đánh giá Mục tiêu (Feature 2.9).
+ 2. Bước 2: Giải phóng nguồn lực (Release Resources).
+ 3. Bước 3: Nhập **Lessons Learned** (Cái gì làm tốt? Cái gì cần cải thiện?).
+ 4. Bước 4: Xác nhận Lưu trữ (Archive).
 #### AC 2 - Knowledge Recycling
-- Dá»¯ liá»‡u "Lessons Learned" vĂ  "Key Risks" sáº½ Ä‘Æ°á»£c gá»£i Ă½ hiá»ƒn thá»‹ khi má»™t PM khĂ¡c táº¡o dá»± Ă¡n má»›i cĂ³ cĂ¹ng **Category** (TĂ­nh nÄƒng tĂ­ch há»£p vá»›i Module 15 - Knowledge Base).
-## 2.13. Feature: Project Baseline Governance (Quáº£n trá»‹ ÄÆ°á»ng cÆ¡ sá»Ÿ Dá»± Ă¡n)
+- Dữ liệu "Lessons Learned" và "Key Risks" sẽ được gợi ý hiển thị khi một PM khác tạo dự án mới có cùng **Category** (Tính năng tích hợp với Module 15 - Knowledge Base).
+## 2.13. Feature: Project Baseline Governance (Quản trị Đường cơ sở Dự án)
 ### User Story 3.13
-LĂ  má»™t PMO hoáº·c Quáº£n lĂ½ Cháº¥t lÆ°á»£ng (QA), TĂ´i muá»‘n kiá»ƒm soĂ¡t cháº·t cháº½ viá»‡c táº¡o vĂ  thay Ä‘á»•i cĂ¡c phiĂªn báº£n Baseline (ÄÆ°á»ng cÆ¡ sá»Ÿ), Äá»ƒ Ä‘áº£m báº£o sá»± thay Ä‘á»•i káº¿ hoáº¡ch luĂ´n Ä‘Æ°á»£c ghi nháº­n minh báº¡ch vĂ  cĂ³ lĂ½ do chĂ­nh Ä‘Ă¡ng (TrĂ¡nh viá»‡c PM sá»­a káº¿ hoáº¡ch Ă¢m tháº§m Ä‘á»ƒ che giáº¥u sá»± cháº­m trá»…).
+Là một PMO hoặc Quản lý Chất lượng (QA), Tôi muốn kiểm soát chặt chẽ việc tạo và thay đổi các phiên bản Baseline (Đường cơ sở), Để đảm bảo sự thay đổi kế hoạch luôn được ghi nhận minh bạch và có lý do chính đáng (Tránh việc PM sửa kế hoạch âm thầm để che giấu sự chậm trễ).
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Versioning Strategy (Chiáº¿n lÆ°á»£c PhiĂªn báº£n)
-- **Logic:** Há»‡ thá»‘ng tá»± Ä‘á»™ng quáº£n lĂ½ phiĂªn báº£n Baseline theo quy táº¯c tÄƒng tiáº¿n:
-    - **v1.0 (Initial):** ÄÆ°á»£c táº¡o tá»± Ä‘á»™ng khi Dá»± Ă¡n chuyá»ƒn tráº¡ng thĂ¡i tá»« _Not-Started_ sang _In-Progress_ (hoáº·c khi Ä‘Æ°á»£c PhĂª duyá»‡t láº§n Ä‘áº§u).
-    - **v1.x (Minor):** CĂ¡c thay Ä‘á»•i nhá», Ä‘iá»u chá»‰nh ná»™i bá»™ (náº¿u cáº¥u hĂ¬nh cho phĂ©p).
-    - **v2.0 (Major):** ÄÆ°á»£c táº¡o khi cĂ³ má»™t **Change Request (PCR)** lá»›n Ä‘Æ°á»£c duyá»‡t (liĂªn káº¿t vá»›i Feature 2.11).
-- **Display:** Hiá»ƒn thá»‹ rĂµ danh sĂ¡ch cĂ¡c phiĂªn báº£n: _Version - Date - Created By - Context_.
-#### AC 2 - Creation Conditions (Äiá»u kiá»‡n khá»Ÿi táº¡o)
-- **Constraint:** NĂºt "Save Baseline" bá»‹ khĂ³a (Disabled) náº¿u:
-    - Dá»± Ă¡n Ä‘ang á»Ÿ tráº¡ng thĂ¡i _Hold_ hoáº·c _Done_.
-    - CĂ³ cĂ¡c Task chÆ°a Ä‘Æ°á»£c láº­p lá»‹ch (Missing Start/End Date).
-    - (TĂ¹y chá»n) ChÆ°a Ä‘Æ°á»£c phĂª duyá»‡t bá»Ÿi cáº¥p trĂªn (Integration vá»›i Module 5 Approval).
-#### AC 3 - Modification Constraints (RĂ ng buá»™c chá»‰nh sá»­a)
-- **Rule:** Má»™t khi Ä‘Ă£ cĂ³ Baseline Active (v1.0 trá»Ÿ lĂªn):
-    - Má»i hĂ nh Ä‘á»™ng thay Ä‘á»•i ngĂ y thĂ¡ng (Reschedule) trĂªn Gantt Chart Ä‘á»u kĂ­ch hoáº¡t má»™t popup **"Change Context"**.
-    - **Input báº¯t buá»™c:** NgÆ°á»i dĂ¹ng pháº£i chá»n _Reason Code_ (vĂ­ dá»¥: "Scope Creep", "Resource unavailable", "Estimation Error") vĂ  nháº­p chĂº thĂ­ch trÆ°á»›c khi há»‡ thá»‘ng cho phĂ©p LÆ°u.
-## 2.14. Feature: What-if Simulation & Scenario Planning (MĂ´ phá»ng & Láº­p káº¿ hoáº¡ch Ká»‹ch báº£n)
+#### AC 1 - Versioning Strategy (Chiến lược Phiên bản)
+- **Logic:** Hệ thống tự động quản lý phiên bản Baseline theo quy tắc tăng tiến:
+    - **v1.0 (Initial):** Được tạo tự động khi Dự án chuyển trạng thái từ _Not-Started_ sang _In-Progress_ (hoặc khi được Phê duyệt lần đầu).
+    - **v1.x (Minor):** Các thay đổi nhỏ, điều chỉnh nội bộ (nếu cấu hình cho phép).
+    - **v2.0 (Major):** Được tạo khi có một **Change Request (PCR)** lớn được duyệt (liên kết với Feature 2.11).
+- **Display:** Hiển thị rõ danh sách các phiên bản: _Version - Date - Created By - Context_.
+#### AC 2 - Creation Conditions (Điều kiện khởi tạo)
+- **Constraint:** Nút "Save Baseline" bị khóa (Disabled) nếu:
+    - Dự án đang ở trạng thái _Hold_ hoặc _Done_.
+    - Có các Task chưa được lập lịch (Missing Start/End Date).
+    - (Tùy chọn) Chưa được phê duyệt bởi cấp trên (Integration với Module 5 Approval).
+#### AC 3 - Modification Constraints (Ràng buộc chỉnh sửa)
+- **Rule:** Một khi đã có Baseline Active (v1.0 trở lên):
+    - Mọi hành động thay đổi ngày tháng (Reschedule) trên Gantt Chart đều kích hoạt một popup **"Change Context"**.
+    - **Input bắt buộc:** Người dùng phải chọn _Reason Code_ (ví dụ: "Scope Creep", "Resource unavailable", "Estimation Error") và nhập chú thích trước khi hệ thống cho phép Lưu.
+## 2.14. Feature: What-if Simulation & Scenario Planning (Mô phỏng & Lập kế hoạch Kịch bản)
 ### User Story 3.14
-LĂ  má»™t Project Manager, TĂ´i muá»‘n táº¡o cĂ¡c ká»‹ch báº£n mĂ´ phá»ng (vĂ­ dá»¥: "Náº¿u team Backend nghá»‰ 3 ngĂ y", "Náº¿u thĂªm 2 nhĂ¢n sá»±") vĂ  xem trÆ°á»›c tĂ¡c Ä‘á»™ng cá»§a chĂºng mĂ  khĂ´ng lĂ m áº£nh hÆ°á»Ÿng Ä‘áº¿n dá»¯ liá»‡u dá»± Ă¡n thá»±c táº¿, Äá»ƒ tĂ´i cĂ³ thá»ƒ ra quyáº¿t Ä‘á»‹nh chĂ­nh xĂ¡c nháº¥t.
+Là một Project Manager, Tôi muốn tạo các kịch bản mô phỏng (ví dụ: "Nếu team Backend nghỉ 3 ngày", "Nếu thêm 2 nhân sự") và xem trước tác động của chúng mà không làm ảnh hưởng đến dữ liệu dự án thực tế, Để tôi có thể ra quyết định chính xác nhất.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Simulation Sandbox (Há»™p cĂ¡t mĂ´ phá»ng)
-- **Action:** Táº¡i mĂ n hĂ¬nh dá»± Ă¡n, user chá»n "Enter Simulation Mode".
+#### AC 1 - Simulation Sandbox (Hộp cát mô phỏng)
+- **Action:** Tại màn hình dự án, user chọn "Enter Simulation Mode".
 - **System Behavior:**
-    - Há»‡ thá»‘ng táº¡o má»™t báº£n sao táº¡m thá»i (Temporary Snapshot) cá»§a dá»± Ă¡n hiá»‡n táº¡i trong bá»™ nhá»› (hoáº·c báº£ng táº¡m).
-    - Giao diá»‡n chuyá»ƒn sang tĂ´ng mĂ u khĂ¡c (vĂ­ dá»¥: Viá»n vĂ ng/Watermark "SIMULATION") Ä‘á»ƒ phĂ¢n biá»‡t vá»›i dá»¯ liá»‡u tháº­t.
-    - Táº¡i Ä‘Ă¢y, PM Ä‘Æ°á»£c phĂ©p thoáº£i mĂ¡i thay Ä‘á»•i Date, Dependency, Resource.
-#### AC 2 - Scenario Management (Quáº£n lĂ½ Ká»‹ch báº£n)
-- Cho phĂ©p lÆ°u cĂ¡c phiĂªn báº£n mĂ´ phá»ng thĂ nh cĂ¡c Ká»‹ch báº£n cĂ³ tĂªn (Named Scenarios).
-    - _VĂ­ dá»¥:_ Scenario A: "Optimistic Plan" (Káº¿ hoáº¡ch láº¡c quan).
-    - _VĂ­ dá»¥:_ Scenario B: "Worst Case" (TrÆ°á»ng há»£p xáº¥u nháº¥t).
-- CĂ¡c ká»‹ch báº£n nĂ y chá»‰ hiá»ƒn thá»‹ vá»›i PM vĂ  khĂ´ng áº£nh hÆ°á»Ÿng Ä‘áº¿n Task list cá»§a thĂ nh viĂªn (Integration with Module 4).
-#### AC 3 - Impact Preview (Xem trÆ°á»›c tĂ¡c Ä‘á»™ng - Integration with Module 5)
-- TrÆ°á»›c khi quyáº¿t Ä‘á»‹nh Ă¡p dá»¥ng, há»‡ thá»‘ng hiá»ƒn thá»‹ báº£ng so sĂ¡nh **Diff** giá»¯a _Simulation_ vĂ  _Live Project_:
-    - **Delta Date:** Dá»± Ă¡n sáº½ xong sá»›m/trá»… bao nhiĂªu ngĂ y?
-    - **Delta Cost:** Chi phĂ­ thay Ä‘á»•i tháº¿ nĂ o?
-    - **Risk:** CĂ³ bao nhiĂªu Task má»›i bá»‹ rÆ¡i vĂ o Ä‘Æ°á»ng gÄƒng (Critical Path)?
-#### AC 4 - Promote to Execution (Ăp dá»¥ng vĂ o thá»±c táº¿)
-- **Action:** User chá»n "Apply Scenario to Live Project".
+    - Hệ thống tạo một bản sao tạm thời (Temporary Snapshot) của dự án hiện tại trong bộ nhớ (hoặc bảng tạm).
+    - Giao diện chuyển sang tông màu khác (ví dụ: Viền vàng/Watermark "SIMULATION") để phân biệt với dữ liệu thật.
+    - Tại đây, PM được phép thoải mái thay đổi Date, Dependency, Resource.
+#### AC 2 - Scenario Management (Quản lý Kịch bản)
+- Cho phép lưu các phiên bản mô phỏng thành các Kịch bản có tên (Named Scenarios).
+    - _Ví dụ:_ Scenario A: "Optimistic Plan" (Kế hoạch lạc quan).
+    - _Ví dụ:_ Scenario B: "Worst Case" (Trường hợp xấu nhất).
+- Các kịch bản này chỉ hiển thị với PM và không ảnh hưởng đến Task list của thành viên (Integration with Module 4).
+#### AC 3 - Impact Preview (Xem trước tác động - Integration with Module 5)
+- Trước khi quyết định áp dụng, hệ thống hiển thị bảng so sánh **Diff** giữa _Simulation_ và _Live Project_:
+    - **Delta Date:** Dự án sẽ xong sớm/trễ bao nhiêu ngày?
+    - **Delta Cost:** Chi phí thay đổi thế nào?
+    - **Risk:** Có bao nhiêu Task mới bị rơi vào đường găng (Critical Path)?
+#### AC 4 - Promote to Execution (Áp dụng vào thực tế)
+- **Action:** User chọn "Apply Scenario to Live Project".
 - **Validation:**
-    - Náº¿u dá»± Ă¡n Ä‘ang á»Ÿ cháº¿ Ä‘á»™ Strict Governance: Há»‡ thá»‘ng tá»± Ä‘á»™ng chuyá»ƒn Ká»‹ch báº£n nĂ y thĂ nh má»™t **Change Request (PCR)** (liĂªn káº¿t Feature 2.11) Ä‘á»ƒ chá» duyá»‡t.
-    - Náº¿u dá»± Ă¡n bĂ¬nh thÆ°á»ng: Cáº­p nháº­t dá»¯ liá»‡u tháº­t vĂ  táº¡o **Baseline** má»›i (náº¿u cáº¥u hĂ¬nh yĂªu cáº§u).
-## 2.15. Feature: Planning Scope Governance (Quáº£n trá»‹ Pháº¡m vi Hoáº¡ch Ä‘á»‹nh)
+    - Nếu dự án đang ở chế độ Strict Governance: Hệ thống tự động chuyển Kịch bản này thành một **Change Request (PCR)** (liên kết Feature 2.11) để chờ duyệt.
+    - Nếu dự án bình thường: Cập nhật dữ liệu thật và tạo **Baseline** mới (nếu cấu hình yêu cầu).
+## 2.15. Feature: Planning Scope Governance (Quản trị Phạm vi Hoạch định)
 ### User Story 3.15
-LĂ  má»™t Project Manager, TĂ´i muá»‘n Ä‘á»‹nh nghÄ©a rĂµ rĂ ng nhá»¯ng Ä‘áº§u viá»‡c nĂ o tham gia vĂ o tĂ­nh toĂ¡n káº¿ hoáº¡ch (Planning) vĂ  nhá»¯ng Ä‘áº§u viá»‡c nĂ o chá»‰ mang tĂ­nh cháº¥t theo dĂµi thá»±c thi (Tracking), Äá»ƒ biá»ƒu Ä‘á»“ Gantt vĂ  Ä‘Æ°á»ng gÄƒng (Critical Path) khĂ´ng bá»‹ nhiá»…u bá»Ÿi cĂ¡c cĂ´ng viá»‡c vá»¥n váº·t.
+Là một Project Manager, Tôi muốn định nghĩa rõ ràng những đầu việc nào tham gia vào tính toán kế hoạch (Planning) và những đầu việc nào chỉ mang tính chất theo dõi thực thi (Tracking), Để biểu đồ Gantt và đường găng (Critical Path) không bị nhiễu bởi các công việc vụn vặt.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Planning Depth Configuration (Cáº¥u hĂ¬nh Äá»™ sĂ¢u Hoáº¡ch Ä‘á»‹nh)
-- **Input:** Trong Project Settings, PM cĂ³ thá»ƒ thiáº¿t láº­p "Planning Cut-off Level":
-    - **Level 1 (Phase):** Chá»‰ tĂ­nh toĂ¡n lá»‹ch trĂ¬nh cho cĂ¡c Phase lá»›n.
-    - **Level 2 (Task List):** TĂ­nh toĂ¡n Ä‘áº¿n cáº¥p Task List.
-    - **All Levels (Default):** TĂ­nh toĂ¡n chi tiáº¿t Ä‘áº¿n tá»«ng Task.
-- **Impact:** CĂ¡c Task náº±m sĂ¢u hÆ¡n má»©c Cut-off sáº½ tá»± Ä‘á»™ng cĂ³ cá» `Is_Planning_Item = False`.
-#### AC 2 - Explicit Inclusion/Exclusion (Chá»‰ Ä‘á»‹nh Pháº¡m vi)
-- Cho phĂ©p PM Ä‘Ă¡nh dáº¥u thá»§ cĂ´ng má»™t Task List hoáº·c Task cá»¥ thá»ƒ lĂ  **"Execution Only"** (Chá»‰ thá»±c thi).
+#### AC 1 - Planning Depth Configuration (Cấu hình Độ sâu Hoạch định)
+- **Input:** Trong Project Settings, PM có thể thiết lập "Planning Cut-off Level":
+    - **Level 1 (Phase):** Chỉ tính toán lịch trình cho các Phase lớn.
+    - **Level 2 (Task List):** Tính toán đến cấp Task List.
+    - **All Levels (Default):** Tính toán chi tiết đến từng Task.
+- **Impact:** Các Task nằm sâu hơn mức Cut-off sẽ tự động có cờ `Is_Planning_Item = False`.
+#### AC 2 - Explicit Inclusion/Exclusion (Chỉ định Phạm vi)
+- Cho phép PM đánh dấu thủ công một Task List hoặc Task cụ thể là **"Execution Only"** (Chỉ thực thi).
 - **Behavior:**
-    - CĂ¡c Task nĂ y váº«n hiá»‡n trĂªn Board/List Ä‘á»ƒ lĂ m viá»‡c.
-    - NhÆ°ng trĂªn Gantt Chart (Module 5), chĂºng bá»‹ má» Ä‘i hoáº·c áº©n (tĂ¹y view) vĂ  **khĂ´ng tham gia vĂ o thuáº­t toĂ¡n CPM** (Critical Path Method).
-    - Sá»± cháº­m trá»… cá»§a cĂ¡c Task nĂ y **khĂ´ng** tá»± Ä‘á»™ng Ä‘áº©y lĂ¹i ngĂ y káº¿t thĂºc cá»§a Dá»± Ă¡n (trá»« khi PM Ä‘á»•i láº¡i cáº¥u hĂ¬nh).
+    - Các Task này vẫn hiện trên Board/List để làm việc.
+    - Nhưng trên Gantt Chart (Module 5), chúng bị mờ đi hoặc ẩn (tùy view) và **không tham gia vào thuật toán CPM** (Critical Path Method).
+    - Sự chậm trễ của các Task này **không** tự động đẩy lùi ngày kết thúc của Dự án (trừ khi PM đổi lại cấu hình).
 #### AC 3 - Default Policy by Template
-- Khi táº¡o dá»± Ă¡n tá»« Template (Feature 2.6), cáº¥u hĂ¬nh Planning Scope cÅ©ng Ä‘Æ°á»£c káº¿ thá»«a. VĂ­ dá»¥: Template "Agile" máº·c Ä‘á»‹nh chá»‰ plan á»Ÿ má»©c Epic (Level 1), Ä‘á»ƒ Dev tá»± do quáº£n lĂ½ Task con.
-## 2.16. Feature: Advanced Dependency Configuration (Cáº¥u hĂ¬nh Phá»¥ thuá»™c NĂ¢ng cao)
+- Khi tạo dự án từ Template (Feature 2.6), cấu hình Planning Scope cũng được kế thừa. Ví dụ: Template "Agile" mặc định chỉ plan ở mức Epic (Level 1), để Dev tự do quản lý Task con.
+## 2.16. Feature: Advanced Dependency Configuration (Cấu hình Phụ thuộc Nâng cao)
 ### User Story 3.16
-LĂ  má»™t Planner/Scheduler chuyĂªn nghiá»‡p, TĂ´i muá»‘n thiáº¿t láº­p dá»± Ă¡n sá»­ dá»¥ng mĂ´ hĂ¬nh phá»¥ thuá»™c nĂ¢ng cao (PDM) bao gá»“m cĂ¡c quan há»‡ song song vĂ  gá»‘i Ä‘áº§u, Äá»ƒ mĂ´ phá»ng chĂ­nh xĂ¡c thá»±c táº¿ thi cĂ´ng (vĂ­ dá»¥: "Vá»«a xĂ¢y vá»«a trĂ¡t") thay vĂ¬ chá»‰ xáº¿p hĂ ng tuáº§n tá»± cá»©ng nháº¯c.
+Là một Planner/Scheduler chuyên nghiệp, Tôi muốn thiết lập dự án sử dụng mô hình phụ thuộc nâng cao (PDM) bao gồm các quan hệ song song và gối đầu, Để mô phỏng chính xác thực tế thi công (ví dụ: "Vừa xây vừa trát") thay vì chỉ xếp hàng tuần tự cứng nhắc.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Supported Dependency Types (CĂ¡c loáº¡i phá»¥ thuá»™c)
-- Trong cáº¥u hĂ¬nh dá»± Ă¡n, cho phĂ©p kĂ­ch hoáº¡t bá»™ 4 loáº¡i quan há»‡ chuáº©n PDM:
-    1. **FS (Finish-to-Start):** Máº·c Ä‘á»‹nh. Task A xong thĂ¬ Task B má»›i báº¯t Ä‘áº§u.
-    2. **SS (Start-to-Start):** Task B báº¯t Ä‘áº§u cĂ¹ng lĂºc (hoáº·c sau má»™t khoáº£ng) vá»›i khi Task A báº¯t Ä‘áº§u. _(DĂ¹ng cho cĂ´ng viá»‡c song song)_.
-    3. **FF (Finish-to-Finish):** Task B chá»‰ Ä‘Æ°á»£c káº¿t thĂºc khi Task A Ä‘Ă£ káº¿t thĂºc. _(DĂ¹ng cho cĂ´ng viá»‡c nghiá»‡m thu/kiá»ƒm thá»­)_.
-    4. **SF (Start-to-Finish):** Task A báº¯t Ä‘áº§u lĂ  Ä‘iá»u kiá»‡n Ä‘á»ƒ Task B káº¿t thĂºc. _(Ăt dĂ¹ng, dĂ nh cho quáº£n lĂ½ ca kĂ­p/kho bĂ£i)_.
-#### AC 2 - Lead & Lag Time (Äá»™ trá»… & Äá»™ sá»›m)
-- Cho phĂ©p Ä‘á»‹nh nghÄ©a tham sá»‘ **Offset** trĂªn má»—i má»‘i ná»‘i:
-    - **Lag (+):** Thá»i gian chá». _VĂ­ dá»¥: FS + 2d (A xong, chá» 2 ngĂ y cho khĂ´ bĂª tĂ´ng rá»“i má»›i lĂ m B)._
-    - **Lead (-):** Thá»i gian lĂ m sá»›m (Gá»‘i Ä‘áº§u). _VĂ­ dá»¥: FS - 1d (B báº¯t Ä‘áº§u trÆ°á»›c khi A xong 1 ngĂ y)._
-#### AC 3 - Validation Mode (Cháº¿ Ä‘á»™ Kiá»ƒm tra)
-- Thiáº¿t láº­p cháº¿ Ä‘á»™ kiá»ƒm tra logic khi táº¡o Dependency:
-    - **Strict:** Cháº·n cĂ¡c má»‘i ná»‘i táº¡o ra vĂ²ng láº·p (Circular Loop) hoáº·c mĂ¢u thuáº«n logic (vá»«a SS vá»«a FF cháº·t cháº½ gĂ¢y bĂ³ cá»©ng lá»‹ch).
-    - **Lenient:** Cho phĂ©p táº¡o nhÆ°ng hiá»‡n cáº£nh bĂ¡o (Warning).
-## 2.14. Feature: What-if Simulation & Scenario Planning (MĂ´ phá»ng & Láº­p káº¿ hoáº¡ch Ká»‹ch báº£n)
+#### AC 1 - Supported Dependency Types (Các loại phụ thuộc)
+- Trong cấu hình dự án, cho phép kích hoạt bộ 4 loại quan hệ chuẩn PDM:
+    1. **FS (Finish-to-Start):** Mặc định. Task A xong thì Task B mới bắt đầu.
+    2. **SS (Start-to-Start):** Task B bắt đầu cùng lúc (hoặc sau một khoảng) với khi Task A bắt đầu. _(Dùng cho công việc song song)_.
+    3. **FF (Finish-to-Finish):** Task B chỉ được kết thúc khi Task A đã kết thúc. _(Dùng cho công việc nghiệm thu/kiểm thử)_.
+    4. **SF (Start-to-Finish):** Task A bắt đầu là điều kiện để Task B kết thúc. _(Ít dùng, dành cho quản lý ca kíp/kho bãi)_.
+#### AC 2 - Lead & Lag Time (Độ trễ & Độ sớm)
+- Cho phép định nghĩa tham số **Offset** trên mỗi mối nối:
+    - **Lag (+):** Thời gian chờ. _Ví dụ: FS + 2d (A xong, chờ 2 ngày cho khô bê tông rồi mới làm B)._
+    - **Lead (-):** Thời gian làm sớm (Gối đầu). _Ví dụ: FS - 1d (B bắt đầu trước khi A xong 1 ngày)._
+#### AC 3 - Validation Mode (Chế độ Kiểm tra)
+- Thiết lập chế độ kiểm tra logic khi tạo Dependency:
+    - **Strict:** Chặn các mối nối tạo ra vòng lặp (Circular Loop) hoặc mâu thuẫn logic (vừa SS vừa FF chặt chẽ gây bó cứng lịch).
+    - **Lenient:** Cho phép tạo nhưng hiện cảnh báo (Warning).
+## 2.14. Feature: What-if Simulation & Scenario Planning (Mô phỏng & Lập kế hoạch Kịch bản)
 ### User Story 3.14
-LĂ  má»™t Project Manager, TĂ´i muá»‘n táº¡o cĂ¡c ká»‹ch báº£n mĂ´ phá»ng (vĂ­ dá»¥: "Náº¿u team Backend nghá»‰ 3 ngĂ y", "Náº¿u thĂªm 2 nhĂ¢n sá»±") vĂ  xem trÆ°á»›c tĂ¡c Ä‘á»™ng cá»§a chĂºng mĂ  khĂ´ng lĂ m áº£nh hÆ°á»Ÿng Ä‘áº¿n dá»¯ liá»‡u dá»± Ă¡n thá»±c táº¿, Äá»ƒ tĂ´i cĂ³ thá»ƒ ra quyáº¿t Ä‘á»‹nh chĂ­nh xĂ¡c nháº¥t.
+Là một Project Manager, Tôi muốn tạo các kịch bản mô phỏng (ví dụ: "Nếu team Backend nghỉ 3 ngày", "Nếu thêm 2 nhân sự") và xem trước tác động của chúng mà không làm ảnh hưởng đến dữ liệu dự án thực tế, Để tôi có thể ra quyết định chính xác nhất.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Simulation Sandbox (Há»™p cĂ¡t mĂ´ phá»ng)
-- **Action:** Táº¡i mĂ n hĂ¬nh dá»± Ă¡n, user chá»n "Enter Simulation Mode".
+#### AC 1 - Simulation Sandbox (Hộp cát mô phỏng)
+- **Action:** Tại màn hình dự án, user chọn "Enter Simulation Mode".
 - **System Behavior:**
-    - Há»‡ thá»‘ng táº¡o má»™t báº£n sao táº¡m thá»i (Temporary Snapshot) cá»§a dá»± Ă¡n hiá»‡n táº¡i trong bá»™ nhá»› (hoáº·c báº£ng táº¡m).
-    - Giao diá»‡n chuyá»ƒn sang tĂ´ng mĂ u khĂ¡c (vĂ­ dá»¥: Viá»n vĂ ng/Watermark "SIMULATION") Ä‘á»ƒ phĂ¢n biá»‡t vá»›i dá»¯ liá»‡u tháº­t.
-    - Táº¡i Ä‘Ă¢y, PM Ä‘Æ°á»£c phĂ©p thoáº£i mĂ¡i thay Ä‘á»•i Date, Dependency, Resource.
-#### AC 2 - Scenario Management (Quáº£n lĂ½ Ká»‹ch báº£n)
-- Cho phĂ©p lÆ°u cĂ¡c phiĂªn báº£n mĂ´ phá»ng thĂ nh cĂ¡c Ká»‹ch báº£n cĂ³ tĂªn (Named Scenarios).
-    - _VĂ­ dá»¥:_ Scenario A: "Optimistic Plan" (Káº¿ hoáº¡ch láº¡c quan).
-    - _VĂ­ dá»¥:_ Scenario B: "Worst Case" (TrÆ°á»ng há»£p xáº¥u nháº¥t).
-- CĂ¡c ká»‹ch báº£n nĂ y chá»‰ hiá»ƒn thá»‹ vá»›i PM vĂ  khĂ´ng áº£nh hÆ°á»Ÿng Ä‘áº¿n Task list cá»§a thĂ nh viĂªn (Integration with Module 4).
-#### AC 3 - Impact Preview (Xem trÆ°á»›c tĂ¡c Ä‘á»™ng - Integration with Module 5)
-- TrÆ°á»›c khi quyáº¿t Ä‘á»‹nh Ă¡p dá»¥ng, há»‡ thá»‘ng hiá»ƒn thá»‹ báº£ng so sĂ¡nh **Diff** giá»¯a _Simulation_ vĂ  _Live Project_:
-    - **Delta Date:** Dá»± Ă¡n sáº½ xong sá»›m/trá»… bao nhiĂªu ngĂ y?
-    - **Delta Cost:** Chi phĂ­ thay Ä‘á»•i tháº¿ nĂ o?
-    - **Risk:** CĂ³ bao nhiĂªu Task má»›i bá»‹ rÆ¡i vĂ o Ä‘Æ°á»ng gÄƒng (Critical Path)?
-#### AC 4 - Promote to Execution (Ăp dá»¥ng vĂ o thá»±c táº¿)
-- **Action:** User chá»n "Apply Scenario to Live Project".
+    - Hệ thống tạo một bản sao tạm thời (Temporary Snapshot) của dự án hiện tại trong bộ nhớ (hoặc bảng tạm).
+    - Giao diện chuyển sang tông màu khác (ví dụ: Viền vàng/Watermark "SIMULATION") để phân biệt với dữ liệu thật.
+    - Tại đây, PM được phép thoải mái thay đổi Date, Dependency, Resource.
+#### AC 2 - Scenario Management (Quản lý Kịch bản)
+- Cho phép lưu các phiên bản mô phỏng thành các Kịch bản có tên (Named Scenarios).
+    - _Ví dụ:_ Scenario A: "Optimistic Plan" (Kế hoạch lạc quan).
+    - _Ví dụ:_ Scenario B: "Worst Case" (Trường hợp xấu nhất).
+- Các kịch bản này chỉ hiển thị với PM và không ảnh hưởng đến Task list của thành viên (Integration with Module 4).
+#### AC 3 - Impact Preview (Xem trước tác động - Integration with Module 5)
+- Trước khi quyết định áp dụng, hệ thống hiển thị bảng so sánh **Diff** giữa _Simulation_ và _Live Project_:
+    - **Delta Date:** Dự án sẽ xong sớm/trễ bao nhiêu ngày?
+    - **Delta Cost:** Chi phí thay đổi thế nào?
+    - **Risk:** Có bao nhiêu Task mới bị rơi vào đường găng (Critical Path)?
+#### AC 4 - Promote to Execution (Áp dụng vào thực tế)
+- **Action:** User chọn "Apply Scenario to Live Project".
 - **Validation:**
-    - Náº¿u dá»± Ă¡n Ä‘ang á»Ÿ cháº¿ Ä‘á»™ Strict Governance: Há»‡ thá»‘ng tá»± Ä‘á»™ng chuyá»ƒn Ká»‹ch báº£n nĂ y thĂ nh má»™t **Change Request (PCR)** (liĂªn káº¿t Feature 2.11) Ä‘á»ƒ chá» duyá»‡t.
-    - Náº¿u dá»± Ă¡n bĂ¬nh thÆ°á»ng: Cáº­p nháº­t dá»¯ liá»‡u tháº­t vĂ  táº¡o **Baseline** má»›i (náº¿u cáº¥u hĂ¬nh yĂªu cáº§u).
-## 2.17. Feature: Planning Freeze & Rolling Wave Lock (KhĂ³a Káº¿ hoáº¡ch & VĂ¹ng Ä‘Ă³ng bÄƒng)
+    - Nếu dự án đang ở chế độ Strict Governance: Hệ thống tự động chuyển Kịch bản này thành một **Change Request (PCR)** (liên kết Feature 2.11) để chờ duyệt.
+    - Nếu dự án bình thường: Cập nhật dữ liệu thật và tạo **Baseline** mới (nếu cấu hình yêu cầu).
+## 2.17. Feature: Planning Freeze & Rolling Wave Lock (Khóa Kế hoạch & Vùng đóng băng)
 ### User Story 3.17
 
-LĂ  má»™t Team Lead, TĂ´i muá»‘n thiáº¿t láº­p má»™t "VĂ¹ng Ä‘Ă³ng bÄƒng" (Freeze Window) cho khoáº£ng thá»i gian sáº¯p tá»›i (vĂ­ dá»¥: 1 tuáº§n tá»›i), Äá»ƒ Ä‘áº£m báº£o cĂ¡c cĂ´ng viá»‡c sáº¯p triá»ƒn khai khĂ´ng bá»‹ thay Ä‘á»•i lá»‹ch trĂ¬nh tĂ¹y tiá»‡n, giĂºp team yĂªn tĂ¢m thá»±c thi.
+Là một Team Lead, Tôi muốn thiết lập một "Vùng đóng băng" (Freeze Window) cho khoảng thời gian sắp tới (ví dụ: 1 tuần tới), Để đảm bảo các công việc sắp triển khai không bị thay đổi lịch trình tùy tiện, giúp team yên tâm thực thi.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Freeze Window Configuration (Cáº¥u hĂ¬nh VĂ¹ng Ä‘Ă³ng bÄƒng)
-- **Input:** Trong Project Settings, cho phĂ©p thiáº¿t láº­p tham sá»‘ `Freeze Duration` (vĂ­ dá»¥: 5 Working Days).
-- **Logic:** Há»‡ thá»‘ng tá»± Ä‘á»™ng tĂ­nh toĂ¡n vĂ¹ng Ä‘Ă³ng bÄƒng lĂ  khoáº£ng thá»i gian tá»« `Current Date` Ä‘áº¿n `Current Date + Freeze Duration`.
-- **Visual:** TrĂªn Gantt Chart (Module 5), vĂ¹ng thá»i gian nĂ y Ä‘Æ°á»£c tĂ´ ná»n xĂ¡m hoáº·c cĂ³ gáº¡ch chĂ©o (Hatched pattern) Ä‘á»ƒ bĂ¡o hiá»‡u trá»±c quan.
-#### AC 2 - Enforcement Mechanism (CÆ¡ cháº¿ CÆ°á»¡ng cháº¿)
-- **Constraint:** Má»i hĂ nh Ä‘á»™ng cá»‘ gáº¯ng thay Ä‘á»•i `Start Date`, `End Date` hoáº·c `Dependency` cá»§a cĂ¡c Task náº±m trong vĂ¹ng Ä‘Ă³ng bÄƒng sáº½ bá»‹ cháº·n (Block).
-- **Message:** Hiá»ƒn thá»‹ thĂ´ng bĂ¡o lá»—i: _"Task nĂ y náº±m trong vĂ¹ng Ä‘Ă³ng bÄƒng (Freeze Zone). Lá»‹ch trĂ¬nh Ä‘Ă£ Ä‘Æ°á»£c cam káº¿t vĂ  khĂ´ng thá»ƒ thay Ä‘á»•i."_
-#### AC 3 - Exception Handling via PCR (Xá»­ lĂ½ Ngoáº¡i lá»‡)
-- **Override:** Náº¿u thá»±c sá»± cáº§n thay Ä‘á»•i (vĂ­ dá»¥: Kháº©n cáº¥p), PM pháº£i thá»±c hiá»‡n quy trĂ¬nh:
-    1. Táº¡o **Change Request (PCR)** (Feature 2.11) vá»›i loáº¡i lĂ  "Emergency Schedule Change".
-    2. Sau khi PCR Ä‘Æ°á»£c duyá»‡t, há»‡ thá»‘ng má»Ÿ khĂ³a táº¡m thá»i (Temporary Unlock) cho Task Ä‘Ă³ Ä‘á»ƒ sá»­a Ä‘á»•i.
-## 2.19. Feature: Project Ownership Transfer (Chuyá»ƒn giao Quyá»n sá»Ÿ há»¯u Dá»± Ă¡n)
+#### AC 1 - Freeze Window Configuration (Cấu hình Vùng đóng băng)
+- **Input:** Trong Project Settings, cho phép thiết lập tham số `Freeze Duration` (ví dụ: 5 Working Days).
+- **Logic:** Hệ thống tự động tính toán vùng đóng băng là khoảng thời gian từ `Current Date` đến `Current Date + Freeze Duration`.
+- **Visual:** Trên Gantt Chart (Module 5), vùng thời gian này được tô nền xám hoặc có gạch chéo (Hatched pattern) để báo hiệu trực quan.
+#### AC 2 - Enforcement Mechanism (Cơ chế Cưỡng chế)
+- **Constraint:** Mọi hành động cố gắng thay đổi `Start Date`, `End Date` hoặc `Dependency` của các Task nằm trong vùng đóng băng sẽ bị chặn (Block).
+- **Message:** Hiển thị thông báo lỗi: _"Task này nằm trong vùng đóng băng (Freeze Zone). Lịch trình đã được cam kết và không thể thay đổi."_
+#### AC 3 - Exception Handling via PCR (Xử lý Ngoại lệ)
+- **Override:** Nếu thực sự cần thay đổi (ví dụ: Khẩn cấp), PM phải thực hiện quy trình:
+    1. Tạo **Change Request (PCR)** (Feature 2.11) với loại là "Emergency Schedule Change".
+    2. Sau khi PCR được duyệt, hệ thống mở khóa tạm thời (Temporary Unlock) cho Task đó để sửa đổi.
+## 2.19. Feature: Project Ownership Transfer (Chuyển giao Quyền sở hữu Dự án)
 ### User Story 3.19
-LĂ  má»™t Workspace Admin, TĂ´i muá»‘n chuyá»ƒn quyá»n sá»Ÿ há»¯u dá»± Ă¡n (Project Owner) tá»« nhĂ¢n viĂªn nĂ y sang nhĂ¢n viĂªn khĂ¡c, Äá»ƒ Ä‘áº£m báº£o hoáº¡t Ä‘á»™ng quáº£n trá»‹ dá»± Ă¡n Ä‘Æ°á»£c liĂªn tá»¥c khi ngÆ°á»i quáº£n lĂ½ cÅ© nghá»‰ viá»‡c hoáº·c luĂ¢n chuyá»ƒn cĂ´ng tĂ¡c.
+Là một Workspace Admin, Tôi muốn chuyển quyền sở hữu dự án (Project Owner) từ nhân viên này sang nhân viên khác, Để đảm bảo hoạt động quản trị dự án được liên tục khi người quản lý cũ nghỉ việc hoặc luân chuyển công tác.
 ### Acceptance Criteria (#AC)
-#### AC 1 - Admin-Only Privilege (Äáº·c quyá»n Admin)
-- **Constraint:** TĂ­nh nÄƒng "Transfer Ownership" chá»‰ hiá»ƒn thá»‹ vĂ  thá»±c thi Ä‘Æ°á»£c bá»Ÿi **Workspace Owner** hoáº·c **Workspace Admin**.
-- **Restriction:** Project Manager hiá»‡n táº¡i (Current Owner) **KHĂ”NG** Ä‘Æ°á»£c tá»± Ă½ chuyá»ƒn quyá»n cho ngÆ°á»i khĂ¡c (Ä‘á»ƒ trĂ¡nh viá»‡c chá»‘i bá» trĂ¡ch nhiá»‡m khi dá»± Ă¡n gáº·p sá»± cá»‘).
-#### AC 2 - Audit Trail Requirement (YĂªu cáº§u Ghi váº¿t)
-- **Input:** Khi thá»±c hiá»‡n chuyá»ƒn Ä‘á»•i, há»‡ thá»‘ng báº¯t buá»™c Admin nháº­p **"Reason for Transfer"** (LĂ½ do chuyá»ƒn giao).
-- **Logging:** Há»‡ thá»‘ng ghi láº¡i báº£n ghi lá»‹ch sá»­ khĂ´ng thá»ƒ sá»­a xĂ³a:
-    - `old_owner`: [TĂªn ngÆ°á»i cÅ©]
-    - `new_owner`: [TĂªn ngÆ°á»i má»›i]
-    - `reason`: [LĂ½ do nháº­p vĂ o]
-    - `timestamp`: [Thá»i gian thá»±c hiá»‡n]
-    - `executor`: [Admin thá»±c hiá»‡n]
-#### AC 3 - Role Swapping Logic (Logic HoĂ¡n Ä‘á»•i Vai trĂ²)
-- **Action:** Sau khi xĂ¡c nháº­n chuyá»ƒn:
-    1. **New Owner:** ÄÆ°á»£c nĂ¢ng quyá»n lĂªn **Project Manager**.
-    2. **Old Owner:** Há»‡ thá»‘ng hiá»ƒn thá»‹ há»™p thoáº¡i há»i Admin: _"Giá»¯ ngÆ°á»i cÅ© lĂ m Member hay XĂ³a khá»i dá»± Ă¡n?"_.
-- **Notification:** Gá»­i email thĂ´ng bĂ¡o cho cáº£ NgÆ°á»i cÅ© vĂ  NgÆ°á»i má»›i vá» sá»± thay Ä‘á»•i nĂ y.
-## 2.20. Feature: Project Priority & Strategic Alignment (Äá»™ Æ°u tiĂªn & Äá»‹nh hÆ°á»›ng Chiáº¿n lÆ°á»£c)
+#### AC 1 - Admin-Only Privilege (Đặc quyền Admin)
+- **Constraint:** Tính năng "Transfer Ownership" chỉ hiển thị và thực thi được bởi **Workspace Owner** hoặc **Workspace Admin**.
+- **Restriction:** Project Manager hiện tại (Current Owner) **KHÔNG** được tự ý chuyển quyền cho người khác (để tránh việc chối bỏ trách nhiệm khi dự án gặp sự cố).
+#### AC 2 - Audit Trail Requirement (Yêu cầu Ghi vết)
+- **Input:** Khi thực hiện chuyển đổi, hệ thống bắt buộc Admin nhập **"Reason for Transfer"** (Lý do chuyển giao).
+- **Logging:** Hệ thống ghi lại bản ghi lịch sử không thể sửa xóa:
+    - `old_owner`: [Tên người cũ]
+    - `new_owner`: [Tên người mới]
+    - `reason`: [Lý do nhập vào]
+    - `timestamp`: [Thời gian thực hiện]
+    - `executor`: [Admin thực hiện]
+#### AC 3 - Role Swapping Logic (Logic Hoán đổi Vai trò)
+- **Action:** Sau khi xác nhận chuyển:
+    1. **New Owner:** Được nâng quyền lên **Project Manager**.
+    2. **Old Owner:** Hệ thống hiển thị hộp thoại hỏi Admin: _"Giữ người cũ làm Member hay Xóa khỏi dự án?"_.
+- **Notification:** Gửi email thông báo cho cả Người cũ và Người mới về sự thay đổi này.
+## 2.20. Feature: Project Priority & Strategic Alignment (Độ ưu tiên & Định hướng Chiến lược)
 ### User Story 3.20
-LĂ  má»™t GiĂ¡m Ä‘á»‘c Danh má»¥c (Portfolio Manager), TĂ´i muá»‘n gĂ¡n má»©c Ä‘á»™ Æ°u tiĂªn vĂ  Ä‘Ă¡nh trá»ng sá»‘ chiáº¿n lÆ°á»£c cho tá»«ng dá»± Ă¡n, Äá»ƒ há»‡ thá»‘ng cĂ³ cÆ¡ sá»Ÿ tá»± Ä‘á»™ng há»— trá»£ ra quyáº¿t Ä‘á»‹nh phĂ¢n bá»• nguá»“n lá»±c khi xáº£y ra xung Ä‘á»™t (Resource Contention).
+Là một Giám đốc Danh mục (Portfolio Manager), Tôi muốn gán mức độ ưu tiên và đánh trọng số chiến lược cho từng dự án, Để hệ thống có cơ sở tự động hỗ trợ ra quyết định phân bổ nguồn lực khi xảy ra xung đột (Resource Contention).
 ### Acceptance Criteria (#AC)
 #### AC 1 - Priority Metadata
-- **Input:** Trong pháº§n cĂ i Ä‘áº·t chung (General Settings), bá»• sung trÆ°á»ng `Priority` (Dropdown):
-    - **Critical (Nguy cáº¥p):** Dá»± Ă¡n sá»‘ng cĂ²n, Ä‘Æ°á»£c Æ°u tiĂªn nguá»“n lá»±c tuyá»‡t Ä‘á»‘i.
-    - **High (Cao):** Dá»± Ă¡n trá»ng Ä‘iá»ƒm.
-    - **Medium (Trung bĂ¬nh):** Dá»± Ă¡n tiĂªu chuáº©n (Default).
-    - **Low (Tháº¥p):** Dá»± Ă¡n ná»™i bá»™ hoáº·c lĂ m khi ráº£nh (Fillers).
-- **Visualization:** Hiá»ƒn thá»‹ Badge mĂ u tÆ°Æ¡ng á»©ng (Äá»/Cam/Xanh/XĂ¡m) cáº¡nh tĂªn dá»± Ă¡n trong má»i danh sĂ¡ch.
-#### AC 2 - Strategic Alignment (Äá»‹nh hÆ°á»›ng chiáº¿n lÆ°á»£c)
-- **Input:** TrÆ°á»ng `Strategic Value` (Thang Ä‘iá»ƒm 1-10 hoáº·c Tags).
-    - _VĂ­ dá»¥:_ "Digital Transformation", "Revenue Growth", "Compliance".
-- **Usage:** DĂ¹ng Ä‘á»ƒ lá»c vĂ  gom nhĂ³m trong bĂ¡o cĂ¡o Portfolio (Module 11).
+- **Input:** Trong phần cài đặt chung (General Settings), bổ sung trường `Priority` (Dropdown):
+    - **Critical (Nguy cấp):** Dự án sống còn, được ưu tiên nguồn lực tuyệt đối.
+    - **High (Cao):** Dự án trọng điểm.
+    - **Medium (Trung bình):** Dự án tiêu chuẩn (Default).
+    - **Low (Thấp):** Dự án nội bộ hoặc làm khi rảnh (Fillers).
+- **Visualization:** Hiển thị Badge màu tương ứng (Đỏ/Cam/Xanh/Xám) cạnh tên dự án trong mọi danh sách.
+#### AC 2 - Strategic Alignment (Định hướng chiến lược)
+- **Input:** Trường `Strategic Value` (Thang điểm 1-10 hoặc Tags).
+    - _Ví dụ:_ "Digital Transformation", "Revenue Growth", "Compliance".
+- **Usage:** Dùng để lọc và gom nhóm trong báo cáo Portfolio (Module 11).
 #### AC 3 - Impact on Resource Leveling (Integration with Module 5)
-- **Logic:** Thuá»™c tĂ­nh nĂ y lĂ  Ä‘áº§u vĂ o quan trá»ng cho thuáº­t toĂ¡n **Auto-Leveling** cá»§a PhĂ¢n há»‡ 5.
-    - _Rule:_ Khi User A bá»‹ trĂ¹ng lá»‹ch giá»¯a Dá»± Ă¡n X (Critical) vĂ  Dá»± Ă¡n Y (Low), há»‡ thá»‘ng sáº½ tá»± Ä‘á»™ng dá»i lá»‹ch cá»§a Dá»± Ă¡n Y vĂ  giá»¯ nguyĂªn Dá»± Ă¡n X.
-## 2.21. Feature: Progressive Governance Configuration (Cáº¥u hĂ¬nh Quáº£n trá»‹ LÅ©y tiáº¿n)
+- **Logic:** Thuộc tính này là đầu vào quan trọng cho thuật toán **Auto-Leveling** của Phân hệ 5.
+    - _Rule:_ Khi User A bị trùng lịch giữa Dự án X (Critical) và Dự án Y (Low), hệ thống sẽ tự động dời lịch của Dự án Y và giữ nguyên Dự án X.
+## 2.21. Feature: Progressive Governance Configuration (Cấu hình Quản trị Lũy tiến)
 ### User Story 3.21
-LĂ  má»™t Project Manager, TĂ´i muá»‘n lá»±a chá»n má»©c Ä‘á»™ nghiĂªm ngáº·t cá»§a quy trĂ¬nh quáº£n trá»‹ (Simple hoáº·c Strict) Ä‘á»ƒ phĂ¹ há»£p vá»›i quy mĂ´ vĂ  vÄƒn hĂ³a lĂ m viá»‡c cá»§a team, trĂ¡nh viá»‡c quy trĂ¬nh phá»©c táº¡p lĂ m cháº­m tiáº¿n Ä‘á»™ cá»§a cĂ¡c dá»± Ă¡n nhá».
+Là một Project Manager, Tôi muốn lựa chọn mức độ nghiêm ngặt của quy trình quản trị (Simple hoặc Strict) để phù hợp với quy mô và văn hóa làm việc của team, tránh việc quy trình phức tạp làm chậm tiến độ của các dự án nhỏ.
 ### Acceptance Criteria (#AC)
-#### AC 1 - Governance Mode Selection (Lá»±a chá»n Cháº¿ Ä‘á»™)
-- **Input:** Trong Project Settings, cung cáº¥p tĂ¹y chá»n `Governance Mode`:
-    1. **Simple Mode (Máº·c Ä‘á»‹nh):** DĂ nh cho team nhá», Agile, Fast-paced.
-    2. **Strict Mode (Enterprise):** DĂ nh cho dá»± Ă¡n lá»›n, cĂ³ há»£p Ä‘á»“ng fix-price, yĂªu cáº§u tuĂ¢n thá»§ cao.
-#### AC 2 - Simple Mode Behavior (CÆ¡ cháº¿ ÄÆ¡n giáº£n)
-- Khi chá»n Simple Mode, há»‡ thá»‘ng tá»± Ä‘á»™ng **áº©n/táº¯t** cĂ¡c tĂ­nh nÄƒng rÆ°á»m rĂ :
-    - **Baseline:** Cho phĂ©p sá»­a ngĂ y trá»±c tiáº¿p trĂªn Gantt mĂ  _khĂ´ng cáº§n_ Change Context.
-    - **PCR:** Táº¯t quy trĂ¬nh duyá»‡t thay Ä‘á»•i. PM sá»­a lĂ  xong.
-    - **Freeze Window:** Táº¯t cáº£nh bĂ¡o vĂ¹ng Ä‘Ă³ng bÄƒng.
-    - **Approval Gate:** Táº¯t cá»•ng phĂª duyá»‡t khi chuyá»ƒn tráº¡ng thĂ¡i dá»± Ă¡n.
-- **UI:** Giao diá»‡n trá»Ÿ nĂªn gá»n nháº¹, áº©n cĂ¡c nĂºt "Request Approval", "Baseline Version".
-#### AC 3 - Strict Mode Behavior (CÆ¡ cháº¿ NghiĂªm ngáº·t)
-- Khi chá»n Strict Mode, há»‡ thá»‘ng **kĂ­ch hoáº¡t toĂ n bá»™** hĂ ng rĂ o báº£o vá»‡:
-    - Báº¯t buá»™c dĂ¹ng PCR Ä‘á»ƒ Ä‘á»•i Scope/Time.
-    - Báº¯t buá»™c nháº­p lĂ½ do khi sá»­a Baseline.
-    - Cháº·n sá»­a Task trong Freeze Window.
-    - Báº¯t buá»™c kiá»ƒm tra Ä‘á»§ Ä‘iá»u kiá»‡n (DoD) má»›i cho Close dá»± Ă¡n.
+#### AC 1 - Governance Mode Selection (Lựa chọn Chế độ)
+- **Input:** Trong Project Settings, cung cấp tùy chọn `Governance Mode`:
+    1. **Simple Mode (Mặc định):** Dành cho team nhỏ, Agile, Fast-paced.
+    2. **Strict Mode (Enterprise):** Dành cho dự án lớn, có hợp đồng fix-price, yêu cầu tuân thủ cao.
+#### AC 2 - Simple Mode Behavior (Cơ chế Đơn giản)
+- Khi chọn Simple Mode, hệ thống tự động **ẩn/tắt** các tính năng rườm rà:
+    - **Baseline:** Cho phép sửa ngày trực tiếp trên Gantt mà _không cần_ Change Context.
+    - **PCR:** Tắt quy trình duyệt thay đổi. PM sửa là xong.
+    - **Freeze Window:** Tắt cảnh báo vùng đóng băng.
+    - **Approval Gate:** Tắt cổng phê duyệt khi chuyển trạng thái dự án.
+- **UI:** Giao diện trở nên gọn nhẹ, ẩn các nút "Request Approval", "Baseline Version".
+#### AC 3 - Strict Mode Behavior (Cơ chế Nghiêm ngặt)
+- Khi chọn Strict Mode, hệ thống **kích hoạt toàn bộ** hàng rào bảo vệ:
+    - Bắt buộc dùng PCR để đổi Scope/Time.
+    - Bắt buộc nhập lý do khi sửa Baseline.
+    - Chặn sửa Task trong Freeze Window.
+    - Bắt buộc kiểm tra đủ điều kiện (DoD) mới cho Close dự án.
 # 3. Business Rules
 ## 3.1. Project Key Generation:
- - Má»—i dá»± Ă¡n cĂ³ má»™t `Prefix Key` (vĂ­ dá»¥: "Marketing Campaign" -> Key: `MAR`).
- - CĂ¡c Task trong dá»± Ă¡n sáº½ cĂ³ ID dá»±a trĂªn Key nĂ y: `MAR-1`, `MAR-2`.
- - Quy táº¯c: Tá»± Ä‘á»™ng láº¥y 3-4 chá»¯ cĂ¡i Ä‘áº§u, in hoa. Cho phĂ©p User sá»­a láº¡i lĂºc táº¡o dá»± Ă¡n, nhÆ°ng pháº£i duy nháº¥t trong Workspace.
+ - Mỗi dự án có một `Prefix Key` (ví dụ: "Marketing Campaign" -> Key: `MAR`).
+ - Các Task trong dự án sẽ có ID dựa trên Key này: `MAR-1`, `MAR-2`.
+ - Quy tắc: Tự động lấy 3-4 chữ cái đầu, in hoa. Cho phép User sửa lại lúc tạo dự án, nhưng phải duy nhất trong Workspace.
 ## 3.2. Date Constraint Logic:
- - `start_date` vĂ  `end_date` lĂ  Optional.
- - Tuy nhiĂªn, náº¿u Task con cĂ³ thá»i háº¡n náº±m ngoĂ i khoáº£ng thá»i gian cá»§a Dá»± Ă¡n -> Há»‡ thá»‘ng hiá»ƒn thá»‹ Cáº£nh bĂ¡o (Warning) nhÆ°ng khĂ´ng cháº·n (Soft Constraint).
+ - `start_date` và `end_date` là Optional.
+ - Tuy nhiên, nếu Task con có thời hạn nằm ngoài khoảng thời gian của Dự án -> Hệ thống hiển thị Cảnh báo (Warning) nhưng không chặn (Soft Constraint).
 ## 3.3. Kanban View Logic:
- - MĂ n hĂ¬nh "All Projects" nhĂ³m dá»± Ă¡n theo `Status`.
- - Sáº¯p xáº¿p máº·c Ä‘á»‹nh: `Priority` (High -> Low) sau Ä‘Ă³ Ä‘áº¿n `Last Updated`.
-## 3.4. Quy táº¯c Äá»‹nh danh (Project Key Immutability)
-- **Project Key** (vĂ­ dá»¥: `PROJ-1`) lĂ  Ä‘á»‹nh danh duy nháº¥t dĂ¹ng trong URL vĂ  commit message (Git Integration).
-- Sau khi dá»± Ă¡n Ä‘Ă£ táº¡o Task Ä‘áº§u tiĂªn, **KHĂ”NG** cho phĂ©p Ä‘á»•i Project Key ná»¯a Ä‘á»ƒ Ä‘áº£m báº£o tĂ­nh toĂ n váº¹n cá»§a cĂ¡c Ä‘Æ°á»ng dáº«n (Deep Links) vĂ  lá»‹ch sá»­ hoáº¡t Ä‘á»™ng.
-## 3.5. Quy táº¯c LÆ°u trá»¯ (Archiving Strategy - Integration with Module 8)
-- Khi Dá»± Ă¡n chuyá»ƒn sang tráº¡ng thĂ¡i **DONE** hoáº·c **CANCELLED**:
-    - Sau 30 ngĂ y (cáº¥u hĂ¬nh máº·c Ä‘á»‹nh): Há»‡ thá»‘ng gá»£i Ă½ **Archive** (LÆ°u trá»¯) Ä‘á»ƒ áº©n khá»i danh sĂ¡ch chá»n nhanh, giĂºp giao diá»‡n gá»n gĂ ng.
-    - Dá»± Ă¡n Archived chuyá»ƒn sang cháº¿ Ä‘á»™ **Read-only** hoĂ n toĂ n (bao gá»“m cáº£ Task vĂ  Comment). Muá»‘n sá»­a pháº£i **Unarchive**.
-## 3.6. Quy táº¯c TĂ­nh toĂ¡n Sá»©c khá»e (Health Computation Logic)
-- **Real-time vs. Periodic:** Chá»‰ sá»‘ sá»©c khá»e Ä‘Æ°á»£c tĂ­nh toĂ¡n láº¡i sau má»—i 4 giá» hoáº·c khi cĂ³ sá»± kiá»‡n lá»›n (HoĂ n thĂ nh Phase, Thay Ä‘á»•i ngĂ y thĂ¡ng). KhĂ´ng tĂ­nh toĂ¡n real-time liĂªn tá»¥c Ä‘á»ƒ trĂ¡nh lock database.
-- **Inheritance:** Náº¿u Dá»± Ă¡n con (Sub-project) bá»‹ **Red**, Dá»± Ă¡n cha (Program) cÅ©ng sáº½ bá»‹ áº£nh hÆ°á»Ÿng (hiá»ƒn thá»‹ cáº£nh bĂ¡o).
-## 3.7. Quy táº¯c Thay Ä‘á»•i Pháº¡m vi (Scope Change Governance)
-- Náº¿u Dá»± Ă¡n Ä‘ang á»Ÿ tráº¡ng thĂ¡i **Strict Mode** (Cháº¿ Ä‘á»™ nghiĂªm ngáº·t):
-    - KhĂ´ng cho phĂ©p thay Ä‘á»•i `End Date` cá»§a Dá»± Ă¡n hoáº·c thĂªm `Task List` má»›i náº¿u khĂ´ng cĂ³ **PCR** (Change Request) Ä‘Æ°á»£c duyá»‡t.
-    - Má»i ná»— lá»±c thay Ä‘á»•i trá»±c tiáº¿p sáº½ bá»‹ cháº·n vĂ  hiá»ƒn thá»‹ thĂ´ng bĂ¡o: _"Vui lĂ²ng táº¡o Change Request Ä‘á»ƒ thá»±c hiá»‡n thay Ä‘á»•i nĂ y."_
-## 3.8. Quy táº¯c Báº¥t biáº¿n Baseline (Baseline Immutability)
-- CĂ¡c phiĂªn báº£n Baseline cÅ© (Historical Baselines) lĂ  tĂ i sáº£n kiá»ƒm toĂ¡n (Audit Assets).
-- **Tuyá»‡t Ä‘á»‘i khĂ´ng** cho phĂ©p sá»­a Ä‘á»•i hoáº·c xĂ³a bá» cĂ¡c Baseline cÅ©. Chá»‰ cho phĂ©p táº¡o phiĂªn báº£n má»›i Ä‘Ă¨ lĂªn lĂ m "Current Baseline" Ä‘á»ƒ so sĂ¡nh.
-## 3.9. Quy táº¯c Äá»“ng bá»™ Tráº¡ng thĂ¡i (Baseline-Status Sync)
-- Khi Dá»± Ă¡n quay láº¡i tráº¡ng thĂ¡i **Not-Started** (Reset dá»± Ă¡n), há»‡ thá»‘ng cĂ³ quyá»n (tĂ¹y chá»n) lÆ°u trá»¯ Baseline hiá»‡n táº¡i vĂ o Archive vĂ  reset vá» tráº¡ng thĂ¡i chÆ°a cĂ³ Baseline Ä‘á»ƒ láº­p káº¿ hoáº¡ch láº¡i tá»« Ä‘áº§u.
-## 3.10. Quy táº¯c CĂ´ láº­p Dá»¯ liá»‡u MĂ´ phá»ng (Simulation Isolation Rule)
-- **Notifications:** Tuyá»‡t Ä‘á»‘i **KHĂ”NG** gá»­i email hay thĂ´ng bĂ¡o (Notification) cho thĂ nh viĂªn khi PM Ä‘ang thao tĂ¡c trong cháº¿ Ä‘á»™ Simulation.
-- **Audit Logs:** CĂ¡c thao tĂ¡c trong Simulation khĂ´ng ghi vĂ o Audit Log chĂ­nh cá»§a dá»± Ă¡n, chá»‰ ghi log vĂ o lá»‹ch sá»­ phiĂªn lĂ m viá»‡c cá»§a PM.
-## 3.11. Quy táº¯c Tá»± há»§y (Ephemeral Data Rule)
-- CĂ¡c Ká»‹ch báº£n mĂ´ phá»ng (Scenarios) chÆ°a Ä‘Æ°á»£c lÆ°u (Unsaved) sáº½ tá»± Ä‘á»™ng bá»‹ há»§y khi phiĂªn lĂ m viá»‡c káº¿t thĂºc hoáº·c sau 24 giá» Ä‘á»ƒ giáº£i phĂ³ng tĂ i nguyĂªn há»‡ thá»‘ng.
-## 3.12. Quy táº¯c TĂ¡ch biá»‡t Hoáº¡ch Ä‘á»‹nh & Thá»±c thi (Planning-Execution Decoupling Rule)
-- **Planning Items (Má»¥c hoáº¡ch Ä‘á»‹nh):** LĂ  xÆ°Æ¡ng sá»‘ng cá»§a dá»± Ă¡n. Thay Ä‘á»•i ngĂ y thĂ¡ng cá»§a cĂ¡c má»¥c nĂ y sáº½ kĂ­ch hoáº¡t tĂ­nh toĂ¡n láº¡i toĂ n bá»™ lá»‹ch trĂ¬nh (Cascade Update) vĂ  áº£nh hÆ°á»Ÿng Ä‘áº¿n Baseline.
-- **Tracking Items (Má»¥c theo dĂµi):** LĂ  "thá»‹t" Ä‘áº¯p vĂ o xÆ°Æ¡ng sá»‘ng. ChĂºng cĂ³ thá»ƒ trá»… háº¡n, kĂ©o dĂ i thá»i gian thá»±c táº¿ (Actual Duration) nhÆ°ng khĂ´ng Ä‘Æ°á»£c phĂ©p lĂ m thay Ä‘á»•i ngĂ y káº¿ hoáº¡ch (Planned Date) cá»§a cĂ¡c Planning Items cha, trá»« khi cĂ³ can thiá»‡p thá»§ cĂ´ng.
-## 3.13. Quy táº¯c TĂ­nh toĂ¡n PDM (PDM Calculation Rules)
-Quy Ä‘á»‹nh cĂ¡ch Module 5 xá»­ lĂ½ cĂ¡c loáº¡i Dependency Ä‘Æ°á»£c Ä‘á»‹nh nghÄ©a trong Module 3:
-- **NguyĂªn táº¯c "Thá»a mĂ£n táº¥t cáº£":** Náº¿u má»™t Task cĂ³ nhiá»u Predecessors, ngĂ y báº¯t Ä‘áº§u/káº¿t thĂºc cá»§a nĂ³ pháº£i thá»a mĂ£n **táº¥t cáº£** cĂ¡c rĂ ng buá»™c.
+ - Màn hình "All Projects" nhóm dự án theo `Status`.
+ - Sắp xếp mặc định: `Priority` (High -> Low) sau đó đến `Last Updated`.
+## 3.4. Quy tắc Định danh (Project Key Immutability)
+- **Project Key** (ví dụ: `PROJ-1`) là định danh duy nhất dùng trong URL và commit message (Git Integration).
+- Sau khi dự án đã tạo Task đầu tiên, **KHÔNG** cho phép đổi Project Key nữa để đảm bảo tính toàn vẹn của các đường dẫn (Deep Links) và lịch sử hoạt động.
+## 3.5. Quy tắc Lưu trữ (Archiving Strategy - Integration with Module 8)
+- Khi Dự án chuyển sang trạng thái **DONE** hoặc **CANCELLED**:
+    - Sau 30 ngày (cấu hình mặc định): Hệ thống gợi ý **Archive** (Lưu trữ) để ẩn khỏi danh sách chọn nhanh, giúp giao diện gọn gàng.
+    - Dự án Archived chuyển sang chế độ **Read-only** hoàn toàn (bao gồm cả Task và Comment). Muốn sửa phải **Unarchive**.
+## 3.6. Quy tắc Tính toán Sức khỏe (Health Computation Logic)
+- **Real-time vs. Periodic:** Chỉ số sức khỏe được tính toán lại sau mỗi 4 giờ hoặc khi có sự kiện lớn (Hoàn thành Phase, Thay đổi ngày tháng). Không tính toán real-time liên tục để tránh lock database.
+- **Inheritance:** Nếu Dự án con (Sub-project) bị **Red**, Dự án cha (Program) cũng sẽ bị ảnh hưởng (hiển thị cảnh báo).
+## 3.7. Quy tắc Thay đổi Phạm vi (Scope Change Governance)
+- Nếu Dự án đang ở trạng thái **Strict Mode** (Chế độ nghiêm ngặt):
+    - Không cho phép thay đổi `End Date` của Dự án hoặc thêm `Task List` mới nếu không có **PCR** (Change Request) được duyệt.
+    - Mọi nỗ lực thay đổi trực tiếp sẽ bị chặn và hiển thị thông báo: _"Vui lòng tạo Change Request để thực hiện thay đổi này."_
+## 3.8. Quy tắc Bất biến Baseline (Baseline Immutability)
+- Các phiên bản Baseline cũ (Historical Baselines) là tài sản kiểm toán (Audit Assets).
+- **Tuyệt đối không** cho phép sửa đổi hoặc xóa bỏ các Baseline cũ. Chỉ cho phép tạo phiên bản mới đè lên làm "Current Baseline" để so sánh.
+## 3.9. Quy tắc Đồng bộ Trạng thái (Baseline-Status Sync)
+- Khi Dự án quay lại trạng thái **Not-Started** (Reset dự án), hệ thống có quyền (tùy chọn) lưu trữ Baseline hiện tại vào Archive và reset về trạng thái chưa có Baseline để lập kế hoạch lại từ đầu.
+## 3.10. Quy tắc Cô lập Dữ liệu Mô phỏng (Simulation Isolation Rule)
+- **Notifications:** Tuyệt đối **KHÔNG** gửi email hay thông báo (Notification) cho thành viên khi PM đang thao tác trong chế độ Simulation.
+- **Audit Logs:** Các thao tác trong Simulation không ghi vào Audit Log chính của dự án, chỉ ghi log vào lịch sử phiên làm việc của PM.
+## 3.11. Quy tắc Tự hủy (Ephemeral Data Rule)
+- Các Kịch bản mô phỏng (Scenarios) chưa được lưu (Unsaved) sẽ tự động bị hủy khi phiên làm việc kết thúc hoặc sau 24 giờ để giải phóng tài nguyên hệ thống.
+## 3.12. Quy tắc Tách biệt Hoạch định & Thực thi (Planning-Execution Decoupling Rule)
+- **Planning Items (Mục hoạch định):** Là xương sống của dự án. Thay đổi ngày tháng của các mục này sẽ kích hoạt tính toán lại toàn bộ lịch trình (Cascade Update) và ảnh hưởng đến Baseline.
+- **Tracking Items (Mục theo dõi):** Là "thịt" đắp vào xương sống. Chúng có thể trễ hạn, kéo dài thời gian thực tế (Actual Duration) nhưng không được phép làm thay đổi ngày kế hoạch (Planned Date) của các Planning Items cha, trừ khi có can thiệp thủ công.
+## 3.13. Quy tắc Tính toán PDM (PDM Calculation Rules)
+Quy định cách Module 5 xử lý các loại Dependency được định nghĩa trong Module 3:
+- **Nguyên tắc "Thỏa mãn tất cả":** Nếu một Task có nhiều Predecessors, ngày bắt đầu/kết thúc của nó phải thỏa mãn **tất cả** các ràng buộc.
     - $Start(B) \geq \max( Constraint_1, Constraint_2, ... )$
-- **Quy Ä‘á»•i Offset:** Má»i Ä‘Æ¡n vá»‹ Lag/Lead pháº£i Ä‘Æ°á»£c quy Ä‘á»•i ra "Working Days" (NgĂ y lĂ m viá»‡c) dá»±a trĂªn Calendar cá»§a dá»± Ă¡n (trá»« khi cĂ³ Ä‘Ă¡nh dáº¥u lĂ  _Elapsed Days_ - ngĂ y lá»‹ch).
-## 3.10. Quy táº¯c CĂ´ láº­p Dá»¯ liá»‡u MĂ´ phá»ng (Simulation Isolation Rule)
-- **Notifications:** Tuyá»‡t Ä‘á»‘i **KHĂ”NG** gá»­i email hay thĂ´ng bĂ¡o (Notification) cho thĂ nh viĂªn khi PM Ä‘ang thao tĂ¡c trong cháº¿ Ä‘á»™ Simulation.
-- **Audit Logs:** CĂ¡c thao tĂ¡c trong Simulation khĂ´ng ghi vĂ o Audit Log chĂ­nh cá»§a dá»± Ă¡n, chá»‰ ghi log vĂ o lá»‹ch sá»­ phiĂªn lĂ m viá»‡c cá»§a PM.
-## 3.11. Quy táº¯c Tá»± há»§y (Ephemeral Data Rule)
-- CĂ¡c Ká»‹ch báº£n mĂ´ phá»ng (Scenarios) chÆ°a Ä‘Æ°á»£c lÆ°u (Unsaved) sáº½ tá»± Ä‘á»™ng bá»‹ há»§y khi phiĂªn lĂ m viá»‡c káº¿t thĂºc hoáº·c sau 24 giá» Ä‘á»ƒ giáº£i phĂ³ng tĂ i nguyĂªn há»‡ thá»‘ng.
-## 3.14. Quy táº¯c Cam káº¿t Ngáº¯n háº¡n (Short-term Commitment Rule)
+- **Quy đổi Offset:** Mọi đơn vị Lag/Lead phải được quy đổi ra "Working Days" (Ngày làm việc) dựa trên Calendar của dự án (trừ khi có đánh dấu là _Elapsed Days_ - ngày lịch).
+## 3.10. Quy tắc Cô lập Dữ liệu Mô phỏng (Simulation Isolation Rule)
+- **Notifications:** Tuyệt đối **KHÔNG** gửi email hay thông báo (Notification) cho thành viên khi PM đang thao tác trong chế độ Simulation.
+- **Audit Logs:** Các thao tác trong Simulation không ghi vào Audit Log chính của dự án, chỉ ghi log vào lịch sử phiên làm việc của PM.
+## 3.11. Quy tắc Tự hủy (Ephemeral Data Rule)
+- Các Kịch bản mô phỏng (Scenarios) chưa được lưu (Unsaved) sẽ tự động bị hủy khi phiên làm việc kết thúc hoặc sau 24 giờ để giải phóng tài nguyên hệ thống.
+## 3.14. Quy tắc Cam kết Ngắn hạn (Short-term Commitment Rule)
 
-- CĂ¡c Task náº±m trong **Freeze Window** Ä‘Æ°á»£c há»‡ thá»‘ng coi lĂ  "Hard Commitment" (Cam káº¿t cá»©ng).
+- Các Task nằm trong **Freeze Window** được hệ thống coi là "Hard Commitment" (Cam kết cứng).
 - **Impact:**
-    - TĂ­nh nÄƒng **Auto-Scheduling** (Module 5) sáº½ tá»± Ä‘á»™ng bá» qua (Skip) cĂ¡c Task nĂ y khi tĂ­nh toĂ¡n dá»“n toa. ChĂºng Ä‘Ă³ng vai trĂ² nhÆ° cĂ¡c "cá»c neo" giá»¯ cá»‘ Ä‘á»‹nh lá»‹ch trĂ¬nh.
-    - Náº¿u má»™t Task trÆ°á»›c Ä‘Ă³ (Predecessor) bá»‹ trá»… vĂ  Ä‘áº©y lĂ¹i Task trong Freeze Zone, há»‡ thá»‘ng sáº½ bĂ¡o **Conflict** (Xung Ä‘á»™t) thay vĂ¬ tá»± Ä‘á»™ng dá»i lá»‹ch.
-## 3.16. Quy táº¯c PhĂ¢n biá»‡t "HOLD" vĂ  "FREEZE" (Disambiguation Rule)
-Äá»ƒ trĂ¡nh nháº§m láº«n vá» máº·t nghiá»‡p vá»¥, há»‡ thá»‘ng quy Ä‘á»‹nh rĂµ sá»± khĂ¡c biá»‡t giá»¯a hai tráº¡ng thĂ¡i nĂ y nhÆ° sau:
+    - Tính năng **Auto-Scheduling** (Module 5) sẽ tự động bỏ qua (Skip) các Task này khi tính toán dồn toa. Chúng đóng vai trò như các "cọc neo" giữ cố định lịch trình.
+    - Nếu một Task trước đó (Predecessor) bị trễ và đẩy lùi Task trong Freeze Zone, hệ thống sẽ báo **Conflict** (Xung đột) thay vì tự động dời lịch.
+## 3.16. Quy tắc Phân biệt "HOLD" và "FREEZE" (Disambiguation Rule)
+Để tránh nhầm lẫn về mặt nghiệp vụ, hệ thống quy định rõ sự khác biệt giữa hai trạng thái này như sau:
 
-|**TiĂªu chĂ­**|**HOLD (Táº¡m dá»«ng)**|**FREEZE (ÄĂ³ng bÄƒng)**|
+|**Tiêu chí**|**HOLD (Tạm dừng)**|**FREEZE (Đóng băng)**|
 |---|---|---|
-|**Báº£n cháº¥t**|**Strategic Pause (Táº¡m dá»«ng Chiáº¿n lÆ°á»£c)**|**Operational Lock (KhĂ³a Váº­n hĂ nh)**|
-|**Pháº¡m vi**|ToĂ n bá»™ Dá»± Ă¡n (Project Level).|Má»™t khoáº£ng thá»i gian cá»¥ thá»ƒ (Time Range) trĂªn lá»‹ch trĂ¬nh.|
-|**TĂ¡c Ä‘á»™ng**|**Ngá»«ng táº¥t cáº£ hoáº¡t Ä‘á»™ng:** KhĂ´ng Ä‘Æ°á»£c táº¡o Task má»›i, khĂ´ng Ä‘Æ°á»£c Log time, khĂ´ng Ä‘Æ°á»£c Comment. Dá»± Ă¡n "ngá»§ Ä‘Ă´ng".|**Dá»± Ă¡n váº«n cháº¡y bĂ¬nh thÆ°á»ng:** Má»i ngÆ°á»i váº«n lĂ m viá»‡c, log time, update status. Chá»‰ **KHĂ”NG** Ä‘Æ°á»£c thay Ä‘á»•i ngĂ y thĂ¡ng (Reschedule).|
-|**Má»¥c Ä‘Ă­ch**|DĂ¹ng khi chá» ngĂ¢n sĂ¡ch, chá» quyáº¿t Ä‘á»‹nh BLÄ, hoáº·c gáº·p sá»± cá»‘ phĂ¡p lĂ½.|DĂ¹ng Ä‘á»ƒ á»•n Ä‘á»‹nh káº¿ hoáº¡ch ngáº¯n háº¡n (Sprint/Week), giĂºp team táº­p trung lĂ m viá»‡c mĂ  khĂ´ng bá»‹ thay Ä‘á»•i lá»‹ch liĂªn tá»¥c.|
-|**Module**|Quáº£n lĂ½ bá»Ÿi Module 3 (Lifecycle).|Cáº¥u hĂ¬nh bá»Ÿi Module 3, Thá»±c thi bá»Ÿi Module 5.|
+|**Bản chất**|**Strategic Pause (Tạm dừng Chiến lược)**|**Operational Lock (Khóa Vận hành)**|
+|**Phạm vi**|Toàn bộ Dự án (Project Level).|Một khoảng thời gian cụ thể (Time Range) trên lịch trình.|
+|**Tác động**|**Ngừng tất cả hoạt động:** Không được tạo Task mới, không được Log time, không được Comment. Dự án "ngủ đông".|**Dự án vẫn chạy bình thường:** Mọi người vẫn làm việc, log time, update status. Chỉ **KHÔNG** được thay đổi ngày tháng (Reschedule).|
+|**Mục đích**|Dùng khi chờ ngân sách, chờ quyết định BLĐ, hoặc gặp sự cố pháp lý.|Dùng để ổn định kế hoạch ngắn hạn (Sprint/Week), giúp team tập trung làm việc mà không bị thay đổi lịch liên tục.|
+|**Module**|Quản lý bởi Module 3 (Lifecycle).|Cấu hình bởi Module 3, Thực thi bởi Module 5.|
 
-## 3.17. Quy táº¯c NgÄƒn cháº·n Dá»± Ă¡n "Má»“ cĂ´i" (Orphan Project Prevention)
-- **Validation:** Há»‡ thá»‘ng khĂ´ng cho phĂ©p **Deactivate** (VĂ´ hiá»‡u hĂ³a) hoáº·c **Delete** (XĂ³a) tĂ i khoáº£n cá»§a má»™t ngÆ°á»i dĂ¹ng náº¿u há» Ä‘ang lĂ  **Owner** cá»§a báº¥t ká»³ dá»± Ă¡n nĂ o Ä‘ang hoáº¡t Ä‘á»™ng (`Status != DONE/CANCELLED`).
-- **Solution:** Admin báº¯t buá»™c pháº£i thá»±c hiá»‡n **Transfer Ownership** cĂ¡c dá»± Ă¡n Ä‘Ă³ cho ngÆ°á»i khĂ¡c trÆ°á»›c, sau Ä‘Ă³ má»›i Ä‘Æ°á»£c phĂ©p xĂ³a tĂ i khoáº£n ngÆ°á»i dĂ¹ng cÅ©.
-## 3.18. Quy táº¯c Tranh cháº¥p Nguá»“n lá»±c (Resource Contention Rule)
-- Trong trÆ°á»ng há»£p xáº£y ra xung Ä‘á»™t tĂ i nguyĂªn giá»¯a cĂ¡c dá»± Ă¡n (Cross-Project Resource Conflict):
-    - Há»‡ thá»‘ng luĂ´n Æ°u tiĂªn báº£o vá»‡ tiáº¿n Ä‘á»™ cá»§a Dá»± Ă¡n cĂ³ **Priority cao hÆ¡n**.
-    - Náº¿u hai dá»± Ă¡n cĂ¹ng Priority, há»‡ thá»‘ng sáº½ xĂ©t Ä‘áº¿n **Start Date** (Dá»± Ă¡n nĂ o cháº¡y trÆ°á»›c Æ°u tiĂªn trÆ°á»›c) hoáº·c cáº§n sá»± can thiá»‡p thá»§ cĂ´ng cá»§a Resource Manager.
-## 3.19. Quy táº¯c Há»£p Ä‘á»“ng Chá»‰ Ä‘á»c TÆ°á»ng minh (Explicit Read-only Contract)
-Há»‡ thá»‘ng quy Ä‘á»‹nh chi tiáº¿t pháº¡m vi cho phĂ©p thao tĂ¡c Ä‘á»‘i vá»›i cĂ¡c tráº¡ng thĂ¡i "ÄĂ³ng" (Terminal States) Ä‘á»ƒ Ä‘áº£m báº£o tĂ­nh nháº¥t quĂ¡n giá»¯a cĂ¡c Ä‘á»™i ngÅ© phĂ¡t triá»ƒn:
+## 3.17. Quy tắc Ngăn chặn Dự án "Mồ côi" (Orphan Project Prevention)
+- **Validation:** Hệ thống không cho phép **Deactivate** (Vô hiệu hóa) hoặc **Delete** (Xóa) tài khoản của một người dùng nếu họ đang là **Owner** của bất kỳ dự án nào đang hoạt động (`Status != DONE/CANCELLED`).
+- **Solution:** Admin bắt buộc phải thực hiện **Transfer Ownership** các dự án đó cho người khác trước, sau đó mới được phép xóa tài khoản người dùng cũ.
+## 3.18. Quy tắc Tranh chấp Nguồn lực (Resource Contention Rule)
+- Trong trường hợp xảy ra xung đột tài nguyên giữa các dự án (Cross-Project Resource Conflict):
+    - Hệ thống luôn ưu tiên bảo vệ tiến độ của Dự án có **Priority cao hơn**.
+    - Nếu hai dự án cùng Priority, hệ thống sẽ xét đến **Start Date** (Dự án nào chạy trước ưu tiên trước) hoặc cần sự can thiệp thủ công của Resource Manager.
+## 3.19. Quy tắc Hợp đồng Chỉ đọc Tường minh (Explicit Read-only Contract)
+Hệ thống quy định chi tiết phạm vi cho phép thao tác đối với các trạng thái "Đóng" (Terminal States) để đảm bảo tính nhất quán giữa các đội ngũ phát triển:
 
-|**HĂ nh Ä‘á»™ng (Action)**|**Tráº¡ng thĂ¡i DONE / CANCELLED (Active Terminal)**|**Tráº¡ng thĂ¡i ARCHIVED (Cold Storage)**|
+|**Hành động (Action)**|**Trạng thái DONE / CANCELLED (Active Terminal)**|**Trạng thái ARCHIVED (Cold Storage)**|
 |---|---|---|
-|**Sá»­a thĂ´ng tin Dá»± Ă¡n** (Name, Settings)|âŒ **Cháº·n**|âŒ **Cháº·n**|
-|**Sá»­a Task** (Status, Date, Assignee)|âŒ **Cháº·n**|âŒ **Cháº·n**|
-|**ThĂªm Comment / Upload File**|â ï¸ **TĂ¹y chá»n** (Cáº¥u hĂ¬nh: _Allow comments after Done_)|âŒ **Cháº·n tuyá»‡t Ä‘á»‘i**|
-|**Xem BĂ¡o cĂ¡o / Dashboard**|âœ… **Cho phĂ©p**|âœ… **Cho phĂ©p**|
-|**Clone / Táº¡o Template tá»« Dá»± Ă¡n**|âœ… **Cho phĂ©p**|âœ… **Cho phĂ©p** (Cáº§n restore táº¡m vá» Hot Storage Ä‘á»ƒ clone náº¿u file quĂ¡ lá»›n)|
-|**Xuáº¥t dá»¯ liá»‡u (Export)**|âœ… **Cho phĂ©p**|âœ… **Cho phĂ©p**|
-|**KhĂ´i phá»¥c (Re-open)**|âœ… **Cho phĂ©p** (Cáº§n quyá»n Admin/PM)|âœ… **Cho phĂ©p** (Pháº£i Unarchive trÆ°á»›c)|
+|**Sửa thông tin Dự án** (Name, Settings)|❌ **Chặn**|❌ **Chặn**|
+|**Sửa Task** (Status, Date, Assignee)|❌ **Chặn**|❌ **Chặn**|
+|**Thêm Comment / Upload File**|⚠️ **Tùy chọn** (Cấu hình: _Allow comments after Done_)|❌ **Chặn tuyệt đối**|
+|**Xem Báo cáo / Dashboard**|✅ **Cho phép**|✅ **Cho phép**|
+|**Clone / Tạo Template từ Dự án**|✅ **Cho phép**|✅ **Cho phép** (Cần restore tạm về Hot Storage để clone nếu file quá lớn)|
+|**Xuất dữ liệu (Export)**|✅ **Cho phép**|✅ **Cho phép**|
+|**Khôi phục (Re-open)**|✅ **Cho phép** (Cần quyền Admin/PM)|✅ **Cho phép** (Phải Unarchive trước)|
 
-**Giáº£i thĂ­ch:**
-- **Active Terminal (`DONE/CANCELLED`):** Dá»¯ liá»‡u váº«n náº±m trong "Hot Storage", truy cáº­p nhanh. NgÆ°á»i dĂ¹ng váº«n cĂ³ thá»ƒ tháº£o luáº­n (Post-mortem discussion) náº¿u cáº¥u hĂ¬nh cho phĂ©p.
-- **Cold Storage (`ARCHIVED`):** Dá»¯ liá»‡u Ä‘Ă£ Ä‘Æ°á»£c nĂ©n hoáº·c chuyá»ƒn sang kho lÆ°u trá»¯ ráº» tiá»n (S3 Glacier). Má»¥c tiĂªu lĂ  lÆ°u trá»¯ lĂ¢u dĂ i, báº¥t biáº¿n (Immutable), khĂ´ng cho phĂ©p báº¥t ká»³ tÆ°Æ¡ng tĂ¡c ghi (Write) nĂ o.
-## 3.20. Quy táº¯c Chuyá»ƒn Ä‘á»•i Cháº¿ Ä‘á»™ (Mode Switching Rule)
+**Giải thích:**
+- **Active Terminal (`DONE/CANCELLED`):** Dữ liệu vẫn nằm trong "Hot Storage", truy cập nhanh. Người dùng vẫn có thể thảo luận (Post-mortem discussion) nếu cấu hình cho phép.
+- **Cold Storage (`ARCHIVED`):** Dữ liệu đã được nén hoặc chuyển sang kho lưu trữ rẻ tiền (S3 Glacier). Mục tiêu là lưu trữ lâu dài, bất biến (Immutable), không cho phép bất kỳ tương tác ghi (Write) nào.
+## 3.20. Quy tắc Chuyển đổi Chế độ (Mode Switching Rule)
 - **Upgrading (Simple $\rightarrow$ Strict):**
-    - Cho phĂ©p chuyá»ƒn Ä‘á»•i báº¥t cá»© lĂºc nĂ o.
-    - Há»‡ thá»‘ng sáº½ yĂªu cáº§u táº¡o Baseline v1.0 ngay láº­p tá»©c Ä‘á»ƒ lĂ m má»‘c báº¯t Ä‘áº§u kiá»ƒm soĂ¡t.
+    - Cho phép chuyển đổi bất cứ lúc nào.
+    - Hệ thống sẽ yêu cầu tạo Baseline v1.0 ngay lập tức để làm mốc bắt đầu kiểm soát.
 - **Downgrading (Strict $\rightarrow$ Simple):**
-    - Cho phĂ©p chuyá»ƒn Ä‘á»•i, NHÆ¯NG há»‡ thá»‘ng hiá»ƒn thá»‹ cáº£nh bĂ¡o: _"Viá»‡c chuyá»ƒn vá» Simple Mode sáº½ bá» qua cĂ¡c quy trĂ¬nh kiá»ƒm soĂ¡t. Lá»‹ch sá»­ duyá»‡t PCR cĂ³ thá»ƒ khĂ´ng cĂ²n hiá»‡u lá»±c tham chiáº¿u."_
-    - CĂ¡c Change Request Ä‘ang chá» duyá»‡t (Pending) sáº½ tá»± Ä‘á»™ng bá»‹ Há»§y (Cancelled).
-## 3.21. Ma tráº­n PhĂ¢n quyá»n Chi tiáº¿t (Permission Matrix)
-Báº£ng Ä‘áº·c táº£ chi tiáº¿t cĂ¡c quyá»n háº¡n dá»±a trĂªn cĂ¡c PhĂ¢n há»‡ chá»©c nÄƒng:
-> Chi tiáº¿t trong file: ["E://Workspace//# project//pronaflow//docs//docs - PronaFlow React&FastAPI//01-Requirements//Functional-Modules//PronaFlow_Project_Roles.xlsx"](Project-Permission-Matrix)
+    - Cho phép chuyển đổi, NHƯNG hệ thống hiển thị cảnh báo: _"Việc chuyển về Simple Mode sẽ bỏ qua các quy trình kiểm soát. Lịch sử duyệt PCR có thể không còn hiệu lực tham chiếu."_
+    - Các Change Request đang chờ duyệt (Pending) sẽ tự động bị Hủy (Cancelled).
+## 3.21. Ma trận Phân quyền Chi tiết (Permission Matrix)
+Bảng đặc tả chi tiết các quyền hạn dựa trên các Phân hệ chức năng:
+> Chi tiết trong file: ["E://Workspace//# project//pronaflow//docs//docs - PronaFlow React&FastAPI//01-Requirements//Functional-Modules//PronaFlow_Project_Roles.xlsx"](Project-Permission-Matrix)
 
-**Ghi chĂº RĂ ng buá»™c:**
-- **â ï¸ (1) Thay Ä‘á»•i Deadline:**
-    - Náº¿u Dá»± Ă¡n á»Ÿ cháº¿ Ä‘á»™ **Simple Mode**: Member Ä‘Æ°á»£c phĂ©p Ä‘á»•i ngĂ y thoáº£i mĂ¡i.
-    - Náº¿u Dá»± Ă¡n á»Ÿ cháº¿ Ä‘á»™ **Strict Mode (hoáº·c Locked)**: Member bá»‹ cháº·n Ä‘á»•i ngĂ y. Há» pháº£i comment yĂªu cáº§u PM/Planner Ä‘á»•i, hoáº·c táº¡o Change Request.
-- **â ï¸ (2) XĂ³a Task:** Member chá»‰ Ä‘Æ°á»£c xĂ³a Task do chĂ­nh mĂ¬nh táº¡o ra (Creator), khĂ´ng Ä‘Æ°á»£c xĂ³a Task cá»§a ngÆ°á»i khĂ¡c.
-## 3.22. Quy táº¯c nghiá»‡p vá»¥ phĂ¢n quyá»n:
-1. **Quy táº¯c "Chá»§ quyá»n riĂªng tÆ°" (Privacy Sovereignty):**
-    - Náº¿u má»™t dá»± Ă¡n Ä‘Æ°á»£c set lĂ  **Private (RiĂªng tÆ°)**: Chá»‰ nhá»¯ng ngÆ°á»i cĂ³ tĂªn trong danh sĂ¡ch thĂ nh viĂªn má»›i truy cáº­p Ä‘Æ°á»£c.
-    - **Ngoáº¡i lá»‡:** Workspace Owner (ngÆ°á»i tráº£ tiá»n) cĂ³ quyá»n truy cáº­p "cá»­a sau" (Backdoor access) Ä‘á»ƒ kiá»ƒm tra, nhÆ°ng hĂ nh Ä‘á»™ng nĂ y pháº£i Ä‘Æ°á»£c ghi log Audit rĂµ rĂ ng ("Owner accessed private project X") vĂ  pháº£i thĂ´ng qua cÆ¡ cháº¿ gá»­i Request Ä‘áº¿n chá»§ Project-private Ä‘á»ƒ xin phĂ©p kiá»ƒm tra.
-2. **Quy táº¯c Báº£o vá»‡ Káº¿ hoáº¡ch (Plan Protection):**
-    - Khi dá»± Ă¡n Ä‘ang á»Ÿ tráº¡ng thĂ¡i **Freeze (ÄĂ³ng bÄƒng)** hoáº·c **Locked (ÄĂ£ duyá»‡t)**: Quyá»n `Sá»­a Gantt` cá»§a Planner cÅ©ng bá»‹ táº¡m khĂ³a. Muá»‘n sá»­a, há» pháº£i má»Ÿ khĂ³a (Unlock) hoáº·c Ä‘i qua quy trĂ¬nh duyá»‡t thay Ä‘á»•i.
-3. **Quy táº¯c Káº¿ thá»«a tá»« Workspace (Inheritance):**
-    - Náº¿u tĂ i khoáº£n cá»§a má»™t User bá»‹ `Deactive` á»Ÿ cáº¥p Workspace (Module 2), há» ngay láº­p tá»©c máº¥t quyá»n truy cáº­p vĂ o Táº¤T Cáº¢ cĂ¡c dá»± Ă¡n, báº¥t ká»ƒ vai trĂ² trong dá»± Ă¡n lĂ  gĂ¬.
-4. **Quy táº¯c PhĂ¢n quyá»n Dá»¯ liá»‡u Nháº¡y cáº£m (Sensitive Data):**
-    - Chá»‰ **PM** (vĂ  Workspace Owner) má»›i nhĂ¬n tháº¥y cĂ¡c trÆ°á»ng dá»¯ liá»‡u liĂªn quan Ä‘áº¿n tiá»n báº¡c nhÆ°: `Hourly Rate` (LÆ°Æ¡ng giá»), `Total Cost` (Tá»•ng chi phĂ­ dá»± Ă¡n), `Budget`.
-    - Planner vĂ  Member chá»‰ nhĂ¬n tháº¥y `Hours` (Sá»‘ giá» lĂ m viá»‡c).
-# 4. Theoretical Basis (CÆ¡ sá»Ÿ LĂ½ luáº­n)
-## 4.1. Tam giĂ¡c sáº¯t trong Quáº£n trá»‹ Thay Ä‘á»•i (Iron Triangle in Change Management)
-TĂ­nh nÄƒng PCR (Feature 2.11) dá»±a trĂªn lĂ½ thuyáº¿t Tam giĂ¡c dá»± Ă¡n (Scope, Time, Cost).
-- PronaFlow buá»™c ngÆ°á»i dĂ¹ng pháº£i Ä‘Ă¡nh Ä‘á»•i: Náº¿u muá»‘n thay Ä‘á»•i **Scope** (thĂªm tĂ­nh nÄƒng), buá»™c pháº£i Ä‘iá»u chá»‰nh **Time** (dá»i lá»‹ch) hoáº·c **Cost** (thĂªm ngÆ°á»i).
-- PCR lĂ  vÄƒn báº£n hĂ³a sá»± Ä‘Ă¡nh Ä‘á»•i nĂ y, Ä‘áº£m báº£o tĂ­nh minh báº¡ch (Transparency) vĂ  trĂ¡ch nhiá»‡m giáº£i trĂ¬nh (Accountability).
-## 4.2. VĂ²ng láº·p Há»c táº­p (Double-Loop Learning)
-TĂ­nh nÄƒng **Closure & Lessons Learned** (Feature 2.12) há»— trá»£ mĂ´ hĂ¬nh há»c táº­p vĂ²ng láº·p kĂ©p cá»§a _Argyris & SchĂ¶n_.
-- Thay vĂ¬ chá»‰ sá»­a lá»—i (Single-loop), há»‡ thá»‘ng khuyáº¿n khĂ­ch Ä‘á»™i ngÅ© Ä‘áº·t cĂ¢u há»i vá» cĂ¡c giáº£ Ä‘á»‹nh vĂ  quy trĂ¬nh cá»‘t lĂµi (Double-loop) Ä‘á»ƒ cáº£i tiáº¿n Template dá»± Ă¡n cho cĂ¡c láº§n sau.
+**Ghi chú Ràng buộc:**
+- **⚠️ (1) Thay đổi Deadline:**
+    - Nếu Dự án ở chế độ **Simple Mode**: Member được phép đổi ngày thoải mái.
+    - Nếu Dự án ở chế độ **Strict Mode (hoặc Locked)**: Member bị chặn đổi ngày. Họ phải comment yêu cầu PM/Planner đổi, hoặc tạo Change Request.
+- **⚠️ (2) Xóa Task:** Member chỉ được xóa Task do chính mình tạo ra (Creator), không được xóa Task của người khác.
+## 3.22. Quy tắc nghiệp vụ phân quyền:
+1. **Quy tắc "Chủ quyền riêng tư" (Privacy Sovereignty):**
+    - Nếu một dự án được set là **Private (Riêng tư)**: Chỉ những người có tên trong danh sách thành viên mới truy cập được.
+    - **Ngoại lệ:** Workspace Owner (người trả tiền) có quyền truy cập "cửa sau" (Backdoor access) để kiểm tra, nhưng hành động này phải được ghi log Audit rõ ràng ("Owner accessed private project X") và phải thông qua cơ chế gửi Request đến chủ Project-private để xin phép kiểm tra.
+2. **Quy tắc Bảo vệ Kế hoạch (Plan Protection):**
+    - Khi dự án đang ở trạng thái **Freeze (Đóng băng)** hoặc **Locked (Đã duyệt)**: Quyền `Sửa Gantt` của Planner cũng bị tạm khóa. Muốn sửa, họ phải mở khóa (Unlock) hoặc đi qua quy trình duyệt thay đổi.
+3. **Quy tắc Kế thừa từ Workspace (Inheritance):**
+    - Nếu tài khoản của một User bị `Deactive` ở cấp Workspace (Module 2), họ ngay lập tức mất quyền truy cập vào TẤT CẢ các dự án, bất kể vai trò trong dự án là gì.
+4. **Quy tắc Phân quyền Dữ liệu Nhạy cảm (Sensitive Data):**
+    - Chỉ **PM** (và Workspace Owner) mới nhìn thấy các trường dữ liệu liên quan đến tiền bạc như: `Hourly Rate` (Lương giờ), `Total Cost` (Tổng chi phí dự án), `Budget`.
+    - Planner và Member chỉ nhìn thấy `Hours` (Số giờ làm việc).
+# 4. Theoretical Basis (Cơ sở Lý luận)
+## 4.1. Tam giác sắt trong Quản trị Thay đổi (Iron Triangle in Change Management)
+Tính năng PCR (Feature 2.11) dựa trên lý thuyết Tam giác dự án (Scope, Time, Cost).
+- PronaFlow buộc người dùng phải đánh đổi: Nếu muốn thay đổi **Scope** (thêm tính năng), buộc phải điều chỉnh **Time** (dời lịch) hoặc **Cost** (thêm người).
+- PCR là văn bản hóa sự đánh đổi này, đảm bảo tính minh bạch (Transparency) và trách nhiệm giải trình (Accountability).
+## 4.2. Vòng lặp Học tập (Double-Loop Learning)
+Tính năng **Closure & Lessons Learned** (Feature 2.12) hỗ trợ mô hình học tập vòng lặp kép của _Argyris & Schön_.
+- Thay vì chỉ sửa lỗi (Single-loop), hệ thống khuyến khích đội ngũ đặt câu hỏi về các giả định và quy trình cốt lõi (Double-loop) để cải tiến Template dự án cho các lần sau.
 # Diagram
 ## 1. Project State Machine Diagram
-**Má»¥c Ä‘Ă­ch:** MĂ´ táº£ cĂ¡c tráº¡ng thĂ¡i cá»©ng cá»§a dá»± Ă¡n vĂ  cĂ¡c hĂ nh Ä‘á»™ng (Transition) Ä‘Æ°á»£c phĂ©p Ä‘á»ƒ chuyá»ƒn Ä‘á»•i giá»¯a chĂºng. ÄĂ¢y lĂ  "xÆ°Æ¡ng sá»‘ng" cá»§a Module 3.
+**Mục đích:** Mô tả các trạng thái cứng của dự án và các hành động (Transition) được phép để chuyển đổi giữa chúng. Đây là "xương sống" của Module 3.
 ```mermaid
 stateDiagram-v2
     direction LR
@@ -528,7 +528,7 @@ stateDiagram-v2
     C --> [*]: Archive
 ```
 ## 2. PCR & Baseline Workflow
-**Má»¥c Ä‘Ă­ch:** Minh há»a quy trĂ¬nh "Strict Governance". LĂ m rĂµ má»‘i quan há»‡ giá»¯a **Change Request (PCR)**, **Impact Analysis** (tá»« Module 5) vĂ  **Baseline**.
+**Mục đích:** Minh họa quy trình "Strict Governance". Làm rõ mối quan hệ giữa **Change Request (PCR)**, **Impact Analysis** (từ Module 5) và **Baseline**.
 ```mermaid
 flowchart TD
     Start([User wants to Change Plan]) --> CheckMode{Is Strict Mode?}
@@ -551,7 +551,7 @@ flowchart TD
 ```
 
 ## 3. ERD - Conceptual Level
-**Má»¥c Ä‘Ă­ch:** GiĂºp DB Designer thiáº¿t káº¿ báº£ng. Biá»ƒu Ä‘á»“ nĂ y lĂ m rĂµ cĂ¡c quan há»‡ má»›i thĂªm vĂ o nhÆ° `Portfolio`, `Baseline`, `Scenarios` (Simulation).
+**Mục đích:** Giúp DB Designer thiết kế bảng. Biểu đồ này làm rõ các quan hệ mới thêm vào như `Portfolio`, `Baseline`, `Scenarios` (Simulation).
 ```mermaid
 erDiagram
     WORKSPACE ||--|{ PROJECT : owns
@@ -591,7 +591,7 @@ erDiagram
     }
 ```
 
-## 4. Luá»“ng MĂ´ phá»ng & PhĂ¢n tĂ­ch TĂ¡c Ä‘á»™ng
+## 4. Luồng Mô phỏng & Phân tích Tác động
 
 ```mermaid
 sequenceDiagram
@@ -603,14 +603,14 @@ sequenceDiagram
     participant M5 as Mod 5 (Calculation Engine)
     participant LiveDB as PostgreSQL (Live Data)
 
-    Note over PM, LiveDB: Giai Ä‘oáº¡n 1: Khá»Ÿi táº¡o Sandbox
+    Note over PM, LiveDB: Giai đoạn 1: Khởi tạo Sandbox
     PM->>FE: Click "Enter Simulation Mode"
     FE->>M3: POST /projects/{id}/simulation/init
     M3->>LiveDB: Fetch Current Project State
     M3->>DB: Clone State to Sandbox (SessionID)
     M3-->>FE: Return SessionID (Simulation Ready)
 
-    Note over PM, LiveDB: Giai Ä‘oáº¡n 2: Thao tĂ¡c & TĂ­nh toĂ¡n
+    Note over PM, LiveDB: Giai đoạn 2: Thao tác & Tính toán
     PM->>FE: Drag Task A (Delay +5 days)
     FE->>M5: POST /calculate/impact (SessionID, Delta)
     M5->>DB: Read Sandbox State
@@ -618,7 +618,7 @@ sequenceDiagram
     M5-->>FE: Return Impact Metrics (Diff: +5d End Date)
     FE->>PM: Show "Impact Alert Panel"
 
-    Note over PM, LiveDB: Giai Ä‘oáº¡n 3: Quyáº¿t Ä‘á»‹nh
+    Note over PM, LiveDB: Giai đoạn 3: Quyết định
     alt Apply Changes
         PM->>FE: Click "Apply to Live"
         FE->>M3: POST /projects/{id}/simulation/promote
@@ -632,26 +632,26 @@ sequenceDiagram
     end
 ```
 
-## 5. Luá»“ng Khá»Ÿi táº¡o Dá»± Ă¡n tá»« Template
+## 5. Luồng Khởi tạo Dự án từ Template
 
 ```mermaid
 flowchart TD
-    %% Node Khá»Ÿi Ä‘áº§u - DĂ¹ng ngoáº·c kĂ©p bao quanh text Ä‘á»ƒ an toĂ n
+    %% Node Khởi đầu - Dùng ngoặc kép bao quanh text để an toàn
     Start(["User clicks Create Project"]) --> ChooseSource{"Source Type?"}
     
-    %% NhĂ¡nh Template
+    %% Nhánh Template
     ChooseSource -- From Template --> SelectTemp["Select Template from Library"]
     SelectTemp --> LoadConfig["Load Settings: Simple/Strict Mode"]
     LoadConfig --> LoadTasks["Load Task Structure & Tags"]
     LoadTasks --> RemapDates["User inputs Start Date<br/>(System shifts Task dates)"]
     
-    %% NhĂ¡nh Má»›i
+    %% Nhánh Mới
     ChooseSource -- Blank Project --> InputMeta["Input Title, Key, Priority"]
     InputMeta --> SelectMode{"Select Governance Mode?"}
     SelectMode -- Simple --> ConfigSimple["Disable PCR, Baseline, Gates"]
     SelectMode -- Strict --> ConfigStrict["Enable PCR, Baseline, Gates"]
     
-    %% Gá»™p cĂ¡c nhĂ¡nh vá» Review (Thay tháº¿ cĂº phĂ¡p & báº±ng dĂ²ng riĂªng Ä‘á»ƒ trĂ¡nh lá»—i)
+    %% Gộp các nhánh về Review (Thay thế cú pháp & bằng dòng riêng để tránh lỗi)
     RemapDates --> Review["Review Project Summary"]
     ConfigStrict --> Review
     ConfigSimple --> Review
