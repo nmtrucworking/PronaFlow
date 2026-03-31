@@ -1,12 +1,12 @@
-{
+﻿{
 	"nodes":[
 		{"id":"5a8816cbb699f355","x":-40,"y":880,"width":400,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md"},
-		{"id":"00754ae0d7017fcf","x":-40,"y":980,"width":500,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md"},
+		{"id":"00754ae0d7017fcf","x":-40,"y":980,"width":500,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/7 - Event-Driven Notification System.md"},
 		{"id":"89634f0857e5ce73","x":-40,"y":1080,"width":560,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/9 - User Experience Personalization.md"},
 		{"id":"b3ac1a6263aa2bd8","x":-40,"y":1180,"width":520,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/15 - Help Center and Knowledge Base.md"},
 		{"id":"bc857db2a594d77d","x":-40,"y":1280,"width":480,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/16 - User Onboarding and Adoption.md"},
-		{"id":"5f56b7496aaf7643","x":-460,"y":1075,"width":280,"height":60,"color":"4","type":"text","text":"Nhóm 3: Cộng tác & Trải nghiệm"},
-		{"id":"5b65370920fe9c0b","x":-460,"y":630,"width":250,"height":60,"color":"4","type":"text","text":"Nhóm 2: Cốt lõi Quản lý Dự án"},
+		{"id":"5f56b7496aaf7643","x":-460,"y":1075,"width":280,"height":60,"color":"4","type":"text","text":"NhĂ³m 3: Cá»™ng tĂ¡c & Tráº£i nghiá»‡m"},
+		{"id":"5b65370920fe9c0b","x":-460,"y":630,"width":250,"height":60,"color":"4","type":"text","text":"NhĂ³m 2: Cá»‘t lĂµi Quáº£n lĂ½ Dá»± Ă¡n"},
 		{"id":"97210abe4b59e21c","x":-40,"y":640,"width":480,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md"},
 		{"id":"4e2250b163fc7ea7","x":-40,"y":746,"width":500,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md"},
 		{"id":"86df41a46b827384","x":-40,"y":540,"width":460,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/3 - Project Lifecycle Management.md"},
@@ -14,10 +14,10 @@
 		{"id":"c21e71b1fc9b7b3b","type":"file","file":"01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md","x":-35,"y":310,"width":500,"height":50},
 		{"id":"cb2034811e65e633","type":"file","file":"01-Requirements/Functional-Modules/2 - Multi-tenancy Workspace Governance.md","x":-35,"y":210,"width":520,"height":50},
 		{"id":"383f0ab5ccfe037e","type":"file","file":"01-Requirements/Functional-Modules/1 - Identity and Access Management.md","x":-35,"y":120,"width":460,"height":50},
-		{"id":"b3bebcb3819e805d","type":"text","text":"Nhóm 1: Nền tảng & Quản trị","x":-455,"y":250,"width":260,"height":60,"color":"4"},
+		{"id":"b3bebcb3819e805d","type":"text","text":"NhĂ³m 1: Ná»n táº£ng & Quáº£n trá»‹","x":-455,"y":250,"width":260,"height":60,"color":"4"},
 		{"id":"0e93b0b4d24dde55","x":-35,"y":1400,"width":520,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/10 - Intelligent Decision Support System.md"},
 		{"id":"00597492c0bdbf2e","x":-35,"y":1500,"width":509,"height":50,"type":"file","file":"01-Requirements/Functional-Modules/11 - Advanced Analytics and Reporting.md"},
-		{"id":"0c1b028ab8726881","x":-455,"y":1440,"width":250,"height":60,"color":"4","type":"text","text":"Nhóm 4: Dữ liệu & AI"},
+		{"id":"0c1b028ab8726881","x":-455,"y":1440,"width":250,"height":60,"color":"4","type":"text","text":"NhĂ³m 4: Dá»¯ liá»‡u & AI"},
 		{"id":"59109faaba19f584","x":-880,"y":820,"width":160,"height":60,"color":"5","type":"text","text":"PronaFlow"}
 	],
 	"edges":[

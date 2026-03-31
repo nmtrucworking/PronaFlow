@@ -11,5 +11,6 @@
 01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md
 01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md
 01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md
-01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md
+01-Requirements/Functional-Modules/7 - Event-Driven Notification System.md
 01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md
+

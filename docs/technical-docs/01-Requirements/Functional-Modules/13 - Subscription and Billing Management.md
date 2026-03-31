@@ -1,87 +1,87 @@
-**Project**: PronaFlow
+﻿**Project**: PronaFlow
 **Version**: 1.2 (Revised based on "Optimal Free Tier" philosophy)
 **State**: Draft
 ***Last updated:** Jan 5, 2026*
 
 ---
-## 1. Business Overview (Tổng quan Nghiệp vụ)
-Trong nền kinh tế SaaS hiện đại, đặc biệt với triết lý **Product-Led Growth (PLG)**, mục tiêu của hệ thống tính phí không phải là tạo ra rào cản (Paywalls) ngay từ đầu, mà là đồng hành cùng sự phát triển của khách hàng.
-Phân hệ **Subscription & Billing Management** của PronaFlow được thiết kế với tư duy: **"Free to Start, Pay to Scale"**.
-1. **Gói Free (Starter):** Cung cấp trải nghiệm quản lý dự án **trọn vẹn** (Full Features) cho các nhu cầu cơ bản. Người dùng không bị cắt giảm các tính năng cốt lõi như Kanban, Gantt, hay Collaboration. Giới hạn chỉ nằm ở **tài nguyên tiêu thụ** (Storage, AI Tokens) và **phạm vi quản trị** (SSO, Audit Log dài hạn).
-2. **Cơ chế Dual-Layer Billing:**
-    - **Inbound:** Quản lý đăng ký gói cước linh hoạt, hỗ trợ tự động nâng cấp khi quy mô team mở rộng.
-    - **Outbound (Work-to-Cash):** Biến PronaFlow thành công cụ kiếm tiền cho Freelancer/Agency bằng cách xuất hóa đơn từ Timesheet.
+## 1. Business Overview (Tá»•ng quan Nghiá»‡p vá»¥)
+Trong ná»n kinh táº¿ SaaS hiá»‡n Ä‘áº¡i, Ä‘áº·c biá»‡t vá»›i triáº¿t lĂ½ **Product-Led Growth (PLG)**, má»¥c tiĂªu cá»§a há»‡ thá»‘ng tĂ­nh phĂ­ khĂ´ng pháº£i lĂ  táº¡o ra rĂ o cáº£n (Paywalls) ngay tá»« Ä‘áº§u, mĂ  lĂ  Ä‘á»“ng hĂ nh cĂ¹ng sá»± phĂ¡t triá»ƒn cá»§a khĂ¡ch hĂ ng.
+PhĂ¢n há»‡ **Subscription & Billing Management** cá»§a PronaFlow Ä‘Æ°á»£c thiáº¿t káº¿ vá»›i tÆ° duy: **"Free to Start, Pay to Scale"**.
+1. **GĂ³i Free (Starter):** Cung cáº¥p tráº£i nghiá»‡m quáº£n lĂ½ dá»± Ă¡n **trá»n váº¹n** (Full Features) cho cĂ¡c nhu cáº§u cÆ¡ báº£n. NgÆ°á»i dĂ¹ng khĂ´ng bá»‹ cáº¯t giáº£m cĂ¡c tĂ­nh nÄƒng cá»‘t lĂµi nhÆ° Kanban, Gantt, hay Collaboration. Giá»›i háº¡n chá»‰ náº±m á»Ÿ **tĂ i nguyĂªn tiĂªu thá»¥** (Storage, AI Tokens) vĂ  **pháº¡m vi quáº£n trá»‹** (SSO, Audit Log dĂ i háº¡n).
+2. **CÆ¡ cháº¿ Dual-Layer Billing:**
+    - **Inbound:** Quáº£n lĂ½ Ä‘Äƒng kĂ½ gĂ³i cÆ°á»›c linh hoáº¡t, há»— trá»£ tá»± Ä‘á»™ng nĂ¢ng cáº¥p khi quy mĂ´ team má»Ÿ rá»™ng.
+    - **Outbound (Work-to-Cash):** Biáº¿n PronaFlow thĂ nh cĂ´ng cá»¥ kiáº¿m tiá»n cho Freelancer/Agency báº±ng cĂ¡ch xuáº¥t hĂ³a Ä‘Æ¡n tá»« Timesheet.
 # 2. User Stories & Acceptance Criteria
-## 2.1. Feature: Seamless Scaling (Nâng cấp mở rộng liền mạch)
+## 2.1. Feature: Seamless Scaling (NĂ¢ng cáº¥p má»Ÿ rá»™ng liá»n máº¡ch)
 ### User Story 13.1
-Là một **Workspace Owner (Gói Free)**, tôi muốn hệ thống cảnh báo nhẹ nhàng khi tôi sắp đạt giới hạn tài nguyên (Dung lượng/Số lượng dự án) thay vì khóa cứng tính năng ngay lập tức, và cho phép tôi nâng cấp nhanh chóng để tiếp tục mạch làm việc.
+LĂ  má»™t **Workspace Owner (GĂ³i Free)**, tĂ´i muá»‘n há»‡ thá»‘ng cáº£nh bĂ¡o nháº¹ nhĂ ng khi tĂ´i sáº¯p Ä‘áº¡t giá»›i háº¡n tĂ i nguyĂªn (Dung lÆ°á»£ng/Sá»‘ lÆ°á»£ng dá»± Ă¡n) thay vĂ¬ khĂ³a cá»©ng tĂ­nh nÄƒng ngay láº­p tá»©c, vĂ  cho phĂ©p tĂ´i nĂ¢ng cáº¥p nhanh chĂ³ng Ä‘á»ƒ tiáº¿p tá»¥c máº¡ch lĂ m viá»‡c.
 ### Acceptance Criteria (#AC)
-#### **AC 1 - Soft Limit Warning (Cảnh báo mềm):**
-- **Trigger:** Khi tài nguyên đạt 80% và 90% (Ví dụ: Đã dùng 2.7/3 Dự án hoặc 900MB/1GB Storage).
-- **Display:** Hiển thị thanh trạng thái sử dụng (Usage Bar) màu vàng/cam trên Dashboard hoặc Settings. Gửi email nhắc nhở "Workspace của bạn đang phát triển rất nhanh!".
-#### **AC 2 - Graceful Enforcement (Cưỡng chế ân hạn):**
-- **Scenario:** Người dùng đạt 100% giới hạn Projects.
-- **Action:** Hệ thống **KHÔNG** khóa quyền truy cập các dự án cũ. Hệ thống chỉ tạm thời vô hiệu hóa nút "Create New Project" cho đến khi nâng cấp hoặc lưu trữ (Archive) bớt dự án cũ.
-- **Philosophy:** Đảm bảo người dùng luôn xử lý được công việc hiện tại, không bao giờ bị "bắt làm con tin" về dữ liệu.
-#### **AC 3 - Instant Upgrade (Nâng cấp tức thì):**
-- Hỗ trợ nâng cấp gói Pro ngay trong luồng công việc (Contextual Upgrade) mà không cần tải lại trang hay đăng nhập lại. Các giới hạn (Quota) được mở rộng ngay lập tức sau khi thanh toán thành công (Webhook trigger).
-## 2.2. Feature: Feature Gating for Power Users (Phân cấp tính năng nâng cao)
+#### **AC 1 - Soft Limit Warning (Cáº£nh bĂ¡o má»m):**
+- **Trigger:** Khi tĂ i nguyĂªn Ä‘áº¡t 80% vĂ  90% (VĂ­ dá»¥: ÄĂ£ dĂ¹ng 2.7/3 Dá»± Ă¡n hoáº·c 900MB/1GB Storage).
+- **Display:** Hiá»ƒn thá»‹ thanh tráº¡ng thĂ¡i sá»­ dá»¥ng (Usage Bar) mĂ u vĂ ng/cam trĂªn Dashboard hoáº·c Settings. Gá»­i email nháº¯c nhá»Ÿ "Workspace cá»§a báº¡n Ä‘ang phĂ¡t triá»ƒn ráº¥t nhanh!".
+#### **AC 2 - Graceful Enforcement (CÆ°á»¡ng cháº¿ Ă¢n háº¡n):**
+- **Scenario:** NgÆ°á»i dĂ¹ng Ä‘áº¡t 100% giá»›i háº¡n Projects.
+- **Action:** Há»‡ thá»‘ng **KHĂ”NG** khĂ³a quyá»n truy cáº­p cĂ¡c dá»± Ă¡n cÅ©. Há»‡ thá»‘ng chá»‰ táº¡m thá»i vĂ´ hiá»‡u hĂ³a nĂºt "Create New Project" cho Ä‘áº¿n khi nĂ¢ng cáº¥p hoáº·c lÆ°u trá»¯ (Archive) bá»›t dá»± Ă¡n cÅ©.
+- **Philosophy:** Äáº£m báº£o ngÆ°á»i dĂ¹ng luĂ´n xá»­ lĂ½ Ä‘Æ°á»£c cĂ´ng viá»‡c hiá»‡n táº¡i, khĂ´ng bao giá» bá»‹ "báº¯t lĂ m con tin" vá» dá»¯ liá»‡u.
+#### **AC 3 - Instant Upgrade (NĂ¢ng cáº¥p tá»©c thĂ¬):**
+- Há»— trá»£ nĂ¢ng cáº¥p gĂ³i Pro ngay trong luá»“ng cĂ´ng viá»‡c (Contextual Upgrade) mĂ  khĂ´ng cáº§n táº£i láº¡i trang hay Ä‘Äƒng nháº­p láº¡i. CĂ¡c giá»›i háº¡n (Quota) Ä‘Æ°á»£c má»Ÿ rá»™ng ngay láº­p tá»©c sau khi thanh toĂ¡n thĂ nh cĂ´ng (Webhook trigger).
+## 2.2. Feature: Feature Gating for Power Users (PhĂ¢n cáº¥p tĂ­nh nÄƒng nĂ¢ng cao)
 ### User Story 13.2
-Là một **Doanh nghiệp (Gói Pro)**, tôi muốn sử dụng các tính năng quản trị chuyên sâu như **SSO, Unlimited Audit Logs, và AI Advanced Insights**, để đảm bảo an ninh và tối ưu hóa vận hành cho đội ngũ lớn.
+LĂ  má»™t **Doanh nghiá»‡p (GĂ³i Pro)**, tĂ´i muá»‘n sá»­ dá»¥ng cĂ¡c tĂ­nh nÄƒng quáº£n trá»‹ chuyĂªn sĂ¢u nhÆ° **SSO, Unlimited Audit Logs, vĂ  AI Advanced Insights**, Ä‘á»ƒ Ä‘áº£m báº£o an ninh vĂ  tá»‘i Æ°u hĂ³a váº­n hĂ nh cho Ä‘á»™i ngÅ© lá»›n.
 ### Acceptance Criteria (#AC)
 #### **AC 1 - Core vs. Power Features:**
 - **Core (Free & Pro):** Task Management, Basic Gantt, Comments, File Sharing, Basic Reports.
 - **Power (Pro Only):**
-	- Custom Field nâng cao (Formula, Relation).
+	- Custom Field nĂ¢ng cao (Formula, Relation).
 	- Advanced AI (Module 10 - Auto Schedule, Risk Prediction).
-	- Data Retention vĩnh viễn (Free chỉ lưu Audit Log 90 ngày - theo Module 8).
-#### **AC 2 - Teaser Experience (Trải nghiệm thử):**
-- Cho phép người dùng Free dùng thử tính năng Pro (ví dụ: AI Prediction) với số lượng giới hạn (5 lần/tháng) để họ thấy giá trị trước khi mua.
-## 2.3. Feature: Freelancer Invoicing (Hóa đơn đầu ra)
+	- Data Retention vÄ©nh viá»…n (Free chá»‰ lÆ°u Audit Log 90 ngĂ y - theo Module 8).
+#### **AC 2 - Teaser Experience (Tráº£i nghiá»‡m thá»­):**
+- Cho phĂ©p ngÆ°á»i dĂ¹ng Free dĂ¹ng thá»­ tĂ­nh nÄƒng Pro (vĂ­ dá»¥: AI Prediction) vá»›i sá»‘ lÆ°á»£ng giá»›i háº¡n (5 láº§n/thĂ¡ng) Ä‘á»ƒ há» tháº¥y giĂ¡ trá»‹ trÆ°á»›c khi mua.
+## 2.3. Feature: Freelancer Invoicing (HĂ³a Ä‘Æ¡n Ä‘áº§u ra)
 ### User Story 13.3
-Là một **Freelancer (Sử dụng cả Free/Pro)**, tôi muốn chuyển đổi dữ liệu chấm công (Timesheet) thành hóa đơn PDF chuyên nghiệp để gửi cho khách hàng, với khả năng tùy chỉnh thương hiệu.
+LĂ  má»™t **Freelancer (Sá»­ dá»¥ng cáº£ Free/Pro)**, tĂ´i muá»‘n chuyá»ƒn Ä‘á»•i dá»¯ liá»‡u cháº¥m cĂ´ng (Timesheet) thĂ nh hĂ³a Ä‘Æ¡n PDF chuyĂªn nghiá»‡p Ä‘á»ƒ gá»­i cho khĂ¡ch hĂ ng, vá»›i kháº£ nÄƒng tĂ¹y chá»‰nh thÆ°Æ¡ng hiá»‡u.
 ### Acceptance Criteria (#AC)
-#### **AC 1 - Basic Invoicing (Dành cho mọi người):**
-- Cho phép chọn các Time Entries đã duyệt -> Tạo PDF hóa đơn cơ bản.
-- Mẫu hóa đơn tiêu chuẩn của PronaFlow.
-#### **AC 2 - Branded Invoicing (Dành cho Pro):**
-- Cho phép tải lên Logo riêng, chỉnh sửa màu sắc Brand, bỏ dòng chữ "Powered by PronaFlow".
-- Hỗ trợ gửi Email hóa đơn trực tiếp từ hệ thống với SMTP riêng.
+#### **AC 1 - Basic Invoicing (DĂ nh cho má»i ngÆ°á»i):**
+- Cho phĂ©p chá»n cĂ¡c Time Entries Ä‘Ă£ duyá»‡t -> Táº¡o PDF hĂ³a Ä‘Æ¡n cÆ¡ báº£n.
+- Máº«u hĂ³a Ä‘Æ¡n tiĂªu chuáº©n cá»§a PronaFlow.
+#### **AC 2 - Branded Invoicing (DĂ nh cho Pro):**
+- Cho phĂ©p táº£i lĂªn Logo riĂªng, chá»‰nh sá»­a mĂ u sáº¯c Brand, bá» dĂ²ng chá»¯ "Powered by PronaFlow".
+- Há»— trá»£ gá»­i Email hĂ³a Ä‘Æ¡n trá»±c tiáº¿p tá»« há»‡ thá»‘ng vá»›i SMTP riĂªng.
 #### **AC 3 - Payment Tracking:**
-- Cho phép đánh dấu hóa đơn là `Sent`, `Paid`, `Overdue` thủ công.
-## 2.4. Feature: Transparent Usage Dashboard (Bảng theo dõi minh bạch)
+- Cho phĂ©p Ä‘Ă¡nh dáº¥u hĂ³a Ä‘Æ¡n lĂ  `Sent`, `Paid`, `Overdue` thá»§ cĂ´ng.
+## 2.4. Feature: Transparent Usage Dashboard (Báº£ng theo dĂµi minh báº¡ch)
 ### User Story 13.4
-Là một **Admin**, tôi muốn xem chi tiết mức độ tiêu thụ tài nguyên (Storage, AI Tokens, API Calls) theo thời gian thực, để hiểu rõ tôi đang trả tiền cho cái gì hoặc khi nào cần dọn dẹp dữ liệu.
+LĂ  má»™t **Admin**, tĂ´i muá»‘n xem chi tiáº¿t má»©c Ä‘á»™ tiĂªu thá»¥ tĂ i nguyĂªn (Storage, AI Tokens, API Calls) theo thá»i gian thá»±c, Ä‘á»ƒ hiá»ƒu rĂµ tĂ´i Ä‘ang tráº£ tiá»n cho cĂ¡i gĂ¬ hoáº·c khi nĂ o cáº§n dá»n dáº¹p dá»¯ liá»‡u.
 ### Acceptance Criteria (#AC)
 #### **AC 1 - Resource Breakdown:**
-- Biểu đồ Donut chart hiển thị dung lượng Storage: Files (80%), Database (10%), Backups (10%).
-- Danh sách các "Heavy Projects" chiếm nhiều tài nguyên nhất.
+- Biá»ƒu Ä‘á»“ Donut chart hiá»ƒn thá»‹ dung lÆ°á»£ng Storage: Files (80%), Database (10%), Backups (10%).
+- Danh sĂ¡ch cĂ¡c "Heavy Projects" chiáº¿m nhiá»u tĂ i nguyĂªn nháº¥t.
 #### **AC 2 - AI Token Usage:**
-- Hiển thị số lượng Token đã dùng cho các tính năng AI (Gợi ý, Tóm tắt).
-- Nếu là gói Free: Hiển thị số Token còn lại trong tháng (Quota reset định kỳ).
+- Hiá»ƒn thá»‹ sá»‘ lÆ°á»£ng Token Ä‘Ă£ dĂ¹ng cho cĂ¡c tĂ­nh nÄƒng AI (Gá»£i Ă½, TĂ³m táº¯t).
+- Náº¿u lĂ  gĂ³i Free: Hiá»ƒn thá»‹ sá»‘ Token cĂ²n láº¡i trong thĂ¡ng (Quota reset Ä‘á»‹nh ká»³).
 # 3. Business Rules & Technical Constraints
-## 3.1. Quy tắc Dunning (Quản lý thu nợ tự động)
-- **Retry Logic:** Nếu thanh toán gia hạn thất bại (do hết hạn thẻ, không đủ số dư), hệ thống tự động thử lại (Retry) theo lịch trình: Ngày 1, Ngày 3, Ngày 7.
-- **Grace Period:** Cho phép người dùng tiếp tục sử dụng dịch vụ trong 7 ngày ân hạn (Grace Period) trước khi khóa quyền truy cập (Downgrade to Read-only).
-## 3.2. Quy tắc Bất biến Tài chính (Financial Immutability)
-- **Immutable Invoices:** Một khi hóa đơn đã được gửi đi (Sent) hoặc đã thanh toán (Paid), nội dung của nó **KHÔNG** được phép chỉnh sửa.
-- Nếu có sai sót, người dùng phải thực hiện quy trình: Hủy hóa đơn cũ (Void) -> Tạo hóa đơn mới (New Invoice) hoặc tạo Credit Note (Giấy báo có).
-## 3.3. Quy tắc Thuế (Tax Compliance)
-- Hệ thống phải hỗ trợ tính thuế tự động dựa trên địa chỉ của người mua (Buyer's Location) để tuân thủ luật VAT (Châu Âu) hoặc Sales Tax (Mỹ).
-- Tích hợp các service tính thuế (như Stripe Tax hoặc Avalara) nếu cần thiết.
-# 4. Theoretical Basis (Cơ sở Lý luận)
+## 3.1. Quy táº¯c Dunning (Quáº£n lĂ½ thu ná»£ tá»± Ä‘á»™ng)
+- **Retry Logic:** Náº¿u thanh toĂ¡n gia háº¡n tháº¥t báº¡i (do háº¿t háº¡n tháº», khĂ´ng Ä‘á»§ sá»‘ dÆ°), há»‡ thá»‘ng tá»± Ä‘á»™ng thá»­ láº¡i (Retry) theo lá»‹ch trĂ¬nh: NgĂ y 1, NgĂ y 3, NgĂ y 7.
+- **Grace Period:** Cho phĂ©p ngÆ°á»i dĂ¹ng tiáº¿p tá»¥c sá»­ dá»¥ng dá»‹ch vá»¥ trong 7 ngĂ y Ă¢n háº¡n (Grace Period) trÆ°á»›c khi khĂ³a quyá»n truy cáº­p (Downgrade to Read-only).
+## 3.2. Quy táº¯c Báº¥t biáº¿n TĂ i chĂ­nh (Financial Immutability)
+- **Immutable Invoices:** Má»™t khi hĂ³a Ä‘Æ¡n Ä‘Ă£ Ä‘Æ°á»£c gá»­i Ä‘i (Sent) hoáº·c Ä‘Ă£ thanh toĂ¡n (Paid), ná»™i dung cá»§a nĂ³ **KHĂ”NG** Ä‘Æ°á»£c phĂ©p chá»‰nh sá»­a.
+- Náº¿u cĂ³ sai sĂ³t, ngÆ°á»i dĂ¹ng pháº£i thá»±c hiá»‡n quy trĂ¬nh: Há»§y hĂ³a Ä‘Æ¡n cÅ© (Void) -> Táº¡o hĂ³a Ä‘Æ¡n má»›i (New Invoice) hoáº·c táº¡o Credit Note (Giáº¥y bĂ¡o cĂ³).
+## 3.3. Quy táº¯c Thuáº¿ (Tax Compliance)
+- Há»‡ thá»‘ng pháº£i há»— trá»£ tĂ­nh thuáº¿ tá»± Ä‘á»™ng dá»±a trĂªn Ä‘á»‹a chá»‰ cá»§a ngÆ°á»i mua (Buyer's Location) Ä‘á»ƒ tuĂ¢n thá»§ luáº­t VAT (ChĂ¢u Ă‚u) hoáº·c Sales Tax (Má»¹).
+- TĂ­ch há»£p cĂ¡c service tĂ­nh thuáº¿ (nhÆ° Stripe Tax hoáº·c Avalara) náº¿u cáº§n thiáº¿t.
+# 4. Theoretical Basis (CÆ¡ sá»Ÿ LĂ½ luáº­n)
 
-## 4.1. Nguyên lý Kế toán Kép (Double-Entry Bookkeeping)
-Mặc dù PronaFlow không phải là phần mềm kế toán chuyên sâu (như QuickBooks), module này vẫn áp dụng tư duy kế toán kép ở tầng dữ liệu (Ledger) để đảm bảo tính toàn vẹn:
-- Mỗi giao dịch ghi nhận doanh thu phải có một bút toán đối ứng vào tài khoản phải thu (Accounts Receivable) hoặc tiền mặt (Cash).
-- Công thức: $Assets = Liabilities + Equity$.
-## 4.2. Mô hình Định giá SaaS (SaaS Pricing Models)
-PronaFlow hỗ trợ mô hình **Per-User Pricing** (Tính tiền theo đầu người) kết hợp **Tiered Pricing** (Phân tầng).
-- Đây là mô hình phổ biến nhất trong B2B SaaS vì tính dễ hiểu và khả năng mở rộng doanh thu tuyến tính theo sự phát triển của khách hàng (Scale with usage).
-## 4.3. Bảo mật Giao dịch (Transaction Security & Idempotency)
-Để ngăn chặn lỗi "Double Charge" (Trừ tiền 2 lần) trong môi trường mạng không ổn định, Module áp dụng **Idempotency Keys**:
-- Mỗi request thanh toán gửi đi đều kèm theo một Key duy nhất (UUID).
-- Nếu Client gửi lại request (do timeout), Server kiểm tra Key này. Nếu đã xử lý, Server trả về kết quả cũ mà không thực hiện trừ tiền lần 2.
+## 4.1. NguyĂªn lĂ½ Káº¿ toĂ¡n KĂ©p (Double-Entry Bookkeeping)
+Máº·c dĂ¹ PronaFlow khĂ´ng pháº£i lĂ  pháº§n má»m káº¿ toĂ¡n chuyĂªn sĂ¢u (nhÆ° QuickBooks), module nĂ y váº«n Ă¡p dá»¥ng tÆ° duy káº¿ toĂ¡n kĂ©p á»Ÿ táº§ng dá»¯ liá»‡u (Ledger) Ä‘á»ƒ Ä‘áº£m báº£o tĂ­nh toĂ n váº¹n:
+- Má»—i giao dá»‹ch ghi nháº­n doanh thu pháº£i cĂ³ má»™t bĂºt toĂ¡n Ä‘á»‘i á»©ng vĂ o tĂ i khoáº£n pháº£i thu (Accounts Receivable) hoáº·c tiá»n máº·t (Cash).
+- CĂ´ng thá»©c: $Assets = Liabilities + Equity$.
+## 4.2. MĂ´ hĂ¬nh Äá»‹nh giĂ¡ SaaS (SaaS Pricing Models)
+PronaFlow há»— trá»£ mĂ´ hĂ¬nh **Per-User Pricing** (TĂ­nh tiá»n theo Ä‘áº§u ngÆ°á»i) káº¿t há»£p **Tiered Pricing** (PhĂ¢n táº§ng).
+- ÄĂ¢y lĂ  mĂ´ hĂ¬nh phá»• biáº¿n nháº¥t trong B2B SaaS vĂ¬ tĂ­nh dá»… hiá»ƒu vĂ  kháº£ nÄƒng má»Ÿ rá»™ng doanh thu tuyáº¿n tĂ­nh theo sá»± phĂ¡t triá»ƒn cá»§a khĂ¡ch hĂ ng (Scale with usage).
+## 4.3. Báº£o máº­t Giao dá»‹ch (Transaction Security & Idempotency)
+Äá»ƒ ngÄƒn cháº·n lá»—i "Double Charge" (Trá»« tiá»n 2 láº§n) trong mĂ´i trÆ°á»ng máº¡ng khĂ´ng á»•n Ä‘á»‹nh, Module Ă¡p dá»¥ng **Idempotency Keys**:
+- Má»—i request thanh toĂ¡n gá»­i Ä‘i Ä‘á»u kĂ¨m theo má»™t Key duy nháº¥t (UUID).
+- Náº¿u Client gá»­i láº¡i request (do timeout), Server kiá»ƒm tra Key nĂ y. Náº¿u Ä‘Ă£ xá»­ lĂ½, Server tráº£ vá» káº¿t quáº£ cÅ© mĂ  khĂ´ng thá»±c hiá»‡n trá»« tiá»n láº§n 2.
 
 ```mermaid
 stateDiagram-v2
@@ -115,12 +115,12 @@ stateDiagram-v2
     Downgraded --> FreeTier: Revert to Free Limits
     
     note right of HardLimit
-        Người dùng vẫn xem/sửa dữ liệu cũ.
-        Chỉ chặn tạo mới (Create Block).
+        NgÆ°á»i dĂ¹ng váº«n xem/sá»­a dá»¯ liá»‡u cÅ©.
+        Chá»‰ cháº·n táº¡o má»›i (Create Block).
     end note
 
     note right of GracePeriod
-        Vẫn giữ full tính năng Pro.
-        Hiển thị cảnh báo thanh toán đỏ.
+        Váº«n giá»¯ full tĂ­nh nÄƒng Pro.
+        Hiá»ƒn thá»‹ cáº£nh bĂ¡o thanh toĂ¡n Ä‘á».
     end note
 ```

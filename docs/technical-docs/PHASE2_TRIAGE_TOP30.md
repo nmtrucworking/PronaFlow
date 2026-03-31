@@ -25,7 +25,7 @@ This list is the first migration batch from shared-path matches, with suggested 
 | 17 | 01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md |
 | 18 | 01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md |
 | 19 | 01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md |
-| 20 | 01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md |
+| 20 | 01-Requirements/Functional-Modules/7 - Event-Driven Notification System.md | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/7 - Event-Driven Notification System.md |
 | 21 | 01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md |
 | 22 | 01-Requirements/Functional-Modules/9 - User Experience Personalization.md | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/9 - User Experience Personalization.md |
 | 23 | 01-Requirements/Functional-Modules/PronaFlow_Admin_Roles.xlsx | P2 | Shared | Product + Domain Leads | Backend Lead + Frontend Lead | docs/technical-docs/01-Requirements/Functional-Modules/PronaFlow_Admin_Roles.xlsx |
@@ -47,3 +47,4 @@ This list is the first migration batch from shared-path matches, with suggested 
 
 - Suggested owners and reviewers are initial routing proposals and can be adjusted by team leads.
 - Canonical target paths assume normalized naming under docs/technical-docs/.
+

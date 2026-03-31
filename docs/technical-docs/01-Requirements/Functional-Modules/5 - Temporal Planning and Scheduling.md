@@ -1,458 +1,458 @@
-**Project**: PronaFlow 
+﻿**Project**: PronaFlow 
 **Version**: 1.1 
 **State**: Draft 
 *Last updated: Jan 04, 2026*
 
 ---
 # 1. Business Overview
-Module này đại diện cho phân hệ "Planning" (Hoạch định Dự án) chuyên sâu của dự án. Khác với việc quản lý thực thi hàng ngày (Task Execution - Module 4), module này tập truung vào tầm nhìn dài hạn và sự phụ thuộc giữa các đầu việc.
-**Triết lý Thiết kế**: "***Optional & Scalable***": Hệ thống PronaFlow tôn trọng quy mô của từng dự án. Không phải dự án nào cũng cần biểu đồ Gantt phức tạp hay cơ chế tính toán lịch trình.
-- **Đối với dựa án nhỏ** (**Simple/Agile**): Người dùng có thể bỏ qua module này. Họ chỉ cần tạo Task List, Task và Subtask (như Module 3&4 trình bày) để quản lý Dựa án đơn giản và gọn nhẹ.
-- **Đối với Dự án lớn** (**Waterfall/Hybrid**): Project Leader có thể kích hợp chế độ "Planning". Khi đó, Project Leader có thể thực hiện các tác vụ hoạch định dự án, như Gantt Chart, Resource Balancing và SLA Tracking.
+Module nĂ y Ä‘áº¡i diá»‡n cho phĂ¢n há»‡ "Planning" (Hoáº¡ch Ä‘á»‹nh Dá»± Ă¡n) chuyĂªn sĂ¢u cá»§a dá»± Ă¡n. KhĂ¡c vá»›i viá»‡c quáº£n lĂ½ thá»±c thi hĂ ng ngĂ y (Task Execution - Module 4), module nĂ y táº­p truung vĂ o táº§m nhĂ¬n dĂ i háº¡n vĂ  sá»± phá»¥ thuá»™c giá»¯a cĂ¡c Ä‘áº§u viá»‡c.
+**Triáº¿t lĂ½ Thiáº¿t káº¿**: "***Optional & Scalable***": Há»‡ thá»‘ng PronaFlow tĂ´n trá»ng quy mĂ´ cá»§a tá»«ng dá»± Ă¡n. KhĂ´ng pháº£i dá»± Ă¡n nĂ o cÅ©ng cáº§n biá»ƒu Ä‘á»“ Gantt phá»©c táº¡p hay cÆ¡ cháº¿ tĂ­nh toĂ¡n lá»‹ch trĂ¬nh.
+- **Äá»‘i vá»›i dá»±a Ă¡n nhá»** (**Simple/Agile**): NgÆ°á»i dĂ¹ng cĂ³ thá»ƒ bá» qua module nĂ y. Há» chá»‰ cáº§n táº¡o Task List, Task vĂ  Subtask (nhÆ° Module 3&4 trĂ¬nh bĂ y) Ä‘á»ƒ quáº£n lĂ½ Dá»±a Ă¡n Ä‘Æ¡n giáº£n vĂ  gá»n nháº¹.
+- **Äá»‘i vá»›i Dá»± Ă¡n lá»›n** (**Waterfall/Hybrid**): Project Leader cĂ³ thá»ƒ kĂ­ch há»£p cháº¿ Ä‘á»™ "Planning". Khi Ä‘Ă³, Project Leader cĂ³ thá»ƒ thá»±c hiá»‡n cĂ¡c tĂ¡c vá»¥ hoáº¡ch Ä‘á»‹nh dá»± Ă¡n, nhÆ° Gantt Chart, Resource Balancing vĂ  SLA Tracking.
 # 2. User Stories & Acceptance Criteria
 
-## 2.1. Feature: Interactive Gantt Chart (Biểu đồ Gantt tương tác)
+## 2.1. Feature: Interactive Gantt Chart (Biá»ƒu Ä‘á»“ Gantt tÆ°Æ¡ng tĂ¡c)
 ### User Story 5.1
-Là một Project Manager, Tôi muốn trực quan hóa lịch trình dự án trên biểu đồ Gantt và thao tác kéo thả, Để nhìn thấy bức tranh tổng thể và điều chỉnh kế hoạch nhanh chóng.
+LĂ  má»™t Project Manager, TĂ´i muá»‘n trá»±c quan hĂ³a lá»‹ch trĂ¬nh dá»± Ă¡n trĂªn biá»ƒu Ä‘á»“ Gantt vĂ  thao tĂ¡c kĂ©o tháº£, Äá»ƒ nhĂ¬n tháº¥y bá»©c tranh tá»•ng thá»ƒ vĂ  Ä‘iá»u chá»‰nh káº¿ hoáº¡ch nhanh chĂ³ng.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Visualization Elements
-- **Timeline:** Trục hoành hiển thị thời gian (Zoom level: Day, Week, Month, Quarter).
+- **Timeline:** Trá»¥c hoĂ nh hiá»ƒn thá»‹ thá»i gian (Zoom level: Day, Week, Month, Quarter).
 - **Task Bars:**
-    - Độ dài thanh = `Duration` (Start -> End).
-    - Màu sắc thể hiện `Status` (Xanh: Done, Lam: In-progress).
-    - Hiển thị `% Progress` lấp đầy bên trong thanh task.
-- **Milestones:** Hiển thị các Task có cờ `Is Milestone = True` (từ Module 4) dưới dạng hình thoi (Diamond) màu vàng/đỏ.
-#### AC 2 - Interaction (Kéo thả thông minh)
-- **Move:** Kéo cả thanh Task để dời ngày (Shift Dates).
-- **Resize:** Kéo cạnh phải để tăng/giảm `Duration`.
-- **Constraint:** Nếu Task có Subtasks, thanh Task cha chỉ là bao hình (Wrapper), không thể kéo thả trực tiếp (Thời gian Task cha tự động = Min Start -> Max End của con).
+    - Äá»™ dĂ i thanh = `Duration` (Start -> End).
+    - MĂ u sáº¯c thá»ƒ hiá»‡n `Status` (Xanh: Done, Lam: In-progress).
+    - Hiá»ƒn thá»‹ `% Progress` láº¥p Ä‘áº§y bĂªn trong thanh task.
+- **Milestones:** Hiá»ƒn thá»‹ cĂ¡c Task cĂ³ cá» `Is Milestone = True` (tá»« Module 4) dÆ°á»›i dáº¡ng hĂ¬nh thoi (Diamond) mĂ u vĂ ng/Ä‘á».
+#### AC 2 - Interaction (KĂ©o tháº£ thĂ´ng minh)
+- **Move:** KĂ©o cáº£ thanh Task Ä‘á»ƒ dá»i ngĂ y (Shift Dates).
+- **Resize:** KĂ©o cáº¡nh pháº£i Ä‘á»ƒ tÄƒng/giáº£m `Duration`.
+- **Constraint:** Náº¿u Task cĂ³ Subtasks, thanh Task cha chá»‰ lĂ  bao hĂ¬nh (Wrapper), khĂ´ng thá»ƒ kĂ©o tháº£ trá»±c tiáº¿p (Thá»i gian Task cha tá»± Ä‘á»™ng = Min Start -> Max End cá»§a con).
 
 ## 2.2. Feature: Auto-Scheduling & Dependencies Impact
 ### User Story 5.2
-Là một PM, Tôi muốn hệ thống tự động tính toán lại lịch trình khi có thay đổi, Để đảm bảo các ràng buộc phụ thuộc (Dependency) luôn được tuân thủ mà không cần chỉnh sửa thủ công hàng trăm task.
+LĂ  má»™t PM, TĂ´i muá»‘n há»‡ thá»‘ng tá»± Ä‘á»™ng tĂ­nh toĂ¡n láº¡i lá»‹ch trĂ¬nh khi cĂ³ thay Ä‘á»•i, Äá»ƒ Ä‘áº£m báº£o cĂ¡c rĂ ng buá»™c phá»¥ thuá»™c (Dependency) luĂ´n Ä‘Æ°á»£c tuĂ¢n thá»§ mĂ  khĂ´ng cáº§n chá»‰nh sá»­a thá»§ cĂ´ng hĂ ng trÄƒm task.
 ### Acceptance Criteria ( #AC)
-#### AC 1 - Cascade Updates (Cập nhật dây chuyền)
-- **Scenario:** Task A (Predecessor) bị trễ 2 ngày.
+#### AC 1 - Cascade Updates (Cáº­p nháº­t dĂ¢y chuyá»n)
+- **Scenario:** Task A (Predecessor) bá»‹ trá»… 2 ngĂ y.
 - **System Action:**
-    - Tự động dời `Start Date` của Task B (Successor - quan hệ FS) lùi lại 2 ngày.
-    - Tiếp tục dời Task C (Successor của B).
+    - Tá»± Ä‘á»™ng dá»i `Start Date` cá»§a Task B (Successor - quan há»‡ FS) lĂ¹i láº¡i 2 ngĂ y.
+    - Tiáº¿p tá»¥c dá»i Task C (Successor cá»§a B).
 #### AC 2 - Conflict Highlighting
-- Nếu việc dời lịch làm vi phạm `Hard Deadline` của Dự án hoặc Task cha, hệ thống hiển thị đường gạch chéo đỏ (Red Hash) trên vùng bị vi phạm và hiện cảnh báo: "Schedule Conflict".
-#### AC 3 - Scheduling Mode (Chế độ lập lịch)
-- Cho phép thiết lập trên từng Task:
-    - **Auto-scheduled:** Tự động trôi theo Task trước (Mặc định).
-    - **Manually-scheduled (Pinned):** Cố định ngày, không bị ảnh hưởng bởi Auto-scheduling. Hiển thị icon "Cái ghim" trên thanh Task.
+- Náº¿u viá»‡c dá»i lá»‹ch lĂ m vi pháº¡m `Hard Deadline` cá»§a Dá»± Ă¡n hoáº·c Task cha, há»‡ thá»‘ng hiá»ƒn thá»‹ Ä‘Æ°á»ng gáº¡ch chĂ©o Ä‘á» (Red Hash) trĂªn vĂ¹ng bá»‹ vi pháº¡m vĂ  hiá»‡n cáº£nh bĂ¡o: "Schedule Conflict".
+#### AC 3 - Scheduling Mode (Cháº¿ Ä‘á»™ láº­p lá»‹ch)
+- Cho phĂ©p thiáº¿t láº­p trĂªn tá»«ng Task:
+    - **Auto-scheduled:** Tá»± Ä‘á»™ng trĂ´i theo Task trÆ°á»›c (Máº·c Ä‘á»‹nh).
+    - **Manually-scheduled (Pinned):** Cá»‘ Ä‘á»‹nh ngĂ y, khĂ´ng bá»‹ áº£nh hÆ°á»Ÿng bá»Ÿi Auto-scheduling. Hiá»ƒn thá»‹ icon "CĂ¡i ghim" trĂªn thanh Task.
 #### AC 4 - Lag & Lead Time Configuration
-- **Interaction:** Khi click đúp vào đường nối (Dependency Line) giữa 2 Task, hiển thị Modal/Popover cấu hình.
-- **Input:** Cho phép nhập số ngày lệch (Offset Days).
-    - Số dương (+2d): **Lag Time** (Chờ 2 ngày).
-    - Số âm (-1d): **Lead Time** (Làm sớm 1 ngày trước khi việc trước kết thúc).
+- **Interaction:** Khi click Ä‘Ăºp vĂ o Ä‘Æ°á»ng ná»‘i (Dependency Line) giá»¯a 2 Task, hiá»ƒn thá»‹ Modal/Popover cáº¥u hĂ¬nh.
+- **Input:** Cho phĂ©p nháº­p sá»‘ ngĂ y lá»‡ch (Offset Days).
+    - Sá»‘ dÆ°Æ¡ng (+2d): **Lag Time** (Chá» 2 ngĂ y).
+    - Sá»‘ Ă¢m (-1d): **Lead Time** (LĂ m sá»›m 1 ngĂ y trÆ°á»›c khi viá»‡c trÆ°á»›c káº¿t thĂºc).
 - **Calculation:** $Start(B) = End(A) + Offset$.
-## 2.3. Feature: Critical Path Analysis (Phân tích Đường găng)
+## 2.3. Feature: Critical Path Analysis (PhĂ¢n tĂ­ch ÄÆ°á»ng gÄƒng)
 ### User Story 5.3
-Là một PM, Tôi muốn biết những công việc nào là quan trọng nhất quyết định thời gian hoàn thành dự án, Để tôi tập trung nguồn lực vào đó và không để chúng bị trễ.
+LĂ  má»™t PM, TĂ´i muá»‘n biáº¿t nhá»¯ng cĂ´ng viá»‡c nĂ o lĂ  quan trá»ng nháº¥t quyáº¿t Ä‘á»‹nh thá»i gian hoĂ n thĂ nh dá»± Ă¡n, Äá»ƒ tĂ´i táº­p trung nguá»“n lá»±c vĂ o Ä‘Ă³ vĂ  khĂ´ng Ä‘á»ƒ chĂºng bá»‹ trá»….
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Highlight Critical Path
-- **Toggle:** Có nút bật/tắt "Show Critical Path".
-- **Visual:** Khi bật, hệ thống tô viền đỏ đậm cho các Task nằm trên đường găng (Tasks có `Total Float = 0`).
+- **Toggle:** CĂ³ nĂºt báº­t/táº¯t "Show Critical Path".
+- **Visual:** Khi báº­t, há»‡ thá»‘ng tĂ´ viá»n Ä‘á» Ä‘áº­m cho cĂ¡c Task náº±m trĂªn Ä‘Æ°á»ng gÄƒng (Tasks cĂ³ `Total Float = 0`).
 #### AC 2 - Dynamic Recalculation
-- Khi người dùng rút ngắn thời gian một Task trên đường găng, hệ thống tính toán lại. Nếu đường găng thay đổi sang nhánh khác, cập nhật highlight tức thì.
+- Khi ngÆ°á»i dĂ¹ng rĂºt ngáº¯n thá»i gian má»™t Task trĂªn Ä‘Æ°á»ng gÄƒng, há»‡ thá»‘ng tĂ­nh toĂ¡n láº¡i. Náº¿u Ä‘Æ°á»ng gÄƒng thay Ä‘á»•i sang nhĂ¡nh khĂ¡c, cáº­p nháº­t highlight tá»©c thĂ¬.
 
-## 2.4. Feature: Project Baselines (Vạch cơ sở)
+## 2.4. Feature: Project Baselines (Váº¡ch cÆ¡ sá»Ÿ)
 ### User Story 5.4
-Là một PM, Tôi muốn lưu lại bản kế hoạch ban đầu trước khi dự án chạy, Để sau này so sánh được thực tế đang nhanh hay chậm hơn so với kế hoạch gốc.
+LĂ  má»™t PM, TĂ´i muá»‘n lÆ°u láº¡i báº£n káº¿ hoáº¡ch ban Ä‘áº§u trÆ°á»›c khi dá»± Ă¡n cháº¡y, Äá»ƒ sau nĂ y so sĂ¡nh Ä‘Æ°á»£c thá»±c táº¿ Ä‘ang nhanh hay cháº­m hÆ¡n so vá»›i káº¿ hoáº¡ch gá»‘c.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Create Snapshot
-- **Action:** Chọn "Save Baseline".
-- **System:** Lưu bản sao (Snapshot) của `Start Date`, `End Date`, `Duration` của toàn bộ Task tại thời điểm đó vào bảng `task_baselines`.
+- **Action:** Chá»n "Save Baseline".
+- **System:** LÆ°u báº£n sao (Snapshot) cá»§a `Start Date`, `End Date`, `Duration` cá»§a toĂ n bá»™ Task táº¡i thá»i Ä‘iá»ƒm Ä‘Ă³ vĂ o báº£ng `task_baselines`.
 #### AC 2 - Visual Comparison
-- Trên Gantt Chart, hiển thị 2 thanh song song cho mỗi Task:
-    - **Thanh mờ (Gray bar):** Kế hoạch gốc (Baseline).
-    - **Thanh màu (Colored bar):** Thực tế (Actual).
-- Giúp PM nhìn thấy trực quan độ lệch (Variance).
+- TrĂªn Gantt Chart, hiá»ƒn thá»‹ 2 thanh song song cho má»—i Task:
+    - **Thanh má» (Gray bar):** Káº¿ hoáº¡ch gá»‘c (Baseline).
+    - **Thanh mĂ u (Colored bar):** Thá»±c táº¿ (Actual).
+- GiĂºp PM nhĂ¬n tháº¥y trá»±c quan Ä‘á»™ lá»‡ch (Variance).
 
-## 2.5. Feature: Workload & Resource Balancing (Cân bằng nguồn lực)
+## 2.5. Feature: Workload & Resource Balancing (CĂ¢n báº±ng nguá»“n lá»±c)
 ### User Story 5.5
-Là một PM, Tôi muốn nhìn thấy biểu đồ tải công việc của nhân viên ngay trong lúc lập kế hoạch, Để tránh việc giao quá nhiều việc cho một người trong cùng một ngày (Overallocation).
+LĂ  má»™t PM, TĂ´i muá»‘n nhĂ¬n tháº¥y biá»ƒu Ä‘á»“ táº£i cĂ´ng viá»‡c cá»§a nhĂ¢n viĂªn ngay trong lĂºc láº­p káº¿ hoáº¡ch, Äá»ƒ trĂ¡nh viá»‡c giao quĂ¡ nhiá»u viá»‡c cho má»™t ngÆ°á»i trong cĂ¹ng má»™t ngĂ y (Overallocation).
 ### Acceptance Criteria ( #AC)
 #### AC 1 - Resource Histogram
-- Dưới Gantt Chart có một panel hiển thị biểu đồ cột chồng (Stacked Bar) cho từng nhân sự theo ngày.
-- **Ngưỡng:** Nếu tổng giờ làm việc dự kiến > 8h/ngày -> Cột chuyển màu đỏ (Overload).
+- DÆ°á»›i Gantt Chart cĂ³ má»™t panel hiá»ƒn thá»‹ biá»ƒu Ä‘á»“ cá»™t chá»“ng (Stacked Bar) cho tá»«ng nhĂ¢n sá»± theo ngĂ y.
+- **NgÆ°á»¡ng:** Náº¿u tá»•ng giá» lĂ m viá»‡c dá»± kiáº¿n > 8h/ngĂ y -> Cá»™t chuyá»ƒn mĂ u Ä‘á» (Overload).
 #### AC 2 - Soft Warning
-- Khi gán Task cho User A vào khung giờ họ đã bận, hiển thị Warning: "User A is overloaded on [Date]". Hệ thống vẫn cho phép lưu (Soft Constraint) nhưng cảnh báo rủi ro.
+- Khi gĂ¡n Task cho User A vĂ o khung giá» há» Ä‘Ă£ báº­n, hiá»ƒn thá»‹ Warning: "User A is overloaded on [Date]". Há»‡ thá»‘ng váº«n cho phĂ©p lÆ°u (Soft Constraint) nhÆ°ng cáº£nh bĂ¡o rá»§i ro.
 
-## 2.6. Feature: Calendar View (Giao diện Lịch)
+## 2.6. Feature: Calendar View (Giao diá»‡n Lá»‹ch)
 ### User Story 5.6
-Là một Thành viên, Tôi muốn xem các công việc của mình dưới dạng lịch tháng/tuần, Để dễ hình dung lịch trình cá nhân.
+LĂ  má»™t ThĂ nh viĂªn, TĂ´i muá»‘n xem cĂ¡c cĂ´ng viá»‡c cá»§a mĂ¬nh dÆ°á»›i dáº¡ng lá»‹ch thĂ¡ng/tuáº§n, Äá»ƒ dá»… hĂ¬nh dung lá»‹ch trĂ¬nh cĂ¡ nhĂ¢n.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - View Modes
-- Hỗ trợ xem theo Tháng (Month), Tuần (Week), Ngày (Day).
-- Cho phép lọc: "My Tasks", "Project Tasks".
-#### AC 2 - External Sync (Tích hợp Module 12)
-- Cung cấp link iCal/WebCal để đồng bộ 1 chiều sang Google Calendar/Outlook.
-## 2.7. Feature: SLA Tracking (Theo dõi Cam kết Dịch vụ)
+- Há»— trá»£ xem theo ThĂ¡ng (Month), Tuáº§n (Week), NgĂ y (Day).
+- Cho phĂ©p lá»c: "My Tasks", "Project Tasks".
+#### AC 2 - External Sync (TĂ­ch há»£p Module 12)
+- Cung cáº¥p link iCal/WebCal Ä‘á»ƒ Ä‘á»“ng bá»™ 1 chiá»u sang Google Calendar/Outlook.
+## 2.7. Feature: SLA Tracking (Theo dĂµi Cam káº¿t Dá»‹ch vá»¥)
 ### User Story 5.7
-Là một Quản lý, Tôi muốn thiết lập và theo dõi SLA cho các Task quan trọng, Để đảm bảo đội ngũ không chỉ hoàn thành việc mà còn đáp ứng đúng cam kết về thời gian phản hồi.
+LĂ  má»™t Quáº£n lĂ½, TĂ´i muá»‘n thiáº¿t láº­p vĂ  theo dĂµi SLA cho cĂ¡c Task quan trá»ng, Äá»ƒ Ä‘áº£m báº£o Ä‘á»™i ngÅ© khĂ´ng chá»‰ hoĂ n thĂ nh viá»‡c mĂ  cĂ²n Ä‘Ă¡p á»©ng Ä‘Ăºng cam káº¿t vá» thá»i gian pháº£n há»“i.
 ### Acceptance Criteria ( #AC)
 #### AC 1 - SLA Definition
-- Cho phép định nghĩa `SLA Policy` dựa trên độ ưu tiên (Priority).
-    - _Urgent:_ 4 giờ làm việc.
-    - _High:_ 1 ngày làm việc (8h).
-    - _Normal:_ 3 ngày làm việc.
+- Cho phĂ©p Ä‘á»‹nh nghÄ©a `SLA Policy` dá»±a trĂªn Ä‘á»™ Æ°u tiĂªn (Priority).
+    - _Urgent:_ 4 giá» lĂ m viá»‡c.
+    - _High:_ 1 ngĂ y lĂ m viá»‡c (8h).
+    - _Normal:_ 3 ngĂ y lĂ m viá»‡c.
 #### AC 2 - Business Hours Logic
-- **Calculation:** Bộ đếm thời gian (Timer) chỉ chạy trong khung giờ làm việc (ví dụ: 08:00 - 17:00, T2-T6).
-- **Exclusion:** Tự động trừ các ngày nghỉ lễ (Holidays) và cuối tuần (Weekends) được cấu hình trong Workspace Settings.
+- **Calculation:** Bá»™ Ä‘áº¿m thá»i gian (Timer) chá»‰ cháº¡y trong khung giá» lĂ m viá»‡c (vĂ­ dá»¥: 08:00 - 17:00, T2-T6).
+- **Exclusion:** Tá»± Ä‘á»™ng trá»« cĂ¡c ngĂ y nghá»‰ lá»… (Holidays) vĂ  cuá»‘i tuáº§n (Weekends) Ä‘Æ°á»£c cáº¥u hĂ¬nh trong Workspace Settings.
 #### AC 3 - Visual Warning
-Hệ thống hiển thị trạng thái SLA thông qua mã màu trên thẻ Task:
-- **On Track (Xanh):** Thời gian trôi qua < 75% SLA.
-- **At Risk (Vàng):** Thời gian trôi qua $\geq$ 75% SLA.
-- **Breached (Đỏ):** Thời gian trôi qua > 100% SLA.
+Há»‡ thá»‘ng hiá»ƒn thá»‹ tráº¡ng thĂ¡i SLA thĂ´ng qua mĂ£ mĂ u trĂªn tháº» Task:
+- **On Track (Xanh):** Thá»i gian trĂ´i qua < 75% SLA.
+- **At Risk (VĂ ng):** Thá»i gian trĂ´i qua $\geq$ 75% SLA.
+- **Breached (Äá»):** Thá»i gian trĂ´i qua > 100% SLA.
 #### AC 4 - SLA Pause Conditions
-- **Logic:** Đồng hồ SLA (Timer) phải **Tạm dừng** khi Task chuyển sang trạng thái thuộc nhóm `Blocking` (ví dụ: "Waiting for Customer", "Blocked").
-- **Resume:** Đồng hồ tiếp tục chạy khi Task quay lại trạng thái `Active` (In-Progress).
-- **Audit:** Ghi log lại khoảng thời gian bị Pause để giải trình khi xuất báo cáo.
-## 2.8. Feature: Export & Reporting (Xuất dữ liệu)
+- **Logic:** Äá»“ng há»“ SLA (Timer) pháº£i **Táº¡m dá»«ng** khi Task chuyá»ƒn sang tráº¡ng thĂ¡i thuá»™c nhĂ³m `Blocking` (vĂ­ dá»¥: "Waiting for Customer", "Blocked").
+- **Resume:** Äá»“ng há»“ tiáº¿p tá»¥c cháº¡y khi Task quay láº¡i tráº¡ng thĂ¡i `Active` (In-Progress).
+- **Audit:** Ghi log láº¡i khoáº£ng thá»i gian bá»‹ Pause Ä‘á»ƒ giáº£i trĂ¬nh khi xuáº¥t bĂ¡o cĂ¡o.
+## 2.8. Feature: Export & Reporting (Xuáº¥t dá»¯ liá»‡u)
 ### User Story 5.8 
-- Là một PM, 
-- Tôi muốn xuất biểu đồ Gantt ra file ảnh hoặc PDF, 
-- Để báo cáo tiến độ trong các cuộc họp với Ban lãnh đạo (những người không truy cập hệ thống). 
+- LĂ  má»™t PM, 
+- TĂ´i muá»‘n xuáº¥t biá»ƒu Ä‘á»“ Gantt ra file áº£nh hoáº·c PDF, 
+- Äá»ƒ bĂ¡o cĂ¡o tiáº¿n Ä‘á»™ trong cĂ¡c cuá»™c há»p vá»›i Ban lĂ£nh Ä‘áº¡o (nhá»¯ng ngÆ°á»i khĂ´ng truy cáº­p há»‡ thá»‘ng). 
 ### Acceptance Criteria ( #AC) 
 #### AC 1 - Export Options 
-- Hỗ trợ xuất ra: PDF (A4/A3 Landscape), PNG. 
-- Tùy chọn khoảng thời gian xuất (Toàn bộ dự án hoặc Tháng này).
-## 2.9. Feature: Planning Scope Control (Kiểm soát phạm vi hoạch định)
+- Há»— trá»£ xuáº¥t ra: PDF (A4/A3 Landscape), PNG. 
+- TĂ¹y chá»n khoáº£ng thá»i gian xuáº¥t (ToĂ n bá»™ dá»± Ă¡n hoáº·c ThĂ¡ng nĂ y).
+## 2.9. Feature: Planning Scope Control (Kiá»ƒm soĂ¡t pháº¡m vi hoáº¡ch Ä‘á»‹nh)
 ### Business Problem
-Trong thực tế:
-- Không phải **mọi Task** đều cần:
+Trong thá»±c táº¿:
+- KhĂ´ng pháº£i **má»i Task** Ä‘á»u cáº§n:
     - Auto-scheduling
     - CPM
     - Dependency cascade
-- PM thường:
-    - Chỉ hoạch định **Phase chính**
-    - Hoặc **Task Level cao**
-    - Còn Task chi tiết để team tự xử lý
-Nếu không có Scope Control:
-- Gantt quá phức tạp
-- CPM nhiễu
-- Auto-scheduling phá vỡ kế hoạch vi mô
+- PM thÆ°á»ng:
+    - Chá»‰ hoáº¡ch Ä‘á»‹nh **Phase chĂ­nh**
+    - Hoáº·c **Task Level cao**
+    - CĂ²n Task chi tiáº¿t Ä‘á»ƒ team tá»± xá»­ lĂ½
+Náº¿u khĂ´ng cĂ³ Scope Control:
+- Gantt quĂ¡ phá»©c táº¡p
+- CPM nhiá»…u
+- Auto-scheduling phĂ¡ vá»¡ káº¿ hoáº¡ch vi mĂ´
 
 > [!NOTE] Business Definition
-> Planning Scope xác định Task/Phase nào được hệ thống coi là đối tượng hoạch định, tham gia vào các thuật toán Scheduling, CPM và Impact Analystic.
+> Planning Scope xĂ¡c Ä‘á»‹nh Task/Phase nĂ o Ä‘Æ°á»£c há»‡ thá»‘ng coi lĂ  Ä‘á»‘i tÆ°á»£ng hoáº¡ch Ä‘á»‹nh, tham gia vĂ o cĂ¡c thuáº­t toĂ¡n Scheduling, CPM vĂ  Impact Analystic.
 ### User Story 5.9
-Là một Project Manager, tôi muốn chỉ định phạm vi các Task/Phase được đưa vào hoạch định, để tập trung vào kế hoạch cấp cao mà không bị nhiễu bởi các Task chi tiết.
+LĂ  má»™t Project Manager, tĂ´i muá»‘n chá»‰ Ä‘á»‹nh pháº¡m vi cĂ¡c Task/Phase Ä‘Æ°á»£c Ä‘Æ°a vĂ o hoáº¡ch Ä‘á»‹nh, Ä‘á»ƒ táº­p trung vĂ o káº¿ hoáº¡ch cáº¥p cao mĂ  khĂ´ng bá»‹ nhiá»…u bá»Ÿi cĂ¡c Task chi tiáº¿t.
 ### Acceptance Criteria ( #AC)
-#### AC 1 – Scope Flag
-- Mỗi **Task / Task List / Phase** có thuộc tính:
+#### AC 1 â€“ Scope Flag
+- Má»—i **Task / Task List / Phase** cĂ³ thuá»™c tĂ­nh:
     - `IncludeInPlanning: Boolean`
-- Mặc định:
+- Máº·c Ä‘á»‹nh:
     - Level cao (Phase, Task List): `true`
-    - Subtask chi tiết: `false`
-#### AC 2 – Scope Inheritance
-- Nếu Parent = `IncludeInPlanning = false`  
-    → toàn bộ Children **tự động excluded**
-- PM có thể override ở Child (nếu được quyền)
-#### AC 3 – Behavior Rules
-Task **không thuộc Planning Scope**:
-- Không tham gia:
+    - Subtask chi tiáº¿t: `false`
+#### AC 2 â€“ Scope Inheritance
+- Náº¿u Parent = `IncludeInPlanning = false`  
+    â†’ toĂ n bá»™ Children **tá»± Ä‘á»™ng excluded**
+- PM cĂ³ thá»ƒ override á»Ÿ Child (náº¿u Ä‘Æ°á»£c quyá»n)
+#### AC 3 â€“ Behavior Rules
+Task **khĂ´ng thuá»™c Planning Scope**:
+- KhĂ´ng tham gia:
     - CPM
     - Auto-scheduling
     - Dependency cascade
--  Vẫn:
-    - Hiển thị trên Gantt (màu xám nhạt)
-    - Có thể gán người, cập nhật trạng thái
-#### AC 4 – Visual Distinction
-- Task ngoài scope:
-    - Opacity giảm (30–40%)
-    - Không vẽ dependency line
+-  Váº«n:
+    - Hiá»ƒn thá»‹ trĂªn Gantt (mĂ u xĂ¡m nháº¡t)
+    - CĂ³ thá»ƒ gĂ¡n ngÆ°á»i, cáº­p nháº­t tráº¡ng thĂ¡i
+#### AC 4 â€“ Visual Distinction
+- Task ngoĂ i scope:
+    - Opacity giáº£m (30â€“40%)
+    - KhĂ´ng váº½ dependency line
 - Tooltip:
-    > “This task is excluded from planning scope”
-#### AC 5 – Scope Summary
-- Panel hiển thị:
-    - Tổng số Task trong scope
-    - % phạm vi dự án được hoạch định
+    > â€œThis task is excluded from planning scopeâ€
+#### AC 5 â€“ Scope Summary
+- Panel hiá»ƒn thá»‹:
+    - Tá»•ng sá»‘ Task trong scope
+    - % pháº¡m vi dá»± Ă¡n Ä‘Æ°á»£c hoáº¡ch Ä‘á»‹nh
 ## 2.10. Feature: What-If Simulation Mode
 ### Business Problem
-PM thường:
-- Muốn thử:
-    - Dời Task
-    - Thêm Dependency
-    - Rút Duration
-- Nhưng:
-    - Sợ phá kế hoạch thật
-    - Không thấy trước hậu quả
-Không có Simulation = **Hệ thống không an toàn cho quyết định chiến lược**
+PM thÆ°á»ng:
+- Muá»‘n thá»­:
+    - Dá»i Task
+    - ThĂªm Dependency
+    - RĂºt Duration
+- NhÆ°ng:
+    - Sá»£ phĂ¡ káº¿ hoáº¡ch tháº­t
+    - KhĂ´ng tháº¥y trÆ°á»›c háº­u quáº£
+KhĂ´ng cĂ³ Simulation = **Há»‡ thá»‘ng khĂ´ng an toĂ n cho quyáº¿t Ä‘á»‹nh chiáº¿n lÆ°á»£c**
 ### User Story 5.10.
-Là PM, tôi muốn mô phỏng thay đổi lịch trình để thấy tác động trước khi quyết định áp dụng.
+LĂ  PM, tĂ´i muá»‘n mĂ´ phá»ng thay Ä‘á»•i lá»‹ch trĂ¬nh Ä‘á»ƒ tháº¥y tĂ¡c Ä‘á»™ng trÆ°á»›c khi quyáº¿t Ä‘á»‹nh Ă¡p dá»¥ng.
 ### Acceptance Criteria ( #AC)
-#### AC 1 – Enter Simulation Mode
-- Toggle “Simulation Mode”
-- UI chuyển:
-	 - Màu nền vàng nhạt
+#### AC 1 â€“ Enter Simulation Mode
+- Toggle â€œSimulation Modeâ€
+- UI chuyá»ƒn:
+	 - MĂ u ná»n vĂ ng nháº¡t
 	 - Watermark: _Simulation_
-#### AC 2 – Simulation Behavior
+#### AC 2 â€“ Simulation Behavior
 Trong Simulation:
-- Cho phép:
-	 - Kéo Gantt
-	 - Đổi Dependency
+- Cho phĂ©p:
+	 - KĂ©o Gantt
+	 - Äá»•i Dependency
 	 - Thay Duration
-- Không ghi DB chính
-- Tất cả thay đổi lưu trong **temporary simulation graph**
-#### AC 3 – Impact Analysis Panel (Realtime)
-Hiển thị:
-- Δ Project End Date (+/- days)
+- KhĂ´ng ghi DB chĂ­nh
+- Táº¥t cáº£ thay Ä‘á»•i lÆ°u trong **temporary simulation graph**
+#### AC 3 â€“ Impact Analysis Panel (Realtime)
+Hiá»ƒn thá»‹:
+- Î” Project End Date (+/- days)
 - Tasks newly on Critical Path
 - SLA at risk count
 - Resource overload increase
-#### AC 4 – Exit Options
-Khi thoát Simulation:
+#### AC 4 â€“ Exit Options
+Khi thoĂ¡t Simulation:
 - **Apply Changes**
-	 - Ghi vào DB
+	 - Ghi vĂ o DB
 	 - Recalculate baseline variance
 - **Discard**
-	 - Rollback toàn bộ
+	 - Rollback toĂ n bá»™
 - **Save as New Baseline**
 	 - Baseline v2 (optional)
 ### 3.5. Business Rules
-- Simulation **không trigger notification**
-- SLA Timer **không chạy trong Simulation**
-- Baseline cũ **không bị ghi đè**
+- Simulation **khĂ´ng trigger notification**
+- SLA Timer **khĂ´ng cháº¡y trong Simulation**
+- Baseline cÅ© **khĂ´ng bá»‹ ghi Ä‘Ă¨**
 ## 2.11. Feature: Planning Governance & Approval Workflow
 ### User Story 5.11
-Là một Program Manager, Tôi muốn phê duyệt và khóa (Lock) kế hoạch dự án (Baseline) trước khi đưa vào thực thi, Để đảm bảo tính kỷ luật và ngăn chặn các thay đổi tùy tiện làm sai lệch cam kết với khách hàng.
+LĂ  má»™t Program Manager, TĂ´i muá»‘n phĂª duyá»‡t vĂ  khĂ³a (Lock) káº¿ hoáº¡ch dá»± Ă¡n (Baseline) trÆ°á»›c khi Ä‘Æ°a vĂ o thá»±c thi, Äá»ƒ Ä‘áº£m báº£o tĂ­nh ká»· luáº­t vĂ  ngÄƒn cháº·n cĂ¡c thay Ä‘á»•i tĂ¹y tiá»‡n lĂ m sai lá»‡ch cam káº¿t vá»›i khĂ¡ch hĂ ng.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Plan State Machine
-- Trạng thái của Kế hoạch (Plan) tuân theo quy trình:
- 1. **Draft:** PM đang soạn thảo, chỉnh sửa thoải mái.
- 2. **Submitted:** Gửi yêu cầu phê duyệt.
- 3. **Approved:** Được cấp trên phê duyệt. Tạo Baseline chính thức.
- 4. **Locked:** Đã chốt.
+- Tráº¡ng thĂ¡i cá»§a Káº¿ hoáº¡ch (Plan) tuĂ¢n theo quy trĂ¬nh:
+ 1. **Draft:** PM Ä‘ang soáº¡n tháº£o, chá»‰nh sá»­a thoáº£i mĂ¡i.
+ 2. **Submitted:** Gá»­i yĂªu cáº§u phĂª duyá»‡t.
+ 3. **Approved:** ÄÆ°á»£c cáº¥p trĂªn phĂª duyá»‡t. Táº¡o Baseline chĂ­nh thá»©c.
+ 4. **Locked:** ÄĂ£ chá»‘t.
 #### AC 2 - Locked State Behavior
-- Khi Plan ở trạng thái **Locked**:
- - Vô hiệu hóa tính năng kéo thả trên Gantt Chart.
- - Không cho phép thay đổi `Duration`, `Start/End Date` trực tiếp.
- - Mọi thay đổi bắt buộc phải thông qua quy trình **Change Request (CR)**.
+- Khi Plan á»Ÿ tráº¡ng thĂ¡i **Locked**:
+ - VĂ´ hiá»‡u hĂ³a tĂ­nh nÄƒng kĂ©o tháº£ trĂªn Gantt Chart.
+ - KhĂ´ng cho phĂ©p thay Ä‘á»•i `Duration`, `Start/End Date` trá»±c tiáº¿p.
+ - Má»i thay Ä‘á»•i báº¯t buá»™c pháº£i thĂ´ng qua quy trĂ¬nh **Change Request (CR)**.
 #### AC 3 - Approval Audit
-- Ghi nhận: Người duyệt, Thời gian duyệt và Version của Baseline tại thời điểm duyệt.
+- Ghi nháº­n: NgÆ°á»i duyá»‡t, Thá»i gian duyá»‡t vĂ  Version cá»§a Baseline táº¡i thá»i Ä‘iá»ƒm duyá»‡t.
 ## 2.12. Feature: Change Impact Analysis (CIA) Panel
 ### User Story 5.12
-Là một Project Manager, Tôi muốn hệ thống tự động phân tích và cảnh báo tác động của việc thay đổi một Task cụ thể, Để tôi hiểu rõ hậu quả (về tiến độ, chi phí) trước khi nhấn nút Lưu.
+LĂ  má»™t Project Manager, TĂ´i muá»‘n há»‡ thá»‘ng tá»± Ä‘á»™ng phĂ¢n tĂ­ch vĂ  cáº£nh bĂ¡o tĂ¡c Ä‘á»™ng cá»§a viá»‡c thay Ä‘á»•i má»™t Task cá»¥ thá»ƒ, Äá»ƒ tĂ´i hiá»ƒu rĂµ háº­u quáº£ (vá» tiáº¿n Ä‘á»™, chi phĂ­) trÆ°á»›c khi nháº¥n nĂºt LÆ°u.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Pre-save Analysis
-- **Trigger:** Khi người dùng thay đổi ngày hoặc dependency của một Task và nhấn Save.
-- **Action:** Hệ thống hiển thị Panel "Impact Analysis" (chưa ghi vào DB ngay).
+- **Trigger:** Khi ngÆ°á»i dĂ¹ng thay Ä‘á»•i ngĂ y hoáº·c dependency cá»§a má»™t Task vĂ  nháº¥n Save.
+- **Action:** Há»‡ thá»‘ng hiá»ƒn thá»‹ Panel "Impact Analysis" (chÆ°a ghi vĂ o DB ngay).
 #### AC 2 - Impact Metrics
-- Panel hiển thị rõ các thông số thay đổi ($\Delta$):
- - **Project End Date:** Trễ bao nhiêu ngày? (Ví dụ: +5 days).
- - **Critical Path:** Liệt kê các Task mới bị rơi vào đường găng.
- - **SLA Risk:** Số lượng Task có nguy cơ vi phạm SLA do sự thay đổi này.
- - **Resource Overload:** Số lượng nhân sự bị quá tải do lịch mới.
+- Panel hiá»ƒn thá»‹ rĂµ cĂ¡c thĂ´ng sá»‘ thay Ä‘á»•i ($\Delta$):
+ - **Project End Date:** Trá»… bao nhiĂªu ngĂ y? (VĂ­ dá»¥: +5 days).
+ - **Critical Path:** Liá»‡t kĂª cĂ¡c Task má»›i bá»‹ rÆ¡i vĂ o Ä‘Æ°á»ng gÄƒng.
+ - **SLA Risk:** Sá»‘ lÆ°á»£ng Task cĂ³ nguy cÆ¡ vi pháº¡m SLA do sá»± thay Ä‘á»•i nĂ y.
+ - **Resource Overload:** Sá»‘ lÆ°á»£ng nhĂ¢n sá»± bá»‹ quĂ¡ táº£i do lá»‹ch má»›i.
 #### AC 3 - Confirmation
-- Yêu cầu PM phải tick chọn: _"I understand the impact"_ (Tôi đã hiểu tác động) mới được phép Lưu thay đổi.
+- YĂªu cáº§u PM pháº£i tick chá»n: _"I understand the impact"_ (TĂ´i Ä‘Ă£ hiá»ƒu tĂ¡c Ä‘á»™ng) má»›i Ä‘Æ°á»£c phĂ©p LÆ°u thay Ä‘á»•i.
 ## 2.13. Feature: Planning Drift Analytics
 ### User Story 5.13
-Là một Stakeholder, Tôi muốn theo dõi độ lệch tích lũy giữa Kế hoạch và Thực thi theo thời gian, Để biết được dự án đang trễ do khâu Lập kế hoạch yếu kém hay do khâu Thực thi chậm chạp.
+LĂ  má»™t Stakeholder, TĂ´i muá»‘n theo dĂµi Ä‘á»™ lá»‡ch tĂ­ch lÅ©y giá»¯a Káº¿ hoáº¡ch vĂ  Thá»±c thi theo thá»i gian, Äá»ƒ biáº¿t Ä‘Æ°á»£c dá»± Ă¡n Ä‘ang trá»… do khĂ¢u Láº­p káº¿ hoáº¡ch yáº¿u kĂ©m hay do khĂ¢u Thá»±c thi cháº­m cháº¡p.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Schedule Variance (SV) Tracking
-- Hệ thống tính toán chỉ số SV theo từng giai đoạn (Phase):
+- Há»‡ thá»‘ng tĂ­nh toĂ¡n chá»‰ sá»‘ SV theo tá»«ng giai Ä‘oáº¡n (Phase):
  $$SV = Earned\ Value (EV) - Planned\ Value (PV)$$
-- Hiển thị biểu đồ xu hướng (Trendline) của SV qua các tuần.
+- Hiá»ƒn thá»‹ biá»ƒu Ä‘á»“ xu hÆ°á»›ng (Trendline) cá»§a SV qua cĂ¡c tuáº§n.
 #### AC 2 - Phase Drift Heatmap
-- Hiển thị biểu đồ nhiệt: Phase nào bị lệch nhiều nhất (Ví dụ: Phase "Testing" thường xuyên bị trễ 30% so với Baseline).
-- **Insight:** Hệ thống đưa ra nhận định text: _"70% tổng thời gian trễ của dự án đến từ giai đoạn UAT"_.
+- Hiá»ƒn thá»‹ biá»ƒu Ä‘á»“ nhiá»‡t: Phase nĂ o bá»‹ lá»‡ch nhiá»u nháº¥t (VĂ­ dá»¥: Phase "Testing" thÆ°á»ng xuyĂªn bá»‹ trá»… 30% so vá»›i Baseline).
+- **Insight:** Há»‡ thá»‘ng Ä‘Æ°a ra nháº­n Ä‘á»‹nh text: _"70% tá»•ng thá»i gian trá»… cá»§a dá»± Ă¡n Ä‘áº¿n tá»« giai Ä‘oáº¡n UAT"_.
 ## 2.14. Feature: Risk-aware Scheduling (Optional)
 ### User Story 5.14
-Là một Risk Manager, Tôi muốn lập lịch dự án dựa trên xác suất rủi ro thay vì các con số cố định (Deterministic), Để có cái nhìn thực tế hơn về ngày hoàn thành khả dĩ (P50/P90).
+LĂ  má»™t Risk Manager, TĂ´i muá»‘n láº­p lá»‹ch dá»± Ă¡n dá»±a trĂªn xĂ¡c suáº¥t rá»§i ro thay vĂ¬ cĂ¡c con sá»‘ cá»‘ Ä‘á»‹nh (Deterministic), Äá»ƒ cĂ³ cĂ¡i nhĂ¬n thá»±c táº¿ hÆ¡n vá» ngĂ y hoĂ n thĂ nh kháº£ dÄ© (P50/P90).
 ### Acceptance Criteria (#AC)
 #### AC 1 - Risk Buffer Input
-- Cho phép nhập **Risk Factor (%)** trên từng Task hoặc cả Project.
-- Hệ thống tự động cộng thêm **Buffer Time** vào đuôi Task nhưng đánh dấu rõ đây là thời gian dự phòng (không phải thời gian làm việc chính thức).
+- Cho phĂ©p nháº­p **Risk Factor (%)** trĂªn tá»«ng Task hoáº·c cáº£ Project.
+- Há»‡ thá»‘ng tá»± Ä‘á»™ng cá»™ng thĂªm **Buffer Time** vĂ o Ä‘uĂ´i Task nhÆ°ng Ä‘Ă¡nh dáº¥u rĂµ Ä‘Ă¢y lĂ  thá»i gian dá»± phĂ²ng (khĂ´ng pháº£i thá»i gian lĂ m viá»‡c chĂ­nh thá»©c).
 #### AC 2 - Probabilistic Dates
-- Thay vì hiển thị 1 ngày kết thúc duy nhất, hệ thống tính toán và hiển thị:
- - **P50 Date:** Ngày có 50% khả năng hoàn thành.
- - **P90 Date:** Ngày có 90% khả năng hoàn thành (An toàn để cam kết với khách hàng).
+- Thay vĂ¬ hiá»ƒn thá»‹ 1 ngĂ y káº¿t thĂºc duy nháº¥t, há»‡ thá»‘ng tĂ­nh toĂ¡n vĂ  hiá»ƒn thá»‹:
+ - **P50 Date:** NgĂ y cĂ³ 50% kháº£ nÄƒng hoĂ n thĂ nh.
+ - **P90 Date:** NgĂ y cĂ³ 90% kháº£ nÄƒng hoĂ n thĂ nh (An toĂ n Ä‘á»ƒ cam káº¿t vá»›i khĂ¡ch hĂ ng).
 #### AC 3 - Confidence Band
-- Trên Gantt Chart, hiển thị vùng mờ (Shaded area) phía sau thanh Task thể hiện khoảng thời gian rủi ro có thể xảy ra.
+- TrĂªn Gantt Chart, hiá»ƒn thá»‹ vĂ¹ng má» (Shaded area) phĂ­a sau thanh Task thá»ƒ hiá»‡n khoáº£ng thá»i gian rá»§i ro cĂ³ thá»ƒ xáº£y ra.
 ## 2.15. Feature: Planning Permissions (RBAC)
 ### User Story 5.15
-Là một Admin, Tôi muốn phân quyền chi tiết cho việc lập kế hoạch, Để phân biệt rõ ai là người thiết kế lịch trình và ai chỉ là người đóng góp ý kiến.
+LĂ  má»™t Admin, TĂ´i muá»‘n phĂ¢n quyá»n chi tiáº¿t cho viá»‡c láº­p káº¿ hoáº¡ch, Äá»ƒ phĂ¢n biá»‡t rĂµ ai lĂ  ngÆ°á»i thiáº¿t káº¿ lá»‹ch trĂ¬nh vĂ  ai chá»‰ lĂ  ngÆ°á»i Ä‘Ă³ng gĂ³p Ă½ kiáº¿n.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Planning Roles
-- **Planner:** Quyền chỉnh sửa Gantt, tạo Dependency, lưu Baseline.
-- **Contributor:** Quyền xem Gantt, comment vào Task, nhưng không được kéo thả lịch.
-- **Approver:** Quyền duyệt Baseline (Feature 2.11).
+- **Planner:** Quyá»n chá»‰nh sá»­a Gantt, táº¡o Dependency, lÆ°u Baseline.
+- **Contributor:** Quyá»n xem Gantt, comment vĂ o Task, nhÆ°ng khĂ´ng Ä‘Æ°á»£c kĂ©o tháº£ lá»‹ch.
+- **Approver:** Quyá»n duyá»‡t Baseline (Feature 2.11).
 #### AC 2 - Edit Lock
-- Khi một Planner đang chỉnh sửa lịch trình (Edit Mode), hệ thống khóa quyền sửa của các Planner khác để tránh xung đột (Concurrent Editing Lock).
+- Khi má»™t Planner Ä‘ang chá»‰nh sá»­a lá»‹ch trĂ¬nh (Edit Mode), há»‡ thá»‘ng khĂ³a quyá»n sá»­a cá»§a cĂ¡c Planner khĂ¡c Ä‘á»ƒ trĂ¡nh xung Ä‘á»™t (Concurrent Editing Lock).
 ## 2.16. Feature: Advanced Planning Utilities
 ### User Story 5.16
-Là một PM chuyên nghiệp, Tôi muốn có các công cụ tiện ích nâng cao để thao tác trên biểu đồ Gantt nhanh chóng và chính xác.
+LĂ  má»™t PM chuyĂªn nghiá»‡p, TĂ´i muá»‘n cĂ³ cĂ¡c cĂ´ng cá»¥ tiá»‡n Ă­ch nĂ¢ng cao Ä‘á»ƒ thao tĂ¡c trĂªn biá»ƒu Ä‘á»“ Gantt nhanh chĂ³ng vĂ  chĂ­nh xĂ¡c.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Gantt Undo/Redo
-- Hỗ trợ `Ctrl+Z` / `Ctrl+Y` để hoàn tác các hành động kéo thả nhầm trên Gantt Chart (Lưu state tạm ở Client).
+- Há»— trá»£ `Ctrl+Z` / `Ctrl+Y` Ä‘á»ƒ hoĂ n tĂ¡c cĂ¡c hĂ nh Ä‘á»™ng kĂ©o tháº£ nháº§m trĂªn Gantt Chart (LÆ°u state táº¡m á»Ÿ Client).
 #### AC 2 - Baseline Versioning
-- Quản lý danh sách các Baseline: `v1.0 (Initial)`, `v1.1 (Change Request #1)`, `v2.0 (Replanned)`.
-- Cho phép chuyển đổi view để so sánh giữa các version Baseline khác nhau.
+- Quáº£n lĂ½ danh sĂ¡ch cĂ¡c Baseline: `v1.0 (Initial)`, `v1.1 (Change Request #1)`, `v2.0 (Replanned)`.
+- Cho phĂ©p chuyá»ƒn Ä‘á»•i view Ä‘á»ƒ so sĂ¡nh giá»¯a cĂ¡c version Baseline khĂ¡c nhau.
 #### AC 3 - Freeze Window
-- Cho phép thiết lập "Vùng đóng băng" (Ví dụ: 2 tuần tới).
-- Các Task nằm trong vùng này bị khóa cứng, không cho phép Auto-scheduling tự động dời lịch, để đảm bảo ổn định cho team đang chạy Sprint.
-## 2.17. Feature: Automated Resource Leveling (Cân bằng Nguồn lực Tự động)
+- Cho phĂ©p thiáº¿t láº­p "VĂ¹ng Ä‘Ă³ng bÄƒng" (VĂ­ dá»¥: 2 tuáº§n tá»›i).
+- CĂ¡c Task náº±m trong vĂ¹ng nĂ y bá»‹ khĂ³a cá»©ng, khĂ´ng cho phĂ©p Auto-scheduling tá»± Ä‘á»™ng dá»i lá»‹ch, Ä‘á»ƒ Ä‘áº£m báº£o á»•n Ä‘á»‹nh cho team Ä‘ang cháº¡y Sprint.
+## 2.17. Feature: Automated Resource Leveling (CĂ¢n báº±ng Nguá»“n lá»±c Tá»± Ä‘á»™ng)
 ### User Story 5.17
-Là một Project Manager, Tôi muốn hệ thống tự động điều chỉnh lịch trình của các công việc không quan trọng để giải quyết tình trạng quá tải nhân sự, Để tối ưu hóa nguồn lực mà không cần phải dời từng Task thủ công.
+LĂ  má»™t Project Manager, TĂ´i muá»‘n há»‡ thá»‘ng tá»± Ä‘á»™ng Ä‘iá»u chá»‰nh lá»‹ch trĂ¬nh cá»§a cĂ¡c cĂ´ng viá»‡c khĂ´ng quan trá»ng Ä‘á»ƒ giáº£i quyáº¿t tĂ¬nh tráº¡ng quĂ¡ táº£i nhĂ¢n sá»±, Äá»ƒ tá»‘i Æ°u hĂ³a nguá»“n lá»±c mĂ  khĂ´ng cáº§n pháº£i dá»i tá»«ng Task thá»§ cĂ´ng.
 ### Acceptance Criteria (#AC)
 #### AC 1 - Leveling Strategy Configuration
-- **Action:** Khi nhấn nút "Level Resources", hiển thị Popup cho phép chọn chiến lược:
-    1. **Within Slack (An toàn):** Chỉ dời các Task có độ trôi (`Total Float > 0`). Đảm bảo **không** làm trễ ngày kết thúc dự án.
-    2. **Extend Project (Toàn diện):** Dời bất kỳ Task nào gây quá tải. Chấp nhận việc ngày kết thúc dự án bị kéo dài ra.
+- **Action:** Khi nháº¥n nĂºt "Level Resources", hiá»ƒn thá»‹ Popup cho phĂ©p chá»n chiáº¿n lÆ°á»£c:
+    1. **Within Slack (An toĂ n):** Chá»‰ dá»i cĂ¡c Task cĂ³ Ä‘á»™ trĂ´i (`Total Float > 0`). Äáº£m báº£o **khĂ´ng** lĂ m trá»… ngĂ y káº¿t thĂºc dá»± Ă¡n.
+    2. **Extend Project (ToĂ n diá»‡n):** Dá»i báº¥t ká»³ Task nĂ o gĂ¢y quĂ¡ táº£i. Cháº¥p nháº­n viá»‡c ngĂ y káº¿t thĂºc dá»± Ă¡n bá»‹ kĂ©o dĂ i ra.
 #### AC 2 - Heuristic Priority Logic
-- Hệ thống sử dụng thuật toán ưu tiên để chọn Task nào sẽ bị dời (Delay) khi có xung đột tài nguyên:
-    - **Priority 1:** Task có độ ưu tiên thấp hơn (Low Priority).
-    - **Priority 2:** Task có độ trôi (Float) lớn hơn.
-    - **Priority 3:** Task có thời lượng (Duration) ngắn hơn.
+- Há»‡ thá»‘ng sá»­ dá»¥ng thuáº­t toĂ¡n Æ°u tiĂªn Ä‘á»ƒ chá»n Task nĂ o sáº½ bá»‹ dá»i (Delay) khi cĂ³ xung Ä‘á»™t tĂ i nguyĂªn:
+    - **Priority 1:** Task cĂ³ Ä‘á»™ Æ°u tiĂªn tháº¥p hÆ¡n (Low Priority).
+    - **Priority 2:** Task cĂ³ Ä‘á»™ trĂ´i (Float) lá»›n hÆ¡n.
+    - **Priority 3:** Task cĂ³ thá»i lÆ°á»£ng (Duration) ngáº¯n hÆ¡n.
 #### AC 3 - Visualization & Diff
-- **Preview:** Trước khi áp dụng, hệ thống hiển thị bản xem trước (Shadow Bars) của lịch trình mới chồng lên lịch trình cũ.
-- **Diff:** Hiển thị tóm tắt tác động: _"Sẽ dời 5 Tasks, giảm 80% xung đột, ngày kết thúc dự án tăng 2 ngày"_.
+- **Preview:** TrÆ°á»›c khi Ă¡p dá»¥ng, há»‡ thá»‘ng hiá»ƒn thá»‹ báº£n xem trÆ°á»›c (Shadow Bars) cá»§a lá»‹ch trĂ¬nh má»›i chá»“ng lĂªn lá»‹ch trĂ¬nh cÅ©.
+- **Diff:** Hiá»ƒn thá»‹ tĂ³m táº¯t tĂ¡c Ä‘á»™ng: _"Sáº½ dá»i 5 Tasks, giáº£m 80% xung Ä‘á»™t, ngĂ y káº¿t thĂºc dá»± Ă¡n tÄƒng 2 ngĂ y"_.
 #### AC 4 - Constraint Adherence
-- Thuật toán Leveling **tuyệt đối không** được dời các Task:
-    - Đang ở trạng thái `Started` / `Done`.
-    - Có ràng buộc cứng (`Must Start On`, `Locked`).
-    - Task đã được phê duyệt trong Freeze Window (Feature 5.16).
-## 2.18. Feature: Cross-Project Dependencies (Phụ thuộc Đa Dự án)
+- Thuáº­t toĂ¡n Leveling **tuyá»‡t Ä‘á»‘i khĂ´ng** Ä‘Æ°á»£c dá»i cĂ¡c Task:
+    - Äang á»Ÿ tráº¡ng thĂ¡i `Started` / `Done`.
+    - CĂ³ rĂ ng buá»™c cá»©ng (`Must Start On`, `Locked`).
+    - Task Ä‘Ă£ Ä‘Æ°á»£c phĂª duyá»‡t trong Freeze Window (Feature 5.16).
+## 2.18. Feature: Cross-Project Dependencies (Phá»¥ thuá»™c Äa Dá»± Ă¡n)
 ### User Story 5.18
-Là một Program Manager, Tôi muốn thiết lập mối quan hệ phụ thuộc giữa các công việc thuộc hai dự án khác nhau, Để nhìn thấy bức tranh tổng thể và đánh giá được tác động dây chuyền (Domino Effect) khi một dự án thành phần bị chậm trễ.
+LĂ  má»™t Program Manager, TĂ´i muá»‘n thiáº¿t láº­p má»‘i quan há»‡ phá»¥ thuá»™c giá»¯a cĂ¡c cĂ´ng viá»‡c thuá»™c hai dá»± Ă¡n khĂ¡c nhau, Äá»ƒ nhĂ¬n tháº¥y bá»©c tranh tá»•ng thá»ƒ vĂ  Ä‘Ă¡nh giĂ¡ Ä‘Æ°á»£c tĂ¡c Ä‘á»™ng dĂ¢y chuyá»n (Domino Effect) khi má»™t dá»± Ă¡n thĂ nh pháº§n bá»‹ cháº­m trá»….
 ### Acceptance Criteria (#AC)
 #### AC 1 - External Predecessor Selection
-- **Action:** Trong hộp thoại "Add Dependency", bổ sung tùy chọn: _Source = External Project_.
+- **Action:** Trong há»™p thoáº¡i "Add Dependency", bá»• sung tĂ¹y chá»n: _Source = External Project_.
 - **Interaction:**
-    1. Chọn Dự án nguồn (Dropdown list - chỉ hiện các dự án User có quyền truy cập).
-    2. Tìm kiếm Task nguồn (Search by Name/ID).
-    3. Chọn loại quan hệ (FS/SS...).
-- **Result:** Tạo một liên kết logic giữa Task A (Project 1) và Task B (Project 2).
-#### AC 2 - Ghost Task Visualization (Hiển thị Task "Bóng ma")
-- Trên biểu đồ Gantt của Dự án đích (Project 2)
-    - Hiển thị Task nguồn (từ Project 1) dưới dạng **"Ghost Bar"** (Thanh mờ, màu xám nhạt, nét đứt).
-    - **Tooltip:** Khi hover vào Ghost Bar, hiển thị rõ: _"External Dependency: [Project 1] - Task A - End: 15/10/2025"_.
-    - Không cho phép sửa đổi Ghost Task này tại đây (Read-only).
-#### AC 3 - Impact Propagation (Lan truyền tác động)
-- **Scenario:** Khi Task A (Project 1) bị dời ngày kết thúc trễ 3 ngày.
+    1. Chá»n Dá»± Ă¡n nguá»“n (Dropdown list - chá»‰ hiá»‡n cĂ¡c dá»± Ă¡n User cĂ³ quyá»n truy cáº­p).
+    2. TĂ¬m kiáº¿m Task nguá»“n (Search by Name/ID).
+    3. Chá»n loáº¡i quan há»‡ (FS/SS...).
+- **Result:** Táº¡o má»™t liĂªn káº¿t logic giá»¯a Task A (Project 1) vĂ  Task B (Project 2).
+#### AC 2 - Ghost Task Visualization (Hiá»ƒn thá»‹ Task "BĂ³ng ma")
+- TrĂªn biá»ƒu Ä‘á»“ Gantt cá»§a Dá»± Ă¡n Ä‘Ă­ch (Project 2)
+    - Hiá»ƒn thá»‹ Task nguá»“n (tá»« Project 1) dÆ°á»›i dáº¡ng **"Ghost Bar"** (Thanh má», mĂ u xĂ¡m nháº¡t, nĂ©t Ä‘á»©t).
+    - **Tooltip:** Khi hover vĂ o Ghost Bar, hiá»ƒn thá»‹ rĂµ: _"External Dependency: [Project 1] - Task A - End: 15/10/2025"_.
+    - KhĂ´ng cho phĂ©p sá»­a Ä‘á»•i Ghost Task nĂ y táº¡i Ä‘Ă¢y (Read-only).
+#### AC 3 - Impact Propagation (Lan truyá»n tĂ¡c Ä‘á»™ng)
+- **Scenario:** Khi Task A (Project 1) bá»‹ dá»i ngĂ y káº¿t thĂºc trá»… 3 ngĂ y.
 - **System Action:**
-    - Tự động tính toán lại ngày bắt đầu của Task B (Project 2).
-    - Gửi thông báo **Critical Alert** cho PM của Project 2: _"Task B is impacted by delay in Project 1"_.
-    - Đánh dấu trạng thái **"Sync Pending"** trên Gantt Chart nếu Project 2 đang bị Lock/Freeze.
-## 2.19. Feature: Calendar Exception Handling (Xử lý Ngoại lệ Lịch biểu)
+    - Tá»± Ä‘á»™ng tĂ­nh toĂ¡n láº¡i ngĂ y báº¯t Ä‘áº§u cá»§a Task B (Project 2).
+    - Gá»­i thĂ´ng bĂ¡o **Critical Alert** cho PM cá»§a Project 2: _"Task B is impacted by delay in Project 1"_.
+    - ÄĂ¡nh dáº¥u tráº¡ng thĂ¡i **"Sync Pending"** trĂªn Gantt Chart náº¿u Project 2 Ä‘ang bá»‹ Lock/Freeze.
+## 2.19. Feature: Calendar Exception Handling (Xá»­ lĂ½ Ngoáº¡i lá»‡ Lá»‹ch biá»ƒu)
 ### User Story 5.19
-Là một Thành viên dự án, Tôi muốn đăng ký lịch nghỉ phép (Leave Request) và hệ thống tự động cập nhật lại kế hoạch các Task được gán cho tôi, Để PM không phải điều chỉnh thủ công và Deadline được tính toán chính xác.
+LĂ  má»™t ThĂ nh viĂªn dá»± Ă¡n, TĂ´i muá»‘n Ä‘Äƒng kĂ½ lá»‹ch nghá»‰ phĂ©p (Leave Request) vĂ  há»‡ thá»‘ng tá»± Ä‘á»™ng cáº­p nháº­t láº¡i káº¿ hoáº¡ch cĂ¡c Task Ä‘Æ°á»£c gĂ¡n cho tĂ´i, Äá»ƒ PM khĂ´ng pháº£i Ä‘iá»u chá»‰nh thá»§ cĂ´ng vĂ  Deadline Ä‘Æ°á»£c tĂ­nh toĂ¡n chĂ­nh xĂ¡c.
 ### Acceptance Criteria (#AC)
-#### AC 1 - Personal Exception Input (Đăng ký ngoại lệ cá nhân)
-- **Action:** User có thể đánh dấu các ngày cụ thể trên Calendar cá nhân là: _Vacation_, _Sick Leave_, hoặc _Half-day Off_.
-- **Sync:** Dữ liệu này có thể được đồng bộ từ module HRM (nếu có tích hợp) hoặc nhập tay.
+#### AC 1 - Personal Exception Input (ÄÄƒng kĂ½ ngoáº¡i lá»‡ cĂ¡ nhĂ¢n)
+- **Action:** User cĂ³ thá»ƒ Ä‘Ă¡nh dáº¥u cĂ¡c ngĂ y cá»¥ thá»ƒ trĂªn Calendar cĂ¡ nhĂ¢n lĂ : _Vacation_, _Sick Leave_, hoáº·c _Half-day Off_.
+- **Sync:** Dá»¯ liá»‡u nĂ y cĂ³ thá»ƒ Ä‘Æ°á»£c Ä‘á»“ng bá»™ tá»« module HRM (náº¿u cĂ³ tĂ­ch há»£p) hoáº·c nháº­p tay.
 #### AC 2 - Availability Conflict Warning
-- **Scenario:** Khi PM gán Task cho User A vào ngày họ đã đăng ký nghỉ phép.
+- **Scenario:** Khi PM gĂ¡n Task cho User A vĂ o ngĂ y há» Ä‘Ă£ Ä‘Äƒng kĂ½ nghá»‰ phĂ©p.
 - **System Action:**
-    - Hiển thị cảnh báo: _"User A is unavailable on [Date] due to [Reason]"_.
-    - Đề xuất: _"Gán cho người khác"_ hoặc _"Tự động kéo dài Task qua ngày nghỉ"_.
-#### AC 3 - Task Splitting (Chia tách công việc)
-- **Logic:** Nếu một Task dài 5 ngày (T2 -> T6) nhưng User nghỉ phép vào Thứ 4.
-- **Result:** Hệ thống tự động chia Task thành 2 phân đoạn (Segments) trên Gantt Chart:
+    - Hiá»ƒn thá»‹ cáº£nh bĂ¡o: _"User A is unavailable on [Date] due to [Reason]"_.
+    - Äá» xuáº¥t: _"GĂ¡n cho ngÆ°á»i khĂ¡c"_ hoáº·c _"Tá»± Ä‘á»™ng kĂ©o dĂ i Task qua ngĂ y nghá»‰"_.
+#### AC 3 - Task Splitting (Chia tĂ¡ch cĂ´ng viá»‡c)
+- **Logic:** Náº¿u má»™t Task dĂ i 5 ngĂ y (T2 -> T6) nhÆ°ng User nghá»‰ phĂ©p vĂ o Thá»© 4.
+- **Result:** Há»‡ thá»‘ng tá»± Ä‘á»™ng chia Task thĂ nh 2 phĂ¢n Ä‘oáº¡n (Segments) trĂªn Gantt Chart:
     - Segment 1: T2, T3.
-    - Segment 2: T5, T6, T7 (Kéo dài thêm 1 ngày làm việc để bù cho Thứ 4).
-    - Ngày Thứ 4 được tô xám (Non-working) trên dòng Task đó.
-# 3. Business Rules (Quy tắc Nghiệp vụ)
-## 3.1. Quy tắc Toàn vẹn Thời gian (Temporal Integrity)
-1. **Parent-Child Constraint:** Khoảng thời gian của Task List (Parent) là bao trùm (union) của tất cả các Task con.
+    - Segment 2: T5, T6, T7 (KĂ©o dĂ i thĂªm 1 ngĂ y lĂ m viá»‡c Ä‘á»ƒ bĂ¹ cho Thá»© 4).
+    - NgĂ y Thá»© 4 Ä‘Æ°á»£c tĂ´ xĂ¡m (Non-working) trĂªn dĂ²ng Task Ä‘Ă³.
+# 3. Business Rules (Quy táº¯c Nghiá»‡p vá»¥)
+## 3.1. Quy táº¯c ToĂ n váº¹n Thá»i gian (Temporal Integrity)
+1. **Parent-Child Constraint:** Khoáº£ng thá»i gian cá»§a Task List (Parent) lĂ  bao trĂ¹m (union) cá»§a táº¥t cáº£ cĂ¡c Task con.
     - $Start(Parent) = \min(Start(Children))$
     - $End(Parent) = \max(End(Children))$
-2. **Milestone Logic:** Milestone là một điểm thời gian, không có thời lượng ($Duration = 0$). Milestone không thể có Subtask.
-## 3.2. Quy tắc Lập lịch (Scheduling Rules)
-- **Dependency:** Mặc định FS (Finish-to-Start). Nếu vi phạm (Task sau bắt đầu trước khi Task trước kết thúc), hệ thống tự động đẩy Task sau lùi lại (trừ khi Task sau đang ở chế độ *Pinned*).
-- **Non-working Days:** Task tự động kéo dài qua ngày nghỉ. Ví dụ: Task 2 ngày bắt đầu thứ 6 sẽ kết thúc vào thứ 2 (nếu T7, CN nghỉ).
-## 3.3. Quy tắc SLA (Service Level Agreement)
-- **SLA Timer:** Chỉ chạy trong giờ hành chính (Working Hours: 08:00 - 17:00).
+2. **Milestone Logic:** Milestone lĂ  má»™t Ä‘iá»ƒm thá»i gian, khĂ´ng cĂ³ thá»i lÆ°á»£ng ($Duration = 0$). Milestone khĂ´ng thá»ƒ cĂ³ Subtask.
+## 3.2. Quy táº¯c Láº­p lá»‹ch (Scheduling Rules)
+- **Dependency:** Máº·c Ä‘á»‹nh FS (Finish-to-Start). Náº¿u vi pháº¡m (Task sau báº¯t Ä‘áº§u trÆ°á»›c khi Task trÆ°á»›c káº¿t thĂºc), há»‡ thá»‘ng tá»± Ä‘á»™ng Ä‘áº©y Task sau lĂ¹i láº¡i (trá»« khi Task sau Ä‘ang á»Ÿ cháº¿ Ä‘á»™ *Pinned*).
+- **Non-working Days:** Task tá»± Ä‘á»™ng kĂ©o dĂ i qua ngĂ y nghá»‰. VĂ­ dá»¥: Task 2 ngĂ y báº¯t Ä‘áº§u thá»© 6 sáº½ káº¿t thĂºc vĂ o thá»© 2 (náº¿u T7, CN nghá»‰).
+## 3.3. Quy táº¯c SLA (Service Level Agreement)
+- **SLA Timer:** Chá»‰ cháº¡y trong giá» hĂ nh chĂ­nh (Working Hours: 08:00 - 17:00).
 - **Breach Logic:**
-    - Khi thời gian thực hiện > SLA quy định (theo Priority trong Module 4).
-    - Hành động: Gửi email cho Manager + Đổi màu Task sang Đỏ.
-## 3.4. Quy tắc Ràng buộc Task (Constraint Types)
-Hệ thống phân biệt 2 loại ràng buộc ngày tháng để xử lý xung đột:
-1. **Soft Constraint (Mềm):** "Start No Earlier Than".
-    - Áp dụng cho Task thường.
-    - _Hành vi:_ Nếu Task trước bị đẩy lùi, Task này trôi theo.
-2. **Hard Constraint (Cứng):** "Must Start On" / "Must Finish On".
-    - Áp dụng cho Task có chế độ **Pinned** (Ghim).
-    - _Hành vi:_ Hệ thống **không bao giờ** tự động thay đổi ngày của Task này. Nếu Task trước đẩy lùi đè lên ngày của Task này -> Báo lỗi xung đột (Conflict) đỏ rực trên UI.
-## 3.5. Quy tắc Đa Múi giờ (Multi-Timezone Strategy)
-- **Lưu trữ:** Mọi thời gian trong Database phải lưu dưới dạng chuẩn **UTC**.
-- **Hiển thị:** Gantt Chart hiển thị theo múi giờ của **Project Settings** (không phải múi giờ của User đang xem).
-    - _Lý do:_ Đảm bảo tất cả thành viên nhìn thấy cùng một kế hoạch thống nhất, tránh việc User ở Mỹ thấy Task bắt đầu thứ 5, User ở Việt Nam thấy bắt đầu thứ 6 gây hiểu lầm deadline.
-## 3.6. Quy tắc Leo thang SLA (SLA Escalation Rule)
-- **Cơ chế:** Nếu một Task bị vi phạm SLA (Breached) và không được xử lý trong vòng X giờ tiếp theo:
-    1. **Level 1:** Gửi email nhắc nhở Assignee.
-    2. **Level 2:** Gửi thông báo cho Line Manager.
-    3. **Level 3 (Auto-Action):** Tự động chuyển Task sang trạng thái "At Risk" hoặc Re-assign cho Team Lead (tùy cấu hình).
-## 3.7. Quy tắc Kiểm toán Lập lịch (Planning Audit Trail)
-- Mọi thay đổi tác động đến **Start Date**, **End Date**, **Duration**, hoặc **Dependency** đều phải lưu vết:
-    - _Who:_ Ai thay đổi?
-    - _From:_ Giá trị cũ (Old Value).
-    - _To:_ Giá trị mới (New Value).
-    - _Reason:_ Lý do thay đổi (bắt buộc nhập nếu Dự án đang ở trạng thái Locked/In-Progress).
-## 3.8. Quy tắc Bảo toàn Đường găng (Critical Path Preservation Rule)
-- Trong chế độ Leveling mặc định (_Within Slack_), hệ thống được phép tiêu thụ **Free Float** (độ trôi tự do) của Task.
-- Nếu việc dời Task làm tiêu tốn hết Float và biến Task đó thành Critical Task (Float = 0), hệ thống phải dừng lại và không dời thêm nữa, ngay cả khi nhân sự vẫn còn quá tải (ưu tiên Deadline hơn Resource).
-## 3.9. Quy tắc Toàn vẹn Tham chiếu Chéo (Cross-Reference Integrity)
-- **Permission Check:** Để tạo Dependency chéo, người dùng phải có quyền **View** ở Dự án nguồn và quyền **Edit** ở Dự án đích.
-- **Broken Link Handling:** Nếu Task nguồn (Project 1) bị xóa hoặc Dự án 1 bị Archive:
-    - Hệ thống **không** xóa Dependency mà chuyển nó sang trạng thái **"Broken"** (Gãy liên kết).
-    - Hiển thị icon cảnh báo tam giác vàng trên Task đích (Project 2) để PM biết và xử lý thủ công (Xóa link hoặc nối lại vào Task khác).
-## 3.10. Quy tắc Thứ bậc Lịch biểu (Calendar Hierarchy Precedence)
-Hệ thống áp dụng cơ chế **"Calendar Layering"** (Lớp lịch) để xác định một ngày cụ thể là "Working" hay "Non-working". Thứ tự ưu tiên từ cao xuống thấp như sau:
-1. **Individual Exception:** Lịch nghỉ phép/làm bù của từng cá nhân (Cao nhất).
-2. **Project Calendar:** Lịch đặc thù của dự án (ví dụ: Team onsite làm việc cả T7 để kịp tiến độ).
-3. **Workspace Calendar:** Lịch nghỉ lễ chung của công ty (Quốc khánh, Tết)
-4. **System Default:** T2-T6, 09:00-18:00 (Thấp nhất). -> _Ví dụ:_ Nếu Công ty nghỉ lễ (Layer 3), nhưng Dự án quy định làm việc (Layer 2) -> Ngày đó là Working Day cho team dự án đó.
-# 4. Theoretical Basis & Algorithms (Cơ sở Lý luận & Thuật toán)
-## 4.1. Phương pháp Đường găng (Critical Path Method - CPM)
-Hệ thống tự động xác định chuỗi các công việc quyết định thời gian hoàn thành dự án.
-- **Forward Pass (Tính toán xuôi):** Xác định thời gian sớm nhất ($ES, EF$).
+    - Khi thá»i gian thá»±c hiá»‡n > SLA quy Ä‘á»‹nh (theo Priority trong Module 4).
+    - HĂ nh Ä‘á»™ng: Gá»­i email cho Manager + Äá»•i mĂ u Task sang Äá».
+## 3.4. Quy táº¯c RĂ ng buá»™c Task (Constraint Types)
+Há»‡ thá»‘ng phĂ¢n biá»‡t 2 loáº¡i rĂ ng buá»™c ngĂ y thĂ¡ng Ä‘á»ƒ xá»­ lĂ½ xung Ä‘á»™t:
+1. **Soft Constraint (Má»m):** "Start No Earlier Than".
+    - Ăp dá»¥ng cho Task thÆ°á»ng.
+    - _HĂ nh vi:_ Náº¿u Task trÆ°á»›c bá»‹ Ä‘áº©y lĂ¹i, Task nĂ y trĂ´i theo.
+2. **Hard Constraint (Cá»©ng):** "Must Start On" / "Must Finish On".
+    - Ăp dá»¥ng cho Task cĂ³ cháº¿ Ä‘á»™ **Pinned** (Ghim).
+    - _HĂ nh vi:_ Há»‡ thá»‘ng **khĂ´ng bao giá»** tá»± Ä‘á»™ng thay Ä‘á»•i ngĂ y cá»§a Task nĂ y. Náº¿u Task trÆ°á»›c Ä‘áº©y lĂ¹i Ä‘Ă¨ lĂªn ngĂ y cá»§a Task nĂ y -> BĂ¡o lá»—i xung Ä‘á»™t (Conflict) Ä‘á» rá»±c trĂªn UI.
+## 3.5. Quy táº¯c Äa MĂºi giá» (Multi-Timezone Strategy)
+- **LÆ°u trá»¯:** Má»i thá»i gian trong Database pháº£i lÆ°u dÆ°á»›i dáº¡ng chuáº©n **UTC**.
+- **Hiá»ƒn thá»‹:** Gantt Chart hiá»ƒn thá»‹ theo mĂºi giá» cá»§a **Project Settings** (khĂ´ng pháº£i mĂºi giá» cá»§a User Ä‘ang xem).
+    - _LĂ½ do:_ Äáº£m báº£o táº¥t cáº£ thĂ nh viĂªn nhĂ¬n tháº¥y cĂ¹ng má»™t káº¿ hoáº¡ch thá»‘ng nháº¥t, trĂ¡nh viá»‡c User á»Ÿ Má»¹ tháº¥y Task báº¯t Ä‘áº§u thá»© 5, User á»Ÿ Viá»‡t Nam tháº¥y báº¯t Ä‘áº§u thá»© 6 gĂ¢y hiá»ƒu láº§m deadline.
+## 3.6. Quy táº¯c Leo thang SLA (SLA Escalation Rule)
+- **CÆ¡ cháº¿:** Náº¿u má»™t Task bá»‹ vi pháº¡m SLA (Breached) vĂ  khĂ´ng Ä‘Æ°á»£c xá»­ lĂ½ trong vĂ²ng X giá» tiáº¿p theo:
+    1. **Level 1:** Gá»­i email nháº¯c nhá»Ÿ Assignee.
+    2. **Level 2:** Gá»­i thĂ´ng bĂ¡o cho Line Manager.
+    3. **Level 3 (Auto-Action):** Tá»± Ä‘á»™ng chuyá»ƒn Task sang tráº¡ng thĂ¡i "At Risk" hoáº·c Re-assign cho Team Lead (tĂ¹y cáº¥u hĂ¬nh).
+## 3.7. Quy táº¯c Kiá»ƒm toĂ¡n Láº­p lá»‹ch (Planning Audit Trail)
+- Má»i thay Ä‘á»•i tĂ¡c Ä‘á»™ng Ä‘áº¿n **Start Date**, **End Date**, **Duration**, hoáº·c **Dependency** Ä‘á»u pháº£i lÆ°u váº¿t:
+    - _Who:_ Ai thay Ä‘á»•i?
+    - _From:_ GiĂ¡ trá»‹ cÅ© (Old Value).
+    - _To:_ GiĂ¡ trá»‹ má»›i (New Value).
+    - _Reason:_ LĂ½ do thay Ä‘á»•i (báº¯t buá»™c nháº­p náº¿u Dá»± Ă¡n Ä‘ang á»Ÿ tráº¡ng thĂ¡i Locked/In-Progress).
+## 3.8. Quy táº¯c Báº£o toĂ n ÄÆ°á»ng gÄƒng (Critical Path Preservation Rule)
+- Trong cháº¿ Ä‘á»™ Leveling máº·c Ä‘á»‹nh (_Within Slack_), há»‡ thá»‘ng Ä‘Æ°á»£c phĂ©p tiĂªu thá»¥ **Free Float** (Ä‘á»™ trĂ´i tá»± do) cá»§a Task.
+- Náº¿u viá»‡c dá»i Task lĂ m tiĂªu tá»‘n háº¿t Float vĂ  biáº¿n Task Ä‘Ă³ thĂ nh Critical Task (Float = 0), há»‡ thá»‘ng pháº£i dá»«ng láº¡i vĂ  khĂ´ng dá»i thĂªm ná»¯a, ngay cáº£ khi nhĂ¢n sá»± váº«n cĂ²n quĂ¡ táº£i (Æ°u tiĂªn Deadline hÆ¡n Resource).
+## 3.9. Quy táº¯c ToĂ n váº¹n Tham chiáº¿u ChĂ©o (Cross-Reference Integrity)
+- **Permission Check:** Äá»ƒ táº¡o Dependency chĂ©o, ngÆ°á»i dĂ¹ng pháº£i cĂ³ quyá»n **View** á»Ÿ Dá»± Ă¡n nguá»“n vĂ  quyá»n **Edit** á»Ÿ Dá»± Ă¡n Ä‘Ă­ch.
+- **Broken Link Handling:** Náº¿u Task nguá»“n (Project 1) bá»‹ xĂ³a hoáº·c Dá»± Ă¡n 1 bá»‹ Archive:
+    - Há»‡ thá»‘ng **khĂ´ng** xĂ³a Dependency mĂ  chuyá»ƒn nĂ³ sang tráº¡ng thĂ¡i **"Broken"** (GĂ£y liĂªn káº¿t).
+    - Hiá»ƒn thá»‹ icon cáº£nh bĂ¡o tam giĂ¡c vĂ ng trĂªn Task Ä‘Ă­ch (Project 2) Ä‘á»ƒ PM biáº¿t vĂ  xá»­ lĂ½ thá»§ cĂ´ng (XĂ³a link hoáº·c ná»‘i láº¡i vĂ o Task khĂ¡c).
+## 3.10. Quy táº¯c Thá»© báº­c Lá»‹ch biá»ƒu (Calendar Hierarchy Precedence)
+Há»‡ thá»‘ng Ă¡p dá»¥ng cÆ¡ cháº¿ **"Calendar Layering"** (Lá»›p lá»‹ch) Ä‘á»ƒ xĂ¡c Ä‘á»‹nh má»™t ngĂ y cá»¥ thá»ƒ lĂ  "Working" hay "Non-working". Thá»© tá»± Æ°u tiĂªn tá»« cao xuá»‘ng tháº¥p nhÆ° sau:
+1. **Individual Exception:** Lá»‹ch nghá»‰ phĂ©p/lĂ m bĂ¹ cá»§a tá»«ng cĂ¡ nhĂ¢n (Cao nháº¥t).
+2. **Project Calendar:** Lá»‹ch Ä‘áº·c thĂ¹ cá»§a dá»± Ă¡n (vĂ­ dá»¥: Team onsite lĂ m viá»‡c cáº£ T7 Ä‘á»ƒ ká»‹p tiáº¿n Ä‘á»™).
+3. **Workspace Calendar:** Lá»‹ch nghá»‰ lá»… chung cá»§a cĂ´ng ty (Quá»‘c khĂ¡nh, Táº¿t)
+4. **System Default:** T2-T6, 09:00-18:00 (Tháº¥p nháº¥t). -> _VĂ­ dá»¥:_ Náº¿u CĂ´ng ty nghá»‰ lá»… (Layer 3), nhÆ°ng Dá»± Ă¡n quy Ä‘á»‹nh lĂ m viá»‡c (Layer 2) -> NgĂ y Ä‘Ă³ lĂ  Working Day cho team dá»± Ă¡n Ä‘Ă³.
+# 4. Theoretical Basis & Algorithms (CÆ¡ sá»Ÿ LĂ½ luáº­n & Thuáº­t toĂ¡n)
+## 4.1. PhÆ°Æ¡ng phĂ¡p ÄÆ°á»ng gÄƒng (Critical Path Method - CPM)
+Há»‡ thá»‘ng tá»± Ä‘á»™ng xĂ¡c Ä‘á»‹nh chuá»—i cĂ¡c cĂ´ng viá»‡c quyáº¿t Ä‘á»‹nh thá»i gian hoĂ n thĂ nh dá»± Ă¡n.
+- **Forward Pass (TĂ­nh toĂ¡n xuĂ´i):** XĂ¡c Ä‘á»‹nh thá»i gian sá»›m nháº¥t ($ES, EF$).
     - $ES(Task) = \max(EF(Predecessors))$
     - $EF(Task) = ES(Task) + Duration$
-- **Backward Pass (Tính toán ngược):** Xác định thời gian muộn nhất ($LS, LF$).
+- **Backward Pass (TĂ­nh toĂ¡n ngÆ°á»£c):** XĂ¡c Ä‘á»‹nh thá»i gian muá»™n nháº¥t ($LS, LF$).
     - $LF(Task) = \min(LS(Successors))$
     - $LS(Task) = LF(Task) - Duration$
-- **Float/Slack (Độ trôi):** $Float = LS - ES$.
-    - Nếu $Float = 0$: Task nằm trên đường găng (Critical Task). Bất kỳ sự chậm trễ nào của task này đều làm trễ cả dự án. Hệ thống sẽ tô đỏ các task này trên Gantt Chart.
-## 4.2. Thuật toán tính toán SLA (SLA Calculation Algorithm)
-Đây là thuật toán xử lý sự chênh lệch giữa thời gian thực tế (Calendar Time) và thời gian làm việc (Business Time).
-Công thức xác định thời điểm vi phạm ($T_{breach}$):
+- **Float/Slack (Äá»™ trĂ´i):** $Float = LS - ES$.
+    - Náº¿u $Float = 0$: Task náº±m trĂªn Ä‘Æ°á»ng gÄƒng (Critical Task). Báº¥t ká»³ sá»± cháº­m trá»… nĂ o cá»§a task nĂ y Ä‘á»u lĂ m trá»… cáº£ dá»± Ă¡n. Há»‡ thá»‘ng sáº½ tĂ´ Ä‘á» cĂ¡c task nĂ y trĂªn Gantt Chart.
+## 4.2. Thuáº­t toĂ¡n tĂ­nh toĂ¡n SLA (SLA Calculation Algorithm)
+ÄĂ¢y lĂ  thuáº­t toĂ¡n xá»­ lĂ½ sá»± chĂªnh lá»‡ch giá»¯a thá»i gian thá»±c táº¿ (Calendar Time) vĂ  thá»i gian lĂ m viá»‡c (Business Time).
+CĂ´ng thá»©c xĂ¡c Ä‘á»‹nh thá»i Ä‘iá»ƒm vi pháº¡m ($T_{breach}$):
 $$T_{breach} = T_{start} + D_{sla} + \sum T_{off\_shift} + \sum T_{holidays}$$
-**Trong đó:**
-- $T_{start}$: Thời điểm bắt đầu tính giờ (Status chuyển sang In-Progress).
-- $D_{sla}$: Thời lượng cam kết (ví dụ: 4 giờ).
-- $\sum T_{off\_shift}$: Tổng thời gian ngoài giờ hành chính nằm giữa khoảng thời gian xử lý.
-- $\sum T_{holidays}$: Tổng thời gian các ngày lễ/nghỉ phép.
-_Ví dụ minh họa:_
-- SLA: 4 giờ.
-- Start: 16:00 Thứ Sáu.
-- Giờ làm việc: 08:00 - 17:00 (Nghỉ trưa 12:00-13:00).
-- Tính toán:
-    - 16:00 -> 17:00 Thứ 6: Tiêu tốn 1 giờ. (Còn lại 3h).
-    - 17:00 T6 -> 08:00 Thứ 2: Off-shift (Cuối tuần).
-    - 08:00 -> 11:00 Thứ 2: Tiêu tốn 3 giờ.
-- **Kết quả:** $T_{breach}$ là 11:00 Thứ Hai tuần kế tiếp.
-## 4.3. Thuật toán Cân bằng Nguồn lực (Resource Leveling Heuristics)
-PronaFlow giải quyết bài toán "Resource Constrained Scheduling Problem" (RCSP) - một bài toán NP-Hard - bằng phương pháp Heuristic (Quy tắc kinh nghiệm) thay vì tối ưu hóa toán học tuyệt đối (vì quá tốn tài nguyên tính toán).
-- **Nguyên lý "Song song":**
-    1. Sắp xếp danh sách tất cả các Task theo thời gian bắt đầu ($ES$).
-    2. Duyệt qua từng đơn vị thời gian (t) từ đầu đến cuối dự án.
-    3. Tại mỗi thời điểm $t$, tính tổng nhu cầu tài nguyên $R(t)$.
-    4. Nếu $R(t) > Capacity_{limit}$:
-        - Chọn tập hợp các Task đang tranh chấp tài nguyên.
-        - Giữ lại Task có _Priority_ cao nhất hoặc _Slack_ ít nhất.
-        - Đẩy lùi ($Delay$) các Task còn lại sang thời điểm $t+1$.
-    5. Cập nhật lại mạng lưới Dependency và tính lại $ES, LS$.
-- **Kết quả:** Tạo ra một lịch trình khả thi về mặt vật lý (không ai làm quá 24h/ngày) với sự thay đổi tối thiểu so với kế hoạch gốc.
-## 4.4. Phương pháp Đường găng Đa dự án (Multi-Project Critical Path Method - MCPM)
-- **Vấn đề:** Trong môi trường đa dự án, đường găng của Dự án B có thể không nằm trong nội bộ Dự án B, mà bị chi phối bởi một Task nằm ở Dự án A.
-- **Giải pháp:** PronaFlow xây dựng đồ thị phụ thuộc ảo (Virtual Dependency Graph) kết nối các nút giữa các dự án khác nhau.
-    - Khi tính toán CPM cho Project B, hệ thống coi Task A (External) như một ràng buộc cứng về thời gian ($Start \geq End_{external}$).
-    - Điều này giúp Ban lãnh đạo nhìn thấy **"Global Critical Path"** (Đường găng toàn cục) của cả chương trình.
-## 4.n. Biểu đồ Logic SLA
+**Trong Ä‘Ă³:**
+- $T_{start}$: Thá»i Ä‘iá»ƒm báº¯t Ä‘áº§u tĂ­nh giá» (Status chuyá»ƒn sang In-Progress).
+- $D_{sla}$: Thá»i lÆ°á»£ng cam káº¿t (vĂ­ dá»¥: 4 giá»).
+- $\sum T_{off\_shift}$: Tá»•ng thá»i gian ngoĂ i giá» hĂ nh chĂ­nh náº±m giá»¯a khoáº£ng thá»i gian xá»­ lĂ½.
+- $\sum T_{holidays}$: Tá»•ng thá»i gian cĂ¡c ngĂ y lá»…/nghá»‰ phĂ©p.
+_VĂ­ dá»¥ minh há»a:_
+- SLA: 4 giá».
+- Start: 16:00 Thá»© SĂ¡u.
+- Giá» lĂ m viá»‡c: 08:00 - 17:00 (Nghá»‰ trÆ°a 12:00-13:00).
+- TĂ­nh toĂ¡n:
+    - 16:00 -> 17:00 Thá»© 6: TiĂªu tá»‘n 1 giá». (CĂ²n láº¡i 3h).
+    - 17:00 T6 -> 08:00 Thá»© 2: Off-shift (Cuá»‘i tuáº§n).
+    - 08:00 -> 11:00 Thá»© 2: TiĂªu tá»‘n 3 giá».
+- **Káº¿t quáº£:** $T_{breach}$ lĂ  11:00 Thá»© Hai tuáº§n káº¿ tiáº¿p.
+## 4.3. Thuáº­t toĂ¡n CĂ¢n báº±ng Nguá»“n lá»±c (Resource Leveling Heuristics)
+PronaFlow giáº£i quyáº¿t bĂ i toĂ¡n "Resource Constrained Scheduling Problem" (RCSP) - má»™t bĂ i toĂ¡n NP-Hard - báº±ng phÆ°Æ¡ng phĂ¡p Heuristic (Quy táº¯c kinh nghiá»‡m) thay vĂ¬ tá»‘i Æ°u hĂ³a toĂ¡n há»c tuyá»‡t Ä‘á»‘i (vĂ¬ quĂ¡ tá»‘n tĂ i nguyĂªn tĂ­nh toĂ¡n).
+- **NguyĂªn lĂ½ "Song song":**
+    1. Sáº¯p xáº¿p danh sĂ¡ch táº¥t cáº£ cĂ¡c Task theo thá»i gian báº¯t Ä‘áº§u ($ES$).
+    2. Duyá»‡t qua tá»«ng Ä‘Æ¡n vá»‹ thá»i gian (t) tá»« Ä‘áº§u Ä‘áº¿n cuá»‘i dá»± Ă¡n.
+    3. Táº¡i má»—i thá»i Ä‘iá»ƒm $t$, tĂ­nh tá»•ng nhu cáº§u tĂ i nguyĂªn $R(t)$.
+    4. Náº¿u $R(t) > Capacity_{limit}$:
+        - Chá»n táº­p há»£p cĂ¡c Task Ä‘ang tranh cháº¥p tĂ i nguyĂªn.
+        - Giá»¯ láº¡i Task cĂ³ _Priority_ cao nháº¥t hoáº·c _Slack_ Ă­t nháº¥t.
+        - Äáº©y lĂ¹i ($Delay$) cĂ¡c Task cĂ²n láº¡i sang thá»i Ä‘iá»ƒm $t+1$.
+    5. Cáº­p nháº­t láº¡i máº¡ng lÆ°á»›i Dependency vĂ  tĂ­nh láº¡i $ES, LS$.
+- **Káº¿t quáº£:** Táº¡o ra má»™t lá»‹ch trĂ¬nh kháº£ thi vá» máº·t váº­t lĂ½ (khĂ´ng ai lĂ m quĂ¡ 24h/ngĂ y) vá»›i sá»± thay Ä‘á»•i tá»‘i thiá»ƒu so vá»›i káº¿ hoáº¡ch gá»‘c.
+## 4.4. PhÆ°Æ¡ng phĂ¡p ÄÆ°á»ng gÄƒng Äa dá»± Ă¡n (Multi-Project Critical Path Method - MCPM)
+- **Váº¥n Ä‘á»:** Trong mĂ´i trÆ°á»ng Ä‘a dá»± Ă¡n, Ä‘Æ°á»ng gÄƒng cá»§a Dá»± Ă¡n B cĂ³ thá»ƒ khĂ´ng náº±m trong ná»™i bá»™ Dá»± Ă¡n B, mĂ  bá»‹ chi phá»‘i bá»Ÿi má»™t Task náº±m á»Ÿ Dá»± Ă¡n A.
+- **Giáº£i phĂ¡p:** PronaFlow xĂ¢y dá»±ng Ä‘á»“ thá»‹ phá»¥ thuá»™c áº£o (Virtual Dependency Graph) káº¿t ná»‘i cĂ¡c nĂºt giá»¯a cĂ¡c dá»± Ă¡n khĂ¡c nhau.
+    - Khi tĂ­nh toĂ¡n CPM cho Project B, há»‡ thá»‘ng coi Task A (External) nhÆ° má»™t rĂ ng buá»™c cá»©ng vá» thá»i gian ($Start \geq End_{external}$).
+    - Äiá»u nĂ y giĂºp Ban lĂ£nh Ä‘áº¡o nhĂ¬n tháº¥y **"Global Critical Path"** (ÄÆ°á»ng gÄƒng toĂ n cá»¥c) cá»§a cáº£ chÆ°Æ¡ng trĂ¬nh.
+## 4.n. Biá»ƒu Ä‘á»“ Logic SLA
 ```mermaid
 flowchart TD
     Start([Task Created]) --> GetSLA{Get SLA Duration based on Priority}
@@ -478,3 +478,4 @@ flowchart TD
     CheckDone -- Yes --> Stop[Stop Timer & Log Actual Time]
     CheckDone -- No --> Monitor
 ```
+

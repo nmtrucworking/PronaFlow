@@ -17,7 +17,7 @@
 01-Requirements/Functional-Modules/4 - Task Execution and Orchestration.md
 01-Requirements/Functional-Modules/5 - Temporal Planning and Scheduling.md
 01-Requirements/Functional-Modules/6 - Unified Collaboration Hub.md
-01-Requirements/Functional-Modules/7 - Even-Driven Notification System.md
+01-Requirements/Functional-Modules/7 - Event-Driven Notification System.md
 01-Requirements/Functional-Modules/8 - Data Archiving and Compliance.md
 01-Requirements/Functional-Modules/9 - User Experience Personalization.md
 01-Requirements/Functional-Modules/PronaFlow_Admin_Roles.xlsx
@@ -76,3 +76,4 @@ Contents.base
 HEADER DOCUMENT - Hệ thống Tài liệu Kỹ thuật PronaFlow.md
 Lộ trình xây dựng Tài liệu Kỹ thuật Dự án PronaFlow.md
 README.md
+
