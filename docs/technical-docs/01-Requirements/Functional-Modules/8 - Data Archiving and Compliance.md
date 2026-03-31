@@ -1,15 +1,20 @@
-Project**: PronaFlow
+# Data Archiving and Compliance
+
+**Project**: PronaFlow
 **Version**: 1.0
 **State**: Draft
 _Last updated: Dec 31, 2025_
 
 ---
+
 # 1. Business Overview
 Trong vận hành hệ thống phần mềm doanh nghiệp, dữ liệu tăng trưởng theo hàm mũ theo thời gian. Việc giữ lại tất cả dữ liệu lịch sử trong cùng một không gian lưu trữ với dữ liệu hiện hành (Active Data) sẽ dẫn đến hai vấn đề nghiêm trọng:
 1. **Suy giảm hiệu năng (Performance Degradation):** Kích thước bảng (Table Size) quá lớn làm tăng độ sâu của cây chỉ mục (B-Tree Index Depth), khiến các truy vấn SELECT/UPDATE trở nên chậm chạp.
 2. **Rủi ro tuân thủ (Compliance Risk):** Các quy định quốc tế như GDPR (Châu Âu) yêu cầu doanh nghiệp phải có chính sách xóa dữ liệu rõ ràng (Right to be Forgotten) và khả năng trích xuất dữ liệu (Data Portability).
 Module **Data Archiving & Compliance** của PronaFlow được thiết kế để giải quyết bài toán trên thông qua chiến lược **Lưu trữ Phân tầng (Tiered Storage)** và cơ chế **Quản trị Vòng đời Dữ liệu tự động**.
+
 **Chiến lược Phân loại Dữ liệu:**
+
 - **Hot Data:** Dữ liệu đang truy xuất thường xuyên (Dự án đang chạy). Yêu cầu độ trễ thấp (<100ms).
 - **Warm Data:** Dữ liệu ít truy cập (Dự án vừa hoàn thành < 6 tháng).
 - **Cold Data:** Dữ liệu lịch sử (Dự án > 6 tháng). Chuyển sang chế độ Read-only để tối ưu chi phí và hiệu năng.
@@ -46,15 +51,20 @@ Là một Người dùng, Tôi muốn có cơ chế "Thùng rác" lưu trữ t�
 ## 2.3. Feature: Data Export & Portability (Trích xuất dữ liệu)
 ### User Story 8.3
 Là một Chủ sở hữu Workspace, Tôi muốn tải xuống toàn bộ dữ liệu dự án của mình dưới định dạng chuẩn (JSON/CSV), Để lưu trữ cục bộ hoặc di chuyển sang hệ thống khác (Tuân thủ quyền khả chuyển dữ liệu).
+
 ### Acceptance Criteria (#AC)
+
 #### AC 1 - Async Export Processing
+
 - **Constraint:** Vì lượng dữ liệu có thể rất lớn (hàng ngàn task), việc xuất dữ liệu không được thực hiện đồng bộ (Synchronous).
 - **Flow:**
     1. User nhấn "Request Export".
     2. Server trả về thông báo "Đang xử lý".
     3. Worker Process thu thập dữ liệu, đóng gói thành file `.zip`.
     4. Hệ thống gửi Email chứa Secure Link tải xuống (Link hết hạn sau 24h).
+
 #### AC 2 - Data Structure Standard
+
 - **Format:** File xuất ra phải có cấu trúc JSON rõ ràng, bao gồm đầy đủ quan hệ: Projects -> Lists -> Tasks -> Comments/Attachments.
 # 3. Business Rules & Compliance Standards
 ## 3.1. Quy tắc Toàn vẹn Tham chiếu khi Xóa (Referential Integrity on Delete)
