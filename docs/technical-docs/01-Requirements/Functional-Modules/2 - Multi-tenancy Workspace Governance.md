@@ -78,6 +78,8 @@ Là một Workspace Admin, Tôi muốn thiết lập ngày làm việc và ngày
 	 - **Timezone:** Asia/Ho_Chi_Minh (GMT+7).
 #### AC 2 - Branding (Tùy chọn)
 - Cho phép upload Logo của công ty để thay thế Logo mặc định của Workspace trên thanh Sidebar (Tăng tính cá nhân hóa).
+- UI/UX phải giữ nguyên pattern hiện có của PronaFlow: trigger dạng thẻ/logo, popover có các tab `Upload` / `Presets` / `Library`, hỗ trợ preview, chọn mẫu có sẵn (preset/avatar/logo), và nút xóa logo hiện tại.
+- Không thay đổi sang layout tối giản mới nếu chưa có yêu cầu thiết kế riêng; ưu tiên tính nhất quán với giao diện cũ của workspace settings.
 ## 2.5. Feature: Lifecycle & Soft Delete
 ### User Story 2.3:
 Là một Workspace Owner, Tôi muốn xóa một Workspace không còn sử dụng, Để dọn dẹp giao diện và quản lý tài nguyên hiệu quả.
