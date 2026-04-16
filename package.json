@@ -23,6 +23,7 @@
     "dev:ai": "cd services/ai-serving && python -m uvicorn app.main:app --reload --port 8001",
     "build": "npm run build:frontend && npm run build:electron",
     "build:pages": "npm --prefix apps/frontend run build:pages",
+    "build:pages:mock": "npm --prefix apps/frontend run build:pages:mock",
     "build:backend": "cd apps/backend && python -m compileall app",
     "build:frontend": "npm --prefix apps/frontend run build",
     "build:electron": "npm --prefix apps/electron run build",

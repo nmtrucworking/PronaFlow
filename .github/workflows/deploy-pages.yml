@@ -45,7 +45,7 @@ jobs:
         run: npm ci
 
       - name: Build frontend for Pages
-        run: npm run build:pages
+        run: npm run build:pages:mock
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
