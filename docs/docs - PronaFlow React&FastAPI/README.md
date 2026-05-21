@@ -1,4 +1,4 @@
-﻿# Legacy Path Redirect
+# Legacy Path Redirect
 
 This folder has been consolidated into the canonical shared docs folder:
 
