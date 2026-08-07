@@ -1,479 +1,147 @@
 # Deployment Guide
 
-Comprehensive guide for deploying PronaFlow to various environments.
+PronaFlow is released as native application processes and static build artifacts. This guide covers local release validation and deployment to a host where Node.js, Python, PostgreSQL, and a web server are installed directly.
 
-## Table of Contents
+## Release Outputs
 
-1. [Deployment Environments](#deployment-environments)
-2. [Prerequisites](#prerequisites)
-3. [Development Deployment](#development-deployment)
-4. [Production Deployment](#production-deployment)
-5. [Docker Deployment](#docker-deployment)
-6. [Kubernetes Deployment](#kubernetes-deployment)
-7. [Database Migration](#database-migration)
-8. [Monitoring & Logging](#monitoring--logging)
-9. [Rollback Procedures](#rollback-procedures)
-10. [Troubleshooting](#troubleshooting)
+| Component | Build or start command | Output |
+|---|---|---|
+| Frontend | `npm run build:frontend` | `apps/frontend/dist/` |
+| Backend | `npm run build:backend` | Validated Python bytecode; source remains under `apps/backend/` |
+| Desktop | `npm --prefix apps/electron run dist:win` | Installers under `apps/electron/build/` |
+| AI service | Not currently released | Service is still a scaffold |
 
-## Deployment Environments
+## Pre-release Checklist
 
-| Environment | Usage | URL | Database |
-|------------|-------|-----|----------|
-| **Local** | Development | http://localhost:5173 | SQLite/PostgreSQL |
-| **Development** | Team testing | https://dev.pronaflow.com | PostgreSQL |
-| **Staging** | Pre-production | https://staging.pronaflow.com | PostgreSQL |
-| **Production** | Live | https://pronaflow.com | PostgreSQL (Replicated) |
+- The intended revision has been reviewed.
+- Frontend and backend tests pass.
+- Frontend and backend builds pass.
+- Production environment files are present only on the target host.
+- `SECRET_KEY` and third-party credentials are stored outside Git.
+- PostgreSQL has a current, restorable backup.
+- The database migration and rollback plan has been reviewed.
 
-## Prerequisites
+## 1. Validate Locally
 
-### Required Tools
+Activate `apps/backend/.venv`, then run from the repository root:
 
-- Docker & Docker Compose 20.10+
-- Kubernetes cluster (for K8s deployment)
-- Terraform 1.0+ (for Infrastructure-as-Code)
-- kubectl 1.21+ (for K8s management)
-- Helm 3.0+ (for K8s package management)
-
-### Required Credentials
-
-- Docker Registry credentials
-- Cloud provider credentials (AWS/Azure/GCP)
-- Database credentials
-- SSL/TLS certificates
-- API tokens for third-party services
-
-### Configuration Files
-
-```bash
-# Copy production environment files
-cp configs/environment.template .env.production
-cp configs/environment.template apps/backend/.env.production
-cp configs/environment.template apps/frontend/.env.production
-
-# Copy secrets
-cp configs/secrets.example.json configs/secrets.production.json
-# Edit with actual values
+```powershell
+npm ci
+python -m pip install -r apps/backend/requirements.txt
+npm run test
+npm run test:backend
+npm run lint
+npm run build:frontend
+npm run build:backend
 ```
 
-## Development Deployment
+Start the release candidate locally and verify:
 
-### Quick Start
-
-```bash
-# Install dependencies
-npm run setup
-
-# Start services
+```powershell
 npm run dev
-
-# Access application
-# Frontend: http://localhost:5173
-# Backend: http://localhost:8000
-# API Docs: http://localhost:8000/docs
+Invoke-RestMethod http://localhost:8000/health
+Invoke-WebRequest http://localhost:5173
 ```
 
-### Docker Compose Development
+## 2. Configure the Backend Host
+
+Create a dedicated Python virtual environment on the target host:
 
 ```bash
-# Build and start all services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop services
-docker-compose down
-
-# Reset database
-docker-compose down -v
-docker-compose up -d
-```
-
-## Production Deployment
-
-### Pre-Deployment Checklist
-
-- [ ] All tests passing locally
-- [ ] Code reviewed and approved
-- [ ] Environment variables configured
-- [ ] Database backups created
-- [ ] SSL certificates valid
-- [ ] Monitoring configured
-- [ ] Rollback plan prepared
-
-### 1. Build and Push Docker Images
-
-```bash
-# Configure Docker registry
-docker login
-
-# Build images
-docker-compose -f docker-compose.prod.yml build
-
-# Tag images
-docker tag pronaflow-backend:latest myregistry/pronaflow-backend:v2.0.0
-docker tag pronaflow-frontend:latest myregistry/pronaflow-frontend:v2.0.0
-
-# Push to registry
-docker push myregistry/pronaflow-backend:v2.0.0
-docker push myregistry/pronaflow-frontend:v2.0.0
-```
-
-### 2. Deploy with Docker Compose
-
-```bash
-# SSH into production server
-ssh user@production-server
-
-# Pull latest code
-git pull origin main
-
-# Copy environment files
-cp .env.production .env
-cp apps/backend/.env.production apps/backend/.env
-cp apps/frontend/.env.production apps/frontend/.env
-
-# Deploy services
-docker-compose -f docker-compose.prod.yml up -d
-
-# Verify deployment
-docker-compose -f docker-compose.prod.yml ps
-```
-
-### 3. Database Migration
-
-```bash
-# Connect to backend container
-docker-compose -f docker-compose.prod.yml exec backend bash
-
-# Run migrations
 cd apps/backend
-alembic upgrade head
-
-# Exit container
-exit
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-### 4. Verify Deployment
+Create `apps/backend/.env` from `apps/backend/.env.example` and set production values. At minimum:
+
+- Set `DEBUG=False`.
+- Use a strong, unique `SECRET_KEY`.
+- Set `DATABASE_URL` to the production PostgreSQL database.
+- Restrict `ALLOWED_ORIGINS` to the deployed frontend origins.
+- Configure mail, storage, OAuth, billing, and Redis values only for enabled features.
+
+Do not copy local credentials to the target host.
+
+## 3. Back Up and Migrate PostgreSQL
+
+Create and verify a database backup before applying schema changes:
 
 ```bash
-# Check service health
-curl https://pronaflow.com/api/health
-
-# View logs
-docker-compose -f docker-compose.prod.yml logs -f
-
-# Test API endpoints
-curl https://pronaflow.com/api/v1/workspaces
-
-# Test frontend
-curl https://pronaflow.com/
+pg_dump --host=DB_HOST --port=5432 --username=DB_USER --format=custom --file=pronaflow-before-release.dump DB_NAME
+pg_restore --list pronaflow-before-release.dump
 ```
 
-## Docker Deployment
-
-### Multi-Stage Build
-
-The Dockerfiles use multi-stage builds for optimized images:
-
-```dockerfile
-# Stage 1: Build
-FROM node:18 AS builder
-
-# Stage 2: Runtime
-FROM node:18-alpine
-COPY --from=builder /app/dist /app/dist
-```
-
-### Docker Compose Files
-
-- **docker-compose.yml** - Development configuration
-- **docker-compose.prod.yml** - Production configuration
-
-### Building Images
+Apply migrations from `apps/backend/` with its virtual environment active:
 
 ```bash
-# Build all images
-docker-compose build
-
-# Build specific service
-docker-compose build backend
-
-# Build without cache
-docker-compose build --no-cache
-
-# View build logs
-docker-compose build --verbose
+python -m alembic upgrade head
+python -m alembic current
 ```
 
-### Managing Containers
+## 4. Run the Backend Process
+
+Start the API from `apps/backend/`:
 
 ```bash
-# Start services
-docker-compose up -d
-
-# Stop services
-docker-compose stop
-
-# Remove containers
-docker-compose rm
-
-# View container logs
-docker-compose logs backend -f
-
-# Execute command in container
-docker-compose exec backend python init_db.py
-
-# Access container shell
-docker-compose exec backend bash
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 4
 ```
 
-## Kubernetes Deployment
+Use the host operating system's service manager to keep the process running, restart it after failure, and capture stdout and stderr. Put a TLS-enabled reverse proxy in front of port 8000; do not expose the development server directly to the public network.
 
-### Prerequisites
+Verify the API before routing user traffic:
 
 ```bash
-# Install kubectl
-kubectl version --client
-
-# Configure kubeconfig
-export KUBECONFIG=~/.kube/config
-
-# Verify cluster access
-kubectl cluster-info
+curl --fail http://127.0.0.1:8000/health
 ```
 
-### Deploy to Kubernetes
+## 5. Build and Publish the Frontend
+
+Create `apps/frontend/.env.production` with the public API base URL:
+
+```env
+VITE_API_MODE=backend
+VITE_API_URL=https://api.example.com/api/v1
+VITE_API_BASE_URL=https://api.example.com/api/v1
+```
+
+Build from the repository root:
 
 ```bash
-# Navigate to k8s directory
-cd deployment/k8s
-
-# Create namespace
-kubectl create namespace pronaflow
-
-# Create secrets
-kubectl create secret generic pronaflow-secrets \
-  --from-file=.env.production \
-  -n pronaflow
-
-# Deploy applications
-kubectl apply -f deployment/
-
-# Verify deployment
-kubectl get pods -n pronaflow
-kubectl get services -n pronaflow
+npm ci
+npm run build:frontend
 ```
 
-### Kubernetes Commands
+Publish the contents of `apps/frontend/dist/` to the web root or static hosting service. Configure an SPA fallback so unknown application routes return `index.html`. Keep the previous artifact available until post-release checks pass.
 
-```bash
-# View deployment status
-kubectl get deployments -n pronaflow
+## 6. Package the Desktop App
 
-# View pods
-kubectl get pods -n pronaflow
+Install dependencies and build the platform-specific package:
 
-# View logs
-kubectl logs -f deployment/backend -n pronaflow
-
-# Scale deployment
-kubectl scale deployment backend --replicas=3 -n pronaflow
-
-# Update image
-kubectl set image deployment/backend \
-  backend=myregistry/pronaflow-backend:v2.0.1 \
-  -n pronaflow
-
-# Port forward
-kubectl port-forward svc/backend 8000:8000 -n pronaflow
-
-# Get shell access
-kubectl exec -it pod/backend-xyz -n pronaflow -- bash
+```powershell
+npm ci
+npm --prefix apps/electron run dist:win
 ```
 
-## Database Migration
+For other platforms, use `dist:mac` or `dist:linux` on the corresponding operating system. Test the generated installer and confirm its API endpoint before distribution.
 
-### Alembic Setup
+## Post-release Checks
 
-```bash
-# Generate migration
-alembic revision --autogenerate -m "Add users table"
+- `GET /health` returns a healthy response.
+- The frontend loads and can call `/api/v1`.
+- Authentication, workspace loading, and one write operation succeed.
+- Database migrations report the expected revision.
+- Application logs contain no repeated startup or connection errors.
+- The previous backend revision and frontend artifact remain available for rollback.
 
-# Review migration file
-cat alembic/versions/001_add_users_table.py
+## Rollback
 
-# Apply migration
-alembic upgrade head
+1. Stop routing new requests to the failed backend revision.
+2. Restore the previous backend source and dependency set.
+3. Re-publish the previous frontend artifact.
+4. If the release changed the schema, follow the reviewed downgrade plan or restore the pre-release PostgreSQL backup.
+5. Start the previous backend process and repeat the health checks.
 
-# Rollback migration
-alembic downgrade -1
-
-# View migration status
-alembic current
-alembic history
-```
-
-### Backup Before Migration
-
-```bash
-# Backup database
-pg_dump -U postgres -d pronaflow > backup_$(date +%Y%m%d_%H%M%S).sql
-
-# Verify backup
-ls -lh backup_*.sql
-
-# Restore from backup
-psql -U postgres -d pronaflow < backup_20240203_120000.sql
-```
-
-## Monitoring & Logging
-
-### Health Checks
-
-```bash
-# Backend health
-curl http://localhost:8000/health
-
-# Frontend health
-curl http://localhost:5173/
-
-# Database health
-docker-compose exec database pg_isready -U postgres
-```
-
-### Logging
-
-```bash
-# View application logs
-docker-compose logs -f backend
-docker-compose logs -f frontend
-
-# Filter logs
-docker-compose logs backend | grep ERROR
-
-# Save logs to file
-docker-compose logs > logs.txt
-
-# View logs with timestamps
-docker-compose logs -f --timestamps
-```
-
-### Monitoring Setup
-
-Configure monitoring with:
-- Prometheus for metrics
-- Grafana for dashboards
-- ELK stack for logging
-- Datadog or New Relic for APM
-
-See [monitoring documentation](docs/deployment/monitoring.md) for details.
-
-## Rollback Procedures
-
-### Docker Compose Rollback
-
-```bash
-# Stop current version
-docker-compose -f docker-compose.prod.yml down
-
-# Checkout previous version
-git checkout HEAD~1
-
-# Deploy previous version
-docker-compose -f docker-compose.prod.yml up -d
-
-# Verify
-docker-compose -f docker-compose.prod.yml ps
-```
-
-### Kubernetes Rollback
-
-```bash
-# View rollout history
-kubectl rollout history deployment/backend -n pronaflow
-
-# Rollback to previous version
-kubectl rollout undo deployment/backend -n pronaflow
-
-# Rollback to specific revision
-kubectl rollout undo deployment/backend --to-revision=2 -n pronaflow
-
-# Monitor rollback
-kubectl rollout status deployment/backend -n pronaflow
-```
-
-### Database Rollback
-
-```bash
-# List available backups
-ls -la backups/
-
-# Restore from backup
-psql -U postgres -d pronaflow < backups/backup_20240203_120000.sql
-
-# Verify restoration
-psql -U postgres -d pronaflow -c "SELECT COUNT(*) FROM users;"
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**Issue: Container fails to start**
-```bash
-# Check logs
-docker-compose logs backend
-
-# Check container status
-docker-compose ps
-
-# Rebuild image
-docker-compose build --no-cache backend
-```
-
-**Issue: Database connection error**
-```bash
-# Verify database is running
-docker-compose ps database
-
-# Check database logs
-docker-compose logs database
-
-# Test connection
-docker-compose exec backend psql -U postgres -d pronaflow -c "SELECT 1"
-```
-
-**Issue: Out of disk space**
-```bash
-# Check disk usage
-docker system df
-
-# Clean up unused images
-docker image prune -a
-
-# Clean up volumes
-docker volume prune
-```
-
-**Issue: Performance degradation**
-```bash
-# Check resource usage
-docker stats
-
-# View slow queries (if using PostgreSQL)
-docker-compose exec database psql -U postgres -d pronaflow \
-  -c "SELECT query FROM pg_stat_statements ORDER BY mean_time DESC LIMIT 10;"
-```
-
-### Getting Help
-
-1. Check logs: `docker-compose logs <service>`
-2. Review status: `docker-compose ps`
-3. Check documentation: [docs/](docs/)
-4. Create issue with details: logs, configuration, error messages
-
----
-
-**Last Updated**: February 3, 2026  
-**Version**: 2.0+
+Do not run an unreviewed schema downgrade against production data.

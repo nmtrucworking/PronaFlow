@@ -1,76 +1,62 @@
 # Scripts Directory
 
-This directory contains utility scripts for development, setup, and deployment.
+This directory contains the local setup, development, and documentation maintenance helpers that remain supported by the repository.
 
-## Structure
+## Available Scripts
 
-### setup/
-- `setup.js` - Main setup script for initializing the project
-- `setup-dev.js` - Development environment configuration
-- `setup-prod.js` - Production environment verification
+### `setup/setup.cjs`
 
-### dev/
-- `watch.js` - File watcher for development
-- `db-reset.js` - Database initialization for development
+The `npm run setup` entry point:
 
-### deploy/
-- `deploy-dev.js` - Deploy to development environment
-- `deploy-prod.js` - Deploy to production environment
+- checks Node.js, npm, and Python;
+- creates missing local environment files from the matching examples;
+- installs root, frontend, and desktop JavaScript dependencies; and
+- prints the PostgreSQL and migration steps that must be completed locally.
 
-## Usage
+It never overwrites an existing environment file.
 
-### Initial Setup
-```bash
+### `setup/setup-dev.cjs`
+
+The `npm run setup:dev` entry point. It creates missing `.env.local` development overrides and enables local debug values.
+
+### `setup/setup-frontend-prod.js`
+
+Interactive helper for generating `apps/frontend/.env.production` and installing frontend dependencies:
+
+```powershell
+node scripts/setup/setup-frontend-prod.js
+```
+
+Review the generated file, run `npm run build:frontend`, and publish `apps/frontend/dist/` as described in [DEPLOYMENT.md](../DEPLOYMENT.md).
+
+### `dev/watch.js`
+
+Development file watcher. Run it directly when its watch behavior is needed:
+
+```powershell
+node scripts/dev/watch.js
+```
+
+### `dev/db-reset.js`
+
+Development database reset helper. Read the script and verify the target database before running it; resetting data is destructive.
+
+### `docs/check-shared-docs-migration.ps1`
+
+Checks the shared documentation migration state:
+
+```powershell
+./scripts/docs/check-shared-docs-migration.ps1
+```
+
+## Common Usage
+
+```powershell
 npm run setup
-```
-
-### Development Setup
-```bash
 npm run setup:dev
+npm run dev
+npm run test
+npm run build
 ```
 
-### Production Setup
-```bash
-npm run setup:prod
-```
-
-### Deployment
-```bash
-# Deploy to development
-npm run deploy:dev
-
-# Deploy to production
-npm run deploy:prod
-```
-
-## Scripts Details
-
-### setup.js
-Performs complete project initialization:
-- Checks prerequisites (Node.js, Python, Docker)
-- Creates environment files
-- Installs dependencies
-- Initializes database
-
-### setup-dev.js
-Configures development environment:
-- Creates .env.local files
-- Sets debug mode
-- Configures hot-reload
-
-### setup-prod.js
-Verifies production configuration:
-- Checks required .env.production files
-- Validates production settings
-
-### deploy-dev.js
-Deploys to development:
-- Builds all applications
-- Starts Docker services
-- Configures development endpoints
-
-### deploy-prod.js
-Deploys to production:
-- Validates production configuration
-- Builds optimized bundles
-- Deploys with docker-compose.prod.yml
+See [DEVELOPMENT.md](../DEVELOPMENT.md) for the full local workflow and [DEPLOYMENT.md](../DEPLOYMENT.md) for release procedures.

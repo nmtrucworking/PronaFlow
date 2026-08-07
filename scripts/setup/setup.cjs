@@ -40,7 +40,6 @@ function checkPrerequisites() {
     { name: 'Node.js 18+', cmd: 'node --version' },
     { name: 'npm 9+', cmd: 'npm --version' },
     { name: 'Python 3.9+', cmd: 'python --version' },
-    { name: 'Docker', cmd: 'docker --version' },
   ];
 
   let allMet = true;
@@ -58,29 +57,34 @@ function checkPrerequisites() {
 }
 
 function createEnvFiles() {
-  log('\n📝 Creating environment files...', 'blue');
+  log('\n📝 Creating local environment files...', 'blue');
 
-  const templatePath = path.join(__dirname, '../../configs/environment.template');
-  const locations = [
-    path.join(__dirname, '../../.env'),
-    path.join(__dirname, '../../apps/backend/.env'),
-    path.join(__dirname, '../../apps/frontend/.env'),
-    path.join(__dirname, '../../services/ai-serving/.env'),
+  const envFiles = [
+    {
+      template: path.join(__dirname, '../../.env.example'),
+      target: path.join(__dirname, '../../.env'),
+    },
+    {
+      template: path.join(__dirname, '../../apps/backend/.env.example'),
+      target: path.join(__dirname, '../../apps/backend/.env'),
+    },
+    {
+      template: path.join(__dirname, '../../apps/frontend/.env.example'),
+      target: path.join(__dirname, '../../apps/frontend/.env.local'),
+    },
   ];
 
-  if (!fs.existsSync(templatePath)) {
-    log('⚠ Template file not found', 'yellow');
-    return;
-  }
+  envFiles.forEach(({ template, target }) => {
+    if (!fs.existsSync(template)) {
+      log(`⚠ Template not found: ${template}`, 'yellow');
+      return;
+    }
 
-  const templateContent = fs.readFileSync(templatePath, 'utf-8');
-
-  locations.forEach(envPath => {
-    if (!fs.existsSync(envPath)) {
-      fs.writeFileSync(envPath, templateContent);
-      log(`✓ Created ${envPath}`, 'green');
+    if (!fs.existsSync(target)) {
+      fs.copyFileSync(template, target);
+      log(`✓ Created ${target}`, 'green');
     } else {
-      log(`⊘ ${envPath} already exists`, 'yellow');
+      log(`⊘ ${target} already exists`, 'yellow');
     }
   });
 }
@@ -105,20 +109,10 @@ function installDependencies() {
 }
 
 function setupDatabase() {
-  log('\n🗄️  Setting up database...', 'blue');
-  log('Please ensure PostgreSQL is running and configured in .env files', 'yellow');
-  
-  const backendPath = path.join(__dirname, '../../apps/backend');
-  const initDbScript = path.join(backendPath, 'init_db.py');
-
-  if (fs.existsSync(initDbScript)) {
-    execCommand(
-      `cd "${backendPath}" && python init_db.py init`,
-      'Initializing database'
-    );
-  } else {
-    log('⚠ Database initialization script not found', 'yellow');
-  }
+  log('\n🗄️  Database setup...', 'blue');
+  log('Ensure PostgreSQL is running and DATABASE_URL is set in apps/backend/.env', 'yellow');
+  log('Then activate apps/backend/.venv and run:', 'yellow');
+  log('python -m alembic -c apps/backend/alembic.ini upgrade head', 'yellow');
 }
 
 function main() {
@@ -149,10 +143,11 @@ function main() {
   log('╚════════════════════════════════════════╝\n', 'blue');
   
   log('Next steps:', 'blue');
-  log('1. Update environment variables in .env files', 'yellow');
-  log('2. Start backend: npm run dev:backend', 'yellow');
-  log('3. Start frontend: npm run dev:frontend', 'yellow');
-  log('4. Visit http://localhost:5173', 'yellow');
+  log('1. Create apps/backend/.venv and install apps/backend/requirements.txt', 'yellow');
+  log('2. Update environment variables and prepare PostgreSQL', 'yellow');
+  log('3. Apply migrations with Alembic', 'yellow');
+  log('4. Activate the backend virtual environment and run npm run dev', 'yellow');
+  log('5. Visit http://localhost:5173', 'yellow');
 }
 
 main();

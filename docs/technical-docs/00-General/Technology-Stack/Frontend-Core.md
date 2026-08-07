@@ -129,5 +129,5 @@ Tài liệu này không đặc tả:
 - Backend API & Database.
 - AI/ML Pipline & Model Serving.
 - Desktop Wrapper (Electron)
-- CI/CD & Infrastructure.
+- Infrastructure and release operations.
 Các nội dung trên được quản lý bằng tài liệu riêng.

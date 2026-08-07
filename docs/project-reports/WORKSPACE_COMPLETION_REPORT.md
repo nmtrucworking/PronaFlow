@@ -324,7 +324,7 @@ GET    /api/v1/workspaces/{id}/access-logs       - Get access history
 ### Short Term (Medium Priority)
 1. Write unit tests for services
 2. Write integration tests for API
-3. Set up CI/CD pipeline
+3. Document local release validation
 
 ### Medium Term (Nice to Have)
 1. Create React components for workspace UI

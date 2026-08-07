@@ -122,7 +122,7 @@ VITE_DEBUG_MODE=false
     log('\nNext steps:', 'cyan');
     log('1. Review configuration: cat apps/frontend/.env.production', 'yellow');
     log('2. Build application: npm run build:frontend', 'yellow');
-    log('3. Deploy: npm run deploy:frontend', 'yellow');
+    log('3. Publish apps/frontend/dist/ using the workflow in DEPLOYMENT.md', 'yellow');
 
   } catch (error) {
     log(`\n✗ Setup failed: ${error.message}`, 'red');

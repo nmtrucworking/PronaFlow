@@ -98,7 +98,7 @@ AI_PORT=8001
 AI_LOG_LEVEL=INFO
 
 # Model Configuration
-MODEL_PATH=/app/models
+MODEL_PATH=./models
 MODEL_VERSION=latest
 
 # GPU Support
@@ -131,18 +131,9 @@ AUTO_UPDATE_URL=https://releases.pronaflow.com
 ELECTRON_LOG_LEVEL=info
 ```
 
-## Docker & Deployment
+## Native Host Release
 
 ```env
-# Docker Registry
-DOCKER_REGISTRY=docker.io
-DOCKER_USERNAME=your-docker-username
-DOCKER_PASSWORD=your-docker-password
-
-# Kubernetes
-K8S_NAMESPACE=pronaflow
-K8S_REPLICAS=3
-
 # SSL/TLS
 SSL_CERT_PATH=/etc/ssl/certs/certificate.crt
 SSL_KEY_PATH=/etc/ssl/private/key.key
